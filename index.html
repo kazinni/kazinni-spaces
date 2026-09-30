@@ -251,19 +251,6 @@
       background: var(--gold-soft); color: var(--gold-dark);
     }
 
-    .lp-app.locked {
-      opacity: 0.55; cursor: not-allowed;
-    }
-    .lp-app.locked:hover { transform: none; background: transparent; border-color: transparent; }
-    .lp-app.locked .lp-app-icon { filter: grayscale(0.3); }
-
-    .lp-app.locked::after {
-      content: '\f023';
-      font-family: 'Font Awesome 6 Free'; font-weight: 900;
-      position: absolute; top: 0.7rem; right: 0.7rem;
-      font-size: 0.65rem; color: var(--text-muted);
-    }
-
     .lp-empty {
       padding: 2rem 1rem; text-align: center;
       color: var(--text-muted); font-size: 0.82rem;
@@ -285,6 +272,7 @@
     .lp-footer a {
       color: var(--gold-dark); text-decoration: none;
       font-weight: 600; transition: color 0.2s;
+      cursor: pointer;
     }
     .lp-footer a:hover { color: var(--gold); }
 
@@ -293,9 +281,9 @@
        ============================================================ */
     .hero {
       position: relative;
-      min-height: calc(100vh - var(--header-height));
+      min-height: calc(100vh - var(--header-height) - 70px);
       display: flex; align-items: center; justify-content: center;
-      padding: 4rem 2rem;
+      padding: 4rem 2rem 6rem;
       text-align: center;
       overflow: hidden;
       background:
@@ -372,17 +360,6 @@
     }
     .btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
     .btn-lg { padding: 0.95rem 2rem; font-size: 0.95rem; }
-
-    /* ============================================================
-       WELCOME STRIP (signed in)
-       ============================================================ */
-    .welcome-strip {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      z-index: 50;
-      display: none;
-      padding: 0;
-    }
-    .welcome-strip.active { display: block; animation: fadeUp 0.5s ease; }
 
     /* ============================================================
        FOOTER
@@ -670,7 +647,7 @@
       .m365-nav-links { display: none; }
       .m365-avatar-name { display: none; }
       .launcher-panel { right: 1rem; width: calc(100vw - 2rem); }
-      .hero { padding: 3rem 1.25rem; }
+      .hero { padding: 3rem 1.25rem 5rem; }
       .hero h1 { font-size: 2.1rem; }
       .hero-lede { font-size: 1rem; }
       .footer-inner { flex-direction: column; gap: 0.6rem; text-align: center; padding: 0; }
@@ -750,7 +727,7 @@
 
     <div class="lp-footer">
       <span id="launcherFooterText">Sign in to open your apps</span>
-      <a href="#" onclick="openAuthModal(); closeLauncher(); return false;">Sign in</a>
+      <a id="launcherFooterLink" onclick="openAuthModal(); closeLauncher(); return false;">Sign in</a>
     </div>
   </div>
 
@@ -885,11 +862,16 @@
     //   apps/flexikazi/index.html   →  link: 'apps/flexikazi/'
     //   apps/kaskazi/index.html     →  link: 'apps/kaskazi/'
     //
-    // The `permission` key maps to workspacePermissions/{uid}/{permission}.
-    // Set `alwaysVisible: true` to show the app to everyone (signed in
-    // or not) — e.g. FlexiKazi.
+    // Permission model:
+    //   `permission`          → primary permission key checked in
+    //                           workspacePermissions/{uid}
+    //   `fallbackPermission`  → optional. If set, the user also gets
+    //                           access when this key is true. Used for
+    //                           apps that inherit access from another.
     //
-    // To add a new app, just add another entry here.
+    // `alwaysVisible: true`  → shows to everyone (signed in or not)
+    //
+    // To add a new app, just add another entry below.
     // ============================================================
     const APPS = {
       'flexikazi': {
@@ -910,18 +892,19 @@
         link: 'apps/kaskazi/',
         badge: 'New',
         permission: 'kaskazi',
+        fallbackPermission: 'ekazi',   // Anyone with ekazi also gets Kaskazi
         alwaysVisible: false
       }
 
       // ── Add future apps below, e.g.:
-      // 'kusini': {
-      //   name: 'Kusini',
-      //   desc: 'Kusini workspace — coming soon.',
-      //   icon: 'fa-sun',
+      // 'newapp': {
+      //   name: 'New App',
+      //   desc: 'Description here.',
+      //   icon: 'fa-star',
       //   color: '#f59e0b',
-      //   link: 'apps/kusini/',
-      //   badge: null,
-      //   permission: 'kusini',
+      //   link: 'apps/newapp/',
+      //   badge: 'New',
+      //   permission: 'newapp',
       //   alwaysVisible: false
       // }
     };
@@ -981,21 +964,22 @@
       const grid = document.getElementById('launcherGrid');
       const statusEl = document.getElementById('launcherStatus');
       const footerTextEl = document.getElementById('launcherFooterText');
-      const footerLinkEl = document.querySelector('.lp-footer a');
+      const footerLinkEl = document.getElementById('launcherFooterLink');
 
       const signedIn = !!currentUser;
       const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
 
-      // Filter: signed out → only alwaysVisible apps
-      //         signed in  → alwaysVisible OR permission granted
+      // Filter logic:
+      //   Signed out → only alwaysVisible apps
+      //   Signed in  → alwaysVisible OR permission OR fallbackPermission granted
       const visible = apps.filter(app => {
         if (!signedIn) return app.alwaysVisible === true;
         if (app.alwaysVisible) return true;
-        return currentPerms[app.permission] === true;
+        if (currentPerms[app.permission] === true) return true;
+        if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+        return false;
       });
 
-      // Locked (visible to signed-in users but no permission) — we don't
-      // show them at all; instead we show the empty state if none.
       if (visible.length === 0) {
         grid.innerHTML = `
           <div class="lp-empty" style="grid-column: 1 / -1;">
@@ -1005,40 +989,31 @@
           </div>
         `;
       } else {
-        grid.innerHTML = visible.map(app => {
-          const locked = false; // visible only if permitted
-          return `
-            <a href="${app.link}" class="lp-app ${locked ? 'locked' : ''}">
-              ${app.badge ? `<span class="lp-app-badge">${escapeHtml(app.badge)}</span>` : ''}
-              <div class="lp-app-icon" style="background:linear-gradient(135deg, ${app.color}, ${lighten(app.color, 18)}); box-shadow:0 6px 16px ${hexAlpha(app.color, 0.3)};">
-                <i class="fas ${app.icon}"></i>
-              </div>
-              <div>
-                <div class="lp-app-name">${escapeHtml(app.name)}</div>
-                <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
-              </div>
-            </a>
-          `;
-        }).join('');
+        grid.innerHTML = visible.map(app => `
+          <a href="${app.link}" class="lp-app">
+            ${app.badge ? `<span class="lp-app-badge">${escapeHtml(app.badge)}</span>` : ''}
+            <div class="lp-app-icon" style="background:linear-gradient(135deg, ${app.color}, ${lighten(app.color, 18)}); box-shadow:0 6px 16px ${hexAlpha(app.color, 0.3)};">
+              <i class="fas ${app.icon}"></i>
+            </div>
+            <div>
+              <div class="lp-app-name">${escapeHtml(app.name)}</div>
+              <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
+            </div>
+          </a>
+        `).join('');
       }
 
-      // Update status
+      // Update status + footer
       if (signedIn) {
         statusEl.textContent = `${visible.length} app${visible.length !== 1 ? 's' : ''}`;
         footerTextEl.textContent = 'All apps at a glance';
-        if (footerLinkEl) {
-          footerLinkEl.textContent = 'Account settings';
-          footerLinkEl.href = 'account-settings.html';
-          footerLinkEl.onclick = null;
-        }
+        footerLinkEl.textContent = 'Account settings';
+        footerLinkEl.onclick = () => { window.location.href = 'account-settings.html'; };
       } else {
         statusEl.textContent = 'Preview';
         footerTextEl.textContent = 'Sign in to open your apps';
-        if (footerLinkEl) {
-          footerLinkEl.textContent = 'Sign in';
-          footerLinkEl.href = '#';
-          footerLinkEl.onclick = (ev) => { ev.preventDefault(); openAuthModal(); closeLauncher(); };
-        }
+        footerLinkEl.textContent = 'Sign in';
+        footerLinkEl.onclick = (ev) => { ev.preventDefault(); openAuthModal(); closeLauncher(); };
       }
     }
 
@@ -1343,7 +1318,6 @@
       return div.innerHTML;
     }
 
-    // Lighten a hex color by percentage
     function lighten(hex, percent) {
       const num = parseInt(hex.replace('#',''), 16);
       const amt = Math.round(2.55 * percent);
@@ -1353,7 +1327,6 @@
       return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
     }
 
-    // Hex + alpha → rgba string
     function hexAlpha(hex, alpha) {
       const num = parseInt(hex.replace('#',''), 16);
       const R = (num >> 16) & 255;
