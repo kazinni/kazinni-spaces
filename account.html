@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ca8a04">
+  <meta name="color-scheme" content="light">
+  <title>My Account · KazInni Suite</title>
+  <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #ca8a04;
+      --gold-dark: #a16207;
+      --gold-light: #fbbf24;
+      --gold-soft: #fef3c7;
+      --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+      --ink: #0f0f1e;
+      --ink-2: #1a1a2e;
+      --ink-3: #2d2d4a;
+      --success: #10b981;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --text-primary: #0f0f1e;
+      --text-secondary: #4a4a5e;
+      --text-muted: #6b7280;
+      --border-light: #e9ecef;
+      --border-medium: #d1d5db;
+      --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+      --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
+      --shadow-gold: 0 20px 50px rgba(202, 138, 4, 0.22);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --header-height: 64px;
+      --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+      --font-heading: 'Satoshi', 'General Sans', sans-serif;
+      --font-body: 'General Sans', 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: var(--font-body);
+      background: #faf9f7;
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: -0.005em;
+    }
+
+    /* ============================================================
+       TOP NAV (same as suite.html)
+       ============================================================ */
+    .m365-nav {
+      position: sticky; top: 0; z-index: 1000;
+      height: var(--header-height);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(15,15,30,0.06);
+      padding: 0 2rem;
+    }
+    .m365-nav-inner {
+      max-width: 1600px; height: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .m365-left { display: flex; align-items: center; gap: 2.2rem; flex: 1; min-width: 0; }
+    .m365-logo {
+      display: flex; align-items: center; gap: 0.65rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .m365-logo img { height: 34px; width: auto; }
+    .m365-logo-text {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.15rem;
+      color: var(--ink); letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+    .m365-logo-text .accent {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .m365-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .m365-icon-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: transparent; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); font-size: 0.95rem;
+      transition: all 0.2s; position: relative;
+    }
+    .m365-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+
+    .m365-avatar-btn {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+      border-radius: 100px; background: transparent;
+      border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s; font-family: var(--font-body);
+    }
+    .m365-avatar-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+    .m365-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gold-gradient);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.8rem;
+      font-family: var(--font-heading);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .m365-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .m365-avatar-name {
+      font-size: 0.82rem; font-weight: 600; color: var(--ink);
+      max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-family: var(--font-heading);
+    }
+    .m365-avatar-btn .fa-chevron-down {
+      font-size: 0.55rem; color: var(--text-muted);
+      transition: transform 0.25s;
+    }
+    .m365-avatar-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .account-layout {
+      max-width: 1160px; margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    .account-title {
+      margin-bottom: 2rem;
+    }
+    .account-title h1 {
+      font-family: var(--font-display);
+      font-size: 2.1rem; font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .account-title p {
+      color: var(--text-muted); font-size: 0.95rem;
+    }
+
+    /* Profile header card */
+    .profile-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem 2rem 1.8rem;
+      display: flex; align-items: center; gap: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .profile-card::before {
+      content: ''; position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(202,138,4,0.08) 0%, transparent 65%);
+      top: -180px; right: -120px; pointer-events: none;
+    }
+    .profile-avatar-wrap {
+      position: relative; flex-shrink: 0;
+    }
+    .profile-avatar {
+      width: 108px; height: 108px; border-radius: 50%;
+      background: var(--gold-gradient);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 2.4rem;
+      font-family: var(--font-heading);
+      box-shadow: 0 12px 30px rgba(202,138,4,0.28);
+      overflow: hidden;
+    }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-avatar-edit {
+      position: absolute; bottom: 0; right: 0;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--ink); color: white;
+      border: 3px solid white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .profile-avatar-edit:hover { background: var(--gold); transform: scale(1.05); }
+
+    .profile-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
+    .profile-info .profile-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink); margin-bottom: 0.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .profile-info .profile-email {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+    .profile-info .profile-meta {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .profile-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.68rem; font-weight: 700;
+      font-family: var(--font-heading);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 0.22rem 0.65rem; border-radius: 100px;
+    }
+    .profile-badge.verified { background: #d1fae5; color: #065f46; }
+    .profile-badge.gold { background: var(--gold-soft); color: var(--gold-dark); }
+    .profile-badge.neutral { background: #f3f4f6; color: #4b5563; }
+
+    /* Sections grid */
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .account-grid { grid-template-columns: 1fr; }
+    }
+
+    .account-section {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .account-section:hover {
+      border-color: rgba(202,138,4,0.18);
+      box-shadow: 0 8px 24px rgba(15,15,30,0.04);
+    }
+    .section-head {
+      padding: 1.4rem 1.6rem 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .section-head-left {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--gold-soft); color: var(--gold-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; flex-shrink: 0;
+    }
+    .section-head h2 {
+      font-family: var(--font-heading);
+      font-weight: 700; font-size: 1rem;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .section-head .edit-link {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--gold-dark); text-decoration: none;
+      font-family: var(--font-heading);
+      cursor: pointer; transition: color 0.2s;
+      background: none; border: none;
+    }
+    .section-head .edit-link:hover { color: var(--gold); }
+
+    .section-body { padding: 0.5rem 1.6rem 1.4rem; }
+
+    .info-row {
+      display: flex; align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 0.88rem;
+      gap: 1rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label {
+      color: var(--text-muted); min-width: 110px;
+      font-family: var(--font-heading); font-weight: 500;
+      font-size: 0.82rem; flex-shrink: 0;
+    }
+    .info-value {
+      color: var(--text-primary); font-weight: 500;
+      flex: 1; min-width: 0;
+      word-break: break-word;
+    }
+    .info-value.muted { color: var(--text-muted); font-style: italic; }
+
+    /* Quick links list */
+    .quick-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #f3f4f6;
+      text-decoration: none; color: inherit;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .quick-link:last-child { border-bottom: none; }
+    .quick-link:hover .quick-link-title { color: var(--gold-dark); }
+    .quick-link:hover .quick-link-arrow { transform: translateX(3px); color: var(--gold); }
+    .quick-link-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: #faf9f7; color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .quick-link:hover .quick-link-icon {
+      background: var(--gold-soft); color: var(--gold-dark);
+    }
+    .quick-link-body { flex: 1; min-width: 0; }
+    .quick-link-title {
+      font-family: var(--font-heading);
+      font-weight: 600; font-size: 0.92rem;
+      color: var(--ink); transition: color 0.2s;
+      margin-bottom: 0.1rem;
+    }
+    .quick-link-desc {
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+    .quick-link-arrow {
+      color: var(--text-muted); font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    /* Danger zone */
+    .danger-section {
+      grid-column: 1 / -1;
+      background: white;
+      border: 1px solid #fecaca;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .danger-section .section-head {
+      background: #fef2f2;
+      border-bottom-color: #fecaca;
+    }
+    .danger-section .section-icon {
+      background: #fee2e2; color: #991b1b;
+    }
+    .danger-body {
+      padding: 1.4rem 1.6rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+    }
+    .danger-body p {
+      font-size: 0.85rem; color: var(--text-secondary);
+      flex: 1; min-width: 240px;
+      line-height: 1.6;
+    }
+    .btn-danger {
+      padding: 0.65rem 1.4rem;
+      background: #fef2f2; color: #991b1b;
+      border: 1px solid #fecaca;
+      border-radius: 100px;
+      font-weight: 600; font-size: 0.85rem;
+      cursor: pointer; transition: all 0.2s;
+      font-family: var(--font-heading);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .btn-danger:hover {
+      background: #ef4444; color: white; border-color: #ef4444;
+    }
+
+    /* ============================================================
+       USER DROPDOWN
+       ============================================================ */
+    .user-dropdown-wrap { position: relative; }
+    .user-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      width: 320px; background: white;
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
+      border: 1px solid var(--border-light);
+      overflow: hidden; display: none; z-index: 1001;
+      animation: fadeUp 0.2s ease;
+    }
+    .user-dropdown.active { display: block; }
+    .ud-header {
+      padding: 1.1rem 1.2rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center; gap: 0.85rem;
+    }
+    .ud-header .m365-avatar { width: 42px; height: 42px; font-size: 1rem; }
+    .ud-header-info { min-width: 0; flex: 1; }
+    .ud-header-name {
+      font-weight: 700; font-size: 0.92rem;
+      color: var(--ink); font-family: var(--font-heading);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ud-header-email {
+      font-size: 0.75rem; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ud-body { padding: 0.5rem; }
+    .ud-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.9rem; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s;
+      border: none; background: none; width: 100%;
+      text-align: left; font-size: 0.85rem;
+      color: var(--text-secondary); text-decoration: none;
+      font-family: var(--font-body); font-weight: 500;
+    }
+    .ud-item i {
+      width: 18px; font-size: 0.85rem; color: var(--text-muted);
+      transition: color 0.15s;
+    }
+    .ud-item:hover { background: #faf9f7; color: var(--ink); }
+    .ud-item:hover i { color: var(--gold); }
+    .ud-item.active { background: var(--gold-soft); color: var(--gold-dark); }
+    .ud-item.active i { color: var(--gold-dark); }
+    .ud-item.danger { color: var(--danger); }
+    .ud-item.danger i { color: var(--danger); }
+    .ud-item.danger:hover { background: #fef2f2; }
+    .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+    .ud-section-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted);
+      padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+    }
+
+    /* ============================================================
+       TOASTS
+       ============================================================ */
+    .toast-container {
+      position: fixed; top: 80px; right: 24px; z-index: 4000;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--ink); color: white;
+      border-radius: 12px; padding: 0.85rem 1.15rem;
+      box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+      display: flex; align-items: center; gap: 0.65rem;
+      font-family: var(--font-heading); font-size: 0.85rem;
+      animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      max-width: 360px; font-weight: 500;
+      pointer-events: auto;
+    }
+    .toast i { font-size: 0.95rem; }
+    .toast.success i { color: #34d399; }
+    .toast.error i { color: #f87171; }
+    .toast.info i { color: #fbbf24; }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s ease-in-out infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .m365-nav { padding: 0 1rem; }
+      .m365-avatar-name { display: none; }
+      .account-layout { padding: 1.5rem 1rem 4rem; }
+      .profile-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 1.6rem 1.4rem; }
+      .profile-info .profile-name { justify-content: center; }
+      .profile-info .profile-meta { justify-content: center; }
+      .info-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .info-label { min-width: 0; }
+      .danger-body { flex-direction: column; align-items: stretch; }
+      .user-dropdown { width: 280px; right: -8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ============================================================
+       TOP NAV
+       ============================================================ -->
+  <header class="m365-nav">
+    <div class="m365-nav-inner">
+      <div class="m365-left">
+        <a href="index.html" class="m365-logo">
+          <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="KazInni">
+          <span class="m365-logo-text">Kaz<span class="accent">Inni</span></span>
+        </a>
+      </div>
+
+      <div class="m365-right">
+        <button class="m365-icon-btn" title="Search" onclick="showToast('Search coming soon', 'info')">
+          <i class="fas fa-magnifying-glass"></i>
+        </button>
+        <button class="m365-icon-btn" title="Notifications" onclick="showToast('No new notifications', 'info')">
+          <i class="far fa-bell"></i>
+        </button>
+
+        <!-- Auth container -->
+        <div id="headerAuthContainer">
+          <button class="m365-icon-btn" title="Loading…" disabled>
+            <i class="fas fa-circle-notch" style="animation:spin 1s linear infinite;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="account-layout" id="accountLayout" style="display:none;">
+    <div class="account-title">
+      <h1>My account</h1>
+      <p id="accountSubtitle">Manage your profile, security and preferences.</p>
+    </div>
+
+    <!-- Profile header card -->
+    <div class="profile-card">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">--</div>
+        <button class="profile-avatar-edit" title="Change photo" onclick="showToast('Photo upload coming soon', 'info')">
+          <i class="fas fa-camera"></i>
+        </button>
+      </div>
+
+      <div class="profile-info">
+        <div class="profile-name">
+          <span id="profileName">Loading…</span>
+        </div>
+        <div class="profile-email" id="profileEmail">—</div>
+        <div class="profile-meta" id="profileMeta">
+          <!-- Badges injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Sections grid -->
+    <div class="account-grid">
+
+      <!-- Contact info -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-address-card"></i></div>
+            <h2>Contact info</h2>
+          </div>
+          <button class="edit-link" onclick="showToast('Edit coming soon', 'info')">Edit</button>
+        </div>
+        <div class="section-body">
+          <div class="info-row">
+            <div class="info-label">Full name</div>
+            <div class="info-value" id="infoName">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="infoEmail">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Phone</div>
+            <div class="info-value" id="infoPhone">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Zone</div>
+            <div class="info-value" id="infoZone">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Work info -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-briefcase"></i></div>
+            <h2>Work info</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="info-row">
+            <div class="info-label">Role</div>
+            <div class="info-value" id="infoRole">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Category</div>
+            <div class="info-value" id="infoCategory">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Skills</div>
+            <div class="info-value" id="infoSkills">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Bio</div>
+            <div class="info-value" id="infoBio">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account & security -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-shield-halved"></i></div>
+            <h2>Account & security</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <a class="quick-link" onclick="location.href='account-settings.html'">
+            <div class="quick-link-icon"><i class="fas fa-gear"></i></div>
+            <div class="quick-link-body">
+              <div class="quick-link-title">Account settings</div>
+              <div class="quick-link-desc">Password, language, theme & notifications</div>
+            </div>
+            <i class="fas fa-chevron-right quick-link-arrow"></i>
+          </a>
+          <a class="quick-link" onclick="location.href='security.html'">
+            <div class="quick-link-icon"><i class="fas fa-lock"></i></div>
+            <div class="quick-link-body">
+              <div class="quick-link-title">Security & privacy</div>
+              <div class="quick-link-desc">Two-factor auth, sessions & devices</div>
+            </div>
+            <i class="fas fa-chevron-right quick-link-arrow"></i>
+          </a>
+          <a class="quick-link" onclick="sendPasswordReset()">
+            <div class="quick-link-icon"><i class="fas fa-key"></i></div>
+            <div class="quick-link-body">
+              <div class="quick-link-title">Change password</div>
+              <div class="quick-link-desc">Send a password reset link to your email</div>
+            </div>
+            <i class="fas fa-chevron-right quick-link-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Workspaces -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-layer-group"></i></div>
+            <h2>Workspaces</h2>
+          </div>
+        </div>
+        <div class="section-body" id="workspacesBody">
+          <div class="info-row">
+            <div class="info-label" style="min-width:auto;">
+              <span class="skeleton" style="display:inline-block;width:140px;height:0.9rem;"></span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-label" style="min-width:auto;">
+              <span class="skeleton" style="display:inline-block;width:120px;height:0.9rem;"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apps quick links -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-grip"></i></div>
+            <h2>Your apps</h2>
+          </div>
+          <button class="edit-link" onclick="location.href='index.html'">Open launcher</button>
+        </div>
+        <div class="section-body" id="appsBody">
+          <div class="info-row">
+            <div class="info-label" style="min-width:auto;">
+              <span class="skeleton" style="display:inline-block;width:160px;height:0.9rem;"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="account-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-circle-question"></i></div>
+            <h2>Help & support</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <a class="quick-link" href="mailto:operations@kazinni.com">
+            <div class="quick-link-icon"><i class="fas fa-envelope"></i></div>
+            <div class="quick-link-body">
+              <div class="quick-link-title">Contact support</div>
+              <div class="quick-link-desc">operations@kazinni.com</div>
+            </div>
+            <i class="fas fa-chevron-right quick-link-arrow"></i>
+          </a>
+          <a class="quick-link" onclick="showToast('Help center coming soon', 'info')">
+            <div class="quick-link-icon"><i class="fas fa-book"></i></div>
+            <div class="quick-link-body">
+              <div class="quick-link-title">Help center</div>
+              <div class="quick-link-desc">Guides, FAQs and tutorials</div>
+            </div>
+            <i class="fas fa-chevron-right quick-link-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Danger zone -->
+    <div class="danger-section">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <h2>Sign out of your account</h2>
+        </div>
+      </div>
+      <div class="danger-body">
+        <p>
+          Signing out will end your session on this device. You can sign back in anytime
+          with your KazInni credentials.
+        </p>
+        <button class="btn-danger" onclick="handleSignOut()">
+          <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       NOT SIGNED IN STATE
+       ============================================================ -->
+  <div class="account-layout" id="notSignedIn" style="display:none;">
+    <div class="account-title">
+      <h1>My account</h1>
+      <p>Sign in to view your account details.</p>
+    </div>
+
+    <div class="account-section" style="text-align:center; padding: 3rem 2rem;">
+      <div style="width:72px;height:72px;border-radius:20px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.2rem;">
+        <i class="fas fa-user-lock"></i>
+      </div>
+      <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);margin-bottom:0.5rem;">
+        You're not signed in
+      </h2>
+      <p style="color:var(--text-muted);font-size:0.92rem;max-width:420px;margin:0 auto 1.6rem;line-height:1.6;">
+        Sign in with your KazInni account to view your profile and manage your account.
+      </p>
+      <button class="btn-danger" style="background:var(--ink);color:white;border-color:var(--ink);" onclick="location.href='index.html'">
+        <i class="fas fa-arrow-right-to-bracket"></i> Go to sign in
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // FIREBASE
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+      authDomain: "mugera-e51cc.firebaseapp.com",
+      databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "mugera-e51cc"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    // ============================================================
+    // APP CONFIG (same as suite.html — used to render "Your apps")
+    // ============================================================
+    const APPS = {
+      'flexikazi': {
+        name: 'FlexiKazi',
+        icon: 'fa-list-check',
+        color: '#059669',
+        link: 'apps/flexikazi/',
+        permission: 'ekazi',
+        alwaysVisible: true
+      },
+      'kasikazi': {
+        name: 'Kasikazi',
+        icon: 'fa-compass',
+        color: '#0891b2',
+        link: 'apps/kasikazi/',
+        permission: 'kasikazi',
+        fallbackPermission: 'ekazi',
+        alwaysVisible: false
+      }
+    };
+
+    const WORKSPACE_LABELS = {
+      brandinn: 'BrandInn',
+      'brandinn-print': 'BrandInn Print',
+      dsog: 'DSOG Fashion',
+      'fusion-foods': 'Fusion Foods',
+      'mugs-n-dines': 'Mugs n Dines',
+      heritage: 'Heritage Ads',
+      'heritage-marketplace': 'Heritage Marketplace',
+      'heritage-interiors': 'Heritage Interiors',
+      'digital-services': 'E-Huduma',
+      'pick-up': 'Pick-Up Deliveries',
+      'pick-me': 'Pick-Me Rides',
+      workfit: 'WorkFit',
+      epitome: 'Epitome Reviews',
+      'latter-logistics': 'Latter Logistics',
+      ekazi: 'FlexiKazi',
+      kaskazi: 'Kasikazi'
+    };
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let currentUser = null;
+    let currentTasker = null;
+    let currentPerms = {};
+
+    // ============================================================
+    // TOAST
+    // ============================================================
+    function showToast(msg, type = 'success') {
+      const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas ${icons[type]}"></i> <span>${escapeHtml(msg)}</span>`;
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = '0.35s';
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+
+    // ============================================================
+    // AUTH FLOW
+    // ============================================================
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        currentUser = null;
+        currentTasker = null;
+        currentPerms = {};
+        showSignedOut();
+        return;
+      }
+
+      // Verify tasker
+      try {
+        const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
+        if (!taskerSnap.exists()) {
+          await auth.signOut();
+          showToast('This account is not registered on KazInni.', 'error');
+          return;
+        }
+        currentTasker = taskerSnap.val();
+        if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
+          await auth.signOut();
+          showToast('Your KazInni account is pending verification.', 'error');
+          return;
+        }
+      } catch (e) {
+        console.error('Tasker verification failed:', e);
+        await auth.signOut();
+        showToast('Could not verify your KazInni account.', 'error');
+        return;
+      }
+
+      // Load permissions
+      try {
+        const permsSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+        currentPerms = permsSnap.exists() ? permsSnap.val() : {};
+      } catch (e) {
+        currentPerms = {};
+      }
+
+      currentUser = user;
+      renderSignedIn();
+    });
+
+    // ============================================================
+    // RENDERING
+    // ============================================================
+    function showSignedOut() {
+      document.getElementById('accountLayout').style.display = 'none';
+      document.getElementById('notSignedIn').style.display = 'block';
+
+      const container = document.getElementById('headerAuthContainer');
+      container.innerHTML = `
+        <button class="btn-danger" style="background:var(--ink);color:white;border-color:var(--ink);padding:0.55rem 1.2rem;font-size:0.82rem;" onclick="location.href='index.html'">
+          <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+        </button>
+      `;
+    }
+
+    function renderSignedIn() {
+      document.getElementById('accountLayout').style.display = 'block';
+      document.getElementById('notSignedIn').style.display = 'none';
+
+      renderHeaderAvatar();
+      renderProfileCard();
+      renderContactInfo();
+      renderWorkInfo();
+      renderWorkspaces();
+      renderApps();
+    }
+
+    function renderHeaderAvatar() {
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || 'User';
+      const initials = displayName
+        .split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+      const email = user.email || '';
+
+      const container = document.getElementById('headerAuthContainer');
+      container.innerHTML = `
+        <div class="user-dropdown-wrap" id="userMenuWrap">
+          <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
+            <div class="m365-avatar">${initials}</div>
+            <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+
+          <div class="user-dropdown" id="userDropdown">
+            <div class="ud-header">
+              <div class="m365-avatar">${initials}</div>
+              <div class="ud-header-info">
+                <div class="ud-header-name">${escapeHtml(displayName)}</div>
+                <div class="ud-header-email">${escapeHtml(email)}</div>
+              </div>
+            </div>
+
+            <div class="ud-body">
+              <div class="ud-section-label">Account</div>
+              <a href="account.html" class="ud-item active">
+                <i class="fas fa-user"></i> My account
+              </a>
+              <a href="account-settings.html" class="ud-item">
+                <i class="fas fa-gear"></i> Account settings
+              </a>
+              <a href="security.html" class="ud-item">
+                <i class="fas fa-shield-halved"></i> Security & privacy
+              </a>
+
+              <div class="ud-divider"></div>
+              <div class="ud-section-label">Apps</div>
+              <a href="apps/flexikazi/" class="ud-item">
+                <i class="fas fa-list-check"></i> FlexiKazi
+              </a>
+              <a href="apps/kasikazi/" class="ud-item">
+                <i class="fas fa-compass"></i> Kasikazi
+              </a>
+
+              <div class="ud-divider"></div>
+              <button class="ud-item danger" onclick="handleSignOut()">
+                <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProfileCard() {
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || 'User';
+      const initials = displayName
+        .split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+
+      const avatarEl = document.getElementById('profileAvatar');
+      if (tasker.photoURL || user.photoURL) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(tasker.photoURL || user.photoURL)}" alt="">`;
+      } else {
+        avatarEl.textContent = initials;
+      }
+
+      document.getElementById('profileName').textContent = displayName;
+      document.getElementById('profileEmail').textContent = user.email || '—';
+
+      // Meta badges
+      const metaEl = document.getElementById('profileMeta');
+      const badges = [];
+
+      if (tasker.verified === true || tasker.status === 'verified') {
+        badges.push(`<span class="profile-badge verified"><i class="fas fa-circle-check"></i> Verified</span>`);
+      } else {
+        badges.push(`<span class="profile-badge neutral"><i class="fas fa-clock"></i> Pending</span>`);
+      }
+
+      if (tasker.category) {
+        badges.push(`<span class="profile-badge gold"><i class="fas fa-briefcase"></i> ${escapeHtml(tasker.category)}</span>`);
+      }
+
+      if (tasker.zone) {
+        badges.push(`<span class="profile-badge neutral"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(tasker.zone)}</span>`);
+      }
+
+      metaEl.innerHTML = badges.join('');
+    }
+
+    function renderContactInfo() {
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || '—';
+
+      document.getElementById('infoName').textContent = displayName;
+      document.getElementById('infoEmail').textContent = user.email || '—';
+
+      const phone = tasker.phone || tasker.payoutPhone;
+      const phoneEl = document.getElementById('infoPhone');
+      if (phone) {
+        phoneEl.textContent = phone;
+      } else {
+        phoneEl.textContent = 'Add a phone number';
+        phoneEl.classList.add('muted');
+      }
+
+      const zone = tasker.zone;
+      const zoneEl = document.getElementById('infoZone');
+      if (zone) {
+        zoneEl.textContent = zone;
+      } else {
+        zoneEl.textContent = 'Not set';
+        zoneEl.classList.add('muted');
+      }
+    }
+
+    function renderWorkInfo() {
+      const tasker = currentTasker;
+
+      document.getElementById('infoRole').textContent =
+        tasker.status === 'verified' ? 'Verified KazInni member' : 'KazInni member';
+
+      const catEl = document.getElementById('infoCategory');
+      if (tasker.category) {
+        catEl.textContent = tasker.category;
+      } else {
+        catEl.textContent = 'Not set';
+        catEl.classList.add('muted');
+      }
+
+      const skillsEl = document.getElementById('infoSkills');
+      if (Array.isArray(tasker.skills) && tasker.skills.length > 0) {
+        skillsEl.textContent = tasker.skills.join(', ');
+      } else if (typeof tasker.skills === 'string' && tasker.skills) {
+        skillsEl.textContent = tasker.skills;
+      } else {
+        skillsEl.textContent = 'No skills listed';
+        skillsEl.classList.add('muted');
+      }
+
+      const bioEl = document.getElementById('infoBio');
+      if (tasker.bio) {
+        bioEl.textContent = tasker.bio;
+      } else {
+        bioEl.textContent = 'No bio yet';
+        bioEl.classList.add('muted');
+      }
+    }
+
+    function renderWorkspaces() {
+      const body = document.getElementById('workspacesBody');
+      const keys = Object.keys(currentPerms).filter(k => currentPerms[k] === true && WORKSPACE_LABELS[k]);
+
+      if (keys.length === 0) {
+        body.innerHTML = `
+          <div class="info-row">
+            <div class="info-value muted">No workspaces granted yet. Contact your KazInni administrator.</div>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = keys.map(k => `
+        <div class="info-row">
+          <div class="info-label">
+            <i class="fas fa-check-circle" style="color:var(--success);font-size:0.75rem;margin-right:0.3rem;"></i>
+            ${escapeHtml(WORKSPACE_LABELS[k])}
+          </div>
+          <div class="info-value" style="text-align:right;color:var(--success);font-size:0.8rem;font-weight:600;">Active</div>
+        </div>
+      `).join('');
+    }
+
+    function renderApps() {
+      const body = document.getElementById('appsBody');
+      const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
+
+      const visible = apps.filter(app => {
+        if (app.alwaysVisible) return true;
+        if (currentPerms[app.permission] === true) return true;
+        if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+        return false;
+      });
+
+      if (visible.length === 0) {
+        body.innerHTML = `
+          <div class="info-row">
+            <div class="info-value muted">No apps available. Contact your KazInni administrator.</div>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = visible.map(app => `
+        <a class="quick-link" href="${app.link}">
+          <div class="quick-link-icon" style="background:${hexAlpha(app.color, 0.12)};color:${app.color};">
+            <i class="fas ${app.icon}"></i>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">${escapeHtml(app.name)}</div>
+            <div class="quick-link-desc">Open app</div>
+          </div>
+          <i class="fas fa-chevron-right quick-link-arrow"></i>
+        </a>
+      `).join('');
+    }
+
+    // ============================================================
+    // USER MENU
+    // ============================================================
+    function toggleUserDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('userDropdown');
+      const btn = document.getElementById('userMenuBtn');
+      if (!menu) return;
+      menu.classList.toggle('active');
+      if (btn) btn.classList.toggle('active');
+    }
+
+    function closeUserDropdown() {
+      const menu = document.getElementById('userDropdown');
+      const btn = document.getElementById('userMenuBtn');
+      if (menu) menu.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      const wrap = document.getElementById('userMenuWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        closeUserDropdown();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeUserDropdown();
+    });
+
+    // ============================================================
+    // ACTIONS
+    // ============================================================
+    async function handleSignOut() {
+      try {
+        await auth.signOut();
+        showToast('Signed out successfully', 'info');
+        setTimeout(() => { window.location.href = 'index.html'; }, 500);
+      } catch (err) {
+        console.error('Sign out error:', err);
+        showToast('Error signing out', 'error');
+      }
+    }
+
+    async function sendPasswordReset() {
+      if (!currentUser || !currentUser.email) return;
+      try {
+        await auth.sendPasswordResetEmail(currentUser.email);
+        showToast('Password reset link sent to your email', 'success');
+      } catch (err) {
+        console.error('Reset error:', err);
+        showToast('Could not send reset link. Try again later.', 'error');
+      }
+    }
+
+    // ============================================================
+    // UTILS
+    // ============================================================
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return '';
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    }
+
+    function hexAlpha(hex, alpha) {
+      const num = parseInt(hex.replace('#',''), 16);
+      const R = (num >> 16) & 255;
+      const G = (num >> 8) & 255;
+      const B = num & 255;
+      return `rgba(${R}, ${G}, ${B}, ${alpha})`;
+    }
+  </script>
+</body>
+</html>
