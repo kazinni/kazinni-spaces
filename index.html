@@ -744,7 +744,7 @@
         Welcome to <span class="accent">KazInni Suite</span>
       </h1>
       <p class="hero-lede" id="heroLede">
-        Sign in with your KazInni account to access FlexiKazi, Kaskazi and every
+        Sign in with your KazInni account to access FlexiKazi, Kasikazi and every
         app you've been granted. One login, all your workspaces.
       </p>
       <div class="hero-cta" id="heroCta">
@@ -860,7 +860,7 @@
     // ------------------------------------------------------------
     // Each app lives in its own folder:
     //   apps/flexikazi/index.html   →  link: 'apps/flexikazi/'
-    //   apps/kaskazi/index.html     →  link: 'apps/kaskazi/'
+    //   apps/kasikazi/index.html     →  link: 'apps/kasikazi/'
     //
     // Permission model:
     //   `permission`          → primary permission key checked in
@@ -884,15 +884,15 @@
         permission: 'ekazi',
         alwaysVisible: true
       },
-      'kaskazi': {
-        name: 'Kaskazi',
-        desc: 'Kaskazi workspace — operations and coordination hub.',
+      'kasikazi': {
+        name: 'Kasikazi',
+        desc: 'Kasikazi workspace — operations and coordination hub.',
         icon: 'fa-compass',
         color: '#0891b2',
-        link: 'apps/kaskazi/',
+        link: 'apps/kasikazi/',
         badge: 'New',
-        permission: 'kaskazi',
-        fallbackPermission: 'ekazi',   // Anyone with ekazi also gets Kaskazi
+        permission: 'kasikazi',
+        fallbackPermission: 'ekazi',   // Anyone with ekazi also gets Kasikazi
         alwaysVisible: false
       }
 
@@ -1119,7 +1119,7 @@
         </button>
       `;
       document.getElementById('heroLede').textContent =
-        "Sign in with your KazInni account to access FlexiKazi, Kaskazi and every app you've been granted. One login, all your workspaces.";
+        "Sign in with your KazInni account to access FlexiKazi, Kasikazi and every app you've been granted. One login, all your workspaces.";
     }
 
     function renderSignedIn(user, tasker) {
@@ -1163,8 +1163,8 @@
               <a href="apps/flexikazi/" class="ud-item">
                 <i class="fas fa-list-check"></i> FlexiKazi
               </a>
-              <a href="apps/kaskazi/" class="ud-item">
-                <i class="fas fa-compass"></i> Kaskazi
+              <a href="apps/kasikazi/" class="ud-item">
+                <i class="fas fa-compass"></i> Kasikazi
               </a>
 
               <div class="ud-divider"></div>
