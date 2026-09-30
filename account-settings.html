@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ca8a04">
+  <meta name="color-scheme" content="light">
+  <title>Account Settings · KazInni Suite</title>
+  <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #ca8a04;
+      --gold-dark: #a16207;
+      --gold-light: #fbbf24;
+      --gold-soft: #fef3c7;
+      --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+      --ink: #0f0f1e;
+      --ink-2: #1a1a2e;
+      --ink-3: #2d2d4a;
+      --success: #10b981;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --text-primary: #0f0f1e;
+      --text-secondary: #4a4a5e;
+      --text-muted: #6b7280;
+      --border-light: #e9ecef;
+      --border-medium: #d1d5db;
+      --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+      --shadow-gold-soft: 0 10px 30px rgba(202, 138, 4, 0.12);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --header-height: 64px;
+      --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+      --font-heading: 'Satoshi', 'General Sans', sans-serif;
+      --font-body: 'General Sans', 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: var(--font-body);
+      background: #faf9f7;
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: -0.005em;
+    }
+
+    /* ============================================================
+       TOP NAV
+       ============================================================ */
+    .m365-nav {
+      position: sticky; top: 0; z-index: 1000;
+      height: var(--header-height);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(15,15,30,0.06);
+      padding: 0 2rem;
+    }
+    .m365-nav-inner {
+      max-width: 1600px; height: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .m365-left { display: flex; align-items: center; gap: 2.2rem; flex: 1; min-width: 0; }
+    .m365-logo {
+      display: flex; align-items: center; gap: 0.65rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .m365-logo img { height: 34px; width: auto; }
+    .m365-logo-text {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.15rem;
+      color: var(--ink); letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+    .m365-logo-text .accent {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .m365-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .m365-icon-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: transparent; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); font-size: 0.95rem;
+      transition: all 0.2s; position: relative;
+    }
+    .m365-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+
+    .m365-avatar-btn {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+      border-radius: 100px; background: transparent;
+      border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s; font-family: var(--font-body);
+    }
+    .m365-avatar-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+    .m365-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gold-gradient);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.8rem;
+      font-family: var(--font-heading);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .m365-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .m365-avatar-name {
+      font-size: 0.82rem; font-weight: 600; color: var(--ink);
+      max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-family: var(--font-heading);
+    }
+    .m365-avatar-btn .fa-chevron-down {
+      font-size: 0.55rem; color: var(--text-muted);
+      transition: transform 0.25s;
+    }
+    .m365-avatar-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .settings-layout {
+      max-width: 1100px; margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    .settings-title {
+      margin-bottom: 2rem;
+    }
+    .settings-title h1 {
+      font-family: var(--font-display);
+      font-size: 2.1rem; font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .settings-title p {
+      color: var(--text-muted); font-size: 0.95rem;
+    }
+
+    /* Tabs */
+    .settings-tabs {
+      display: flex; gap: 0.3rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .settings-tab {
+      padding: 0.75rem 1.1rem;
+      background: none; border: none;
+      font-family: var(--font-heading);
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--text-muted); cursor: pointer;
+      transition: all 0.2s;
+      position: relative; border-radius: 8px 8px 0 0;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .settings-tab:hover { color: var(--ink); background: rgba(15,15,30,0.03); }
+    .settings-tab.active { color: var(--gold-dark); }
+    .settings-tab.active::after {
+      content: ''; position: absolute;
+      left: 1.1rem; right: 1.1rem; bottom: -1px;
+      height: 3px; background: var(--gold-gradient); border-radius: 3px 3px 0 0;
+    }
+    .settings-tab i { font-size: 0.8rem; }
+
+    /* Tab panels */
+    .settings-panel { display: none; }
+    .settings-panel.active { display: block; animation: fadeUp 0.35s ease; }
+
+    /* Section card */
+    .settings-section {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 18px;
+      padding: 1.6rem 1.8rem 1.4rem;
+      margin-bottom: 1.2rem;
+      transition: all 0.25s;
+    }
+    .settings-section:hover {
+      border-color: rgba(202,138,4,0.18);
+      box-shadow: 0 8px 24px rgba(15,15,30,0.04);
+    }
+
+    .settings-section-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .settings-section-head h2 {
+      font-family: var(--font-heading);
+      font-size: 1rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.01em;
+      margin-bottom: 0.2rem;
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .settings-section-head h2 i {
+      color: var(--gold); font-size: 0.9rem;
+    }
+    .settings-section-head p {
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+
+    /* Setting rows */
+    .setting-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #f3f4f6;
+      gap: 1.5rem;
+    }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-row.no-border { border-bottom: none; }
+    .setting-label {
+      flex: 1; min-width: 0;
+    }
+    .setting-label .title {
+      font-family: var(--font-heading);
+      font-weight: 600; font-size: 0.9rem;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+    }
+    .setting-label .desc {
+      font-size: 0.78rem; color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .setting-control { flex-shrink: 0; }
+
+    /* Toggle switch */
+    .toggle {
+      position: relative; display: inline-block;
+      width: 44px; height: 24px;
+      cursor: pointer;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: #d1d5db;
+      border-radius: 100px;
+      transition: all 0.3s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; left: 3px; top: 3px;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .toggle input:checked + .toggle-slider {
+      background: var(--gold);
+    }
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(20px);
+    }
+    .toggle input:disabled + .toggle-slider {
+      opacity: 0.5; cursor: not-allowed;
+    }
+
+    /* Select */
+    .select-control {
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      background: white;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 180px;
+    }
+    .select-control:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(202,138,4,0.08);
+    }
+
+    /* Text control */
+    .text-control {
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      background: white;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      min-width: 220px;
+    }
+    .text-control:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(202,138,4,0.08);
+    }
+
+    /* Theme picker */
+    .theme-options {
+      display: flex; gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .theme-option {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.4rem;
+      cursor: pointer; padding: 0.5rem;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      background: none;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+    }
+    .theme-option:hover { background: #faf9f7; }
+    .theme-option.active {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+    }
+    .theme-swatch {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .theme-option .theme-label {
+      font-size: 0.72rem; font-weight: 600;
+      font-family: var(--font-heading);
+    }
+
+    /* Accent color picker */
+    .accent-options {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .accent-option {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .accent-option:hover { transform: scale(1.08); }
+    .accent-option.active {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(15,15,30,0.08);
+    }
+    .accent-option.active::after {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free'; font-weight: 900;
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.75rem;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Font size */
+    .font-size-options {
+      display: flex; gap: 0.4rem;
+    }
+    .font-size-option {
+      padding: 0.5rem 1rem;
+      background: #faf9f7;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+    .font-size-option:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .font-size-option.active {
+      background: var(--gold-gradient);
+      color: white; border-color: transparent;
+      box-shadow: var(--shadow-gold-soft);
+    }
+    .font-size-option.small { font-size: 0.75rem; }
+    .font-size-option.medium { font-size: 0.85rem; }
+    .font-size-option.large { font-size: 0.95rem; }
+
+    /* Buttons */
+    .btn {
+      padding: 0.65rem 1.4rem; border: none; border-radius: 100px;
+      font-weight: 600; font-size: 0.85rem; cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-heading);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--ink); color: white;
+      box-shadow: 0 4px 14px rgba(15,15,30,0.15);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold-gradient);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .btn-primary > * { position: relative; z-index: 1; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(202,138,4,0.35); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--border-medium);
+    }
+    .btn-outline:hover { border-color: var(--ink); background: var(--ink); color: white; }
+
+    .btn-danger {
+      background: #fef2f2; color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .btn-danger:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.78rem; }
+
+    /* Save bar */
+    .save-bar {
+      position: sticky; bottom: 1.5rem;
+      margin-top: 2rem;
+      background: var(--ink); color: white;
+      border-radius: 100px;
+      padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+      display: none;
+      align-items: center; justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 20px 40px rgba(15,15,30,0.25);
+      z-index: 100;
+      animation: fadeUp 0.3s ease;
+    }
+    .save-bar.active { display: flex; }
+    .save-bar-text {
+      font-family: var(--font-heading);
+      font-size: 0.85rem; font-weight: 500;
+    }
+    .save-bar-text strong { color: var(--gold-light); }
+    .save-bar-actions {
+      display: flex; gap: 0.5rem;
+    }
+    .btn-save {
+      padding: 0.55rem 1.3rem;
+      background: var(--gold-gradient); color: white;
+      border: none; border-radius: 100px;
+      font-family: var(--font-heading); font-weight: 700;
+      font-size: 0.82rem; cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-save:hover { box-shadow: 0 10px 24px rgba(202,138,4,0.4); }
+    .btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-discard {
+      padding: 0.55rem 1rem;
+      background: rgba(255,255,255,0.08); color: white;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      font-family: var(--font-heading); font-weight: 600;
+      font-size: 0.82rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-discard:hover { background: rgba(255,255,255,0.15); }
+
+    /* ============================================================
+       USER DROPDOWN (same as account.html)
+       ============================================================ */
+    .user-dropdown-wrap { position: relative; }
+    .user-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      width: 320px; background: white;
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
+      border: 1px solid var(--border-light);
+      overflow: hidden; display: none; z-index: 1001;
+      animation: fadeUp 0.2s ease;
+    }
+    .user-dropdown.active { display: block; }
+    .ud-header {
+      padding: 1.1rem 1.2rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center; gap: 0.85rem;
+    }
+    .ud-header .m365-avatar { width: 42px; height: 42px; font-size: 1rem; }
+    .ud-header-info { min-width: 0; flex: 1; }
+    .ud-header-name {
+      font-weight: 700; font-size: 0.92rem;
+      color: var(--ink); font-family: var(--font-heading);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ud-header-email {
+      font-size: 0.75rem; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ud-body { padding: 0.5rem; }
+    .ud-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.9rem; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s;
+      border: none; background: none; width: 100%;
+      text-align: left; font-size: 0.85rem;
+      color: var(--text-secondary); text-decoration: none;
+      font-family: var(--font-body); font-weight: 500;
+    }
+    .ud-item i {
+      width: 18px; font-size: 0.85rem; color: var(--text-muted);
+      transition: color 0.15s;
+    }
+    .ud-item:hover { background: #faf9f7; color: var(--ink); }
+    .ud-item:hover i { color: var(--gold); }
+    .ud-item.active { background: var(--gold-soft); color: var(--gold-dark); }
+    .ud-item.active i { color: var(--gold-dark); }
+    .ud-item.danger { color: var(--danger); }
+    .ud-item.danger i { color: var(--danger); }
+    .ud-item.danger:hover { background: #fef2f2; }
+    .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+    .ud-section-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted);
+      padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+    }
+
+    /* ============================================================
+       TOASTS
+       ============================================================ */
+    .toast-container {
+      position: fixed; top: 80px; right: 24px; z-index: 4000;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--ink); color: white;
+      border-radius: 12px; padding: 0.85rem 1.15rem;
+      box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+      display: flex; align-items: center; gap: 0.65rem;
+      font-family: var(--font-heading); font-size: 0.85rem;
+      animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      max-width: 360px; font-weight: 500;
+      pointer-events: auto;
+    }
+    .toast i { font-size: 0.95rem; }
+    .toast.success i { color: #34d399; }
+    .toast.error i { color: #f87171; }
+    .toast.info i { color: #fbbf24; }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .m365-nav { padding: 0 1rem; }
+      .m365-avatar-name { display: none; }
+      .settings-layout { padding: 1.5rem 1rem 4rem; }
+      .setting-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+      }
+      .setting-control { align-self: flex-start; }
+      .select-control, .text-control { min-width: 100%; }
+      .settings-tabs { gap: 0.15rem; }
+      .settings-tab { padding: 0.6rem 0.85rem; font-size: 0.78rem; }
+      .settings-tab i { display: none; }
+      .user-dropdown { width: 280px; right: -8px; }
+      .save-bar {
+        left: 1rem; right: 1rem;
+        padding: 0.6rem 0.6rem 0.6rem 1rem;
+      }
+      .save-bar-text { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ============================================================
+       TOP NAV
+       ============================================================ -->
+  <header class="m365-nav">
+    <div class="m365-nav-inner">
+      <div class="m365-left">
+        <a href="index.html" class="m365-logo">
+          <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="KazInni">
+          <span class="m365-logo-text">Kaz<span class="accent">Inni</span></span>
+        </a>
+      </div>
+
+      <div class="m365-right">
+        <button class="m365-icon-btn" title="Search" onclick="showToast('Search coming soon', 'info')">
+          <i class="fas fa-magnifying-glass"></i>
+        </button>
+        <button class="m365-icon-btn" title="Notifications" onclick="showToast('No new notifications', 'info')">
+          <i class="far fa-bell"></i>
+        </button>
+
+        <div id="headerAuthContainer">
+          <button class="m365-icon-btn" title="Loading…" disabled>
+            <i class="fas fa-circle-notch" style="animation:spin 1s linear infinite;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="settings-layout" id="settingsLayout" style="display:none;">
+    <div class="settings-title">
+      <h1>Account settings</h1>
+      <p id="settingsSubtitle">Manage your account preferences.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="settings-tabs">
+      <button class="settings-tab active" data-tab="general">
+        <i class="fas fa-sliders"></i> General
+      </button>
+      <button class="settings-tab" data-tab="appearance">
+        <i class="fas fa-palette"></i> Appearance
+      </button>
+      <button class="settings-tab" data-tab="notifications">
+        <i class="fas fa-bell"></i> Notifications
+      </button>
+      <button class="settings-tab" data-tab="security">
+        <i class="fas fa-shield-halved"></i> Privacy & security
+      </button>
+      <button class="settings-tab" data-tab="language">
+        <i class="fas fa-globe"></i> Language & region
+      </button>
+    </div>
+
+    <!-- GENERAL -->
+    <div class="settings-panel active" data-panel="general">
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-user"></i> Profile</h2>
+            <p>Basic information visible across KazInni apps.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Display name</div>
+            <div class="desc">This is how your name appears to others.</div>
+          </div>
+          <div class="setting-control">
+            <input type="text" class="text-control" id="displayNameInput" placeholder="Your name">
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Email</div>
+            <div class="desc">Your KazInni sign-in email. Contact support to change.</div>
+          </div>
+          <div class="setting-control">
+            <input type="text" class="text-control" id="emailInput" disabled>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Phone</div>
+            <div class="desc">Used for notifications and payouts.</div>
+          </div>
+          <div class="setting-control">
+            <input type="text" class="text-control" id="phoneInput" placeholder="Add phone number">
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-briefcase"></i> Work info</h2>
+            <p>Your role and skills across KazInni.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Category</div>
+            <div class="desc">Primary area of work.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="categorySelect">
+              <option value="">Select category</option>
+              <option>Content Writing</option>
+              <option>Graphic Design</option>
+              <option>Data Entry</option>
+              <option>Social Media</option>
+              <option>Web Development</option>
+              <option>Virtual Assistant</option>
+              <option>Video Editing</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Bio</div>
+            <div class="desc">Short description about yourself.</div>
+          </div>
+          <div class="setting-control">
+            <input type="text" class="text-control" id="bioInput" placeholder="Short bio">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPEARANCE -->
+    <div class="settings-panel" data-panel="appearance">
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-sun"></i> Theme</h2>
+            <p>Choose how KazInni looks on your device.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Color mode</div>
+            <div class="desc">Light, dark or match your system.</div>
+          </div>
+          <div class="setting-control">
+            <div class="theme-options" id="themeOptions">
+              <button class="theme-option active" data-theme="light">
+                <div class="theme-swatch" style="background:#faf9f7;color:#0f0f1e;border:1px solid #e9ecef;">
+                  <i class="fas fa-sun"></i>
+                </div>
+                <span class="theme-label">Light</span>
+              </button>
+              <button class="theme-option" data-theme="dark">
+                <div class="theme-swatch" style="background:#0f0f1e;color:white;">
+                  <i class="fas fa-moon"></i>
+                </div>
+                <span class="theme-label">Dark</span>
+              </button>
+              <button class="theme-option" data-theme="system">
+                <div class="theme-swatch" style="background:linear-gradient(135deg,#faf9f7 50%,#0f0f1e 50%);color:var(--gold);">
+                  <i class="fas fa-circle-half-stroke"></i>
+                </div>
+                <span class="theme-label">System</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Accent color</div>
+            <div class="desc">Used for buttons, links and highlights.</div>
+          </div>
+          <div class="setting-control">
+            <div class="accent-options" id="accentOptions">
+              <button class="accent-option active" data-accent="#ca8a04" style="background:#ca8a04;" title="Gold"></button>
+              <button class="accent-option" data-accent="#0891b2" style="background:#0891b2;" title="Teal"></button>
+              <button class="accent-option" data-accent="#059669" style="background:#059669;" title="Green"></button>
+              <button class="accent-option" data-accent="#4f46e5" style="background:#4f46e5;" title="Indigo"></button>
+              <button class="accent-option" data-accent="#ec4899" style="background:#ec4899;" title="Pink"></button>
+              <button class="accent-option" data-accent="#dc2626" style="background:#dc2626;" title="Red"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-font"></i> Typography</h2>
+            <p>Adjust text size for readability.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Font size</div>
+            <div class="desc">Applies to all KazInni apps on this device.</div>
+          </div>
+          <div class="setting-control">
+            <div class="font-size-options" id="fontSizeOptions">
+              <button class="font-size-option small" data-size="small">Small</button>
+              <button class="font-size-option medium active" data-size="medium">Medium</button>
+              <button class="font-size-option large" data-size="large">Large</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="settings-panel" data-panel="notifications">
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-bell"></i> Notifications</h2>
+            <p>Control what updates you receive.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Email notifications</div>
+            <div class="desc">Receive updates and announcements by email.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefEmail" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Push notifications</div>
+            <div class="desc">Get notified on this device for new tasks and updates.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefPush" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Sound alerts</div>
+            <div class="desc">Play a sound for new notifications.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefSound">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Weekly digest</div>
+            <div class="desc">Receive a weekly summary of your KazInni activity.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefDigest" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-grip"></i> App-specific alerts</h2>
+            <p>Notifications for individual KazInni apps.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">FlexiKazi task alerts</div>
+            <div class="desc">New tasks, revisions and approvals.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefFlexikazi" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Kasikazi workspace alerts</div>
+            <div class="desc">Updates from your Kasikazi workspace.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefKasikazi" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIVACY & SECURITY -->
+    <div class="settings-panel" data-panel="security">
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-lock"></i> Password</h2>
+            <p>Change your account password securely.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Change password</div>
+            <div class="desc">We'll send a secure reset link to your email.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn btn-outline btn-sm" onclick="sendPasswordReset()">
+              <i class="fas fa-key"></i> Send reset link
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-shield-halved"></i> Security</h2>
+            <p>Keep your account protected.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Two-factor authentication</div>
+            <div class="desc">Add an extra layer of security to your account.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="pref2FA">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Active sessions</div>
+            <div class="desc">Manage devices signed into your account.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn btn-outline btn-sm" onclick="showToast('Session manager coming soon', 'info')">
+              <i class="fas fa-desktop"></i> View sessions
+            </button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Sign out everywhere</div>
+            <div class="desc">Sign out of all devices except this one.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn btn-danger btn-sm" onclick="showToast('Sign out everywhere coming soon', 'info')">
+              <i class="fas fa-power-off"></i> Sign out all
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-eye"></i> Privacy</h2>
+            <p>Control what others can see.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Profile visibility</div>
+            <div class="desc">Who can see your profile details.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="privacyVisibility">
+              <option>Only me</option>
+              <option>KazInni team</option>
+              <option selected>Everyone on KazInni</option>
+            </select>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Show my online status</div>
+            <div class="desc">Let others see when you're active.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="prefOnline" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANGUAGE & REGION -->
+    <div class="settings-panel" data-panel="language">
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-globe"></i> Language</h2>
+            <p>Choose your preferred language.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Display language</div>
+            <div class="desc">Applies across all KazInni apps.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="langSelect">
+              <option selected>English</option>
+              <option>Kiswahili</option>
+              <option>Français</option>
+              <option>Español</option>
+              <option>العربية</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div>
+            <h2><i class="fas fa-map-location-dot"></i> Region</h2>
+            <p>Adjust timezone and date format.</p>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Timezone</div>
+            <div class="desc">Used for scheduling and events.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="timezoneSelect">
+              <option selected>Africa/Nairobi (EAT)</option>
+              <option>Africa/Kampala</option>
+              <option>Africa/Dar es Salaam</option>
+              <option>Africa/Kigali</option>
+              <option>UTC</option>
+            </select>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Date format</div>
+            <div class="desc">How dates appear throughout KazInni.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="dateFormatSelect">
+              <option selected>DD MMM YYYY (30 Sep 2026)</option>
+              <option>MM/DD/YYYY (09/30/2026)</option>
+              <option>DD/MM/YYYY (30/09/2026)</option>
+              <option>YYYY-MM-DD (2026-09-30)</option>
+            </select>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">
+            <div class="title">Currency</div>
+            <div class="desc">Displayed for payouts and pricing.</div>
+          </div>
+          <div class="setting-control">
+            <select class="select-control" id="currencySelect">
+              <option selected>KES · Kenyan Shilling</option>
+              <option>USD · US Dollar</option>
+              <option>EUR · Euro</option>
+              <option>GBP · Pound Sterling</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save bar -->
+    <div class="save-bar" id="saveBar">
+      <div class="save-bar-text">
+        <strong>Unsaved changes</strong> · Review and save
+      </div>
+      <div class="save-bar-actions">
+        <button class="btn-discard" onclick="discardChanges()">Discard</button>
+        <button class="btn-save" id="saveBtn" onclick="saveChanges()">
+          <i class="fas fa-check"></i> Save changes
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Not signed in -->
+  <div class="settings-layout" id="notSignedIn" style="display:none;">
+    <div class="settings-title">
+      <h1>Account settings</h1>
+      <p>Sign in to manage your preferences.</p>
+    </div>
+
+    <div class="settings-section" style="text-align:center; padding: 3rem 2rem;">
+      <div style="width:72px;height:72px;border-radius:20px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.2rem;">
+        <i class="fas fa-user-lock"></i>
+      </div>
+      <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);margin-bottom:0.5rem;">
+        You're not signed in
+      </h2>
+      <p style="color:var(--text-muted);font-size:0.92rem;max-width:420px;margin:0 auto 1.6rem;line-height:1.6;">
+        Sign in with your KazInni account to manage your settings.
+      </p>
+      <button class="btn btn-primary" onclick="location.href='index.html'">
+        <i class="fas fa-arrow-right-to-bracket"></i> Go to sign in
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // FIREBASE
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+      authDomain: "mugera-e51cc.firebaseapp.com",
+      databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "mugera-e51cc"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let currentUser = null;
+    let currentTasker = null;
+    let currentPerms = {};
+    let originalPrefs = {};
+    let workingPrefs = {};
+    let hasUnsavedChanges = false;
+
+    const PREF_PATHS = {
+      displayName: 'taskers/{uid}/name',
+      phone: 'taskers/{uid}/phone',
+      category: 'taskers/{uid}/category',
+      bio: 'taskers/{uid}/bio',
+      theme: 'kazinni_prefs/{uid}/theme',
+      accent: 'kazinni_prefs/{uid}/accent',
+      fontSize: 'kazinni_prefs/{uid}/fontSize',
+      email: 'kazinni_prefs/{uid}/notifications/email',
+      push: 'kazinni_prefs/{uid}/notifications/push',
+      sound: 'kazinni_prefs/{uid}/notifications/sound',
+      digest: 'kazinni_prefs/{uid}/notifications/digest',
+      flexikazi: 'kazinni_prefs/{uid}/notifications/flexikazi',
+      kasikazi: 'kazinni_prefs/{uid}/notifications/kasikazi',
+      twoFactor: 'kazinni_prefs/{uid}/security/twoFactor',
+      privacyVisibility: 'kazinni_prefs/{uid}/privacy/visibility',
+      prefOnline: 'kazinni_prefs/{uid}/privacy/showOnline',
+      language: 'kazinni_prefs/{uid}/region/language',
+      timezone: 'kazinni_prefs/{uid}/region/timezone',
+      dateFormat: 'kazinni_prefs/{uid}/region/dateFormat',
+      currency: 'kazinni_prefs/{uid}/region/currency'
+    };
+
+    // ============================================================
+    // TOAST
+    // ============================================================
+    function showToast(msg, type = 'success') {
+      const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas ${icons[type]}"></i> <span>${escapeHtml(msg)}</span>`;
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = '0.35s';
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+
+    // ============================================================
+    // AUTH FLOW
+    // ============================================================
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        currentUser = null;
+        currentTasker = null;
+        currentPerms = {};
+        showSignedOut();
+        return;
+      }
+
+      try {
+        const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
+        if (!taskerSnap.exists()) {
+          await auth.signOut();
+          showToast('This account is not registered on KazInni.', 'error');
+          return;
+        }
+        currentTasker = taskerSnap.val();
+        if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
+          await auth.signOut();
+          showToast('Your KazInni account is pending verification.', 'error');
+          return;
+        }
+      } catch (e) {
+        console.error('Tasker verification failed:', e);
+        await auth.signOut();
+        showToast('Could not verify your KazInni account.', 'error');
+        return;
+      }
+
+      try {
+        const permsSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+        currentPerms = permsSnap.exists() ? permsSnap.val() : {};
+      } catch (e) {
+        currentPerms = {};
+      }
+
+      currentUser = user;
+
+      // Load saved prefs
+      try {
+        const prefsSnap = await database.ref(`kazinni_prefs/${user.uid}`).once('value');
+        const savedPrefs = prefsSnap.exists() ? prefsSnap.val() : {};
+        originalPrefs = buildPrefsFromSaved(savedPrefs);
+      } catch (e) {
+        originalPrefs = buildPrefsFromSaved({});
+      }
+      workingPrefs = { ...originalPrefs };
+
+      // Apply saved theme immediately
+      applyTheme(workingPrefs.theme);
+      applyAccent(workingPrefs.accent);
+      applyFontSize(workingPrefs.fontSize);
+
+      renderSignedIn();
+    });
+
+    function buildPrefsFromSaved(saved) {
+      const t = currentTasker || {};
+      const n = saved.notifications || {};
+      const s = saved.security || {};
+      const p = saved.privacy || {};
+      const r = saved.region || {};
+
+      return {
+        displayName: t.name || '',
+        phone: t.phone || '',
+        category: t.category || '',
+        bio: t.bio || '',
+        theme: saved.theme || 'light',
+        accent: saved.accent || '#ca8a04',
+        fontSize: saved.fontSize || 'medium',
+        email: n.email !== false,
+        push: n.push !== false,
+        sound: n.sound === true,
+        digest: n.digest !== false,
+        flexikazi: n.flexikazi !== false,
+        kasikazi: n.kasikazi !== false,
+        twoFactor: s.twoFactor === true,
+        privacyVisibility: p.visibility || 'Everyone on KazInni',
+        prefOnline: p.showOnline !== false,
+        language: r.language || 'English',
+        timezone: r.timezone || 'Africa/Nairobi (EAT)',
+        dateFormat: r.dateFormat || 'DD MMM YYYY (30 Sep 2026)',
+        currency: r.currency || 'KES · Kenyan Shilling'
+      };
+    }
+
+    // ============================================================
+    // RENDERING
+    // ============================================================
+    function showSignedOut() {
+      document.getElementById('settingsLayout').style.display = 'none';
+      document.getElementById('notSignedIn').style.display = 'block';
+
+      const container = document.getElementById('headerAuthContainer');
+      container.innerHTML = `
+        <button class="btn btn-primary" style="padding:0.55rem 1.2rem;font-size:0.82rem;" onclick="location.href='index.html'">
+          <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+        </button>
+      `;
+    }
+
+    function renderSignedIn() {
+      document.getElementById('settingsLayout').style.display = 'block';
+      document.getElementById('notSignedIn').style.display = 'none';
+
+      renderHeaderAvatar();
+      hydrateForm();
+      attachFormListeners();
+    }
+
+    function renderHeaderAvatar() {
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || 'User';
+      const initials = displayName
+        .split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+      const email = user.email || '';
+
+      const container = document.getElementById('headerAuthContainer');
+      container.innerHTML = `
+        <div class="user-dropdown-wrap" id="userMenuWrap">
+          <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
+            <div class="m365-avatar">${initials}</div>
+            <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+
+          <div class="user-dropdown" id="userDropdown">
+            <div class="ud-header">
+              <div class="m365-avatar">${initials}</div>
+              <div class="ud-header-info">
+                <div class="ud-header-name">${escapeHtml(displayName)}</div>
+                <div class="ud-header-email">${escapeHtml(email)}</div>
+              </div>
+            </div>
+
+            <div class="ud-body">
+              <div class="ud-section-label">Account</div>
+              <a href="account.html" class="ud-item">
+                <i class="fas fa-user"></i> My account
+              </a>
+              <a href="account-settings.html" class="ud-item active">
+                <i class="fas fa-gear"></i> Account settings
+              </a>
+              <a href="security.html" class="ud-item">
+                <i class="fas fa-shield-halved"></i> Security & privacy
+              </a>
+
+              <div class="ud-divider"></div>
+              <div class="ud-section-label">Apps</div>
+              <a href="apps/flexikazi/" class="ud-item">
+                <i class="fas fa-list-check"></i> FlexiKazi
+              </a>
+              <a href="apps/kasikazi/" class="ud-item">
+                <i class="fas fa-compass"></i> Kasikazi
+              </a>
+
+              <div class="ud-divider"></div>
+              <button class="ud-item danger" onclick="handleSignOut()">
+                <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function hydrateForm() {
+      const p = workingPrefs;
+
+      document.getElementById('displayNameInput').value = p.displayName;
+      document.getElementById('emailInput').value = currentUser.email || '';
+      document.getElementById('phoneInput').value = p.phone;
+      document.getElementById('categorySelect').value = p.category;
+      document.getElementById('bioInput').value = p.bio;
+
+      document.querySelectorAll('.theme-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === p.theme);
+      });
+      document.querySelectorAll('.accent-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.accent === p.accent);
+      });
+      document.querySelectorAll('.font-size-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.size === p.fontSize);
+      });
+
+      document.getElementById('prefEmail').checked = p.email;
+      document.getElementById('prefPush').checked = p.push;
+      document.getElementById('prefSound').checked = p.sound;
+      document.getElementById('prefDigest').checked = p.digest;
+      document.getElementById('prefFlexikazi').checked = p.flexikazi;
+      document.getElementById('prefKasikazi').checked = p.kasikazi;
+      document.getElementById('pref2FA').checked = p.twoFactor;
+      document.getElementById('prefOnline').checked = p.prefOnline;
+
+      document.getElementById('privacyVisibility').value = p.privacyVisibility;
+      document.getElementById('langSelect').value = p.language;
+      document.getElementById('timezoneSelect').value = p.timezone;
+      document.getElementById('dateFormatSelect').value = p.dateFormat;
+      document.getElementById('currencySelect').value = p.currency;
+    }
+
+    // ============================================================
+    // FORM LISTENERS
+    // ============================================================
+    function attachFormListeners() {
+      document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+      });
+
+      const textFields = ['displayNameInput', 'phoneInput', 'bioInput'];
+      textFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', () => {
+          const key = id.replace('Input', '');
+          workingPrefs[key] = el.value;
+          markDirty();
+        });
+      });
+
+      ['categorySelect', 'privacyVisibility', 'langSelect', 'timezoneSelect', 'dateFormatSelect', 'currencySelect']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('change', () => {
+            workingPrefs[id.replace('Select', '')] = el.value;
+            markDirty();
+          });
+        });
+
+      const toggles = {
+        prefEmail: 'email',
+        prefPush: 'push',
+        prefSound: 'sound',
+        prefDigest: 'digest',
+        prefFlexikazi: 'flexikazi',
+        prefKasikazi: 'kasikazi',
+        pref2FA: 'twoFactor',
+        prefOnline: 'prefOnline'
+      };
+      Object.entries(toggles).forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', () => {
+          workingPrefs[key] = el.checked;
+          markDirty();
+        });
+      });
+
+      document.querySelectorAll('.theme-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          workingPrefs.theme = btn.dataset.theme;
+          document.querySelectorAll('.theme-option').forEach(b => b.classList.toggle('active', b === btn));
+          applyTheme(btn.dataset.theme);
+          markDirty();
+        });
+      });
+
+      document.querySelectorAll('.accent-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          workingPrefs.accent = btn.dataset.accent;
+          document.querySelectorAll('.accent-option').forEach(b => b.classList.toggle('active', b === btn));
+          applyAccent(btn.dataset.accent);
+          markDirty();
+        });
+      });
+
+      document.querySelectorAll('.font-size-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          workingPrefs.fontSize = btn.dataset.size;
+          document.querySelectorAll('.font-size-option').forEach(b => b.classList.toggle('active', b === btn));
+          applyFontSize(btn.dataset.size);
+          markDirty();
+        });
+      });
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.settings-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === name);
+      });
+      document.querySelectorAll('.settings-panel').forEach(p => {
+        p.classList.toggle('active', p.dataset.panel === name);
+      });
+    }
+
+    // ============================================================
+    // DIRTY TRACKING
+    // ============================================================
+    function markDirty() {
+      const changed = JSON.stringify(workingPrefs) !== JSON.stringify(originalPrefs);
+      hasUnsavedChanges = changed;
+      document.getElementById('saveBar').classList.toggle('active', changed);
+    }
+
+    function discardChanges() {
+      workingPrefs = { ...originalPrefs };
+      hydrateForm();
+      applyTheme(workingPrefs.theme);
+      applyAccent(workingPrefs.accent);
+      applyFontSize(workingPrefs.fontSize);
+      hasUnsavedChanges = false;
+      document.getElementById('saveBar').classList.remove('active');
+      showToast('Changes discarded', 'info');
+    }
+
+    async function saveChanges() {
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Saving…';
+
+      try {
+        const uid = currentUser.uid;
+        const updates = {};
+
+        // Tasker fields
+        if (workingPrefs.displayName !== originalPrefs.displayName) {
+          updates[`taskers/${uid}/name`] = workingPrefs.displayName;
+          updates[`taskers/${uid}/updatedAt`] = Date.now();
+        }
+        if (workingPrefs.phone !== originalPrefs.phone) {
+          updates[`taskers/${uid}/phone`] = workingPrefs.phone;
+          updates[`taskers/${uid}/updatedAt`] = Date.now();
+        }
+        if (workingPrefs.category !== originalPrefs.category) {
+          updates[`taskers/${uid}/category`] = workingPrefs.category;
+          updates[`taskers/${uid}/updatedAt`] = Date.now();
+        }
+        if (workingPrefs.bio !== originalPrefs.bio) {
+          updates[`taskers/${uid}/bio`] = workingPrefs.bio;
+          updates[`taskers/${uid}/updatedAt`] = Date.now();
+        }
+
+        // Prefs
+        const prefsBase = `kazinni_prefs/${uid}`;
+        updates[`${prefsBase}/theme`] = workingPrefs.theme;
+        updates[`${prefsBase}/accent`] = workingPrefs.accent;
+        updates[`${prefsBase}/fontSize`] = workingPrefs.fontSize;
+        updates[`${prefsBase}/notifications/email`] = workingPrefs.email;
+        updates[`${prefsBase}/notifications/push`] = workingPrefs.push;
+        updates[`${prefsBase}/notifications/sound`] = workingPrefs.sound;
+        updates[`${prefsBase}/notifications/digest`] = workingPrefs.digest;
+        updates[`${prefsBase}/notifications/flexikazi`] = workingPrefs.flexikazi;
+        updates[`${prefsBase}/notifications/kasikazi`] = workingPrefs.kasikazi;
+        updates[`${prefsBase}/security/twoFactor`] = workingPrefs.twoFactor;
+        updates[`${prefsBase}/privacy/visibility`] = workingPrefs.privacyVisibility;
+        updates[`${prefsBase}/privacy/showOnline`] = workingPrefs.prefOnline;
+        updates[`${prefsBase}/region/language`] = workingPrefs.language;
+        updates[`${prefsBase}/region/timezone`] = workingPrefs.timezone;
+        updates[`${prefsBase}/region/dateFormat`] = workingPrefs.dateFormat;
+        updates[`${prefsBase}/region/currency`] = workingPrefs.currency;
+        updates[`${prefsBase}/updatedAt`] = Date.now();
+
+        await database.ref().update(updates);
+
+        originalPrefs = { ...workingPrefs };
+        hasUnsavedChanges = false;
+        document.getElementById('saveBar').classList.remove('active');
+        showToast('Settings saved', 'success');
+      } catch (err) {
+        console.error('Save failed:', err);
+        showToast('Could not save settings. Try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check"></i> Save changes';
+      }
+    }
+
+    // ============================================================
+    // THEME / ACCENT / FONT SIZE (visual preview)
+    // ============================================================
+    function applyTheme(theme) {
+      // For now, only "light" is fully supported in-suite.
+      // This is a placeholder — dark theme can be wired in later.
+      // We just remember the preference.
+      if (theme === 'dark') {
+        document.documentElement.style.filter = 'invert(0)';
+        // Not applying dark yet — placeholder for future
+      }
+    }
+
+    function applyAccent(color) {
+      // Live preview of accent color
+      document.documentElement.style.setProperty('--gold', color);
+      document.documentElement.style.setProperty('--gold-dark', shadeColor(color, -20));
+      document.documentElement.style.setProperty('--gold-light', shadeColor(color, 25));
+    }
+
+    function applyFontSize(size) {
+      // Live preview — apply to body
+      const sizes = { small: '0.94', medium: '1', large: '1.08' };
+      document.body.style.fontSize = (sizes[size] || '1') + 'rem';
+    }
+
+    function shadeColor(hex, percent) {
+      const num = parseInt(hex.replace('#',''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.max(0, Math.min(255, (num >> 16) + amt));
+      const G = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amt));
+      const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
+      return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
+    }
+
+    // ============================================================
+    // USER MENU
+    // ============================================================
+    function toggleUserDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('userDropdown');
+      const btn = document.getElementById('userMenuBtn');
+      if (!menu) return;
+      menu.classList.toggle('active');
+      if (btn) btn.classList.toggle('active');
+    }
+
+    function closeUserDropdown() {
+      const menu = document.getElementById('userDropdown');
+      const btn = document.getElementById('userMenuBtn');
+      if (menu) menu.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      const wrap = document.getElementById('userMenuWrap');
+      if (wrap && !wrap.contains(e.target)) closeUserDropdown();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeUserDropdown();
+    });
+
+    // ============================================================
+    // ACTIONS
+    // ============================================================
+    async function handleSignOut() {
+      try {
+        if (hasUnsavedChanges) {
+          const ok = confirm('You have unsaved changes. Sign out anyway?');
+          if (!ok) return;
+        }
+        await auth.signOut();
+        showToast('Signed out successfully', 'info');
+        setTimeout(() => { window.location.href = 'index.html'; }, 500);
+      } catch (err) {
+        console.error('Sign out error:', err);
+        showToast('Error signing out', 'error');
+      }
+    }
+
+    async function sendPasswordReset() {
+      if (!currentUser || !currentUser.email) return;
+      try {
+        await auth.sendPasswordResetEmail(currentUser.email);
+        showToast('Password reset link sent to your email', 'success');
+      } catch (err) {
+        console.error('Reset error:', err);
+        showToast('Could not send reset link. Try again later.', 'error');
+      }
+    }
+
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+    // ============================================================
+    // UTILS
+    // ============================================================
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return '';
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>
