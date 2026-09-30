@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0891b2">
+<meta name="color-scheme" content="light">
+<title>Kasikazi · My Tasks</title>
+<link rel="icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand: #0891b2;
+  --brand-dark: #0e7490;
+  --brand-light: #22d3ee;
+  --brand-soft: #ecfeff;
+  --brand-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #22d3ee 100%);
+  --ink: #0f0f1e;
+  --ink-3: #2d2d4a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --purple: #8b5cf6;
+  --rose: #e11d48;
+  --text-primary: #0f0f1e;
+  --text-secondary: #4a4a5e;
+  --text-muted: #6b7280;
+  --border-light: #e9ecef;
+  --border-medium: #d1d5db;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-brand: 0 20px 50px rgba(8,145,178,0.22);
+  --shadow-brand-soft: 0 10px 30px rgba(8,145,178,0.12);
+  --nav-bg: rgba(255,255,255,0.85);
+  --header-height: 76px;
+  --footer-height: 64px;
+  --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'General Sans', sans-serif;
+  --font-body: 'General Sans', 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: #faf9f7;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: var(--footer-height);
+}
+
+/* AMBIENT */
+.ambient { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.ambient .glow { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.5; }
+.glow-1 { width: 700px; height: 700px; background: #a5f3fc; top: -220px; left: -200px; }
+.glow-2 { width: 600px; height: 600px; background: #67e8f9; top: 30%; right: -240px; opacity: 0.35; }
+.glow-3 { width: 500px; height: 500px; background: #cffafe; bottom: -160px; left: 40%; opacity: 0.28; }
+.noise {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ANIMATIONS */
+@keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5);} 50% { box-shadow: 0 0 0 10px rgba(16,185,129,0);} }
+@keyframes pulseBrand { 0%,100% { box-shadow: 0 0 0 0 rgba(8,145,178,0.4);} 50% { box-shadow: 0 0 0 12px rgba(8,145,178,0);} }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* HEADER */
+.site-header {
+  position: fixed; top: 0; width: 100%; height: var(--header-height);
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(15,15,30,0.06);
+  z-index: 1000; padding: 0 2.5rem;
+}
+.header-container {
+  max-width: 1440px; height: 100%; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem;
+}
+.logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+.logo img {
+  height: 38px; width: auto;
+  filter: drop-shadow(0 3px 8px rgba(8,145,178,0.25));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.logo:hover img { transform: scale(1.06) rotate(-2deg); }
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-text .kz {
+  font-size: 1.35rem; font-weight: 800;
+  background: var(--brand-gradient); background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  font-family: var(--font-display); letter-spacing: -0.6px;
+}
+.logo-text .fk {
+  font-size: 0.62rem; font-weight: 700; color: var(--brand-dark);
+  font-family: var(--font-heading); letter-spacing: 1.8px;
+  text-transform: uppercase; margin-top: 4px;
+}
+
+.nav-links { display: flex; gap: 2.2rem; align-items: center; }
+.nav-link {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  font-family: var(--font-heading); letter-spacing: -0.01em;
+  transition: color 0.25s ease; position: relative; padding: 0.4rem 0;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%; height: 2px;
+  background: var(--brand-gradient); border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover::after, .nav-link.active::after { transform: translateX(-50%) scaleX(1); }
+.nav-link:hover, .nav-link.active { color: var(--text-primary); }
+
+.live-indicator {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.9rem; border-radius: 100px;
+  background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+  font-size: 0.7rem; color: var(--success); font-weight: 700;
+  font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.live-dot {
+  width: 7px; height: 7px; background: var(--success);
+  border-radius: 50%; animation: pulseDot 2s infinite;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 0.65rem 1.5rem; border: none; border-radius: 100px;
+  font-weight: 600; font-size: 0.85rem; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-heading); letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.btn-brand {
+  background: var(--brand-gradient); color: white;
+  box-shadow: var(--shadow-brand-soft);
+}
+.btn-brand:hover { transform: translateY(-2px); box-shadow: var(--shadow-brand); }
+.btn-primary {
+  background: var(--ink); color: white;
+  box-shadow: 0 4px 14px rgba(15,15,30,0.15);
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--brand-gradient);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:hover::before { opacity: 1; }
+.btn-ghost {
+  background: transparent; color: var(--text-primary);
+  border: 1.5px solid var(--border-medium);
+}
+.btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
+.btn-lg { padding: 0.95rem 2rem; font-size: 0.95rem; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* MAIN */
+.main-content {
+  max-width: 1440px; margin: 0 auto;
+  padding: calc(var(--header-height) + 2rem) 2.5rem 2rem;
+  position: relative; z-index: 2;
+}
+
+/* HERO */
+.dash-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: 28px; padding: 2rem 2.4rem;
+  margin-bottom: 1.5rem; position: relative; overflow: hidden;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.dash-hero::before {
+  content: ''; position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--brand) 0%, transparent 65%);
+  opacity: 0.35; top: -200px; right: -150px; pointer-events: none;
+}
+.dash-hero::after {
+  content: ''; position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(34,211,238,0.2) 0%, transparent 65%);
+  bottom: -180px; left: -100px; pointer-events: none;
+}
+.dash-hero-left { position: relative; z-index: 2; flex: 1; min-width: 260px; }
+.dash-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(34,211,238,0.15); border: 1px solid rgba(34,211,238,0.3);
+  border-radius: 100px; color: #a5f3fc;
+  font-size: 0.68rem; font-weight: 700; font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;
+}
+.dash-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: #4ade80; animation: pulseDot 2s infinite; }
+.dash-hero h1 {
+  color: white; font-family: var(--font-display);
+  font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 0.5rem;
+}
+.dash-hero h1 .accent {
+  background: var(--brand-gradient); background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+.dash-hero p { color: rgba(255,255,255,0.65); font-size: 0.9rem; max-width: 500px; }
+.dash-hero-actions { display: flex; gap: 0.6rem; position: relative; z-index: 2; flex-wrap: wrap; }
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.stat-card {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 18px; padding: 1.2rem 1.3rem;
+  display: flex; align-items: center; gap: 0.9rem;
+  transition: all 0.3s; box-shadow: var(--shadow-sm);
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(8,145,178,0.25); }
+.stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.stat-value { font-size: 1.6rem; font-weight: 800; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.15; }
+.stat-label { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-heading); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* CHARTS */
+.charts-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.chart-card {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 20px; padding: 1.3rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+}
+.chart-title {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+.chart-title i { color: var(--brand); }
+.chart-container { position: relative; height: 220px; }
+
+/* TABS */
+.tab-nav {
+  display: flex; gap: 0.3rem; margin-bottom: 1.2rem;
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 30px; padding: 4px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 0.55rem 1.15rem; border-radius: 26px; border: none;
+  background: transparent; color: var(--text-muted); cursor: pointer;
+  font-weight: 600; font-size: 0.75rem; font-family: var(--font-heading);
+  display: flex; align-items: center; gap: 6px; transition: all 0.25s;
+  white-space: nowrap;
+}
+.tab-btn.active { background: var(--brand-gradient); color: white; box-shadow: 0 4px 12px rgba(8,145,178,0.25); }
+.tab-badge { font-size: 0.6rem; padding: 1px 7px; border-radius: 10px; font-weight: 700; }
+.tab-btn.active .tab-badge { background: rgba(255,255,255,0.3); }
+.tab-btn:not(.active) .tab-badge { background: rgba(8,145,178,0.1); color: var(--brand-dark); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeUp 0.35s ease; }
+
+/* SUITE CHIPS */
+.ws-chips {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.2rem;
+  padding: 0.5rem; background: white;
+  border: 1px solid var(--border-light); border-radius: 16px;
+}
+.ws-chip {
+  padding: 0.4rem 0.85rem; border-radius: 100px;
+  background: #faf9f7; border: 1.5px solid transparent;
+  font-size: 0.72rem; font-weight: 600; font-family: var(--font-heading);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all 0.25s; display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.ws-chip i { font-size: 0.65rem; color: var(--brand); }
+.ws-chip:hover { background: var(--brand-soft); color: var(--brand-dark); }
+.ws-chip.active { background: var(--brand-gradient); color: white; box-shadow: 0 4px 12px rgba(8,145,178,0.25); }
+.ws-chip.active i { color: white; }
+.ws-chip .count { font-size: 0.6rem; padding: 1px 6px; border-radius: 10px; background: rgba(0,0,0,0.06); }
+.ws-chip.active .count { background: rgba(255,255,255,0.25); }
+
+/* TASK LIST */
+.task-list-card {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 20px; padding: 1.2rem 1.3rem;
+  box-shadow: var(--shadow-sm);
+}
+.task-row {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1rem 0.4rem;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer; transition: all 0.2s;
+  border-radius: 12px;
+}
+.task-row:last-child { border-bottom: none; }
+.task-row:hover { background: rgba(8,145,178,0.04); padding-left: 0.9rem; padding-right: 0.9rem; }
+.task-row-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; flex-shrink: 0;
+}
+.task-row-body { flex: 1; min-width: 0; }
+.task-row-title {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.92rem; color: var(--text-primary); margin-bottom: 0.25rem;
+}
+.task-row-meta {
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap;
+}
+.task-row-meta i { font-size: 0.65rem; color: var(--brand); }
+.task-row-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+.task-row-pay { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+.task-action-hint {
+  font-size: 0.62rem; color: var(--brand-dark); font-weight: 600;
+  font-family: var(--font-heading); display: inline-flex; align-items: center; gap: 0.25rem;
+}
+.badge {
+  padding: 0.25rem 0.7rem; border-radius: 40px; font-size: 0.65rem;
+  font-weight: 700; text-transform: uppercase; font-family: var(--font-heading);
+  letter-spacing: 0.3px; display: inline-block;
+}
+.badge-claimed { background: rgba(8,145,178,0.1); color: var(--brand-dark); }
+.badge-working { background: rgba(245,158,11,0.1); color: #d97706; }
+.badge-submitted { background: rgba(139,92,246,0.1); color: #7c3aed; }
+.badge-revision { background: rgba(225,29,72,0.1); color: #e11d48; }
+.badge-approved { background: rgba(16,185,129,0.1); color: #059669; }
+
+/* EMPTY */
+.empty-data {
+  text-align: center; padding: 3.5rem 1.5rem;
+  color: var(--text-muted); background: white;
+  border: 1.5px dashed var(--border-light); border-radius: 24px;
+}
+.empty-data i { font-size: 2.4rem; margin-bottom: 0.8rem; opacity: 0.35; display: block; color: var(--brand); }
+.empty-data h3 { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; }
+.empty-data p { font-size: 0.85rem; max-width: 440px; margin: 0 auto; }
+
+/* FOOTER */
+.site-footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--footer-height);
+  background: rgba(250, 249, 247, 0.92); backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(15,15,30,0.06); z-index: 999;
+}
+.footer-content {
+  max-width: 1440px; height: 100%; margin: 0 auto; padding: 0 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.85rem; color: var(--ink); font-family: var(--font-heading); }
+.footer-logo i { color: var(--brand); }
+.footer-links { display: flex; gap: 1.8rem; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.78rem; font-family: var(--font-heading); font-weight: 500; transition: color 0.2s; cursor: pointer; }
+.footer-links a:hover { color: var(--brand-dark); }
+.footer-text { color: var(--text-muted); font-size: 0.75rem; font-family: var(--font-heading); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15,15,30,0.65);
+  backdrop-filter: blur(12px); z-index: 2000; display: none;
+}
+.modal-overlay.active { display: block; animation: fadeUp 0.3s ease; }
+.modal {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: white; border-radius: 28px; padding: 0;
+  max-width: 620px; width: calc(100% - 2rem);
+  z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+  display: none; max-height: 92vh; overflow-y: auto;
+}
+.modal.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.modal-hero {
+  background: linear-gradient(135deg, #0e7490 0%, #0891b2 50%, #22d3ee 100%);
+  padding: 1.6rem 1.8rem; position: relative; overflow: hidden;
+  border-radius: 28px 28px 0 0;
+}
+.modal-hero::before {
+  content: ''; position: absolute; width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(165,243,252,0.4) 0%, transparent 65%);
+  top: -140px; right: -100px; pointer-events: none;
+}
+.modal-hero-content { position: relative; z-index: 2; }
+.modal-hero-title {
+  color: white; font-family: var(--font-display); font-size: 1.3rem;
+  font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.3rem;
+}
+.modal-hero-meta { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.modal-hero-meta span {
+  color: rgba(255,255,255,0.85); font-size: 0.72rem;
+  font-family: var(--font-heading); font-weight: 600;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.2rem 0.6rem; border-radius: 100px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+}
+.modal-hero-meta span i { font-size: 0.65rem; color: #a5f3fc; }
+.modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: rgba(255,255,255,0.15); border: none;
+  font-size: 0.9rem; cursor: pointer; color: white;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; z-index: 10;
+}
+.modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+.modal-body { padding: 1.6rem 1.8rem 1.8rem; }
+.modal-section { margin-bottom: 1.3rem; padding-bottom: 1.3rem; border-bottom: 1px dashed var(--border-light); }
+.modal-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.modal-section-title {
+  font-family: var(--font-heading); font-size: 0.72rem; font-weight: 800;
+  color: var(--brand-dark); text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem;
+}
+.modal-section p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
+
+.detail-list { display: flex; flex-direction: column; }
+.detail-item { display: flex; justify-content: space-between; padding: 0.65rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.85rem; gap: 1rem; }
+.detail-item:last-child { border-bottom: none; }
+.detail-item .label { color: var(--text-muted); font-weight: 600; font-family: var(--font-heading); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0; }
+.detail-item .value { color: var(--text-primary); font-weight: 500; text-align: right; max-width: 65%; word-break: break-word; }
+.detail-item .value a { color: var(--brand-dark); text-decoration: none; font-weight: 600; word-break: break-all; }
+.detail-item .value a:hover { text-decoration: underline; }
+
+/* TIMELINE */
+.progress-timeline { display: flex; align-items: center; gap: 0; margin: 1rem 0 0.5rem; }
+.progress-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+.progress-step .dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #faf9f7; color: var(--text-muted);
+  border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; z-index: 2; transition: all 0.3s;
+}
+.progress-step .line {
+  position: absolute; top: 13px; left: 50%; width: 100%; height: 2px;
+  background: var(--border-light); z-index: 1;
+}
+.progress-step:last-child .line { display: none; }
+.progress-step .label {
+  font-size: 0.6rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.3px;
+  text-align: center;
+}
+.progress-step.done .dot { background: var(--success); color: white; border-color: var(--success); }
+.progress-step.done .line { background: var(--success); }
+.progress-step.done .label { color: var(--success); }
+.progress-step.current .dot { background: var(--brand-gradient); color: white; border-color: var(--brand); animation: pulseBrand 2s infinite; }
+.progress-step.current .line { background: var(--success); }
+.progress-step.current .label { color: var(--brand-dark); }
+
+/* ACTION BANNER */
+.action-banner {
+  border-radius: 14px; padding: 0.9rem 1.1rem;
+  margin: 0.8rem 0; font-size: 0.82rem;
+  display: flex; align-items: flex-start; gap: 0.7rem; line-height: 1.5;
+}
+.action-banner i { font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+.action-banner.info { background: rgba(8,145,178,0.08); border: 1px solid rgba(8,145,178,0.2); color: #0e7490; }
+.action-banner.success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #065f46; }
+.action-banner.warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #92400e; }
+.action-banner.danger { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #991b1b; }
+.action-banner strong { font-weight: 700; }
+
+.action-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.2rem; }
+.modal-btn {
+  padding: 0.85rem 1.4rem;
+  background: var(--ink); color: white;
+  border: none; border-radius: 100px;
+  font-weight: 600; cursor: pointer;
+  font-family: var(--font-heading); font-size: 0.88rem;
+  transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  flex: 1; min-width: 140px;
+}
+.modal-btn.brand { background: var(--brand-gradient); box-shadow: 0 8px 20px rgba(8,145,178,0.3); }
+.modal-btn.brand:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(8,145,178,0.4); }
+.modal-btn.secondary { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-light); }
+.modal-btn.secondary:hover { background: #faf9f7; border-color: var(--border-medium); color: var(--text-primary); }
+.modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* LINK INPUT */
+.link-input-row { display: flex; gap: 0.4rem; margin-bottom: 0.5rem; align-items: center; }
+.link-input-row input {
+  flex: 1; padding: 0.7rem 0.9rem; border: 1.5px solid var(--border-light);
+  border-radius: 12px; font-family: var(--font-body); font-size: 0.85rem; transition: all 0.2s;
+}
+.link-input-row input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(8,145,178,0.1); }
+.link-remove-btn {
+  width: 40px; height: 40px; border-radius: 12px;
+  border: none; background: #fef2f2; color: #dc2626;
+  cursor: pointer; font-size: 0.85rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.link-remove-btn:hover { background: #dc2626; color: white; }
+.add-link-btn {
+  padding: 0.5rem 1rem; border-radius: 100px;
+  border: 1.5px dashed var(--border-medium);
+  background: transparent; color: var(--brand-dark);
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all 0.2s; margin-top: 0.3rem;
+}
+.add-link-btn:hover { border-color: var(--brand); background: var(--brand-soft); }
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+  display: block; font-size: 0.72rem; font-weight: 700;
+  color: var(--text-secondary); text-transform: uppercase;
+  letter-spacing: 0.3px; margin-bottom: 0.4rem; font-family: var(--font-heading);
+}
+.form-control {
+  width: 100%; padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px; font-family: var(--font-body);
+  font-size: 0.9rem; transition: all 0.2s;
+}
+.form-control:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(8,145,178,0.1); }
+textarea.form-control { resize: vertical; min-height: 80px; }
+
+/* SUBMISSION BOX */
+.submission-box {
+  background: #faf9f7; padding: 0.9rem 1rem; border-radius: 12px;
+  font-size: 0.82rem; border: 1px solid var(--border-light);
+}
+.submission-box .links { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.5rem 0; }
+.submission-box .links a {
+  color: var(--brand-dark); font-weight: 600;
+  text-decoration: none; word-break: break-all; font-size: 0.8rem;
+  display: flex; align-items: flex-start; gap: 0.4rem;
+}
+.submission-box .links a:hover { text-decoration: underline; }
+.submission-box .note {
+  color: var(--text-secondary); font-size: 0.78rem;
+  margin-top: 0.4rem; font-style: italic;
+  padding: 0.5rem 0.7rem; background: white;
+  border-radius: 8px; border-left: 3px solid var(--brand);
+}
+.submission-box .meta {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-top: 0.4rem; padding-top: 0.4rem;
+  border-top: 1px dashed var(--border-light);
+}
+
+/* USER MENU */
+.user-menu-wrapper { position: relative; display: inline-flex; align-items: center; }
+.user-menu-btn {
+  background: white; border: 1px solid var(--border-light);
+  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
+  border-radius: 100px; cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-body);
+}
+.user-menu-btn:hover { border-color: var(--brand); box-shadow: 0 4px 14px rgba(15,15,30,0.06); }
+.user-menu-btn .user-info { display: flex; align-items: center; gap: 0.5rem; }
+.user-menu-btn .avatar-mini {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--brand-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.75rem;
+  font-family: var(--font-heading);
+}
+.user-menu-btn .user-email {
+  font-size: 0.78rem; color: var(--text-secondary);
+  max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-weight: 500;
+}
+.user-menu-btn .fa-chevron-down {
+  font-size: 0.6rem; color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+.user-menu-btn.active .fa-chevron-down { transform: rotate(180deg); }
+.user-dropdown-menu {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  min-width: 230px; background: white;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(15,15,30,0.15);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+  padding: 0.5rem;
+}
+.user-dropdown-menu.active { display: block; animation: fadeUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.user-dropdown-menu .dropdown-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0.9rem; border-radius: 11px; cursor: pointer;
+  transition: all 0.15s; border: none; background: none;
+  width: 100%; font-family: var(--font-body);
+  text-align: left; font-size: 0.85rem;
+  color: var(--text-secondary); text-decoration: none; font-weight: 500;
+}
+.user-dropdown-menu .dropdown-item i { color: var(--text-muted); font-size: 0.85rem; transition: color 0.15s; }
+.user-dropdown-menu .dropdown-item:hover { background: #faf9f7; color: var(--text-primary); }
+.user-dropdown-menu .dropdown-item:hover i { color: var(--brand); }
+.user-dropdown-menu .dropdown-item.danger { color: var(--danger); }
+.user-dropdown-menu .dropdown-item.danger i { color: var(--danger); }
+.user-dropdown-menu .dropdown-item.danger:hover { background: #fef2f2; }
+.user-dropdown-menu .divider { border-top: 1px solid var(--border-light); margin: 0.35rem 0.4rem; }
+
+/* TOASTS */
+.toast-container { position: fixed; top: 90px; right: 24px; z-index: 4000; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
+.toast {
+  background: var(--ink); color: white;
+  border-radius: 14px; padding: 0.9rem 1.2rem;
+  box-shadow: 0 20px 40px rgba(15,15,30,0.2);
+  display: flex; align-items: center; gap: 0.7rem;
+  font-family: var(--font-heading); font-size: 0.85rem;
+  animation: slideInRight 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 360px; font-weight: 500; pointer-events: auto;
+}
+.toast i { font-size: 0.95rem; }
+.toast.success i { color: #34d399; }
+.toast.error i { color: #f87171; }
+.toast.info i { color: #22d3ee; }
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .charts-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 1.3rem; }
+}
+@media (max-width: 768px) {
+  .site-header { padding: 0 1.25rem; }
+  .main-content { padding: calc(var(--header-height) + 1rem) 1.25rem 1rem; }
+  .nav-links { display: none; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .dash-hero { padding: 1.6rem 1.4rem; }
+  .dash-hero h1 { font-size: 1.6rem; }
+  .footer-content { padding: 0 1.25rem; flex-direction: column; justify-content: center; gap: 0.2rem; }
+  .footer-links { display: none; }
+  .user-menu-btn .user-email { display: none; }
+}
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+</div>
+<div class="noise"></div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-container">
+    <a href="index.html" class="logo">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="Kasikazi">
+      <div class="logo-text">
+        <span class="kz">Kasikazi</span>
+        <span class="fk">by KazInni</span>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="board.html" class="nav-link active"><i class="fas fa-list-check"></i> My Tasks</a>
+      <a href="index.html" class="nav-link"><i class="fas fa-bullhorn"></i> Open Board</a>
+      <a href="../../index.html" class="nav-link"><i class="fas fa-layer-group"></i> KazInni Suite</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <div class="live-indicator">
+        <div class="live-dot"></div> Live
+      </div>
+      <div class="user-menu-wrapper">
+        <button class="user-menu-btn" id="userMenuBtn" onclick="toggleUserDropdown()">
+          <div class="user-info">
+            <div class="avatar-mini" id="userAvatar">K</div>
+            <span class="user-email" id="userEmail">Loading…</span>
+          </div>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="user-dropdown-menu" id="userDropdownMenu">
+          <a href="board.html" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
+          <a href="index.html" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
+          <a href="../../account.html" class="dropdown-item"><i class="fas fa-user"></i> My Account</a>
+          <a href="../../account-settings.html" class="dropdown-item"><i class="fas fa-gear"></i> Settings</a>
+          <div class="divider"></div>
+          <button class="dropdown-item danger" onclick="handleSignOut()">
+            <i class="fas fa-sign-out-alt"></i> Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main-content" id="mainContent" style="display:none;">
+
+  <!-- HERO -->
+  <section class="dash-hero">
+    <div class="dash-hero-left">
+      <div class="dash-badge">
+        <span class="dot"></span>
+        <span>Your Board · Live</span>
+      </div>
+      <h1>Welcome back, <span class="accent" id="heroName">Tasker</span>.</h1>
+      <p>All the tasks you've claimed on Kasikazi. Start work, submit deliverables, and track your earnings — all in one place.</p>
+    </div>
+    <div class="dash-hero-actions">
+      <a href="index.html" class="btn btn-brand">
+        <i class="fas fa-bullhorn"></i> Browse Open Board
+      </a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#cffafe;color:#0891b2;"><i class="fas fa-play"></i></div>
+      <div>
+        <div class="stat-value" style="color:#0891b2;" id="statActive">0</div>
+        <div class="stat-label">Active</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="fas fa-clipboard-check"></i></div>
+      <div>
+        <div class="stat-value" style="color:#7c3aed;" id="statReview">0</div>
+        <div class="stat-label">In Review</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#ecfdf5;color:#059669;"><i class="fas fa-circle-check"></i></div>
+      <div>
+        <div class="stat-value" style="color:#059669;" id="statApproved">0</div>
+        <div class="stat-label">Approved</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fdf2f8;color:#ec4899;"><i class="fas fa-wallet"></i></div>
+      <div>
+        <div class="stat-value" style="color:#ec4899;" id="statEarned">0</div>
+        <div class="stat-label">Earned (KES)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-chart-bar"></i> Task History · Last 8 Weeks</div>
+      <div class="chart-container"><canvas id="weeklyChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-chart-pie"></i> Status Breakdown</div>
+      <div class="chart-container"><canvas id="statusChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="active" onclick="switchTab('active')">
+      <i class="fas fa-play"></i> Active <span class="tab-badge" id="badgeActive">0</span>
+    </button>
+    <button class="tab-btn" data-tab="review" onclick="switchTab('review')">
+      <i class="fas fa-clock"></i> In Review <span class="tab-badge" id="badgeReview">0</span>
+    </button>
+    <button class="tab-btn" data-tab="approved" onclick="switchTab('approved')">
+      <i class="fas fa-check-double"></i> Approved <span class="tab-badge" id="badgeApproved">0</span>
+    </button>
+  </div>
+
+  <!-- SUITE CHIPS -->
+  <div class="ws-chips" id="wsChips"></div>
+
+  <!-- ACTIVE -->
+  <div class="tab-content active" id="tab-active">
+    <div class="task-list-card">
+      <div id="activeList"></div>
+    </div>
+  </div>
+
+  <!-- IN REVIEW -->
+  <div class="tab-content" id="tab-review">
+    <div class="task-list-card">
+      <div id="reviewList"></div>
+    </div>
+  </div>
+
+  <!-- APPROVED -->
+  <div class="tab-content" id="tab-approved">
+    <div class="task-list-card">
+      <div id="approvedList"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Access Denied -->
+<div class="main-content" id="accessDenied" style="display:none;">
+  <div class="empty-data" style="margin-top:4rem;">
+    <i class="fas fa-lock"></i>
+    <h3 id="deniedTitle">Access Denied</h3>
+    <p id="deniedMessage">You don't have access to Kasikazi.</p>
+    <a href="../../index.html" class="btn btn-brand" style="margin-top:1.5rem;">
+      <i class="fas fa-arrow-left"></i> Back to KazInni Suite
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo"><i class="fas fa-list-check"></i> Kasikazi · My Tasks</div>
+    <div class="footer-links">
+      <a href="index.html">Open Board</a>
+      <a href="../../index.html">KazInni Suite</a>
+      <a href="mailto:operations@kazinni.com">Contact</a>
+    </div>
+    <div class="footer-text">© 2026 Teleio Savour · Kasikazi</div>
+  </div>
+</footer>
+
+<!-- TASK DETAIL MODAL -->
+<div class="modal-overlay" id="detailModalOverlay" onclick="closeDetailModal()"></div>
+<div class="modal" id="detailModal">
+  <div class="modal-hero">
+    <button class="modal-close" onclick="closeDetailModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-hero-content">
+      <div class="modal-hero-title" id="detailTitle">—</div>
+      <div class="modal-hero-meta" id="detailMeta"></div>
+    </div>
+  </div>
+  <div class="modal-body" id="detailBody"></div>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submitModalOverlay" onclick="closeSubmitModal()"></div>
+<div class="modal" id="submitModal">
+  <div class="modal-hero">
+    <button class="modal-close" onclick="closeSubmitModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-hero-content">
+      <div class="modal-hero-title"><i class="fas fa-paper-plane"></i> Submit Your Work</div>
+      <div class="modal-hero-meta" id="submitMeta"></div>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form id="submitForm" onsubmit="submitWork(event)">
+      <input type="hidden" id="submitTaskId">
+      <div class="form-group">
+        <label>Submission Links</label>
+        <div id="submitLinksContainer"></div>
+        <button type="button" class="add-link-btn" onclick="addLinkField('')">
+          <i class="fas fa-plus"></i> Add another link
+        </button>
+        <p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">
+          <i class="fas fa-info-circle"></i> Paste links to Google Drive, Dropbox, Canva, Imgur, YouTube, or anywhere your work lives.
+        </p>
+      </div>
+      <div class="form-group">
+        <label>Notes for Reviewer (optional)</label>
+        <textarea class="form-control" id="submitNotes" rows="3" placeholder="Anything the reviewer should know — context, decisions, blockers."></textarea>
+      </div>
+      <div class="action-row">
+        <button type="button" class="modal-btn secondary" onclick="closeSubmitModal(); reopenDetail();">Back</button>
+        <button type="submit" class="modal-btn brand" id="submitBtn">
+          <i class="fas fa-paper-plane"></i> Submit for Review
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const auth = firebase.auth();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+// ============================================================
+// SUITE CONFIG
+// ============================================================
+const SUITE_CONFIG = {
+  'brandinn':              { name: 'BrandInn',              icon: 'fa-building',       color: '#4f46e5', bgColor: '#eef2ff' },
+  'brandinn-print':        { name: 'BrandInn Print',        icon: 'fa-print',          color: '#db2777', bgColor: '#fdf2f8' },
+  'dsog':                  { name: 'DSOG Fashion',          icon: 'fa-tshirt',         color: '#ec4899', bgColor: '#fdf2f8' },
+  'fusion-foods':          { name: 'Fusion Foods',          icon: 'fa-utensils',       color: '#10b981', bgColor: '#ecfdf5' },
+  'mugs-n-dines':          { name: 'Mugs n Dines',          icon: 'fa-utensil-spoon',  color: '#ef4444', bgColor: '#fef2f2' },
+  'heritage':              { name: 'Heritage Ads',          icon: 'fa-landmark',       color: '#d946ef', bgColor: '#faf5ff' },
+  'heritage-marketplace':  { name: 'Heritage Marketplace',  icon: 'fa-store',          color: '#d97706', bgColor: '#fffbeb' },
+  'heritage-interiors':    { name: 'Heritage Interiors',    icon: 'fa-couch',          color: '#7c3aed', bgColor: '#f5f3ff' },
+  'digital-services':      { name: 'E-Huduma',              icon: 'fa-laptop-code',    color: '#0ea5e9', bgColor: '#f0f9ff' },
+  'pick-up':               { name: 'Pick-Up Deliveries',    icon: 'fa-truck-fast',     color: '#f59e0b', bgColor: '#fffbeb' },
+  'pick-me':               { name: 'Pick-Me Rides',         icon: 'fa-taxi',           color: '#06b6d4', bgColor: '#ecfeff' },
+  'workfit':               { name: 'WorkFit',               icon: 'fa-dumbbell',       color: '#22c55e', bgColor: '#f0fdf4' },
+  'epitome':               { name: 'Epitome Reviews',       icon: 'fa-car',            color: '#3b82f6', bgColor: '#eff6ff' },
+  'ekazi':                 { name: 'FlexiKazi Tasks',       icon: 'fa-list-check',     color: '#059669', bgColor: '#ecfdf5' },
+  'latter-logistics':      { name: 'Latter Logistics',      icon: 'fa-ship',           color: '#0891b2', bgColor: '#ecfeff' }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentUser = null;
+let taskerProfile = {};
+let userPermissions = {};
+let myTasks = [];
+let currentTab = 'active';
+let currentSuiteFilter = 'all';
+let currentDetailTask = null;
+let weeklyChart = null;
+let statusChart = null;
+let listenerRef = null;
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  const d = document.createElement('div');
+  d.textContent = String(s);
+  return d.innerHTML;
+}
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'Just now';
+}
+function formatDate(str) {
+  if (!str) return '—';
+  try {
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return str;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch (e) { return str; }
+}
+function showToast(m, type = 'info') {
+  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || 'info-circle'}"></i><span>${escapeHtml(m)}</span>`;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transition = '0.3s';
+    setTimeout(() => t.remove(), 300);
+  }, 3500);
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+auth.onAuthStateChanged(async (user) => {
+  if (!user) { window.location.href = '../../index.html'; return; }
+  currentUser = user;
+
+  try {
+    const snap = await database.ref(`taskers/${user.uid}`).once('value');
+    if (!snap.exists()) { window.location.href = '../../index.html'; return; }
+    taskerProfile = snap.val();
+    if (taskerProfile.verified !== true && taskerProfile.status !== 'verified') {
+      window.location.href = '../../index.html'; return;
+    }
+  } catch (e) { window.location.href = '../../index.html'; return; }
+
+  try {
+    const permSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+    userPermissions = permSnap.exists() ? permSnap.val() : {};
+  } catch (e) { userPermissions = {}; }
+
+  const name = taskerProfile.name || user.displayName || user.email?.split('@')[0] || 'Tasker';
+  const initials = name.split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'K';
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userEmail').textContent = user.email || '';
+  document.getElementById('heroName').textContent = name.split(' ')[0];
+
+  document.getElementById('mainContent').style.display = 'block';
+  attachListener();
+});
+
+async function handleSignOut() {
+  if (confirm('Sign out?')) {
+    if (listenerRef) listenerRef.off();
+    await auth.signOut();
+    window.location.href = '../../index.html';
+  }
+}
+
+function toggleUserDropdown() {
+  const menu = document.getElementById('userDropdownMenu');
+  const btn = document.getElementById('userMenuBtn');
+  if (menu) { menu.classList.toggle('active'); if (btn) btn.classList.toggle('active'); }
+}
+document.addEventListener('click', function(e) {
+  const wrapper = document.querySelector('.user-menu-wrapper');
+  if (wrapper && !wrapper.contains(e.target)) {
+    const menu = document.getElementById('userDropdownMenu');
+    const btn = document.getElementById('userMenuBtn');
+    if (menu) menu.classList.remove('active');
+    if (btn) btn.classList.remove('active');
+  }
+});
+
+// ============================================================
+// LISTENER
+// ============================================================
+function attachListener() {
+  if (listenerRef) listenerRef.off();
+  listenerRef = database.ref('kasikazi_tasks');
+  listenerRef.on('value', snap => {
+    const data = snap.val() || {};
+    processMyTasks(data);
+  });
+}
+
+function processMyTasks(data) {
+  const all = Object.entries(data).map(([id, t]) => ({ id, ...t }));
+  myTasks = all.filter(t => t.claimedBy && t.claimedBy[currentUser.uid]);
+  render();
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  updateStats();
+  updateChips();
+  renderTabLists();
+  updateCharts();
+}
+
+function updateStats() {
+  const counts = { active: 0, review: 0, approved: 0 };
+  let earned = 0;
+
+  myTasks.forEach(t => {
+    const c = t.claimedBy[currentUser.uid];
+    const s = (c.status || 'claimed').toLowerCase();
+    const pay = Number(t.payRate) || 0;
+    if (s === 'approved') { counts.approved++; earned += pay; }
+    else if (s === 'submitted' || s === 'revision') counts.review++;
+    else counts.active++;
+  });
+
+  document.getElementById('statActive').textContent = counts.active;
+  document.getElementById('statReview').textContent = counts.review;
+  document.getElementById('statApproved').textContent = counts.approved;
+  document.getElementById('statEarned').textContent = earned.toLocaleString();
+
+  document.getElementById('badgeActive').textContent = counts.active;
+  document.getElementById('badgeReview').textContent = counts.review;
+  document.getElementById('badgeApproved').textContent = counts.approved;
+}
+
+function updateChips() {
+  const chips = document.getElementById('wsChips');
+  const mySuites = Object.keys(userPermissions).filter(k => userPermissions[k] === true && SUITE_CONFIG[k]);
+  if (mySuites.length === 0) { chips.innerHTML = ''; return; }
+
+  const counts = {};
+  myTasks.forEach(t => {
+    const ws = t.workspace || t.suite;
+    if (ws) counts[ws] = (counts[ws] || 0) + 1;
+  });
+
+  let html = `<button class="ws-chip ${currentSuiteFilter === 'all' ? 'active' : ''}" onclick="setSuiteFilter('all')">
+    <i class="fas fa-globe"></i> All <span class="count">${myTasks.length}</span>
+  </button>`;
+
+  html += mySuites.map(k => {
+    const cfg = SUITE_CONFIG[k];
+    const count = counts[k] || 0;
+    if (count === 0) return '';
+    return `<button class="ws-chip ${currentSuiteFilter === k ? 'active' : ''}" onclick="setSuiteFilter('${k}')">
+      <i class="fas ${cfg.icon}"></i> ${escapeHtml(cfg.name)} <span class="count">${count}</span>
+    </button>`;
+  }).join('');
+
+  chips.innerHTML = html;
+}
+
+window.setSuiteFilter = function(k) {
+  currentSuiteFilter = k;
+  updateChips();
+  renderTabLists();
+};
+
+function filterBySuite(list) {
+  if (currentSuiteFilter === 'all') return list;
+  return list.filter(t => (t.workspace || t.suite) === currentSuiteFilter);
+}
+
+function renderTabLists() {
+  const active = filterBySuite(myTasks.filter(t => {
+    const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
+    return s === 'claimed' || s === 'working';
+  }));
+  const review = filterBySuite(myTasks.filter(t => {
+    const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
+    return s === 'submitted' || s === 'revision';
+  }));
+  const approved = filterBySuite(myTasks.filter(t => {
+    return (t.claimedBy[currentUser.uid].status || '').toLowerCase() === 'approved';
+  }));
+
+  document.getElementById('activeList').innerHTML = renderTaskList(active, 'active');
+  document.getElementById('reviewList').innerHTML = renderTaskList(review, 'review');
+  document.getElementById('approvedList').innerHTML = renderTaskList(approved, 'approved');
+}
+
+function renderTaskList(list, mode) {
+  if (list.length === 0) {
+    const msgs = {
+      active: { title: 'No active tasks', desc: 'Claim tasks from the Open Board to see them here.' },
+      review: { title: 'Nothing in review', desc: 'Submitted tasks appear here while waiting for admin review.' },
+      approved: { title: 'No approved tasks yet', desc: 'Completed tasks you\'ve earned on will appear here.' }
+    };
+    const m = msgs[mode] || { title: 'No tasks', desc: '' };
+    return `<div class="empty-data">
+      <i class="fas fa-inbox"></i>
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+      ${mode === 'active' ? '<a href="index.html" class="btn btn-brand" style="margin-top:1rem;"><i class="fas fa-bullhorn"></i> Browse Open Board</a>' : ''}
+    </div>`;
+  }
+
+  return list.map(t => {
+    const cfg = SUITE_CONFIG[t.workspace || t.suite] || { name: 'Suite', icon: 'fa-cube', color: '#0891b2', bgColor: '#cffafe' };
+    const c = t.claimedBy[currentUser.uid];
+    const s = (c.status || 'claimed').toLowerCase();
+    const pay = `KES ${Number(t.payRate || 0).toLocaleString()}`;
+    const due = t.dueDate ? formatDate(t.dueDate) : '—';
+
+    const badgeMap = {
+      'claimed': 'badge-claimed', 'working': 'badge-working',
+      'submitted': 'badge-submitted', 'revision': 'badge-revision',
+      'approved': 'badge-approved'
+    };
+    const labelMap = {
+      'claimed': 'Just Claimed', 'working': 'Working',
+      'submitted': 'In Review', 'revision': 'Needs Revision',
+      'approved': 'Approved'
+    };
+
+    let hint = 'View details';
+    let hintIcon = 'fa-eye';
+    if (s === 'claimed') { hint = 'Start Task'; hintIcon = 'fa-play'; }
+    else if (s === 'working') { hint = 'Mark Complete'; hintIcon = 'fa-check'; }
+    else if (s === 'submitted') { hint = 'Awaiting Review'; hintIcon = 'fa-clock'; }
+    else if (s === 'revision') { hint = 'Fix & Resubmit'; hintIcon = 'fa-redo'; }
+    else if (s === 'approved') { hint = 'Completed'; hintIcon = 'fa-check-double'; }
+
+    return `
+      <div class="task-row" onclick="viewTask('${t.id}')">
+        <div class="task-row-icon" style="background:${cfg.bgColor};color:${cfg.color};"><i class="fas ${cfg.icon}"></i></div>
+        <div class="task-row-body">
+          <div class="task-row-title">${escapeHtml(t.title || 'Untitled')}</div>
+          <div class="task-row-meta">
+            <span><i class="fas fa-tag"></i> ${escapeHtml(t.category || '—')}</span>
+            <span><i class="fas fa-calendar"></i> Due ${escapeHtml(due)}</span>
+            <span><i class="fas fa-user"></i> ${escapeHtml(t.clientName || 'KazInni')}</span>
+          </div>
+          <div class="task-action-hint" style="margin-top:0.4rem;">
+            <i class="fas ${hintIcon}"></i> ${hint}
+          </div>
+        </div>
+        <div class="task-row-right">
+          <span class="task-row-pay">${pay}</span>
+          <span class="badge ${badgeMap[s] || 'badge-claimed'}">${labelMap[s] || s}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
+// CHARTS
+// ============================================================
+function updateCharts() {
+  try {
+    const now = new Date();
+    const weeks = [];
+    for (let i = 7; i >= 0; i--) {
+      const weekStart = new Date(now);
+      weekStart.setDate(weekStart.getDate() - (weekStart.getDay() + 7 * i));
+      weekStart.setHours(0, 0, 0, 0);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekEnd.getDate() + 7);
+      const count = myTasks.filter(t => {
+        const c = t.claimedBy[currentUser.uid];
+        const at = c.claimedAt || 0;
+        return at >= weekStart.getTime() && at < weekEnd.getTime();
+      }).length;
+      weeks.push({ label: `${weekStart.getMonth() + 1}/${weekStart.getDate()}`, count });
+    }
+
+    if (weeklyChart) weeklyChart.destroy();
+    const ctx1 = document.getElementById('weeklyChart').getContext('2d');
+    weeklyChart = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: weeks.map(w => w.label),
+        datasets: [{
+          data: weeks.map(w => w.count),
+          backgroundColor: 'rgba(8,145,178,0.7)',
+          borderColor: '#0891b2',
+          borderWidth: 2,
+          borderRadius: 8,
+          maxBarThickness: 40
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        }
+      }
+    });
+
+    const counts = { active: 0, review: 0, approved: 0 };
+    myTasks.forEach(t => {
+      const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
+      if (s === 'approved') counts.approved++;
+      else if (s === 'submitted' || s === 'revision') counts.review++;
+      else counts.active++;
+    });
+
+    const total = counts.active + counts.review + counts.approved;
+    if (statusChart) statusChart.destroy();
+    const ctx2 = document.getElementById('statusChart').getContext('2d');
+    statusChart = new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        labels: ['Active', 'In Review', 'Approved'],
+        datasets: [{
+          data: total === 0 ? [1] : [counts.active, counts.review, counts.approved],
+          backgroundColor: total === 0 ? ['#e5e7eb'] : ['#0891b2', '#8b5cf6', '#10b981'],
+          borderWidth: 2, borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '60%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { padding: 12, usePointStyle: true, font: { size: 10 } }
+          }
+        }
+      }
+    });
+  } catch (e) { console.warn('Chart error:', e); }
+}
+
+// ============================================================
+// TABS
+// ============================================================
+window.switchTab = function(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
+};
+
+// ============================================================
+// TASK DETAIL MODAL
+// ============================================================
+window.viewTask = function(taskId) {
+  const t = myTasks.find(x => x.id === taskId);
+  if (!t) { showToast('Task not found', 'error'); return; }
+  currentDetailTask = t;
+
+  const cfg = SUITE_CONFIG[t.workspace || t.suite] || { name: 'Suite', icon: 'fa-cube', color: '#0891b2', bgColor: '#cffafe' };
+  const c = t.claimedBy[currentUser.uid];
+  const s = (c.status || 'claimed').toLowerCase();
+  const due = t.dueDate ? formatDate(t.dueDate) : '—';
+
+  document.getElementById('detailTitle').textContent = t.title || 'Untitled Task';
+  document.getElementById('detailMeta').innerHTML = `
+    <span><i class="fas ${cfg.icon}"></i> ${escapeHtml(cfg.name)}</span>
+    <span><i class="fas fa-tag"></i> ${escapeHtml(t.category || 'General')}</span>
+  `;
+
+  // Timeline
+  const timelineSteps = [
+    { key: 'claimed', label: 'Claimed', icon: 'fa-hand-sparkles' },
+    { key: 'working', label: 'Working', icon: 'fa-play' },
+    { key: 'submitted', label: 'Submitted', icon: 'fa-paper-plane' },
+    { key: 'approved', label: 'Approved', icon: 'fa-check' }
+  ];
+  const statusOrder = ['claimed', 'working', 'submitted', 'approved'];
+  let displayStatus = s === 'revision' ? 'submitted' : s;
+  const currentIdx = statusOrder.indexOf(displayStatus);
+  const isRevision = s === 'revision';
+
+  let timelineHtml = '<div class="progress-timeline">';
+  timelineSteps.forEach((step, i) => {
+    let cls = '';
+    if (isRevision) {
+      // On revision, show claimed+working as done, submitted as current (revision state)
+      if (i < 2) cls = 'done';
+      else if (i === 2) cls = 'current';
+    } else {
+      if (i < currentIdx) cls = 'done';
+      else if (i === currentIdx) cls = 'current';
+    }
+    timelineHtml += `
+      <div class="progress-step ${cls}">
+        <div class="line"></div>
+        <div class="dot"><i class="fas ${cls === 'done' ? 'fa-check' : step.icon}"></i></div>
+        <div class="label">${step.label}</div>
+      </div>
+    `;
+  });
+  timelineHtml += '</div>';
+
+  // Submission block
+  let submissionBlock = '';
+  if (c.submittedAt) {
+    const links = Array.isArray(c.submissionLinks) ? c.submissionLinks : (c.submissionLinks ? [c.submissionLinks] : []);
+    submissionBlock = `
+      <div class="modal-section">
+        <div class="modal-section-title"><i class="fas fa-paper-plane"></i> Your Submission</div>
+        <div class="submission-box">
+          ${links.length ? `
+            <div class="links">
+              ${links.map(l => `<a href="${escapeHtml(l)}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> ${escapeHtml(l)}</a>`).join('')}
+            </div>
+          ` : ''}
+          ${c.submissionNotes ? `<div class="note">"${escapeHtml(c.submissionNotes)}"</div>` : ''}
+          <div class="meta">
+            <span><i class="fas fa-clock"></i> Submitted ${getTimeAgo(c.submittedAt)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Reviewer note
+  let reviewerBlock = '';
+  if (isRevision && c.reviewNote) {
+    reviewerBlock = `
+      <div class="action-banner danger">
+        <i class="fas fa-comment-dots"></i>
+        <div><strong>Reviewer feedback:</strong><br>${escapeHtml(c.reviewNote)}</div>
+      </div>
+    `;
+  }
+
+  // Action area
+  let actionHtml = '';
+  if (s === 'approved') {
+    actionHtml = `
+      <div class="action-banner success">
+        <i class="fas fa-check-circle"></i>
+        <div>
+          <strong>Task approved 🎉</strong><br>
+          Payment of KES ${Number(t.payRate || 0).toLocaleString()} will be processed within 48 hours.
+        </div>
+      </div>
+      <div class="action-row"><button class="modal-btn secondary" onclick="closeDetailModal()">Close</button></div>
+    `;
+  } else if (s === 'submitted') {
+    actionHtml = `
+      <div class="action-banner info">
+        <i class="fas fa-clock"></i>
+        <div><strong>Awaiting review</strong><br>Your submission is being reviewed. You'll see an update here when there's a decision.</div>
+      </div>
+      <div class="action-row"><button class="modal-btn secondary" onclick="closeDetailModal()">Close</button></div>
+    `;
+  } else if (isRevision) {
+    actionHtml = `
+      <div class="action-row">
+        <button class="modal-btn brand" onclick="openSubmitFromDetail()"><i class="fas fa-redo"></i> Fix & Resubmit</button>
+        <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
+      </div>
+    `;
+  } else if (s === 'working') {
+    actionHtml = `
+      <div class="action-row">
+        <button class="modal-btn brand" id="markCompleteBtn" onclick="markComplete()"><i class="fas fa-check"></i> Mark as Complete</button>
+        <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
+      </div>
+    `;
+  } else {
+    // claimed
+    actionHtml = `
+      <div class="action-banner info">
+        <i class="fas fa-info-circle"></i>
+        <div><strong>Ready to start?</strong><br>Read the brief above, then tap Start Task when you're ready to begin working.</div>
+      </div>
+      <div class="action-row">
+        <button class="modal-btn brand" id="startTaskBtn" onclick="startTask()"><i class="fas fa-play"></i> Start Task</button>
+        <button class="modal-btn secondary" onclick="closeDetailModal()">Not Now</button>
+      </div>
+    `;
+  }
+
+  document.getElementById('detailBody').innerHTML = `
+    ${timelineHtml}
+
+    <div class="modal-section" style="margin-top:1.2rem;">
+      <div class="modal-section-title"><i class="fas fa-file-pen"></i> Task Brief</div>
+      <p>${escapeHtml(t.notes || 'No description provided.')}</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-circle-info"></i> Details</div>
+      <div class="detail-list">
+        <div class="detail-item"><span class="label">Pay Rate</span><span class="value" style="font-family:var(--font-display);font-weight:700;color:var(--brand-dark);">KES ${Number(t.payRate || 0).toLocaleString()}</span></div>
+        <div class="detail-item"><span class="label">Category</span><span class="value">${escapeHtml(t.category || '—')}</span></div>
+        <div class="detail-item"><span class="label">Client</span><span class="value">${escapeHtml(t.clientName || '—')}</span></div>
+        <div class="detail-item"><span class="label">Due Date</span><span class="value">${escapeHtml(due)}</span></div>
+        <div class="detail-item"><span class="label">Claimed</span><span class="value">${c.claimedAt ? getTimeAgo(c.claimedAt) : '—'}</span></div>
+        ${t.jobLink ? `<div class="detail-item"><span class="label">Brief Link</span><span class="value"><a href="${escapeHtml(t.jobLink)}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Open Brief</a></span></div>` : ''}
+      </div>
+    </div>
+
+    ${submissionBlock}
+    ${reviewerBlock}
+    ${actionHtml}
+  `;
+
+  document.getElementById('detailModal').classList.add('active');
+  document.getElementById('detailModalOverlay').classList.add('active');
+};
+
+window.closeDetailModal = function() {
+  document.getElementById('detailModal').classList.remove('active');
+  document.getElementById('detailModalOverlay').classList.remove('active');
+};
+
+window.reopenDetail = function() {
+  if (currentDetailTask) viewTask(currentDetailTask.id);
+};
+
+// ============================================================
+// START TASK
+// ============================================================
+window.startTask = async function() {
+  const t = currentDetailTask;
+  if (!t) return;
+  if (!confirm(`Start working on "${t.title || 'this task'}"?`)) return;
+
+  const btn = document.getElementById('startTaskBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Starting…'; }
+
+  try {
+    await database.ref(`kasikazi_tasks/${t.id}/claimedBy/${currentUser.uid}`).update({
+      status: 'working',
+      startedAt: Date.now()
+    });
+    showToast('Task started. Good luck!', 'success');
+    closeDetailModal();
+  } catch (err) {
+    console.error(err);
+    showToast('Could not start: ' + err.message, 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-play"></i> Start Task'; }
+  }
+};
+
+// ============================================================
+// MARK COMPLETE → Submit
+// ============================================================
+window.markComplete = function() {
+  const t = currentDetailTask;
+  if (!t) return;
+  if (!confirm('Mark this task as complete? You\'ll then submit your work for review.')) return;
+  closeDetailModal();
+  openSubmitModal(t);
+};
+
+window.openSubmitFromDetail = function() {
+  const t = currentDetailTask;
+  if (!t) return;
+  closeDetailModal();
+  openSubmitModal(t);
+};
+
+// ============================================================
+// SUBMIT MODAL
+// ============================================================
+window.openSubmitModal = function(task) {
+  if (!task) return;
+  currentDetailTask = task;
+
+  document.getElementById('submitTaskId').value = task.id;
+  document.getElementById('submitNotes').value = '';
+  document.getElementById('submitMeta').innerHTML = `
+    <span><i class="fas fa-file-pen"></i> ${escapeHtml(task.title || 'Task')}</span>
+  `;
+
+  const container = document.getElementById('submitLinksContainer');
+  container.innerHTML = '';
+  const c = task.claimedBy[currentUser.uid];
+  const prevLinks = Array.isArray(c.submissionLinks) ? c.submissionLinks : [];
+  if (prevLinks.length > 0) {
+    prevLinks.forEach(l => addLinkField(l));
+  } else {
+    addLinkField('');
+  }
+  if (c.submissionNotes) document.getElementById('submitNotes').value = c.submissionNotes;
+
+  document.getElementById('submitModal').classList.add('active');
+  document.getElementById('submitModalOverlay').classList.add('active');
+};
+
+window.closeSubmitModal = function() {
+  document.getElementById('submitModal').classList.remove('active');
+  document.getElementById('submitModalOverlay').classList.remove('active');
+};
+
+window.addLinkField = function(value) {
+  const container = document.getElementById('submitLinksContainer');
+  const id = 'link_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+  const div = document.createElement('div');
+  div.className = 'link-input-row';
+  div.innerHTML = `
+    <input type="url" id="${id}" placeholder="https://drive.google.com/..." value="${escapeHtml(value || '')}">
+    <button type="button" class="link-remove-btn" onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>
+  `;
+  container.appendChild(div);
+};
+
+window.submitWork = async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const taskId = document.getElementById('submitTaskId').value;
+  const notes = document.getElementById('submitNotes').value.trim();
+
+  const linkInputs = document.querySelectorAll('#submitLinksContainer input[type="url"]');
+  const links = Array.from(linkInputs).map(inp => inp.value.trim()).filter(v => v.length > 0);
+
+  if (links.length === 0) { showToast('Please add at least one submission link', 'warning'); return; }
+  const invalid = links.filter(l => !/^https?:\/\//i.test(l));
+  if (invalid.length > 0) { showToast('Links must start with http:// or https://', 'warning'); return; }
+
+  const t = myTasks.find(x => x.id === taskId);
+  if (!t) { showToast('Task not found', 'error'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Submitting…';
+
+  try {
+    await database.ref(`kasikazi_tasks/${taskId}/claimedBy/${currentUser.uid}`).update({
+      status: 'submitted',
+      submittedAt: Date.now(),
+      submissionLinks: links,
+      submissionNotes: notes || ''
+    });
+
+    showToast('Work submitted! Your coordinator will review it shortly.', 'success');
+    closeSubmitModal();
+  } catch (err) {
+    console.error(err);
+    showToast('Could not submit: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit for Review';
+  }
+};
+
+// Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeDetailModal();
+    closeSubmitModal();
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  if (listenerRef) listenerRef.off();
+});
+</script>
+</body>
+</html>
