@@ -899,10 +899,10 @@ let currentUser = null;
 let currentTasker = null;
 let currentPerms = {};
 let notifications = [];
-let notifListenerRef = null;
+let notifRefs = [];
 
 // ============================================================
-// TOAST
+// UTILS
 // ============================================================
 function showToast(msg, type = 'success') {
   const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
@@ -924,6 +924,27 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d`;
+  if (hrs > 0) return `${hrs}h`;
+  if (mins > 0) return `${mins}m`;
+  return 'now';
+}
+
+function lighten(hex, percent) {
+  const num = parseInt(hex.replace('#',''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.min(255, (num >> 16) + amt);
+  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+  const B = Math.min(255, (num & 0x0000FF) + amt);
+  return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
+}
+
 // ============================================================
 // AUTH
 // ============================================================
@@ -933,15 +954,14 @@ auth.onAuthStateChanged(async (user) => {
     currentTasker = null;
     currentPerms = {};
     notifications = [];
-    detachNotifListener();
+    detachNotifListeners();
     renderSignedOut();
-    // Refresh launcher if open
     if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
     renderNotifications();
+    buildTicker();
     return;
   }
 
-  // Verify tasker
   try {
     const snap = await database.ref(`taskers/${user.uid}`).once('value');
     if (!snap.exists()) {
@@ -970,17 +990,13 @@ auth.onAuthStateChanged(async (user) => {
 
   currentUser = user;
   renderSignedIn(user, currentTasker);
-
-  // Attach notifications listener
-  attachNotifListener();
-  // Fetch task & payout info for notifications
-  fetchTaskNotifications();
+  attachNotifListeners();
 
   if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
 });
 
 // ============================================================
-// SIGNED OUT UI
+// SIGNED OUT
 // ============================================================
 function renderSignedOut() {
   const container = document.getElementById('headerAuthContainer');
@@ -1006,7 +1022,7 @@ function renderSignedOut() {
 }
 
 // ============================================================
-// SIGNED IN UI
+// SIGNED IN
 // ============================================================
 function renderSignedIn(user, tasker) {
   const container = document.getElementById('headerAuthContainer');
@@ -1169,98 +1185,91 @@ function closeNotifications() {
   if (panel) panel.classList.remove('active');
 }
 
-function attachNotifListener() {
-  detachNotifListener();
+function attachNotifListeners() {
+  detachNotifListeners();
   if (!currentUser) return;
 
-  // Watch the admin_logs for events related to me + watch my task updates
-  // Simpler: watch the whole ekazi_assigned_tasks + kasikazi_tasks + cashout_requests
-  // and filter client-side for my email
-
-  const email = (currentUser.email || '').toLowerCase();
   const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
 
-  // 1. Assigned tasks (FlexiKazi)
-  notifListenerRef = database.ref('ekazi_assigned_tasks');
-  notifListenerRef.on('value', snap => {
+  // 1. FlexiKazi tasks
+  const ref1 = database.ref('ekazi_assigned_tasks');
+  const cb1 = (snap) => {
     const data = snap.val() || {};
-    updateTaskNotifications(data, email);
-  });
+    updateFlexikaziNotifications(data, email);
+  };
+  ref1.on('value', cb1);
+  notifRefs.push({ ref: ref1, cb: cb1 });
 
   // 2. Kasikazi tasks
-  database.ref('kasikazi_tasks').on('value', snap => {
+  const ref2 = database.ref('kasikazi_tasks');
+  const cb2 = (snap) => {
     const data = snap.val() || {};
     updateKasikaziNotifications(data, uid);
-  });
+    buildTicker();
+  };
+  ref2.on('value', cb2);
+  notifRefs.push({ ref: ref2, cb: cb2 });
 
   // 3. Payouts
-  database.ref('cashout_requests').on('value', snap => {
+  const ref3 = database.ref('cashout_requests');
+  const cb3 = (snap) => {
     const data = snap.val() || {};
     updatePayoutNotifications(data, uid);
-  });
-
-  // 4. KazInni notifications node (if exists)
-  database.ref(`kazinni_notifications/${uid}`).on('value', snap => {
-    const data = snap.val() || {};
-    const list = Object.entries(data).map(([id, n]) => ({ id, ...n }));
-    if (list.length > 0) {
-      notifications = list.slice(-20).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-      renderNotifications();
-    }
-  });
+    buildTicker();
+  };
+  ref3.on('value', cb3);
+  notifRefs.push({ ref: ref3, cb: cb3 });
 }
 
-function detachNotifListener() {
-  try {
-    if (notifListenerRef) notifListenerRef.off();
-    database.ref('ekazi_assigned_tasks').off();
-    database.ref('kasikazi_tasks').off();
-    database.ref('cashout_requests').off();
-    if (currentUser) database.ref(`kazinni_notifications/${currentUser.uid}`).off();
-  } catch (e) {}
+function detachNotifListeners() {
+  notifRefs.forEach(({ ref, cb }) => {
+    try { ref.off('value', cb); } catch (e) {}
+  });
+  notifRefs = [];
 }
 
-function updateTaskNotifications(tasks, email) {
+function updateFlexikaziNotifications(tasks, email) {
   const mine = Object.entries(tasks)
     .filter(([_, t]) => (t.taskerEmail || '').toLowerCase() === email)
     .map(([id, t]) => ({ id, ...t }));
 
-  // Recent events: approved, revision, new assigned
   const recent = mine
-    .filter(t => t.approvedAt || t.reviewedAt || t.assignedAt)
     .map(t => {
       const status = (t.status || '').toLowerCase();
       let type = 'info', icon = 'fa-info-circle', title = '', desc = '';
-      let ts = t.approvedAt || t.reviewedAt || t.assignedAt || 0;
+      let ts = 0;
 
       if (status === 'approved' || status === 'completed') {
+        ts = t.approvedAt || t.reviewedAt || 0;
         type = 'success'; icon = 'fa-circle-check';
         title = 'Task approved';
         desc = `${t.title || 'Your task'} — KES ${Number(t.payRate || 0).toLocaleString()}`;
       } else if (status === 'revision') {
+        ts = t.reviewedAt || 0;
         type = 'warning'; icon = 'fa-redo';
         title = 'Revision requested';
         desc = `${t.title || 'Task'}: ${t.reviewNote || 'Please review and resubmit.'}`;
       } else if (status === 'review' || status === 'submitted') {
+        ts = t.lastSubmittedAt || 0;
         type = 'info'; icon = 'fa-clock';
         title = 'Submission under review';
         desc = t.title || 'Your work was submitted.';
       } else if (status === 'assigned' || status === 'new') {
+        ts = t.assignedAt || 0;
         type = 'gold'; icon = 'fa-list-check';
         title = 'New task assigned';
         desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
       }
-      return { id: t.id, type, icon, title, desc, ts };
+      return { id: 'f_' + t.id, type, icon, title, desc, ts };
     })
     .filter(n => n.title && n.ts)
     .sort((a, b) => b.ts - a.ts)
     .slice(0, 8);
 
-  // Merge into notifications (dedupe by id)
   const map = new Map(notifications.map(n => [n.id, n]));
   recent.forEach(n => map.set(n.id, n));
   notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
-
   renderNotifications();
 }
 
@@ -1270,25 +1279,28 @@ function updateKasikaziNotifications(tasks, uid) {
     .map(([id, t]) => ({ id, ...t, claim: t.claimedBy[uid] }));
 
   const recent = mine
-    .filter(t => t.claim.reviewedAt || t.claim.submittedAt || t.claim.claimedAt)
     .map(t => {
-      const status = (t.claim.status || '').toLowerCase();
+      const status = (t.claim.status || 'claimed').toLowerCase();
       let type = 'info', icon = 'fa-bullhorn', title = '', desc = '';
-      let ts = t.claim.reviewedAt || t.claim.submittedAt || t.claim.claimedAt || 0;
+      let ts = 0;
 
       if (status === 'approved') {
+        ts = t.claim.reviewedAt || 0;
         type = 'success'; icon = 'fa-circle-check';
         title = 'Kasikazi task approved';
         desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
       } else if (status === 'revision') {
+        ts = t.claim.reviewedAt || 0;
         type = 'warning'; icon = 'fa-redo';
         title = 'Kasikazi revision requested';
         desc = `${t.title}: ${t.claim.reviewNote || 'Check the brief.'}`;
       } else if (status === 'submitted') {
+        ts = t.claim.submittedAt || 0;
         type = 'info'; icon = 'fa-clock';
         title = 'Kasikazi submission in review';
         desc = t.title;
       } else {
+        ts = t.claim.claimedAt || 0;
         type = 'gold'; icon = 'fa-hand-sparkles';
         title = 'Task claimed';
         desc = t.title;
@@ -1302,7 +1314,6 @@ function updateKasikaziNotifications(tasks, uid) {
   const map = new Map(notifications.map(n => [n.id, n]));
   recent.forEach(n => map.set(n.id, n));
   notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
-
   renderNotifications();
 }
 
@@ -1312,9 +1323,8 @@ function updatePayoutNotifications(payouts, uid) {
     .map(([id, p]) => ({ id, ...p }));
 
   const recent = mine
-    .filter(p => p.paidAt || p.approvedAt || p.timestamp)
     .map(p => {
-      const status = (p.status || '').toLowerCase();
+      const status = (p.status || 'pending').toLowerCase();
       let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '';
       let ts = p.paidAt || p.approvedAt || p.timestamp || 0;
 
@@ -1344,7 +1354,6 @@ function updatePayoutNotifications(payouts, uid) {
   const map = new Map(notifications.map(n => [n.id, n]));
   recent.forEach(n => map.set(n.id, n));
   notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
-
   renderNotifications();
 }
 
@@ -1375,9 +1384,9 @@ function renderNotifications() {
     return;
   }
 
-  // Count unread (lastSeenNotif stored in localStorage)
   const lastSeen = Number(localStorage.getItem('kazinni_notif_lastseen') || 0);
   const unread = notifications.filter(n => n.ts > lastSeen).length;
+
   if (unread > 0) {
     badge.textContent = unread > 9 ? '9+' : String(unread);
     badge.classList.add('visible');
@@ -1404,20 +1413,171 @@ function clearNotifications() {
   renderNotifications();
 }
 
-function getTimeAgo(ts) {
-  if (!ts) return '';
-  const diff = Date.now() - new Date(ts).getTime();
-  const mins = Math.floor(diff / 60000);
-  const hrs = Math.floor(mins / 60);
-  const days = Math.floor(hrs / 24);
-  if (days > 0) return `${days}d`;
-  if (hrs > 0) return `${hrs}h`;
-  if (mins > 0) return `${mins}m`;
-  return 'now';
-}
+// ============================================================
+// ACTIVITY TICKER
+// Signed out → generic phrases (no data leaked)
+// Signed in  → YOUR real activity (task titles, payouts)
+// ============================================================
+async function buildTicker() {
+  const track = document.getElementById('psTicker');
+  if (!track) return;
 
-function fetchTaskNotifications() {
-  // Already attached via listener — this is a no-op hook
+  // ---- Signed out ----
+  if (!currentUser) {
+    const items = [
+      { icon: 'fa-circle-check', text: 'A task was approved' },
+      { icon: 'fa-bullhorn',     text: 'New task posted on Kasikazi' },
+      { icon: 'fa-map-marker-alt', text: 'New business location mapped' },
+      { icon: 'fa-list-check',   text: 'A task was completed' },
+      { icon: 'fa-user-check',   text: 'A tasker joined the network' },
+      { icon: 'fa-circle-check', text: 'A submission was approved' },
+      { icon: 'fa-bullhorn',     text: 'A new suite went live' },
+      { icon: 'fa-list-check',   text: 'A tasker claimed an open task' }
+    ];
+    const html = items.map(it => `
+      <span class="ps-ticker-item">
+        <i class="fas ${it.icon}"></i>
+        <span>${it.text}</span>
+      </span>
+    `).join('');
+    track.innerHTML = html + html;
+    return;
+  }
+
+  // ---- Signed in: real events ----
+  const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
+  const items = [];
+
+  try {
+    // FlexiKazi
+    const assignedSnap = await database.ref('ekazi_assigned_tasks').once('value');
+    const assigned = assignedSnap.val() || {};
+    Object.entries(assigned).forEach(([id, t]) => {
+      if ((t.taskerEmail || '').toLowerCase() !== email) return;
+      const s = (t.status || '').toLowerCase();
+      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+      if (!ts) return;
+
+      if (s === 'approved' || s === 'completed') {
+        items.push({
+          icon: 'fa-circle-check',
+          html: `Your task was approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
+          ts
+        });
+      } else if (s === 'revision') {
+        items.push({
+          icon: 'fa-redo',
+          html: `Revision requested on <strong>${escapeHtml(t.title || 'task')}</strong>`,
+          ts
+        });
+      } else if (s === 'review' || s === 'submitted') {
+        items.push({
+          icon: 'fa-clock',
+          html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`,
+          ts
+        });
+      } else if (s === 'assigned' || s === 'new') {
+        items.push({
+          icon: 'fa-list-check',
+          html: `New task assigned: <strong>${escapeHtml(t.title || 'Task')}</strong> — KES ${Number(t.payRate || 0).toLocaleString()}`,
+          ts
+        });
+      }
+    });
+
+    // Kasikazi
+    const kasSnap = await database.ref('kasikazi_tasks').once('value');
+    const kasikazi = kasSnap.val() || {};
+    Object.entries(kasikazi).forEach(([id, t]) => {
+      const c = t.claimedBy && t.claimedBy[uid];
+      if (!c) return;
+      const s = (c.status || 'claimed').toLowerCase();
+      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
+      if (!ts) return;
+
+      if (s === 'approved') {
+        items.push({
+          icon: 'fa-circle-check',
+          html: `Kasikazi task approved: <strong>${escapeHtml(t.title || 'Task')}</strong> — KES ${Number(t.payRate || 0).toLocaleString()}`,
+          ts
+        });
+      } else if (s === 'revision') {
+        items.push({
+          icon: 'fa-redo',
+          html: `Revision requested on Kasikazi task <strong>${escapeHtml(t.title || 'Task')}</strong>`,
+          ts
+        });
+      } else if (s === 'submitted') {
+        items.push({
+          icon: 'fa-clock',
+          html: `Your Kasikazi submission is under review: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
+          ts
+        });
+      } else if (s === 'claimed') {
+        items.push({
+          icon: 'fa-hand-sparkles',
+          html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong> — KES ${Number(t.payRate || 0).toLocaleString()}`,
+          ts
+        });
+      }
+    });
+
+    // Payouts
+    const paySnap = await database.ref('cashout_requests').once('value');
+    const payouts = paySnap.val() || {};
+    Object.entries(payouts).forEach(([id, p]) => {
+      if (p.taskerId !== uid) return;
+      const s = (p.status || 'pending').toLowerCase();
+      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
+      if (!ts) return;
+
+      if (s === 'paid') {
+        items.push({
+          icon: 'fa-check-double',
+          html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong> to ${escapeHtml(p.phone || 'M-Pesa')}`,
+          ts
+        });
+      } else if (s === 'approved') {
+        items.push({
+          icon: 'fa-money-bill-wave',
+          html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong> — processing`,
+          ts
+        });
+      } else if (s === 'rejected') {
+        items.push({
+          icon: 'fa-times-circle',
+          html: `Payout rejected: KES ${Number(p.amount || 0).toLocaleString()}`,
+          ts
+        });
+      }
+    });
+  } catch (e) {
+    console.warn('Ticker build error:', e);
+  }
+
+  // Sort newest first
+  items.sort((a, b) => b.ts - a.ts);
+
+  if (items.length === 0) {
+    track.innerHTML = `
+      <span class="ps-ticker-item">
+        <i class="fas fa-satellite-dish"></i>
+        <span>No recent activity — claim a task or complete work to see it here</span>
+      </span>
+    `;
+    return;
+  }
+
+  const top = items.slice(0, 12);
+  const html = top.map(it => `
+    <span class="ps-ticker-item">
+      <i class="fas ${it.icon}"></i>
+      <span>${it.html}</span>
+    </span>
+  `).join('');
+
+  track.innerHTML = html + html;
 }
 
 // ============================================================
@@ -1463,7 +1623,7 @@ document.addEventListener('keydown', function(e) {
 
 async function handleSignOut() {
   try {
-    detachNotifListener();
+    detachNotifListeners();
     await auth.signOut();
     showToast('Signed out successfully', 'info');
   } catch (err) {
@@ -1472,7 +1632,7 @@ async function handleSignOut() {
 }
 
 // ============================================================
-// PUBLIC STATS
+// PUBLIC STATS (works for signed out and signed in)
 // ============================================================
 async function loadPublicStats() {
   try {
@@ -1511,7 +1671,7 @@ async function loadPublicStats() {
     // Live workspaces
     setStat('psWorkspaces', 14);
 
-    // Ticker
+    // Ticker — rebuild each time we refresh stats
     buildTicker();
   } catch (e) {
     console.warn('Stats error:', e);
@@ -1543,28 +1703,6 @@ function animateCount(el, target) {
   requestAnimationFrame(step);
 }
 
-function buildTicker() {
-  const track = document.getElementById('psTicker');
-  if (!track) return;
-  const items = [
-    { icon: 'fa-circle-check', text: 'A task was approved' },
-    { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
-    { icon: 'fa-map-marker-alt', text: 'New business location mapped' },
-    { icon: 'fa-list-check', text: 'A task was completed' },
-    { icon: 'fa-user-check', text: 'A tasker joined the network' },
-    { icon: 'fa-circle-check', text: 'A submission was approved' },
-    { icon: 'fa-bullhorn', text: 'A new suite went live' },
-    { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
-  ];
-  const html = items.map(it => `
-    <span class="ps-ticker-item">
-      <i class="fas ${it.icon}"></i>
-      <span>${it.text}</span>
-    </span>
-  `).join('');
-  track.innerHTML = html + html;
-}
-
 // ============================================================
 // LIVE CLOCK
 // ============================================================
@@ -1589,29 +1727,18 @@ function updatePublicClock() {
 }
 
 // ============================================================
-// UTILS
-// ============================================================
-function lighten(hex, percent) {
-  const num = parseInt(hex.replace('#',''), 16);
-  const amt = Math.round(2.55 * percent);
-  const R = Math.min(255, (num >> 16) + amt);
-  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
-  const B = Math.min(255, (num & 0x0000FF) + amt);
-  return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
-}
-
-// ============================================================
 // INIT — runs immediately, no auth required
 // ============================================================
 renderSignedOut();
 loadPublicStats();
 updatePublicClock();
+renderNotifications();
 
 setInterval(loadPublicStats, 60000);
 setInterval(updatePublicClock, 1000);
 
 window.addEventListener('beforeunload', () => {
-  detachNotifListener();
+  detachNotifListeners();
 });
 </script>
 </body>
