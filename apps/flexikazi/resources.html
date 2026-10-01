@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="theme-color" content="#ca8a04">
+    <meta name="color-scheme" content="light">
+    <title>FlexiKazi · Resources</title>
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&family=Chillax:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&f[]=chillax@400,500,600,700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #ca8a04;
+            --gold-dark: #a16207;
+            --gold-light: #fbbf24;
+            --gold-soft: #fef3c7;
+            --gold-glow: rgba(202, 138, 4, 0.12);
+            --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+            --ink: #0f0f1e;
+            --ink-3: #2d2d4a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --purple: #8b5cf6;
+            --emerald: #059669;
+            --pink: #ec4899;
+            --bg-primary: #ffffff;
+            --bg-secondary: #faf9f7;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border-light: #e9ecef;
+            --border-medium: #d1d5db;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.03);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --shadow-gold: 0 8px 32px rgba(202,138,4,0.15);
+            --nav-bg: rgba(255,255,255,0.98);
+            --card-bg: #ffffff;
+            --header-height: 80px;
+            --footer-height: 60px;
+            --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+            --font-heading: 'Satoshi', 'General Sans', sans-serif;
+            --font-body: 'General Sans', 'Outfit', sans-serif;
+            --font-accent: 'Chillax', 'Cabinet Grotesk', sans-serif;
+            --guide-color: #3b82f6;
+            --training-color: #8b5cf6;
+            --tool-color: #10b981;
+            --reference-color: #f59e0b;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(180deg, #fffbeb 0%, #ffffff 15%, #faf9f7 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: var(--footer-height);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+        .skeleton-card {
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm);
+        }
+        .skeleton-image { height: 140px; border-radius: 0; }
+        .skeleton-title { height: 1rem; width: 75%; margin-bottom: 0.5rem; }
+        .skeleton-desc { height: 0.8rem; width: 100%; margin-bottom: 0.3rem; }
+        .skeleton-desc-sm { height: 0.8rem; width: 60%; margin-bottom: 0.8rem; }
+        .skeleton-link { height: 0.9rem; width: 50%; }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: fixed; top: 0; width: 100%; height: var(--header-height);
+            background: var(--nav-bg); backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(202,138,4,0.08);
+            z-index: 1000; padding: 0 2.5rem;
+        }
+        .header-container {
+            max-width: 1400px; height: 100%; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+        .logo img {
+            height: 42px; width: auto;
+            filter: drop-shadow(0 3px 8px rgba(202,138,4,0.25));
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .logo:hover img { transform: scale(1.06) rotate(-2deg); }
+        .logo-text { display: flex; flex-direction: column; line-height: 1; }
+        .logo-text .kz {
+            font-size: 1.35rem; font-weight: 800;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-family: var(--font-display); letter-spacing: -0.6px;
+        }
+        .logo-text .fk {
+            font-size: 0.62rem; font-weight: 700; color: var(--gold-dark);
+            font-family: var(--font-heading); letter-spacing: 1.8px;
+            text-transform: uppercase; margin-top: 4px;
+        }
+
+        .nav-links { display: flex; gap: 0.4rem; align-items: center; margin-left: auto; }
+        .nav-link {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500;
+            font-family: var(--font-heading); letter-spacing: -0.01em;
+            padding: 0.55rem 0.95rem; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            transition: all 0.25s ease;
+        }
+        .nav-link i { font-size: 0.75rem; color: var(--gold); }
+        .nav-link:hover { color: var(--text-primary); background: rgba(202,138,4,0.08); }
+        .nav-link.active { color: var(--ink); background: rgba(202,138,4,0.12); }
+
+        .user-menu {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: white; border: 1px solid var(--border-light);
+            border-radius: 60px; padding: 0.3rem 0.5rem 0.3rem 1rem;
+            cursor: pointer; position: relative; transition: all 0.25s;
+            flex-shrink: 0;
+        }
+        .user-menu:hover { border-color: var(--gold); box-shadow: var(--shadow-md); }
+        .user-name {
+            color: var(--text-primary); font-weight: 600; font-size: 0.85rem;
+            font-family: var(--font-heading);
+            max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .user-avatar {
+            width: 34px; height: 34px;
+            background: var(--ink); color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-weight: 700; font-family: var(--font-heading);
+            font-size: 0.85rem;
+        }
+        .user-dropdown {
+            position: absolute; top: calc(100% + 10px); right: 0;
+            background: white; border: 1px solid var(--border-light);
+            border-radius: 16px; padding: 0.5rem; min-width: 200px;
+            opacity: 0; visibility: hidden;
+            transform: translateY(-10px); transition: all 0.2s ease;
+            z-index: 1001; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .user-menu:hover .user-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item {
+            padding: 0.7rem 1rem; color: var(--text-secondary);
+            border-radius: 12px; display: flex; align-items: center; gap: 0.5rem;
+            cursor: pointer; font-size: 0.85rem; font-family: var(--font-body);
+            transition: all 0.2s; border: none; background: none; width: 100%;
+            text-decoration: none;
+        }
+        .dropdown-item i { color: var(--text-muted); font-size: 0.85rem; }
+        .dropdown-item:hover { background: var(--bg-secondary); color: var(--text-primary); }
+        .dropdown-item:hover i { color: var(--gold); }
+        .dropdown-item.danger { color: var(--danger); }
+        .dropdown-item.danger i { color: var(--danger); }
+        .dropdown-item.danger:hover { background: #fef2f2; }
+
+        /* ===== MAIN ===== */
+        .main-content {
+            max-width: 1400px; margin: calc(var(--header-height) + 2rem) auto 2rem;
+            padding: 0 2.5rem;
+        }
+
+        .page-header { text-align: center; margin-bottom: 2rem; }
+        .page-header h1 {
+            font-size: 2.2rem; font-weight: 800; color: var(--text-primary);
+            margin-bottom: 0.3rem; font-family: var(--font-display);
+            letter-spacing: -0.02em;
+        }
+        .page-header h1 i { color: var(--gold); margin-right: 0.5rem; }
+        .page-header p {
+            color: var(--text-muted); font-size: 1rem; max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ===== ACCESS SCOPE BANNER ===== */
+        .scope-banner {
+            display: flex; align-items: center; gap: 0.8rem;
+            background: linear-gradient(135deg, rgba(202,138,4,0.08), rgba(251,191,36,0.05));
+            border: 1px solid rgba(202,138,4,0.18);
+            border-radius: 16px; padding: 0.9rem 1.2rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-heading); font-size: 0.85rem;
+            color: var(--gold-dark);
+        }
+        .scope-banner i { color: var(--gold); font-size: 1rem; }
+        .scope-banner strong { font-weight: 700; }
+        .scope-banner .scope-suites {
+            display: flex; flex-wrap: wrap; gap: 0.4rem; margin-left: 0.4rem;
+        }
+        .scope-chip {
+            padding: 0.15rem 0.65rem; border-radius: 100px;
+            background: white; color: var(--gold-dark);
+            font-size: 0.72rem; font-weight: 600;
+            border: 1px solid rgba(202,138,4,0.2);
+        }
+
+        /* ===== SEARCH ===== */
+        .search-container { max-width: 600px; margin: 2rem auto; position: relative; z-index: 100; }
+        .search-wrapper {
+            display: flex; align-items: center;
+            background: var(--bg-card); border: 1.5px solid var(--border-light);
+            border-radius: 50px; padding: 0.3rem 0.5rem 0.3rem 1.5rem;
+            box-shadow: var(--shadow-sm); transition: all 0.3s;
+        }
+        .search-wrapper:focus-within {
+            border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-glow);
+        }
+        .search-icon { color: var(--text-muted); font-size: 1rem; margin-right: 0.75rem; }
+        .search-input {
+            flex: 1; border: none; outline: none;
+            font-size: 0.95rem; font-family: var(--font-body);
+            color: var(--text-primary); background: transparent;
+            padding: 0.65rem 0;
+        }
+        .search-input::placeholder { color: var(--text-muted); font-size: 0.9rem; }
+        .search-clear {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: none; background: transparent; color: var(--text-muted);
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; transition: all 0.2s;
+        }
+        .search-clear:hover { background: var(--bg-secondary); color: var(--danger); }
+
+        .search-results-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+            background: var(--bg-card); border: 1px solid var(--border-light);
+            border-radius: 20px; box-shadow: var(--shadow-xl);
+            max-height: 350px; overflow-y: auto; display: none; z-index: 200;
+        }
+        .search-results-dropdown.active { display: block; }
+        .search-result-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1.5rem; cursor: pointer; transition: all 0.15s;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: var(--gold-soft); }
+        .search-result-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .search-result-icon.guide { background: rgba(59,130,246,0.1); color: var(--guide-color); }
+        .search-result-icon.training { background: rgba(139,92,246,0.1); color: var(--training-color); }
+        .search-result-icon.tool { background: rgba(16,185,129,0.1); color: var(--tool-color); }
+        .search-result-icon.reference { background: rgba(245,158,11,0.1); color: var(--reference-color); }
+        .search-result-info { flex: 1; min-width: 0; }
+        .search-result-title {
+            font-weight: 600; color: var(--text-primary); font-size: 0.9rem;
+            margin-bottom: 0.15rem; font-family: var(--font-heading);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .search-result-desc {
+            color: var(--text-muted); font-size: 0.78rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .search-result-badge {
+            padding: 0.2rem 0.7rem; border-radius: 20px;
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+            font-family: var(--font-heading); letter-spacing: 0.3px;
+        }
+        .badge-guide { background: rgba(59,130,246,0.1); color: var(--guide-color); }
+        .badge-training { background: rgba(139,92,246,0.1); color: var(--training-color); }
+        .badge-tool { background: rgba(16,185,129,0.1); color: var(--tool-color); }
+        .badge-reference { background: rgba(245,158,11,0.1); color: var(--reference-color); }
+        .no-results-dropdown {
+            padding: 2rem; text-align: center; color: var(--text-muted);
+        }
+        .no-results-dropdown i { font-size: 2rem; color: var(--gold); opacity: 0.3; margin-bottom: 0.5rem; }
+
+        /* ===== SECTIONS ===== */
+        .resources-section { margin-bottom: 3rem; }
+        .section-header {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+        .section-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+        }
+        .section-icon.guides { background: rgba(59,130,246,0.1); color: var(--guide-color); }
+        .section-icon.training { background: rgba(139,92,246,0.1); color: var(--training-color); }
+        .section-icon.tools { background: rgba(16,185,129,0.1); color: var(--tool-color); }
+        .section-icon.references { background: rgba(245,158,11,0.1); color: var(--reference-color); }
+        .section-header h2 {
+            font-size: 1.5rem; font-weight: 700; color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+        .section-header .section-count {
+            margin-left: auto; font-family: var(--font-heading);
+            font-size: 0.78rem; font-weight: 600;
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem; border-radius: 100px;
+            background: var(--bg-secondary);
+        }
+        .section-description {
+            color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;
+        }
+
+        /* ===== CARDS ===== */
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+        }
+        .resource-card {
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column; cursor: pointer;
+        }
+        .resource-card:hover {
+            transform: translateY(-4px); box-shadow: var(--shadow-lg);
+        }
+        .guides-section .resource-card:hover { border-color: var(--guide-color); }
+        .training-section .resource-card:hover { border-color: var(--training-color); }
+        .tools-section .resource-card:hover { border-color: var(--tool-color); }
+        .references-section .resource-card:hover { border-color: var(--reference-color); }
+        .card-image {
+            width: 100%; height: 140px; background: var(--bg-secondary);
+            position: relative; overflow: hidden;
+        }
+        .card-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.3s; display: block;
+        }
+        .resource-card:hover .card-image img { transform: scale(1.05); }
+        .image-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--gold-soft), #fef9e7);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 2.5rem;
+        }
+        .card-content {
+            padding: 1.2rem 1.3rem; flex: 1;
+            display: flex; flex-direction: column;
+        }
+        .card-title {
+            font-size: 1rem; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 0.4rem; font-family: var(--font-heading);
+        }
+        .card-description {
+            color: var(--text-muted); font-size: 0.82rem;
+            margin-bottom: 0.8rem; line-height: 1.5; flex: 1;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            color: var(--gold); text-decoration: none; font-size: 0.85rem;
+            font-weight: 600; margin-top: auto; padding: 0.5rem 0;
+            border-top: 1px solid var(--border-light);
+            transition: all 0.2s; font-family: var(--font-heading);
+        }
+        .card-link:hover { gap: 0.6rem; color: var(--gold-dark); }
+
+        /* ===== EMPTY ===== */
+        .empty-section {
+            text-align: center; padding: 3rem;
+            background: var(--bg-secondary); border-radius: 20px;
+            border: 1px dashed var(--border-medium); grid-column: 1 / -1;
+        }
+        .empty-section i { font-size: 3rem; color: var(--gold); margin-bottom: 1rem; opacity: 0.4; }
+        .empty-section h3 {
+            font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 0.4rem; font-family: var(--font-heading);
+        }
+        .empty-section p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ===== TOASTS ===== */
+        .toast-container { position: fixed; top:20px; right:20px; z-index:4000; }
+        .toast {
+            background: var(--card-bg); border: 1px solid var(--border-light);
+            border-radius: 14px; padding: 0.8rem 1.2rem; margin-bottom: 0.5rem;
+            box-shadow: var(--shadow-lg); display: flex; align-items: center;
+            gap: 0.75rem; min-width: 280px; animation: slideIn 0.2s ease;
+            font-family: var(--font-body); font-size: 0.85rem;
+        }
+        .toast.success { border-left: 3px solid var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-left: 3px solid var(--danger); }
+        .toast.error i { color: var(--danger); }
+        .toast.info { border-left: 3px solid var(--gold); }
+        .toast.info i { color: var(--gold); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: var(--footer-height);
+            background: rgba(250, 249, 247, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-light);
+            z-index: 999;
+        }
+        .footer-content {
+            max-width: 1400px; height: 100%; margin: 0 auto; padding: 0 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .footer-logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 0.85rem; color: var(--ink);
+            font-family: var(--font-heading);
+        }
+        .footer-logo i { color: var(--gold); }
+        .footer-links { display: flex; gap: 1.8rem; }
+        .footer-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.78rem; font-family: var(--font-heading);
+            font-weight: 500; transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--gold-dark); }
+        .footer-text {
+            color: var(--text-muted); font-size: 0.75rem;
+            font-family: var(--font-heading);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .cards-grid { grid-template-columns: repeat(3, 1fr); }
+            .nav-links { gap: 0.2rem; }
+            .nav-link { font-size: 0.78rem; padding: 0.5rem 0.7rem; }
+        }
+        @media (max-width: 900px) {
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .site-header { padding: 0 1.25rem; }
+            .main-content { padding: 0 1.25rem; }
+            .page-header h1 { font-size: 1.8rem; }
+            .nav-links { display: none; }
+            .footer-content { padding: 0 1.25rem; flex-direction: column; justify-content: center; gap: 0.2rem; }
+            .footer-links { display: none; }
+            .footer-logo { font-size: 0.78rem; }
+            .footer-text { font-size: 0.68rem; }
+        }
+        @media (max-width: 480px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="FlexiKazi">
+                <div class="logo-text">
+                    <span class="kz">FlexiKazi</span>
+                    <span class="fk">by KazInni</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profile</a>
+                <a href="index.html#suites" class="nav-link"><i class="fas fa-layer-group"></i> Suites</a>
+                <a href="resources.html" class="nav-link active"><i class="fas fa-book"></i> Resources</a>
+            </nav>
+            <div class="user-menu" id="userMenu">
+                <span class="user-name" id="userDisplayName">Loading...</span>
+                <div class="user-avatar" id="userAvatar">F</div>
+                <div class="user-dropdown">
+                    <a href="dashboard.html" class="dropdown-item"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="index.html#suites" class="dropdown-item"><i class="fas fa-layer-group"></i> My Suites</a>
+                    <button class="dropdown-item" onclick="refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    <button class="dropdown-item danger" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-book-open"></i> Resources & Learning</h1>
+            <p>Guides, tools, and reference materials for your suites</p>
+        </div>
+
+        <!-- Access scope banner -->
+        <div class="scope-banner" id="scopeBanner">
+            <i class="fas fa-shield-halved"></i>
+            <span><strong>Showing resources for:</strong></span>
+            <div class="scope-suites" id="scopeChips">
+                <span class="scope-chip">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput"
+                       placeholder="Search guides, tools, training..."
+                       oninput="handleSearchInput()"
+                       onfocus="handleSearchInput()"
+                       autocomplete="off">
+                <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results-dropdown" id="searchDropdown"></div>
+        </div>
+
+        <!-- Guides -->
+        <section class="resources-section guides-section">
+            <div class="section-header">
+                <div class="section-icon guides"><i class="fas fa-graduation-cap"></i></div>
+                <h2>Guides & Tutorials</h2>
+                <span class="section-count" id="guidesCount">—</span>
+            </div>
+            <p class="section-description">Step-by-step guides for your suite operations</p>
+            <div class="cards-grid" id="guidesContainer">
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div style="padding:1.2rem 1.3rem;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-desc"></div><div class="skeleton skeleton-desc-sm"></div><div class="skeleton skeleton-link"></div></div></div>
+            </div>
+        </section>
+
+        <!-- Training -->
+        <section class="resources-section training-section">
+            <div class="section-header">
+                <div class="section-icon training"><i class="fas fa-video"></i></div>
+                <h2>Training Materials</h2>
+                <span class="section-count" id="trainingCount">—</span>
+            </div>
+            <p class="section-description">Video courses and interactive training</p>
+            <div class="cards-grid" id="trainingContainer">
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div style="padding:1.2rem 1.3rem;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-desc"></div><div class="skeleton skeleton-desc-sm"></div><div class="skeleton skeleton-link"></div></div></div>
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section class="resources-section tools-section">
+            <div class="section-header">
+                <div class="section-icon tools"><i class="fas fa-tools"></i></div>
+                <h2>Working Tools</h2>
+                <span class="section-count" id="toolsCount">—</span>
+            </div>
+            <p class="section-description">Essential tools for your daily work</p>
+            <div class="cards-grid" id="toolsContainer">
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div style="padding:1.2rem 1.3rem;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-desc"></div><div class="skeleton skeleton-desc-sm"></div><div class="skeleton skeleton-link"></div></div></div>
+            </div>
+        </section>
+
+        <!-- References -->
+        <section class="resources-section references-section">
+            <div class="section-header">
+                <div class="section-icon references"><i class="fas fa-link"></i></div>
+                <h2>Reference Points</h2>
+                <span class="section-count" id="referencesCount">—</span>
+            </div>
+            <p class="section-description">Useful links, templates, and documentation</p>
+            <div class="cards-grid" id="referencesContainer">
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div style="padding:1.2rem 1.3rem;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-desc"></div><div class="skeleton skeleton-desc-sm"></div><div class="skeleton skeleton-link"></div></div></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo"><i class="fas fa-briefcase"></i> FlexiKazi · by KazInni</div>
+            <div class="footer-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="profile.html">Profile</a>
+                <a href="index.html#suites">Suites</a>
+            </div>
+            <div class="footer-text">&copy; 2026 Teleio Savour · Internal Use Only</div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // FIREBASE CONFIG
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+            authDomain: "mugera-e51cc.firebaseapp.com",
+            databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "mugera-e51cc"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+        // ============================================================
+        // SUITE CONFIG — must match the landing/dashboard config
+        // ============================================================
+        const SUITE_CONFIG = {
+            'brandinn': { name: 'BrandInn' },
+            'brandinn-print': { name: 'BrandInn Print' },
+            'dsog': { name: 'DSOG Fashion' },
+            'fusion-foods': { name: 'Fusion Foods' },
+            'mugs-n-dines': { name: 'Mugs n Dines' },
+            'heritage': { name: 'Heritage Ads' },
+            'heritage-marketplace': { name: 'Heritage Marketplace' },
+            'heritage-interiors': { name: 'Heritage Interiors' },
+            'digital-services': { name: 'E-Huduma' },
+            'pick-up': { name: 'Pick-Up Deliveries' },
+            'pick-me': { name: 'Pick-Me Rides' },
+            'workfit': { name: 'WorkFit' },
+            'epitome': { name: 'Epitome Reviews' },
+            'ekazi': { name: 'FlexiKazi Tasks' },
+            'latter-logistics': { name: 'Latter Logistics' }
+        };
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        let currentUser = null;
+        let taskerProfile = {};
+        let userPermissions = {};
+        let WORKSPACE_ALIASES = {};
+
+        const resources = { guides: [], training: [], tools: [], references: [] };
+        const allResources = [];
+        const activeListeners = [];
+        let initialLoadDone = false;
+
+        // ============================================================
+        // WORKSPACE ALIAS RESOLUTION
+        // Loads the resources/workspaces map so resources tagged with
+        // auto-keys still match user permission slugs.
+        // ============================================================
+        async function loadWorkspaceAliases() {
+            try {
+                const snap = await database.ref('resources/workspaces').once('value');
+                const data = snap.val() || {};
+                Object.entries(data).forEach(([autoKey, w]) => {
+                    let slug = w.workspaceId || w.slug;
+                    if (!slug && w.link) {
+                        const m = w.link.match(/\/workspaces\/([^\/]+)/);
+                        if (m) slug = m[1];
+                    }
+                    if (slug) WORKSPACE_ALIASES[autoKey] = slug;
+                });
+            } catch (e) {
+                console.warn('Could not load workspace aliases:', e);
+            }
+        }
+
+        // ============================================================
+        // ACCESS CHECK
+        // ============================================================
+        function userHasSuiteAccess(workspaceId) {
+            if (!workspaceId) return true;
+            if (workspaceId === 'global' || workspaceId === 'public' || workspaceId === '__public__') return true;
+            if (userPermissions[workspaceId] === true) return true;
+
+            // Alias resolution
+            const slug = WORKSPACE_ALIASES[workspaceId];
+            if (slug && userPermissions[slug] === true) return true;
+
+            return false;
+        }
+
+        function filterResourcesByPermission(items) {
+            return items.filter(item => userHasSuiteAccess(item.workspace));
+        }
+
+        // ============================================================
+        // HELPERS
+        // ============================================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+            toast.innerHTML = `<i class="fas fa-${icons[type] || 'info-circle'}"></i><span>${escapeHtml(message)}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = '0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function openResourceLink(link) {
+            if (link) window.open(link, '_blank');
+        }
+
+        // ============================================================
+        // SCOPE BANNER — shows which suites the tasker can see
+        // ============================================================
+        function renderScopeBanner() {
+            const chips = document.getElementById('scopeChips');
+            const allowedKeys = Object.keys(userPermissions).filter(
+                k => userPermissions[k] === true && SUITE_CONFIG[k]
+            );
+
+            if (allowedKeys.length === 0) {
+                chips.innerHTML = '<span class="scope-chip">No suites assigned</span>';
+                return;
+            }
+
+            chips.innerHTML = allowedKeys
+                .map(k => `<span class="scope-chip">${escapeHtml(SUITE_CONFIG[k].name)}</span>`)
+                .join('');
+        }
+
+        // ============================================================
+        // SEARCH
+        // ============================================================
+        function handleSearchInput() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const dropdown = document.getElementById('searchDropdown');
+            const clearBtn = document.getElementById('searchClear');
+
+            if (query.length === 0) {
+                dropdown.classList.remove('active');
+                clearBtn.style.display = 'none';
+                return;
+            }
+
+            clearBtn.style.display = 'flex';
+
+            const filtered = allResources.filter(item =>
+                (item.title || '').toLowerCase().includes(query) ||
+                (item.description || '').toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                dropdown.innerHTML = `<div class="no-results-dropdown"><i class="fas fa-search"></i><p>No results for "<strong>${escapeHtml(query)}</strong>"</p></div>`;
+            } else {
+                const typeIcons = { guides: 'book', training: 'video', tools: 'tools', references: 'link' };
+                const typeLabels = { guides: 'Guide', training: 'Training', tools: 'Tool', references: 'Reference' };
+                const iconClass = { guides: 'guide', training: 'training', tools: 'tool', references: 'reference' };
+                const badgeClass = { guides: 'badge-guide', training: 'badge-training', tools: 'badge-tool', references: 'badge-reference' };
+
+                dropdown.innerHTML = filtered.slice(0, 8).map(item => `
+                    <div class="search-result-item" onclick="openResourceLink('${escapeHtml(item.link)}')">
+                        <div class="search-result-icon ${iconClass[item.type] || 'guide'}">
+                            <i class="fas fa-${typeIcons[item.type] || 'book'}"></i>
+                        </div>
+                        <div class="search-result-info">
+                            <div class="search-result-title">${escapeHtml(item.title)}</div>
+                            <div class="search-result-desc">${escapeHtml(item.description)}</div>
+                        </div>
+                        <span class="search-result-badge ${badgeClass[item.type] || 'badge-guide'}">${typeLabels[item.type] || 'Resource'}</span>
+                    </div>
+                `).join('');
+            }
+            dropdown.classList.add('active');
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchClear').style.display = 'none';
+            document.getElementById('searchDropdown').classList.remove('active');
+            document.getElementById('searchInput').focus();
+        }
+
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container');
+            if (searchContainer && !searchContainer.contains(e.target)) {
+                document.getElementById('searchDropdown').classList.remove('active');
+            }
+        });
+
+        // ============================================================
+        // RENDER
+        // ============================================================
+        function createCardHtml(item, placeholderIcon) {
+            const imageHtml = item.image
+                ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\\'image-placeholder\\'><i class=\\'fas fa-${placeholderIcon}\\'></i></div>'">`
+                : `<div class="image-placeholder"><i class="fas fa-${placeholderIcon}"></i></div>`;
+
+            const linkLabels = { book: 'Access Guide', video: 'Start Learning', tools: 'Access Tool', link: 'View Reference' };
+
+            return `
+                <div class="resource-card" onclick="openResourceLink('${escapeHtml(item.link)}')">
+                    <div class="card-image">${imageHtml}</div>
+                    <div class="card-content">
+                        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+                        <p class="card-description">${escapeHtml(item.description)}</p>
+                        <span class="card-link">${linkLabels[placeholderIcon] || 'View Resource'} <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSection(containerId, items, placeholderIcon, countId) {
+            const container = document.getElementById(containerId);
+            const countEl = document.getElementById(countId);
+            if (!container) return;
+
+            if (countEl) countEl.textContent = `${items.length} item${items.length !== 1 ? 's' : ''}`;
+
+            if (!items || items.length === 0) {
+                const iconMap = { guidesContainer: 'book', trainingContainer: 'video', toolsContainer: 'tools', referencesContainer: 'link' };
+                container.innerHTML = `<div class="empty-section"><i class="fas fa-${iconMap[containerId] || 'book'}"></i><h3>No items available</h3><p>Resources for your suites will appear here.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(item => createCardHtml(item, placeholderIcon)).join('');
+        }
+
+        // ============================================================
+        // LIVE LISTENERS
+        // ============================================================
+        const SECTIONS = [
+            { ref: 'resources/guides',     key: 'guides',     type: 'guides',     container: 'guidesContainer',     icon: 'book',  countId: 'guidesCount' },
+            { ref: 'resources/training',   key: 'training',   type: 'training',   container: 'trainingContainer',   icon: 'video', countId: 'trainingCount' },
+            { ref: 'resources/tools',      key: 'tools',      type: 'tools',      container: 'toolsContainer',      icon: 'tools', countId: 'toolsCount' },
+            { ref: 'resources/references', key: 'references', type: 'references', container: 'referencesContainer', icon: 'link',  countId: 'referencesCount' }
+        ];
+
+        function attachLiveListeners() {
+            // Detach any previous listeners
+            activeListeners.forEach(fn => { try { fn(); } catch (e) {} });
+            activeListeners.length = 0;
+
+            SECTIONS.forEach(section => {
+                const ref = database.ref(section.ref);
+
+                // Initial one-time read
+                ref.once('value').then(snap => {
+                    updateSection(section, snap.val() || {});
+                }).catch(err => {
+                    console.warn(`[${section.type}] initial read failed:`, err?.message || err);
+                    updateSection(section, {});
+                });
+
+                // Live updates
+                const handler = ref.on('value', (snap) => {
+                    updateSection(section, snap.val() || {});
+                }, (err) => {
+                    console.warn(`[${section.type}] live read failed:`, err?.message || err);
+                    updateSection(section, {});
+                });
+
+                activeListeners.push(() => ref.off('value', handler));
+            });
+        }
+
+        function updateSection(section, data) {
+            const items = Object.entries(data)
+                .map(([id, item]) => ({ id, ...item, type: section.type }))
+                .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            const permitted = filterResourcesByPermission(items);
+            resources[section.key] = permitted;
+
+            // Rebuild global list
+            allResources.length = 0;
+            ['guides', 'training', 'tools', 'references'].forEach(k => {
+                allResources.push(...(resources[k] || []));
+            });
+
+            // Render this section
+            renderSection(section.container, permitted, section.icon, section.countId);
+        }
+
+        // ============================================================
+        // AUTH BOOT
+        // ============================================================
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            currentUser = user;
+            initialLoadDone = false;
+
+            // 1. Verify tasker registration
+            try {
+                const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
+                if (!taskerSnap.exists()) {
+                    showToast('This account is not registered as a FlexiKazi tasker.', 'error');
+                    setTimeout(() => auth.signOut(), 1500);
+                    return;
+                }
+                taskerProfile = taskerSnap.val();
+
+                if (taskerProfile.verified !== true && taskerProfile.status !== 'verified') {
+                    showToast('Your tasker account is pending verification.', 'error');
+                    setTimeout(() => auth.signOut(), 1500);
+                    return;
+                }
+            } catch (e) {
+                console.error('Tasker verification failed:', e);
+                await auth.signOut();
+                return;
+            }
+
+            // 2. Update header
+            const name = taskerProfile.name || user.displayName || user.email?.split('@')[0] || 'Tasker';
+            document.getElementById('userDisplayName').textContent = name;
+            document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+
+            // 3. Load workspace aliases (from resources/workspaces)
+            await loadWorkspaceAliases();
+
+            // 4. Load tasker permissions
+            try {
+                const permSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+                userPermissions = permSnap.exists() ? permSnap.val() : {};
+            } catch (e) {
+                userPermissions = {};
+            }
+
+            // 5. Render scope banner
+            renderScopeBanner();
+
+            // 6. Attach live listeners
+            attachLiveListeners();
+
+            // 7. Mark initial load done after a short delay
+            setTimeout(() => { initialLoadDone = true; }, 2000);
+        });
+
+        // ============================================================
+        // REFRESH / LOGOUT
+        // ============================================================
+        window.refreshData = async function() {
+            if (currentUser) {
+                await loadWorkspaceAliases();
+                try {
+                    const permSnap = await database.ref(`workspacePermissions/${currentUser.uid}`).once('value');
+                    userPermissions = permSnap.exists() ? permSnap.val() : {};
+                } catch (e) {}
+                renderScopeBanner();
+                attachLiveListeners();
+            }
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchClear').style.display = 'none';
+            document.getElementById('searchDropdown').classList.remove('active');
+            showToast('Resources refreshed!', 'success');
+        };
+
+        window.handleLogout = async function() {
+            if (confirm('Sign out?')) {
+                // Detach listeners before signing out
+                activeListeners.forEach(fn => { try { fn(); } catch (e) {} });
+                activeListeners.length = 0;
+                await auth.signOut();
+                window.location.href = 'index.html';
+            }
+        };
+
+        // Clean up on unload
+        window.addEventListener('beforeunload', () => {
+            activeListeners.forEach(fn => { try { fn(); } catch (e) {} });
+        });
+    </script>
+</body>
+</html>
