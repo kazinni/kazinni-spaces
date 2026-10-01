@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ca8a04">
+<meta name="color-scheme" content="light">
+<title>Wallet · KazInni Suite</title>
+<link rel="icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #ca8a04;
+  --gold-dark: #a16207;
+  --gold-light: #fbbf24;
+  --gold-soft: #fef3c7;
+  --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+  --brand: #0891b2;
+  --brand-dark: #0e7490;
+  --brand-soft: #cffafe;
+  --brand-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #22d3ee 100%);
+  --ink: #0f0f1e;
+  --ink-3: #2d2d4a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --purple: #8b5cf6;
+  --text-primary: #0f0f1e;
+  --text-secondary: #4a4a5e;
+  --text-muted: #6b7280;
+  --border-light: #e9ecef;
+  --border-medium: #d1d5db;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
+  --shadow-gold: 0 20px 50px rgba(202,138,4,0.22);
+  --shadow-gold-soft: 0 10px 30px rgba(202,138,4,0.12);
+  --nav-bg: rgba(255,255,255,0.9);
+  --header-height: 64px;
+  --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'General Sans', sans-serif;
+  --font-body: 'General Sans', 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: #faf9f7;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  letter-spacing: -0.005em;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); } 50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } }
+@keyframes pulseGold { 0%, 100% { box-shadow: 0 0 0 0 rgba(202,138,4,0.4); } 50% { box-shadow: 0 0 0 12px rgba(202,138,4,0); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* HEADER */
+.m365-nav {
+  position: sticky; top: 0; z-index: 1000;
+  height: var(--header-height);
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(15,15,30,0.06);
+  padding: 0 2rem;
+}
+.m365-nav-inner {
+  max-width: 1600px; height: 100%; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+}
+.m365-left { display: flex; align-items: center; gap: 2.2rem; flex: 1; min-width: 0; }
+.m365-logo {
+  display: flex; align-items: center; gap: 0.65rem;
+  text-decoration: none; flex-shrink: 0;
+}
+.m365-logo img { height: 34px; }
+.m365-logo-text {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.15rem; color: var(--ink);
+  letter-spacing: -0.5px; white-space: nowrap;
+}
+.m365-logo-text .accent {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.m365-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+.m365-icon-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 0.95rem;
+  transition: all 0.2s; position: relative;
+}
+.m365-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+
+.m365-avatar-btn {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+  border-radius: 100px; background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  transition: all 0.2s; font-family: var(--font-body);
+}
+.m365-avatar-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.m365-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gold-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading);
+  flex-shrink: 0;
+}
+.m365-avatar-name {
+  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-heading);
+}
+.m365-avatar-btn .fa-chevron-down { font-size: 0.55rem; color: var(--text-muted); transition: transform 0.25s; }
+.m365-avatar-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+.user-dropdown-wrap { position: relative; }
+.user-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 320px; background: white; border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+  animation: fadeUp 0.2s ease;
+}
+.user-dropdown.active { display: block; }
+.ud-header {
+  padding: 1.1rem 1.2rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.ud-header .m365-avatar { width: 42px; height: 42px; font-size: 1rem; }
+.ud-header-info { min-width: 0; flex: 1; }
+.ud-header-name { font-weight: 700; font-size: 0.92rem; color: var(--ink); font-family: var(--font-heading); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ud-header-email { font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ud-body { padding: 0.5rem; }
+.ud-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.9rem; border-radius: 8px;
+  cursor: pointer; transition: background 0.15s;
+  border: none; background: none; width: 100%;
+  text-align: left; font-size: 0.85rem;
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-body); font-weight: 500;
+}
+.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color 0.15s; }
+.ud-item:hover { background: #faf9f7; color: var(--ink); }
+.ud-item:hover i { color: var(--gold); }
+.ud-item.active { background: var(--gold-soft); color: var(--gold-dark); }
+.ud-item.active i { color: var(--gold-dark); }
+.ud-item.danger { color: var(--danger); }
+.ud-item.danger i { color: var(--danger); }
+.ud-item.danger:hover { background: #fef2f2; }
+.ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+.ud-section-label {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+}
+
+/* MAIN */
+.wallet-layout {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+}
+
+.page-title { margin-bottom: 2rem; }
+.page-title h1 {
+  font-family: var(--font-display);
+  font-size: 2.1rem; font-weight: 700;
+  letter-spacing: -0.035em; color: var(--ink); margin-bottom: 0.3rem;
+}
+.page-title p { color: var(--text-muted); font-size: 0.95rem; }
+
+/* HERO BALANCE CARD */
+.balance-card {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: 24px; padding: 2.2rem 2.5rem;
+  position: relative; overflow: hidden;
+  margin-bottom: 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 2rem;
+}
+.balance-card::before {
+  content: ''; position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(202,138,4,0.35) 0%, transparent 60%);
+  top: -220px; right: -160px; pointer-events: none;
+}
+.balance-card::after {
+  content: ''; position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 60%);
+  bottom: -180px; left: -100px; pointer-events: none;
+}
+.balance-left { position: relative; z-index: 2; min-width: 240px; }
+.balance-label {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 1.2px;
+  margin-bottom: 0.8rem;
+}
+.balance-label i { color: var(--gold-light); }
+.balance-value {
+  display: flex; align-items: baseline; gap: 0.5rem;
+  font-family: var(--font-display);
+  color: white; margin-bottom: 0.6rem;
+}
+.balance-value .currency {
+  font-size: 1.4rem; font-weight: 600;
+  color: rgba(255,255,255,0.5);
+}
+.balance-value .amount {
+  font-size: 3rem; font-weight: 700;
+  letter-spacing: -0.03em;
+  background: var(--gold-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation: pulseGold 4s ease-in-out infinite;
+}
+.balance-sub {
+  font-size: 0.85rem; color: rgba(255,255,255,0.55);
+}
+.balance-actions {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  position: relative; z-index: 2; min-width: 200px;
+}
+.balance-btn {
+  padding: 0.85rem 1.5rem;
+  border-radius: 100px;
+  border: none; cursor: pointer;
+  font-family: var(--font-heading);
+  font-weight: 600; font-size: 0.88rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.balance-btn-primary {
+  background: var(--gold-gradient); color: white;
+  box-shadow: 0 8px 24px rgba(202,138,4,0.35);
+}
+.balance-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(202,138,4,0.45); }
+.balance-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.balance-btn-ghost {
+  background: rgba(255,255,255,0.08); color: white;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.balance-btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.35); }
+
+/* STATS */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; margin-bottom: 2rem;
+}
+.stat-card {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 18px; padding: 1.3rem 1.4rem;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--gold-gradient);
+  transform: scaleY(0); transition: transform 0.3s;
+  border-radius: 0 4px 4px 0;
+}
+.stat-card:hover::before { transform: scaleY(1); }
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.stat-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; margin-bottom: 1rem;
+}
+.stat-value {
+  font-family: var(--font-display); font-size: 1.7rem;
+  font-weight: 700; color: var(--ink); line-height: 1;
+  letter-spacing: -0.03em; margin-bottom: 0.3rem;
+}
+.stat-value .unit { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-left: 0.2rem; }
+.stat-label {
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* TABS */
+.tab-nav {
+  display: flex; gap: 0.3rem; margin-bottom: 1.5rem;
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 100px; padding: 4px;
+  width: fit-content; max-width: 100%;
+  overflow-x: auto; scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 0.6rem 1.2rem; border-radius: 100px; border: none;
+  background: transparent; color: var(--text-muted);
+  cursor: pointer; font-weight: 600; font-size: 0.8rem;
+  white-space: nowrap; transition: all 0.25s;
+  font-family: var(--font-heading);
+  display: flex; align-items: center; gap: 6px;
+}
+.tab-btn.active { background: var(--gold-gradient); color: white; box-shadow: 0 4px 12px rgba(202,138,4,0.25); }
+.tab-badge { font-size: 0.62rem; padding: 1px 7px; border-radius: 10px; font-weight: 700; }
+.tab-btn.active .tab-badge { background: rgba(255,255,255,0.3); }
+.tab-btn:not(.active) .tab-badge { background: rgba(202,138,4,0.1); color: var(--gold-dark); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeUp 0.35s ease; }
+
+/* LEDGER CARD */
+.ledger-card {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 20px; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.ledger-header {
+  padding: 1.2rem 1.5rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.6rem;
+}
+.ledger-title {
+  font-family: var(--font-heading); font-size: 0.95rem;
+  font-weight: 700; color: var(--ink);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.ledger-title i { color: var(--gold); }
+.ledger-meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+}
+.ledger-list { padding: 0.5rem 0; }
+
+.ledger-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.2s;
+}
+.ledger-row:last-child { border-bottom: none; }
+.ledger-row:hover { background: #faf9f7; }
+
+.ledger-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; flex-shrink: 0;
+}
+.ledger-icon.flexikazi { background: linear-gradient(135deg, #10b981, #34d399); color: white; }
+.ledger-icon.kasikazi { background: linear-gradient(135deg, #0891b2, #22d3ee); color: white; }
+.ledger-icon.payout { background: linear-gradient(135deg, #ca8a04, #fbbf24); color: white; }
+.ledger-icon.bonus { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
+.ledger-icon.pending { background: linear-gradient(135deg, #6b7280, #9ca3af); color: white; }
+
+.ledger-body { flex: 1; min-width: 0; }
+.ledger-title-text {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 0.88rem; color: var(--text-primary);
+  margin-bottom: 0.15rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ledger-meta-text {
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+}
+.ledger-meta-text span { display: inline-flex; align-items: center; gap: 0.25rem; }
+.ledger-meta-text i { font-size: 0.6rem; }
+
+.ledger-right {
+  text-align: right; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;
+}
+.ledger-amount {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1rem; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ledger-amount.credit { color: var(--success); }
+.ledger-amount.debit { color: var(--danger); }
+.ledger-amount.pending { color: var(--text-muted); }
+.ledger-badge {
+  font-size: 0.6rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  padding: 0.15rem 0.5rem; border-radius: 100px;
+}
+.ledger-badge.confirmed { background: #d1fae5; color: #065f46; }
+.ledger-badge.pending { background: #fef3c7; color: #92400e; }
+.ledger-badge.processing { background: #dbeafe; color: #1e40af; }
+.ledger-badge.paid { background: #d1fae5; color: #065f46; }
+.ledger-badge.rejected { background: #fee2e2; color: #991b1b; }
+
+/* EMPTY */
+.empty-ledger {
+  text-align: center; padding: 3.5rem 2rem;
+  color: var(--text-muted);
+}
+.empty-ledger i {
+  font-size: 2.4rem; margin-bottom: 0.8rem;
+  color: var(--gold); opacity: 0.4; display: block;
+}
+.empty-ledger h3 {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 1rem; color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+.empty-ledger p { font-size: 0.85rem; max-width: 400px; margin: 0 auto; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,15,30,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 2000; display: none;
+}
+.modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+.modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white; border-radius: 24px;
+  padding: 2.2rem 2rem 2rem;
+  max-width: 460px; width: calc(100% - 2rem);
+  z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+  display: none; max-height: 90vh; overflow-y: auto;
+}
+.modal.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: none; border: none; font-size: 1rem;
+  cursor: pointer; color: var(--text-muted);
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
+.modal-header { text-align: center; margin-bottom: 1.6rem; }
+.modal-icon {
+  width: 60px; height: 60px; border-radius: 18px;
+  background: var(--gold-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin: 0 auto 1rem;
+  box-shadow: 0 12px 30px rgba(202,138,4,0.28);
+}
+.modal-header h3 {
+  font-family: var(--font-display); font-size: 1.4rem;
+  font-weight: 700; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 0.3rem;
+}
+.modal-header p { color: var(--text-muted); font-size: 0.85rem; }
+
+.form-group { margin-bottom: 1rem; }
+.form-label {
+  display: block; font-size: 0.75rem; font-weight: 600;
+  font-family: var(--font-heading); color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+.form-control {
+  width: 100%; padding: 0.85rem 1.1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px; font-size: 0.9rem;
+  font-family: var(--font-body); transition: all 0.2s;
+  background: #faf9f7;
+}
+.form-control:focus {
+  outline: none; border-color: var(--gold);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(202,138,4,0.08);
+}
+
+.amount-quick-select {
+  display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap;
+}
+.amount-chip {
+  padding: 0.45rem 0.9rem; border-radius: 100px;
+  background: white; border: 1.5px solid var(--border-light);
+  font-size: 0.75rem; font-weight: 600;
+  font-family: var(--font-heading);
+  cursor: pointer; transition: all 0.2s;
+  color: var(--text-secondary);
+}
+.amount-chip:hover { border-color: var(--gold); color: var(--gold-dark); }
+.amount-chip.active { background: var(--gold-gradient); color: white; border-color: transparent; }
+
+.modal-btn {
+  width: 100%; padding: 0.9rem;
+  background: var(--ink); color: white;
+  border: none; border-radius: 100px;
+  font-weight: 600; cursor: pointer;
+  font-family: var(--font-heading); font-size: 0.9rem;
+  transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  position: relative; overflow: hidden;
+}
+.modal-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold-gradient);
+  opacity: 0; transition: opacity 0.3s;
+}
+.modal-btn > * { position: relative; z-index: 1; }
+.modal-btn:hover { box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
+.modal-btn:hover::before { opacity: 1; }
+.modal-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+.modal-btn.secondary {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+  margin-top: 0.6rem;
+}
+.modal-btn.secondary::before { display: none; }
+.modal-btn.secondary:hover {
+  background: #faf9f7; border-color: var(--border-medium);
+  color: var(--text-primary); box-shadow: none;
+}
+
+/* TOASTS */
+.toast-container { position: fixed; top: 80px; right: 24px; z-index: 4000; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
+.toast {
+  background: var(--ink); color: white;
+  border-radius: 12px; padding: 0.85rem 1.15rem;
+  box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+  display: flex; align-items: center; gap: 0.65rem;
+  font-family: var(--font-heading); font-size: 0.85rem;
+  animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 360px; font-weight: 500; pointer-events: auto;
+}
+.toast i { font-size: 0.95rem; }
+.toast.success i { color: #34d399; }
+.toast.error i { color: #f87171; }
+.toast.info i { color: #fbbf24; }
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .m365-nav { padding: 0 1rem; }
+  .m365-avatar-name { display: none; }
+  .wallet-layout { padding: 1.5rem 1rem 4rem; }
+  .balance-card { padding: 1.8rem 1.5rem; }
+  .balance-value .amount { font-size: 2.4rem; }
+  .balance-actions { width: 100%; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .ledger-row { padding: 0.85rem 1rem; gap: 0.75rem; }
+  .ledger-icon { width: 36px; height: 36px; font-size: 0.85rem; }
+  .ledger-amount { font-size: 0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- HEADER -->
+<header class="m365-nav">
+  <div class="m365-nav-inner">
+    <div class="m365-left">
+      <a href="index.html" class="m365-logo">
+        <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="KazInni">
+        <span class="m365-logo-text">Kaz<span class="accent">Inni</span></span>
+      </a>
+    </div>
+    <div class="m365-right">
+      <button class="m365-icon-btn" title="Notifications" onclick="showToast('No new notifications', 'info')">
+        <i class="far fa-bell"></i>
+      </button>
+      <div id="headerAuthContainer">
+        <button class="m365-icon-btn" title="Loading…" disabled>
+          <i class="fas fa-circle-notch" style="animation:spin 1s linear infinite;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="wallet-layout" id="walletLayout" style="display:none;">
+
+  <div class="page-title">
+    <h1>Wallet</h1>
+    <p>Your earnings, payouts, and transaction history across KazInni.</p>
+  </div>
+
+  <!-- BALANCE CARD -->
+  <section class="balance-card">
+    <div class="balance-left">
+      <div class="balance-label">
+        <i class="fas fa-wallet"></i>
+        <span>Available Balance</span>
+      </div>
+      <div class="balance-value">
+        <span class="currency">KES</span>
+        <span class="amount" id="availableBalance">0</span>
+      </div>
+      <div class="balance-sub" id="balanceSub">Total earned across all apps</div>
+    </div>
+    <div class="balance-actions">
+      <button class="balance-btn balance-btn-primary" id="requestPayoutBtn" onclick="openPayoutModal()">
+        <i class="fas fa-money-bill-transfer"></i> Request Payout
+      </button>
+      <button class="balance-btn balance-btn-ghost" onclick="location.href='account-settings.html'">
+        <i class="fas fa-gear"></i> Payout Settings
+      </button>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#ecfdf5;color:#059669;">
+        <i class="fas fa-arrow-trend-up"></i>
+      </div>
+      <div class="stat-value" id="statTotalEarned">0<span class="unit">KES</span></div>
+      <div class="stat-label">Total Earned</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fef3c7;color:#ca8a04;">
+        <i class="fas fa-hourglass-half"></i>
+      </div>
+      <div class="stat-value" id="statPending">0<span class="unit">KES</span></div>
+      <div class="stat-label">Pending Approval</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#eff6ff;color:#2563eb;">
+        <i class="fas fa-money-bill-wave"></i>
+      </div>
+      <div class="stat-value" id="statPaidOut">0<span class="unit">KES</span></div>
+      <div class="stat-label">Paid Out</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f5f3ff;color:#7c3aed;">
+        <i class="fas fa-list-check"></i>
+      </div>
+      <div class="stat-value" id="statTasksCompleted">0</div>
+      <div class="stat-label">Tasks Completed</div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="all" onclick="switchTab('all')">
+      <i class="fas fa-list"></i> All Transactions
+    </button>
+    <button class="tab-btn" data-tab="earnings" onclick="switchTab('earnings')">
+      <i class="fas fa-plus-circle"></i> Earnings <span class="tab-badge" id="badgeEarnings">0</span>
+    </button>
+    <button class="tab-btn" data-tab="payouts" onclick="switchTab('payouts')">
+      <i class="fas fa-money-bill-transfer"></i> Payouts <span class="tab-badge" id="badgePayouts">0</span>
+    </button>
+  </div>
+
+  <!-- ALL -->
+  <div class="tab-content active" id="tab-all">
+    <div class="ledger-card">
+      <div class="ledger-header">
+        <div class="ledger-title"><i class="fas fa-receipt"></i> Transaction History</div>
+        <div class="ledger-meta" id="allMeta">Loading…</div>
+      </div>
+      <div class="ledger-list" id="allList">
+        <div class="empty-ledger">
+          <i class="fas fa-circle-notch fa-spin"></i>
+          <h3>Loading…</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EARNINGS -->
+  <div class="tab-content" id="tab-earnings">
+    <div class="ledger-card">
+      <div class="ledger-header">
+        <div class="ledger-title"><i class="fas fa-plus-circle"></i> Earnings</div>
+        <div class="ledger-meta" id="earningsMeta">Loading…</div>
+      </div>
+      <div class="ledger-list" id="earningsList"></div>
+    </div>
+  </div>
+
+  <!-- PAYOUTS -->
+  <div class="tab-content" id="tab-payouts">
+    <div class="ledger-card">
+      <div class="ledger-header">
+        <div class="ledger-title"><i class="fas fa-money-bill-transfer"></i> Payout Requests</div>
+        <div class="ledger-meta" id="payoutsMeta">Loading…</div>
+      </div>
+      <div class="ledger-list" id="payoutsList"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Access Denied -->
+<div class="wallet-layout" id="accessDenied" style="display:none;">
+  <div class="empty-ledger" style="margin-top:4rem; background:white; border-radius:24px; padding:4rem 2rem; border:1px solid var(--border-light);">
+    <i class="fas fa-lock"></i>
+    <h3>Sign in required</h3>
+    <p>You need to be signed in to view your wallet. Return to the KazInni Suite to continue.</p>
+    <a href="index.html" class="modal-btn" style="max-width:240px; margin:1.5rem auto 0; text-decoration:none;">
+      <i class="fas fa-arrow-left"></i> Back to KazInni Suite
+    </a>
+  </div>
+</div>
+
+<!-- PAYOUT MODAL -->
+<div class="modal-overlay" id="payoutModalOverlay" onclick="closePayoutModal()"></div>
+<div class="modal" id="payoutModal">
+  <button class="modal-close" onclick="closePayoutModal()"><i class="fas fa-times"></i></button>
+  <div class="modal-header">
+    <div class="modal-icon"><i class="fas fa-money-bill-transfer"></i></div>
+    <h3>Request Payout</h3>
+    <p>Send your available balance to M-Pesa</p>
+  </div>
+  <form id="payoutForm" onsubmit="submitPayout(event)">
+    <div class="form-group">
+      <label class="form-label">Amount (KES)</label>
+      <input type="number" class="form-control" id="payoutAmount" min="100" step="50" placeholder="e.g. 5000" required>
+      <div class="amount-quick-select" style="margin-top:0.6rem;">
+        <button type="button" class="amount-chip" onclick="setQuickAmount(1000)">1,000</button>
+        <button type="button" class="amount-chip" onclick="setQuickAmount(2500)">2,500</button>
+        <button type="button" class="amount-chip" onclick="setQuickAmount(5000)">5,000</button>
+        <button type="button" class="amount-chip" id="quickMax" onclick="setQuickAmount('max')">Max</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">M-Pesa Phone Number</label>
+      <input type="tel" class="form-control" id="payoutPhone" placeholder="e.g. 0727211191" required>
+    </div>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin: 0.6rem 0 1rem; line-height: 1.5;">
+      <i class="fas fa-info-circle" style="color:var(--gold);"></i>
+      Requests are typically processed within 48 hours. Minimum KES 100.
+    </p>
+    <button type="submit" class="modal-btn" id="payoutSubmitBtn">
+      <i class="fas fa-paper-plane"></i> Submit Request
+    </button>
+    <button type="button" class="modal-btn secondary" onclick="closePayoutModal()">Cancel</button>
+  </form>
+</div>
+
+<script>
+// ============================================================
+// FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+// ============================================================
+// STATE
+// ============================================================
+let currentUser = null;
+let currentTasker = null;
+let availableBalance = 0;
+let transactions = [];      // unified ledger
+let pendingAmount = 0;
+let paidOutAmount = 0;
+let tasksCompleted = 0;
+let totalEarned = 0;
+
+// ============================================================
+// UTILS
+// ============================================================
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  const d = document.createElement('div');
+  d.textContent = String(s);
+  return d.innerHTML;
+}
+function formatMoney(n) {
+  return Number(n || 0).toLocaleString();
+}
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'Just now';
+}
+function showToast(msg, type = 'info') {
+  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || 'info-circle'}"></i><span>${escapeHtml(msg)}</span>`;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transition = '0.35s';
+    setTimeout(() => t.remove(), 350);
+  }, 4000);
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+auth.onAuthStateChanged(async (user) => {
+  if (!user) {
+    document.getElementById('walletLayout').style.display = 'none';
+    document.getElementById('accessDenied').style.display = 'block';
+    return;
+  }
+  currentUser = user;
+
+  // Verify tasker
+  try {
+    const snap = await database.ref(`taskers/${user.uid}`).once('value');
+    if (!snap.exists()) {
+      document.getElementById('walletLayout').style.display = 'none';
+      document.getElementById('accessDenied').style.display = 'block';
+      return;
+    }
+    currentTasker = snap.val();
+    if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
+      document.getElementById('walletLayout').style.display = 'none';
+      document.getElementById('accessDenied').style.display = 'block';
+      return;
+    }
+  } catch (e) {
+    document.getElementById('walletLayout').style.display = 'none';
+    document.getElementById('accessDenied').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('walletLayout').style.display = 'block';
+  renderHeaderAvatar();
+
+  // Load everything
+  await loadWallet();
+
+  // Live updates
+  attachLiveListeners();
+});
+
+function renderHeaderAvatar() {
+  const displayName = currentTasker.name || currentUser.email.split('@')[0] || 'User';
+  const initials = displayName.split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+  const email = currentUser.email || '';
+
+  const container = document.getElementById('headerAuthContainer');
+  container.innerHTML = `
+    <div class="user-dropdown-wrap" id="userMenuWrap">
+      <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
+        <div class="m365-avatar">${initials}</div>
+        <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="ud-header">
+          <div class="m365-avatar">${initials}</div>
+          <div class="ud-header-info">
+            <div class="ud-header-name">${escapeHtml(displayName)}</div>
+            <div class="ud-header-email">${escapeHtml(email)}</div>
+          </div>
+        </div>
+        <div class="ud-body">
+          <div class="ud-section-label">Account</div>
+          <a href="account.html" class="ud-item"><i class="fas fa-user"></i> My account</a>
+          <a href="account-settings.html" class="ud-item"><i class="fas fa-gear"></i> Account settings</a>
+          <a href="wallet.html" class="ud-item active"><i class="fas fa-wallet"></i> Wallet</a>
+          <div class="ud-divider"></div>
+          <div class="ud-section-label">Apps</div>
+          <a href="apps/flexikazi/" class="ud-item"><i class="fas fa-list-check"></i> FlexiKazi</a>
+          <a href="apps/kasikazi/" class="ud-item"><i class="fas fa-bullhorn"></i> Kasikazi</a>
+          <div class="ud-divider"></div>
+          <button class="ud-item danger" onclick="handleSignOut()">
+            <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleUserDropdown(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('userDropdown');
+  const btn = document.getElementById('userMenuBtn');
+  if (!menu) return;
+  menu.classList.toggle('active');
+  if (btn) btn.classList.toggle('active');
+}
+function closeUserDropdown() {
+  const menu = document.getElementById('userDropdown');
+  const btn = document.getElementById('userMenuBtn');
+  if (menu) menu.classList.remove('active');
+  if (btn) btn.classList.remove('active');
+}
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('userMenuWrap');
+  if (wrap && !wrap.contains(e.target)) closeUserDropdown();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeUserDropdown();
+    closePayoutModal();
+  }
+});
+
+async function handleSignOut() {
+  try {
+    await auth.signOut();
+    showToast('Signed out successfully', 'info');
+    setTimeout(() => { window.location.href = 'index.html'; }, 400);
+  } catch (err) {
+    showToast('Error signing out', 'error');
+  }
+}
+
+// ============================================================
+// LOAD WALLET
+// ============================================================
+async function loadWallet() {
+  try {
+    const uid = currentUser.uid;
+    const email = (currentUser.email || '').toLowerCase();
+
+    // 1. Assigned tasks (FlexiKazi)
+    const assignedSnap = await database.ref('ekazi_assigned_tasks').once('value');
+    const assigned = assignedSnap.val() || {};
+
+    // 2. Kasikazi tasks (claimed by me)
+    const kasikaziSnap = await database.ref('kasikazi_tasks').once('value');
+    const kasikazi = kasikaziSnap.val() || {};
+
+    // 3. My payout requests
+    const payoutsSnap = await database.ref('cashout_requests').once('value');
+    const payouts = payoutsSnap.val() || {};
+
+    // Build unified ledger
+    transactions = [];
+
+    // Add assigned tasks
+    Object.entries(assigned).forEach(([id, t]) => {
+      const taskerEmail = (t.taskerEmail || '').toLowerCase();
+      if (taskerEmail !== email) return;
+
+      const status = (t.status || '').toLowerCase();
+      const amount = Number(t.payRate) || 0;
+      let txStatus = 'pending';
+      let txType = 'earning';
+
+      if (status === 'approved' || status === 'completed') {
+        txStatus = 'confirmed';
+        totalEarned += amount;
+        tasksCompleted++;
+        if (!t.paidOut) availableBalance += amount;
+      } else if (status === 'review' || status === 'submitted' || status === 'revision') {
+        pendingAmount += amount;
+      }
+
+      transactions.push({
+        id,
+        source: 'flexikazi',
+        sourceLabel: 'FlexiKazi',
+        title: t.title || t.category || 'Assigned task',
+        status: txStatus,
+        appStatus: status,
+        amount,
+        direction: 'credit',
+        timestamp: t.approvedAt || t.lastSubmittedAt || t.assignedAt || 0,
+        meta: t.clientName || t.workspace || ''
+      });
+    });
+
+    // Add Kasikazi claims
+    Object.entries(kasikazi).forEach(([id, t]) => {
+      const claim = t.claimedBy && t.claimedBy[uid];
+      if (!claim) return;
+
+      const status = (claim.status || 'claimed').toLowerCase();
+      const amount = Number(t.payRate) || 0;
+      let txStatus = 'pending';
+      let txType = 'earning';
+
+      if (status === 'approved') {
+        txStatus = 'confirmed';
+        totalEarned += amount;
+        tasksCompleted++;
+        if (!claim.paidOut) availableBalance += amount;
+      } else if (status === 'submitted' || status === 'revision') {
+        pendingAmount += amount;
+      }
+
+      transactions.push({
+        id,
+        source: 'kasikazi',
+        sourceLabel: 'Kasikazi',
+        title: t.title || t.category || 'Claimed task',
+        status: txStatus,
+        appStatus: status,
+        amount,
+        direction: 'credit',
+        timestamp: claim.reviewedAt || claim.submittedAt || claim.claimedAt || 0,
+        meta: t.clientName || t.workspace || ''
+      });
+    });
+
+    // Add payouts
+    Object.entries(payouts).forEach(([id, p]) => {
+      const taskerId = p.taskerId;
+      if (taskerId !== uid) return;
+
+      const status = (p.status || 'pending').toLowerCase();
+      const amount = Number(p.amount) || 0;
+
+      if (status === 'paid') {
+        paidOutAmount += amount;
+        availableBalance -= amount;   // paid out is no longer available
+      } else if (status === 'approved') {
+        // Approved but not yet paid — reserved
+        availableBalance -= amount;
+      }
+      // 'pending' doesn't deduct until approved
+
+      transactions.push({
+        id,
+        source: 'payout',
+        sourceLabel: 'Payout',
+        title: 'M-Pesa Payout',
+        status: status === 'paid' ? 'paid' : (status === 'approved' ? 'processing' : (status === 'rejected' ? 'rejected' : 'pending')),
+        appStatus: status,
+        amount,
+        direction: 'debit',
+        timestamp: p.paidAt || p.approvedAt || p.timestamp || 0,
+        meta: p.phone || ''
+      });
+    });
+
+    // Sort newest first
+    transactions.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+    // Prevent negative balance
+    if (availableBalance < 0) availableBalance = 0;
+
+    // Render
+    renderStats();
+    renderLedger();
+    updatePayoutButton();
+  } catch (e) {
+    console.error('Wallet load error:', e);
+    showToast('Could not load wallet data', 'error');
+  }
+}
+
+function attachLiveListeners() {
+  const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
+
+  // Assigned tasks live
+  database.ref('ekazi_assigned_tasks').on('value', () => {
+    loadWallet();
+  });
+  // Kasikazi live
+  database.ref('kasikazi_tasks').on('value', () => {
+    loadWallet();
+  });
+  // Payouts live
+  database.ref('cashout_requests').on('value', () => {
+    loadWallet();
+  });
+}
+
+// ============================================================
+// RENDER STATS
+// ============================================================
+function renderStats() {
+  document.getElementById('availableBalance').textContent = formatMoney(availableBalance);
+  document.getElementById('balanceSub').textContent = totalEarned > 0
+    ? `Total earned: KES ${formatMoney(totalEarned)} · ${tasksCompleted} task${tasksCompleted !== 1 ? 's' : ''} completed`
+    : 'Total earned across all apps';
+
+  document.getElementById('statTotalEarned').innerHTML = formatMoney(totalEarned) + '<span class="unit">KES</span>';
+  document.getElementById('statPending').innerHTML = formatMoney(pendingAmount) + '<span class="unit">KES</span>';
+  document.getElementById('statPaidOut').innerHTML = formatMoney(paidOutAmount) + '<span class="unit">KES</span>';
+  document.getElementById('statTasksCompleted').textContent = tasksCompleted;
+
+  // Tab badges
+  const earningsCount = transactions.filter(t => t.direction === 'credit').length;
+  const payoutsCount = transactions.filter(t => t.direction === 'debit').length;
+  document.getElementById('badgeEarnings').textContent = earningsCount;
+  document.getElementById('badgePayouts').textContent = payoutsCount;
+}
+
+// ============================================================
+// RENDER LEDGER
+// ============================================================
+function renderLedger() {
+  const all = transactions;
+  const earnings = transactions.filter(t => t.direction === 'credit');
+  const payouts = transactions.filter(t => t.direction === 'debit');
+
+  document.getElementById('allMeta').textContent = all.length
+    ? `${all.length} transaction${all.length !== 1 ? 's' : ''}`
+    : 'No transactions yet';
+  document.getElementById('earningsMeta').textContent = earnings.length
+    ? `${earnings.length} earning${earnings.length !== 1 ? 's' : ''}`
+    : 'No earnings yet';
+  document.getElementById('payoutsMeta').textContent = payouts.length
+    ? `${payouts.length} payout request${payouts.length !== 1 ? 's' : ''}`
+    : 'No payouts yet';
+
+  document.getElementById('allList').innerHTML = renderLedgerList(all, 'all');
+  document.getElementById('earningsList').innerHTML = renderLedgerList(earnings, 'earnings');
+  document.getElementById('payoutsList').innerHTML = renderLedgerList(payouts, 'payouts');
+}
+
+function renderLedgerList(list, mode) {
+  if (list.length === 0) {
+    const msgs = {
+      all: { icon: 'fa-receipt', title: 'No transactions yet', desc: 'Your earnings and payouts will appear here.' },
+      earnings: { icon: 'fa-coins', title: 'No earnings yet', desc: 'Complete tasks in FlexiKazi or Kasikazi to earn.' },
+      payouts: { icon: 'fa-money-bill-transfer', title: 'No payouts yet', desc: 'Request a payout when you have available balance.' }
+    };
+    const m = msgs[mode] || msgs.all;
+    return `<div class="empty-ledger">
+      <i class="fas ${m.icon}"></i>
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+    </div>`;
+  }
+
+  return list.map(tx => {
+    const iconClass = tx.source === 'flexikazi' ? 'flexikazi' :
+                     (tx.source === 'kasikazi' ? 'kasikazi' : 'payout');
+    const icon = tx.source === 'flexikazi' ? 'fa-list-check' :
+                 (tx.source === 'kasikazi' ? 'fa-bullhorn' : 'fa-money-bill-transfer');
+
+    const amountClass = tx.direction === 'credit' ? 'credit' : 'debit';
+    const amountSign = tx.direction === 'credit' ? '+' : '−';
+
+    return `
+      <div class="ledger-row">
+        <div class="ledger-icon ${iconClass}">
+          <i class="fas ${icon}"></i>
+        </div>
+        <div class="ledger-body">
+          <div class="ledger-title-text">${escapeHtml(tx.title)}</div>
+          <div class="ledger-meta-text">
+            <span><i class="fas fa-layer-group"></i> ${escapeHtml(tx.sourceLabel)}</span>
+            ${tx.meta ? `<span><i class="fas fa-user"></i> ${escapeHtml(tx.meta)}</span>` : ''}
+            ${tx.timestamp ? `<span><i class="fas fa-clock"></i> ${getTimeAgo(tx.timestamp)}</span>` : ''}
+          </div>
+        </div>
+        <div class="ledger-right">
+          <div class="ledger-amount ${amountClass}">${amountSign} KES ${formatMoney(tx.amount)}</div>
+          <span class="ledger-badge ${tx.status}">${escapeHtml(tx.status)}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updatePayoutButton() {
+  const btn = document.getElementById('requestPayoutBtn');
+  if (availableBalance < 100) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-money-bill-transfer"></i> Min. KES 100 to request';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-money-bill-transfer"></i> Request Payout';
+  }
+}
+
+// ============================================================
+// TABS
+// ============================================================
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
+};
+
+// ============================================================
+// PAYOUT MODAL
+// ============================================================
+window.openPayoutModal = function() {
+  if (availableBalance < 100) {
+    showToast('Minimum payout is KES 100', 'warning');
+    return;
+  }
+  document.getElementById('payoutAmount').value = '';
+  document.getElementById('payoutPhone').value = currentTasker.payoutPhone || currentTasker.phone || '';
+  document.getElementById('payoutModal').classList.add('active');
+  document.getElementById('payoutModalOverlay').classList.add('active');
+};
+
+window.closePayoutModal = function() {
+  document.getElementById('payoutModal').classList.remove('active');
+  document.getElementById('payoutModalOverlay').classList.remove('active');
+  document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+};
+
+window.setQuickAmount = function(amount) {
+  const input = document.getElementById('payoutAmount');
+  const maxChip = document.getElementById('quickMax');
+  document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+
+  if (amount === 'max') {
+    input.value = Math.floor(availableBalance / 50) * 50;
+    maxChip.classList.add('active');
+  } else {
+    input.value = Math.min(amount, availableBalance);
+    event.target.classList.add('active');
+  }
+};
+
+window.submitPayout = async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('payoutSubmitBtn');
+  const amount = Number(document.getElementById('payoutAmount').value);
+  const phone = document.getElementById('payoutPhone').value.trim();
+
+  if (!amount || amount < 100) { showToast('Minimum payout is KES 100', 'warning'); return; }
+  if (amount > availableBalance) { showToast('Amount exceeds available balance', 'warning'); return; }
+  if (!phone) { showToast('Please enter your M-Pesa phone number', 'warning'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Submitting…';
+
+  try {
+    const id = database.ref('cashout_requests').push().key;
+    await database.ref(`cashout_requests/${id}`).set({
+      amount,
+      phone,
+      paymentMethod: 'M-Pesa',
+      status: 'pending',
+      taskerId: currentUser.uid,
+      taskerName: currentTasker.name || currentUser.email,
+      taskerEmail: currentUser.email,
+      taskerPhone: phone,
+      requestedAt: new Date().toISOString(),
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+      source: 'wallet'
+    });
+
+    // Log
+    const logId = database.ref('admin_logs').push().key;
+    await database.ref(`admin_logs/${logId}`).set({
+      action: 'payout_requested',
+      actor: currentUser.email,
+      actorUid: currentUser.uid,
+      targetId: id,
+      amount,
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    showToast('Payout request submitted! Processing within 48h.', 'success');
+    closePayoutModal();
+    // Live listener will refresh
+  } catch (err) {
+    console.error('Payout error:', err);
+    showToast('Could not submit: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
+  }
+};
+
+// Clean up
+window.addEventListener('beforeunload', () => {
+  try {
+    database.ref('ekazi_assigned_tasks').off();
+    database.ref('kasikazi_tasks').off();
+    database.ref('cashout_requests').off();
+  } catch (e) {}
+});
+</script>
+</body>
+</html>
