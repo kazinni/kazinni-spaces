@@ -459,14 +459,12 @@ async function markComplete(index) {
 
     if (allDone && !existing.completedAt) {
       payload.completedAt = Date.now();
-      // issueCertificate now comes from learning-core.js — no local def needed
       try {
-        await window.issueCertificate(courseId, courseTitle);
+        await window.issueCertificate(course.id, course.title);
       } catch (certErr) {
         console.error('[course] Certificate issuance failed:', certErr);
-        // Don't block the course completion — user can retry from certificate page later
       }
-      await sendNotification(courseId, courseTitle, progress, true);
+      await sendNotification(course.id, course.title, progress, true);
     }
 
     await ref.set(payload);
