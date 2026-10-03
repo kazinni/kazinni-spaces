@@ -5,18 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<title>KazInni Suite</title>
+<meta name="description" content="KazInni Suite — one account, every workspace. Sign in once to access FlexiKazi, Kasikazi and the entire KazInni ecosystem.">
+<title>KazInni Suite — One account, every workspace</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ============================================================
+   RESET & TOKENS
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
   --gold: #ca8a04;
@@ -30,8 +34,7 @@
   --success: #10b981;
   --danger: #ef4444;
   --info: #3b82f6;
-  --purple: #8b5cf6;
-  --pink: #ec4899;
+  --warning: #f59e0b;
   --text-primary: #0f0f1e;
   --text-secondary: #4a4a5e;
   --text-muted: #6b7280;
@@ -45,31 +48,46 @@
   --nav-bg: rgba(255, 255, 255, 0.9);
   --header-height: 64px;
   --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
-  --font-heading: 'Satoshi', 'General Sans', sans-serif;
-  --font-body: 'General Sans', 'Outfit', sans-serif;
+  --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 100px;
+  --transition-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
   font-family: var(--font-body);
   background: #ffffff;
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   letter-spacing: -0.005em;
   display: flex;
   flex-direction: column;
 }
 
-/* MAIN CONTENT WRAPPER — pushes footer down */
-.main-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+.main-wrap { flex: 1; display: flex; flex-direction: column; }
 
-/* ANIMATIONS */
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -93,22 +111,41 @@ body {
   from { opacity: 0; transform: translateY(-8px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
 @keyframes orb {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(40px, -40px) scale(1.05); }
   66% { transform: translate(-30px, 30px) scale(0.95); }
 }
 
-/* HEADER */
+/* ============================================================
+   FOCUS VISIBLE
+   ============================================================ */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
 .m365-nav {
   position: sticky; top: 0; z-index: 1000;
   height: var(--header-height);
   background: var(--nav-bg);
   backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(15,15,30,0.06);
   padding: 0 2rem;
 }
@@ -131,12 +168,12 @@ body {
   letter-spacing: -0.4px;
   white-space: nowrap;
   line-height: 1.2;
-  display: inline-block;
   padding: 2px 0;
 }
 .m365-logo-text .accent {
   background: var(--gold-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   padding: 1px 0;
 }
@@ -145,7 +182,7 @@ body {
   color: var(--text-secondary); text-decoration: none;
   font-size: 0.85rem; font-weight: 500;
   font-family: var(--font-heading);
-  transition: color 0.2s; padding: 0.4rem 0; white-space: nowrap;
+  transition: color var(--transition-fast); padding: 0.4rem 0; white-space: nowrap;
   position: relative; cursor: pointer; background: none; border: none;
 }
 .m365-nav-link:hover { color: var(--ink); }
@@ -160,42 +197,45 @@ body {
   background: transparent; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-secondary); font-size: 0.95rem;
-  transition: all 0.2s; position: relative;
+  transition: all var(--transition-fast); position: relative;
 }
 .m365-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
 .m365-icon-btn .dot-badge {
   position: absolute; top: 6px; right: 6px;
   min-width: 16px; height: 16px; padding: 0 4px;
   background: var(--danger); color: white;
-  border-radius: 100px; border: 2px solid white;
+  border-radius: var(--radius-pill); border: 2px solid white;
   font-size: 0.55rem; font-weight: 800;
   display: none; align-items: center; justify-content: center;
   font-family: var(--font-heading);
 }
 .m365-icon-btn .dot-badge.visible { display: flex; }
 .m365-waffle {
-  width: 38px; height: 38px; border-radius: 8px;
+  width: 38px; height: 38px; border-radius: var(--radius-sm);
   background: transparent; border: none; cursor: pointer;
   display: grid; grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 3px; padding: 9px;
-  transition: background 0.2s; position: relative;
+  transition: background var(--transition-fast); position: relative;
 }
 .m365-waffle:hover { background: rgba(15,15,30,0.05); }
 .m365-waffle.active { background: rgba(202,138,4,0.12); }
 .m365-waffle span {
   width: 4px; height: 4px; border-radius: 1px;
-  background: var(--text-secondary); transition: background 0.2s;
+  background: var(--text-secondary); transition: background var(--transition-fast);
+  justify-self: center; align-self: center;
 }
 .m365-waffle.active span { background: var(--gold); }
 
-/* LAUNCHER */
+/* ============================================================
+   LAUNCHER PANEL
+   ============================================================ */
 .launcher-panel {
   position: fixed;
   top: calc(var(--header-height) + 8px);
   right: 2rem;
   width: 400px; max-width: calc(100vw - 2rem);
-  background: white; border-radius: 16px;
+  background: white; border-radius: var(--radius-lg);
   box-shadow: 0 30px 80px rgba(15,15,30,0.2), 0 6px 20px rgba(15,15,30,0.08);
   border: 1px solid var(--border-light);
   overflow: hidden; z-index: 1100; display: none;
@@ -219,7 +259,7 @@ body {
 .lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 .lp-app {
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.65rem;
-  padding: 0.9rem 0.9rem 0.85rem; border-radius: 12px;
+  padding: 0.9rem 0.9rem 0.85rem; border-radius: var(--radius-md);
   background: transparent; border: 1px solid transparent;
   text-decoration: none; color: inherit;
   transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -231,7 +271,7 @@ body {
   width: 40px; height: 40px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.05rem; color: white; flex-shrink: 0;
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform var(--transition-base);
 }
 .lp-app:hover .lp-app-icon { transform: scale(1.08) rotate(3deg); }
 .lp-app-name {
@@ -244,26 +284,34 @@ body {
   position: absolute; top: 0.7rem; right: 0.7rem;
   font-size: 0.58rem; font-weight: 700; font-family: var(--font-heading);
   text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.18rem 0.5rem; border-radius: 100px;
+  padding: 0.18rem 0.5rem; border-radius: var(--radius-pill);
   background: var(--gold-soft); color: var(--gold-dark);
 }
 .lp-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-heading); }
 .lp-empty i { display: block; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.6rem; }
+.lp-skeleton {
+  height: 96px; border-radius: var(--radius-md);
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
 .lp-footer {
   padding: 0.85rem 1.2rem; border-top: 1px solid var(--border-light);
   background: #faf9f7; display: flex; align-items: center; justify-content: space-between;
   font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading);
 }
-.lp-footer a { color: var(--gold-dark); text-decoration: none; font-weight: 600; transition: color 0.2s; cursor: pointer; }
+.lp-footer a { color: var(--gold-dark); text-decoration: none; font-weight: 600; transition: color var(--transition-fast); cursor: pointer; }
 .lp-footer a:hover { color: var(--gold); }
 
-/* NOTIFICATIONS PANEL */
+/* ============================================================
+   NOTIFICATIONS PANEL
+   ============================================================ */
 .notif-panel {
   position: fixed;
   top: calc(var(--header-height) + 8px);
   right: 2rem;
   width: 400px; max-width: calc(100vw - 2rem);
-  background: white; border-radius: 16px;
+  background: white; border-radius: var(--radius-lg);
   box-shadow: 0 30px 80px rgba(15,15,30,0.2), 0 6px 20px rgba(15,15,30,0.08);
   border: 1px solid var(--border-light);
   overflow: hidden; z-index: 1100; display: none;
@@ -285,12 +333,15 @@ body {
   font-family: var(--font-heading);
 }
 .notif-clear:hover { color: var(--gold); }
+.notif-clear:disabled { opacity: 0.4; cursor: not-allowed; }
 .notif-body { max-height: 420px; overflow-y: auto; padding: 0.5rem; }
 .notif-item {
   display: flex; align-items: flex-start; gap: 0.8rem;
   padding: 0.85rem 0.9rem;
-  border-radius: 12px; transition: background 0.15s;
+  border-radius: var(--radius-md); transition: background var(--transition-fast);
   cursor: pointer; text-decoration: none; color: inherit;
+  width: 100%; border: none; background: none; text-align: left;
+  font-family: var(--font-body);
 }
 .notif-item:hover { background: #faf9f7; }
 .notif-item.unread { background: rgba(202,138,4,0.06); }
@@ -331,14 +382,15 @@ body {
   opacity: 0.4; display: block; margin-bottom: 0.6rem;
 }
 
-/* HERO — LANDING (clean, premium) */
+/* ============================================================
+   HERO
+   ============================================================ */
 .landing-hero {
   position: relative;
   padding: 6rem 2rem 5rem;
   overflow: hidden;
   background: #ffffff;
   border-bottom: 1px solid rgba(15,15,30,0.05);
-  min-height: calc(100vh - var(--header-height));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -355,6 +407,7 @@ body {
   border-radius: 50%;
   filter: blur(120px);
   opacity: 0.35;
+  will-change: transform;
 }
 .landing-hero-bg .orb-1 {
   width: 500px; height: 500px;
@@ -392,7 +445,7 @@ body {
   padding: 0.4rem 0.95rem;
   background: white;
   border: 1px solid rgba(202,138,4,0.22);
-  border-radius: 100px;
+  border-radius: var(--radius-pill);
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--gold-dark);
@@ -421,6 +474,7 @@ body {
   background-size: 200% 200%;
   animation: gradientShift 6s ease infinite;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-style: italic;
   font-weight: 500;
@@ -458,60 +512,55 @@ body {
   font-family: var(--font-heading);
   font-weight: 500;
 }
-.landing-strip-item i {
-  color: var(--gold);
-  font-size: 0.85rem;
-}
+.landing-strip-item i { color: var(--gold); font-size: 0.85rem; }
 
-/* BUTTONS */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .btn {
-  padding: 0.75rem 1.6rem; border: none; border-radius: 100px;
+  padding: 0.75rem 1.6rem; border: none; border-radius: var(--radius-pill);
   font-weight: 600; font-size: 0.88rem; cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all var(--transition-base);
   text-decoration: none; display: inline-flex; align-items: center;
   gap: 0.55rem; font-family: var(--font-heading);
-  white-space: nowrap;
+  white-space: nowrap; position: relative; overflow: hidden;
 }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .btn-primary {
   background: var(--ink); color: white;
   box-shadow: 0 4px 14px rgba(15,15,30,0.18);
-  position: relative; overflow: hidden;
 }
 .btn-primary::before {
   content: ''; position: absolute; inset: 0;
   background: var(--gold-gradient);
-  opacity: 0; transition: opacity 0.3s;
+  opacity: 0; transition: opacity var(--transition-base);
 }
 .btn-primary > * { position: relative; z-index: 1; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.3); }
-.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.3); }
+.btn-primary:hover:not(:disabled)::before { opacity: 1; }
 .btn-ghost {
   background: transparent; color: var(--ink);
   border: 1.5px solid var(--border-medium);
 }
-.btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
+.btn-ghost:hover:not(:disabled) { border-color: var(--ink); background: var(--ink); color: white; }
 .btn-lg { padding: 0.95rem 2rem; font-size: 0.95rem; }
 
-/* PUBLIC STATS SECTION */
+/* ============================================================
+   PUBLIC STATS
+   ============================================================ */
 .public-stats-section {
   padding: 5rem 2rem 4rem;
   background: #faf9f7;
   border-bottom: 1px solid rgba(15,15,30,0.05);
 }
-.public-stats-inner {
-  max-width: 1360px;
-  margin: 0 auto;
-}
-.section-header-center {
-  text-align: center;
-  margin-bottom: 3rem;
-}
+.public-stats-inner { max-width: 1360px; margin: 0 auto; }
+.section-header-center { text-align: center; margin-bottom: 3rem; }
 .section-label {
   display: inline-block;
   padding: 0.35rem 0.9rem;
   background: var(--gold-soft);
   color: var(--gold-dark);
-  border-radius: 100px;
+  border-radius: var(--radius-pill);
   font-size: 0.68rem;
   font-weight: 700;
   font-family: var(--font-heading);
@@ -548,12 +597,12 @@ body {
   top: 0; left: 0; right: 0; height: 3px;
   background: var(--gold-gradient);
   transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s;
+  transition: transform var(--transition-slow);
 }
 .ps-tile:hover::before { transform: scaleX(1); }
 .ps-tile:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,15,30,0.08); border-color: rgba(202,138,4,0.25); }
 .ps-icon {
-  width: 42px; height: 42px; border-radius: 12px;
+  width: 42px; height: 42px; border-radius: var(--radius-md);
   background: var(--gold-soft); color: var(--gold-dark);
   display: flex; align-items: center; justify-content: center;
   font-size: 1rem; margin-bottom: 1.2rem;
@@ -582,15 +631,13 @@ body {
   text-transform: uppercase; letter-spacing: 0.6px;
 }
 
-/* ACTIVITY TICKER */
-.activity-ticker-section {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 2rem 2rem;
-}
+/* ============================================================
+   ACTIVITY TICKER
+   ============================================================ */
+.activity-ticker-section { max-width: 1360px; margin: 0 auto; padding: 0 2rem 2rem; }
 .ps-ticker {
   background: white; border: 1px solid var(--border-light);
-  border-radius: 100px; padding: 0.85rem 0;
+  border-radius: var(--radius-pill); padding: 0.85rem 0;
   overflow: hidden; position: relative;
   box-shadow: var(--shadow-sm);
 }
@@ -605,6 +652,7 @@ body {
   animation: tickerScroll 50s linear infinite;
   white-space: nowrap; padding: 0 2rem; width: max-content;
 }
+.ps-ticker:hover .ps-ticker-track { animation-play-state: paused; }
 .ps-ticker-item {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-family: var(--font-heading); font-size: 0.82rem;
@@ -613,13 +661,15 @@ body {
 .ps-ticker-item i { font-size: 0.7rem; color: var(--gold); }
 .ps-ticker-item strong { color: var(--ink); font-weight: 700; }
 
-/* USER AVATAR */
+/* ============================================================
+   USER AVATAR + DROPDOWN
+   ============================================================ */
 .m365-avatar-btn {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.25rem 0.7rem 0.25rem 0.25rem;
-  border-radius: 100px; background: transparent;
+  border-radius: var(--radius-pill); background: transparent;
   border: 1px solid transparent; cursor: pointer;
-  transition: all 0.2s; font-family: var(--font-body);
+  transition: all var(--transition-fast); font-family: var(--font-body);
 }
 .m365-avatar-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
 .m365-avatar {
@@ -635,15 +685,14 @@ body {
 }
 .m365-avatar-btn .fa-chevron-down {
   font-size: 0.55rem; color: var(--text-muted);
-  transition: transform 0.25s;
+  transition: transform var(--transition-base);
 }
 .m365-avatar-btn.active .fa-chevron-down { transform: rotate(180deg); }
 
-/* DROPDOWN */
 .user-dropdown-wrap { position: relative; }
 .user-dropdown {
   position: absolute; top: calc(100% + 8px); right: 0;
-  width: 320px; background: white; border-radius: 12px;
+  width: 320px; background: white; border-radius: var(--radius-md);
   box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
   border: 1px solid var(--border-light);
   overflow: hidden; display: none; z-index: 1001;
@@ -669,14 +718,14 @@ body {
 .ud-body { padding: 0.5rem; }
 .ud-item {
   display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.6rem 0.9rem; border-radius: 8px;
-  cursor: pointer; transition: background 0.15s;
+  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition-fast);
   border: none; background: none; width: 100%;
   text-align: left; font-size: 0.85rem;
   color: var(--text-secondary); text-decoration: none;
   font-family: var(--font-body); font-weight: 500;
 }
-.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color 0.15s; }
+.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color var(--transition-fast); }
 .ud-item:hover { background: #faf9f7; color: var(--ink); }
 .ud-item:hover i { color: var(--gold); }
 .ud-item.danger { color: var(--danger); }
@@ -689,11 +738,13 @@ body {
   padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
 }
 
-/* NOTIFICATION DETAIL MODAL */
+/* ============================================================
+   MODALS (shared)
+   ============================================================ */
 .notif-modal {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  background: white; border-radius: 20px;
+  background: white; border-radius: var(--radius-xl);
   padding: 2rem 2rem 1.8rem;
   max-width: 480px; width: calc(100% - 2rem);
   z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
@@ -706,7 +757,7 @@ body {
   cursor: pointer; color: var(--text-muted);
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 .notif-modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
 .notif-modal-icon {
@@ -751,66 +802,113 @@ body {
   padding-top: 1rem;
   border-top: 1px dashed var(--border-light);
 }
-.notif-modal-actions {
-  display: flex; gap: 0.6rem;
-}
+.notif-modal-actions { display: flex; gap: 0.6rem; }
 .notif-modal-btn {
   flex: 1;
   padding: 0.75rem 1.2rem;
-  border-radius: 100px;
+  border-radius: var(--radius-pill);
   border: none;
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all var(--transition-base);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
 }
+.notif-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .notif-modal-btn.primary {
   background: var(--gold-gradient); color: white;
   box-shadow: 0 8px 20px rgba(202,138,4,0.28);
 }
-.notif-modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
+.notif-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
 .notif-modal-btn.secondary {
   background: transparent;
   color: var(--text-secondary);
   border: 1.5px solid var(--border-light);
 }
-.notif-modal-btn.secondary:hover { background: #faf9f7; border-color: var(--border-medium); }
+.notif-modal-btn.secondary:hover:not(:disabled) { background: #faf9f7; border-color: var(--border-medium); }
 
-/* MODAL OVERLAY */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15,15,30,0.55);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 2000; display: none;
 }
 .modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
 
-/* TOASTS */
+/* ============================================================
+   AUTH MODAL FORM
+   ============================================================ */
+.auth-field {
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.auth-field label {
+  font-size: 0.72rem; font-weight: 600; color: var(--text-secondary);
+  font-family: var(--font-heading); text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.auth-input {
+  width: 100%; padding: 0.85rem 1.1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem; font-family: var(--font-body);
+  background: #faf9f7; color: var(--ink);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.auth-input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(202,138,4,0.12);
+}
+.auth-input::placeholder { color: var(--text-muted); }
+.auth-error {
+  background: #fef2f2; border: 1px solid #fecaca;
+  color: #991b1b; padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md); font-size: 0.78rem;
+  font-family: var(--font-heading); display: none;
+  margin-bottom: 0.4rem;
+}
+.auth-error.visible { display: block; }
+.auth-note {
+  text-align: center; font-size: 0.72rem;
+  color: var(--text-muted); margin-top: 1rem;
+  font-family: var(--font-heading); line-height: 1.5;
+}
+.auth-note i { color: var(--gold); }
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
 .toast-container {
   position: fixed; top: 80px; right: 24px; z-index: 4000;
-  display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none; max-width: calc(100vw - 48px);
 }
 .toast {
   background: var(--ink); color: white;
-  border-radius: 12px; padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md); padding: 0.85rem 1.15rem;
   box-shadow: 0 20px 40px rgba(15,15,30,0.22);
   display: flex; align-items: center; gap: 0.65rem;
   font-family: var(--font-heading); font-size: 0.85rem;
   animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   max-width: 360px; font-weight: 500; pointer-events: auto;
+  transition: opacity 0.35s, transform 0.35s;
 }
 .toast i { font-size: 0.95rem; }
 .toast.success i { color: #34d399; }
 .toast.error i { color: #f87171; }
 .toast.info i { color: #fbbf24; }
+.toast.leaving { opacity: 0; transform: translateX(24px); }
 
-/* FOOTER — always pinned to bottom when content is short */
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .site-footer {
   background: #faf9f7;
   border-top: 1px solid rgba(15,15,30,0.06);
@@ -829,15 +927,18 @@ body {
 }
 .footer-brand i { color: var(--gold); }
 .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-.footer-links a {
+.footer-links a, .footer-links button {
   color: var(--text-muted); text-decoration: none;
   font-size: 0.76rem; font-family: var(--font-heading);
-  font-weight: 500; transition: color 0.2s; cursor: pointer;
+  font-weight: 500; transition: color var(--transition-fast);
+  cursor: pointer; background: none; border: none; padding: 0;
 }
-.footer-links a:hover { color: var(--gold-dark); }
+.footer-links a:hover, .footer-links button:hover { color: var(--gold-dark); }
 .footer-copy { color: var(--text-muted); font-size: 0.74rem; font-family: var(--font-heading); }
 
-/* RESPONSIVE */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 1000px) {
   .ps-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -846,7 +947,7 @@ body {
   .m365-nav-links { display: none; }
   .m365-avatar-name { display: none; }
   .launcher-panel, .notif-panel { right: 1rem; width: calc(100vw - 2rem); }
-  .landing-hero { padding: 4rem 1.25rem 3rem; min-height: auto; }
+  .landing-hero { padding: 4rem 1.25rem 3rem; }
   .landing-hero h1 { font-size: 2.4rem; }
   .landing-hero-lede { font-size: 1rem; }
   .landing-hero-strip { gap: 1.4rem; }
@@ -854,65 +955,81 @@ body {
   .public-stats-section { padding: 3.5rem 1.25rem 3rem; }
   .activity-ticker-section { padding: 0 1.25rem 1.5rem; }
   .footer-inner { flex-direction: column; gap: 0.6rem; text-align: center; }
+  .toast-container { right: 16px; left: 16px; align-items: stretch; }
+  .toast { max-width: none; }
 }
 @media (max-width: 500px) {
   .ps-grid { grid-template-columns: 1fr; }
+  .notif-modal { padding: 1.6rem 1.4rem 1.4rem; }
+  .landing-hero h1 { font-size: 2rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="toast-container" id="toastContainer"></div>
+<!-- ============================================================
+     SKIP LINK
+     ============================================================ -->
+<a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
 
-<!-- HEADER -->
+<!-- ============================================================
+     TOASTS
+     ============================================================ -->
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
 <header class="m365-nav">
   <div class="m365-nav-inner">
     <div class="m365-left">
-      <a href="index.html" class="m365-logo">
-        <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="KazInni">
+      <a href="index.html" class="m365-logo" aria-label="KazInni Suite home">
+        <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="" aria-hidden="true">
         <span class="m365-logo-text">Kaz<span class="accent">Inni</span> Suite</span>
       </a>
-      <nav class="m365-nav-links">
+      <nav class="m365-nav-links" aria-label="Primary navigation">
         <a href="#home" class="m365-nav-link active">Home</a>
-        <button class="m365-nav-link" onclick="openLauncher(event)">Apps</button>
+        <button type="button" class="m365-nav-link" onclick="openLauncher(event)" aria-haspopup="true" aria-expanded="false" aria-controls="launcherPanel">Apps</button>
         <a href="#activity" class="m365-nav-link">Activity</a>
       </nav>
     </div>
     <div class="m365-right">
-      <button class="m365-icon-btn" id="notifBtn" title="Notifications" onclick="toggleNotifications(event)">
-        <i class="far fa-bell"></i>
-        <span class="dot-badge" id="notifBadge">0</span>
+      <button type="button" class="m365-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" aria-controls="notifPanel" onclick="toggleNotifications(event)">
+        <i class="far fa-bell" aria-hidden="true"></i>
+        <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
       </button>
-      <button class="m365-waffle" id="waffleBtn" title="App launcher" onclick="openLauncher(event)" aria-label="App launcher">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
+      <button type="button" class="m365-waffle" id="waffleBtn" title="App launcher" aria-label="App launcher" aria-haspopup="true" aria-expanded="false" aria-controls="launcherPanel" onclick="openLauncher(event)">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </button>
       <div id="headerAuthContainer">
-        <button class="btn btn-primary" onclick="openAuthModal()" id="signInBtn">
-          <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+        <button type="button" class="btn btn-primary" onclick="openAuthModal()" id="signInBtn">
+          <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-<!-- MAIN WRAPPER -->
-<div class="main-wrap">
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<div class="main-wrap" id="main">
 
-  <!-- LANDING HERO — the welcome screen -->
-  <section class="landing-hero" id="home">
-    <div class="landing-hero-bg">
+  <!-- HERO -->
+  <section class="landing-hero" id="home" aria-labelledby="heroTitle">
+    <div class="landing-hero-bg" aria-hidden="true">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
       <div class="orb orb-3"></div>
     </div>
     <div class="landing-hero-inner">
       <div class="landing-eyebrow">
-        <span class="dot"></span>
+        <span class="dot" aria-hidden="true"></span>
         <span>One account · Every workspace</span>
       </div>
-      <h1>
+      <h1 id="heroTitle">
         Welcome to <span class="accent">KazInni Suite</span>
       </h1>
       <p class="landing-hero-lede" id="heroLede">
@@ -920,60 +1037,60 @@ body {
         FlexiKazi, Kasikazi, and the entire KazInni ecosystem.
       </p>
       <div class="landing-hero-cta" id="heroCta">
-        <button class="btn btn-primary btn-lg" onclick="openAuthModal()">
-          <i class="fas fa-arrow-right-to-bracket"></i> Sign in to KazInni
+        <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal()">
+          <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
         </button>
-        <button class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
-          <i class="fas fa-grip"></i> Explore apps
+        <button type="button" class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
+          <i class="fas fa-grip" aria-hidden="true"></i> <span>Explore apps</span>
         </button>
       </div>
       <div class="landing-hero-strip">
-        <div class="landing-strip-item"><i class="fas fa-shield-halved"></i> Verified accounts only</div>
-        <div class="landing-strip-item"><i class="fas fa-bolt"></i> Single sign-on everywhere</div>
-        <div class="landing-strip-item"><i class="fas fa-wallet"></i> Instant M-Pesa payouts</div>
-        <div class="landing-strip-item"><i class="fas fa-globe"></i> Kenya-built</div>
+        <div class="landing-strip-item"><i class="fas fa-shield-halved" aria-hidden="true"></i> Verified accounts only</div>
+        <div class="landing-strip-item"><i class="fas fa-bolt" aria-hidden="true"></i> Single sign-on everywhere</div>
+        <div class="landing-strip-item"><i class="fas fa-wallet" aria-hidden="true"></i> Instant M-Pesa payouts</div>
+        <div class="landing-strip-item"><i class="fas fa-globe" aria-hidden="true"></i> Kenya-built</div>
       </div>
     </div>
   </section>
 
-  <!-- PUBLIC STATS + ACTIVITY -->
-  <section class="public-stats-section" id="activity">
+  <!-- PUBLIC STATS -->
+  <section class="public-stats-section" id="activity" aria-labelledby="activityTitle">
     <div class="public-stats-inner">
       <div class="section-header-center">
         <span class="section-label">Live</span>
-        <h2>Platform Activity</h2>
+        <h2 id="activityTitle">Platform Activity</h2>
         <p>Real numbers from across the KazInni network — updated every minute.</p>
       </div>
 
       <div class="ps-grid">
         <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-users"></i></div>
-          <div class="ps-value loading" id="psTaskers">—</div>
+          <div class="ps-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+          <div class="ps-value loading" id="psTaskers" aria-label="Active taskers">—</div>
           <div class="ps-label">Active Taskers</div>
         </div>
         <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-circle-check"></i></div>
-          <div class="ps-value loading" id="psCompleted">—</div>
+          <div class="ps-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+          <div class="ps-value loading" id="psCompleted" aria-label="Tasks completed">—</div>
           <div class="ps-label">Tasks Completed</div>
         </div>
         <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-layer-group"></i></div>
-          <div class="ps-value loading" id="psWorkspaces">—</div>
+          <div class="ps-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
+          <div class="ps-value loading" id="psWorkspaces" aria-label="Live workspaces">—</div>
           <div class="ps-label">Live Workspaces</div>
         </div>
         <div class="ps-tile clock-tile">
-          <div class="ps-icon"><i class="fas fa-clock"></i></div>
-          <div class="ps-value" id="psClock">
+          <div class="ps-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+          <div class="ps-value" id="psClock" aria-live="off">
             <span id="psClockTime">--:--</span><span class="ps-ampm" id="psClockAmPm">--</span>
           </div>
           <div class="ps-label" id="psClockDate">Loading…</div>
         </div>
       </div>
 
-      <div class="activity-ticker-section" style="padding: 0 0 0;">
-        <div class="ps-ticker">
+      <div class="activity-ticker-section" style="padding: 0;">
+        <div class="ps-ticker" aria-label="Recent platform activity">
           <div class="ps-ticker-track" id="psTicker">
-            <span class="ps-ticker-item"><i class="fas fa-circle-notch fa-spin"></i> Loading activity…</span>
+            <span class="ps-ticker-item"><i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Loading activity…</span>
           </div>
         </div>
       </div>
@@ -982,26 +1099,30 @@ body {
 
 </div>
 
-<!-- FOOTER -->
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand"><i class="fas fa-cube"></i> KazInni Suite</div>
-    <div class="footer-links">
-      <a onclick="showToast('Coming soon', 'info')">Privacy</a>
-      <a onclick="showToast('Coming soon', 'info')">Terms</a>
-      <a onclick="showToast('Coming soon', 'info')">Help</a>
+    <div class="footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Suite</div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
+      <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
+      <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
       <a href="mailto:operations@kazinni.com">Contact</a>
-    </div>
-    <div class="footer-copy">© 2026 Teleio Savour · KazInni</div>
+    </nav>
+    <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · KazInni</div>
   </div>
 </footer>
 
-<!-- LAUNCHER PANEL -->
-<div class="launcher-panel" id="launcherPanel">
+<!-- ============================================================
+     LAUNCHER PANEL
+     ============================================================ -->
+<div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="KazInni apps">
   <div class="lp-header">
     <div class="lp-title">KazInni apps</div>
     <div class="lp-header-right">
-      <span class="lp-live-dot"></span>
+      <span class="lp-live-dot" aria-hidden="true"></span>
       <span id="launcherStatus">Preview</span>
     </div>
   </div>
@@ -1010,29 +1131,33 @@ body {
   </div>
   <div class="lp-footer">
     <span id="launcherFooterText">Sign in to open your apps</span>
-    <a id="launcherFooterLink">Sign in</a>
+    <a id="launcherFooterLink" role="button" tabindex="0">Sign in</a>
   </div>
 </div>
 
-<!-- NOTIFICATIONS PANEL -->
-<div class="notif-panel" id="notifPanel">
+<!-- ============================================================
+     NOTIFICATIONS PANEL
+     ============================================================ -->
+<div class="notif-panel" id="notifPanel" role="dialog" aria-modal="false" aria-label="Notifications">
   <div class="notif-header">
     <div class="notif-title">Notifications</div>
-    <button class="notif-clear" id="notifClearBtn" onclick="clearNotifications()">Mark all read</button>
+    <button type="button" class="notif-clear" id="notifClearBtn" onclick="clearNotifications()" disabled>Mark all read</button>
   </div>
   <div class="notif-body" id="notifBody">
     <div class="notif-empty">
-      <i class="far fa-bell-slash"></i>
+      <i class="far fa-bell-slash" aria-hidden="true"></i>
       <div>Sign in to see your notifications</div>
     </div>
   </div>
 </div>
 
-<!-- NOTIFICATION DETAIL MODAL -->
+<!-- ============================================================
+     NOTIFICATION DETAIL MODAL
+     ============================================================ -->
 <div class="modal-overlay" id="notifModalOverlay" onclick="closeNotifModal()"></div>
-<div class="notif-modal" id="notifModal">
-  <button class="notif-modal-close" onclick="closeNotifModal()"><i class="fas fa-times"></i></button>
-  <div class="notif-modal-icon" id="notifModalIcon"><i class="fas fa-bell"></i></div>
+<div class="notif-modal" id="notifModal" role="dialog" aria-modal="true" aria-labelledby="notifModalTitle" aria-hidden="true">
+  <button type="button" class="notif-modal-close" onclick="closeNotifModal()" aria-label="Close notification"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="notif-modal-icon" id="notifModalIcon"><i class="fas fa-bell" aria-hidden="true"></i></div>
   <div class="notif-modal-header">
     <h3 id="notifModalTitle">Notification</h3>
     <p id="notifModalSubtitle">—</p>
@@ -1043,37 +1168,52 @@ body {
     <span id="notifModalType">—</span>
   </div>
   <div class="notif-modal-actions" id="notifModalActions">
-    <button class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>
+    <button type="button" class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>
   </div>
 </div>
 
-<!-- AUTH MODAL -->
+<!-- ============================================================
+     AUTH MODAL
+     ============================================================ -->
 <div class="modal-overlay" id="authModalOverlay" onclick="closeAuthModal()"></div>
-<div class="notif-modal" id="authModal" style="max-width: 420px;">
-  <button class="notif-modal-close" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
-  <div class="notif-modal-icon gold"><i class="fas fa-cube"></i></div>
+<div class="notif-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="max-width: 420px;">
+  <button type="button" class="notif-modal-close" onclick="closeAuthModal()" aria-label="Close sign in"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="notif-modal-icon gold"><i class="fas fa-cube" aria-hidden="true"></i></div>
   <div class="notif-modal-header">
-    <h3>Sign in to KazInni</h3>
+    <h3 id="authModalTitle">Sign in to KazInni</h3>
     <p>Use your KazInni account to access your apps</p>
   </div>
-  <form onsubmit="handleLogin(event)" style="display:flex; flex-direction:column; gap:0.8rem;">
-    <input type="email" id="loginEmail" placeholder="Email address" required autocomplete="email"
-      style="width:100%; padding:0.85rem 1.1rem; border:1.5px solid var(--border-light); border-radius:12px; font-size:0.9rem; font-family:var(--font-body); background:#faf9f7;">
-    <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password"
-      style="width:100%; padding:0.85rem 1.1rem; border:1.5px solid var(--border-light); border-radius:12px; font-size:0.9rem; font-family:var(--font-body); background:#faf9f7;">
-    <button type="submit" class="notif-modal-btn primary" id="loginBtn" style="margin-top:0.4rem; padding:0.85rem;">
-      <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+  <div class="auth-error" id="authError" role="alert"></div>
+  <form onsubmit="handleLogin(event)" novalidate>
+    <div class="auth-field" style="margin-bottom:0.8rem;">
+      <label for="loginEmail">Email address</label>
+      <input type="email" id="loginEmail" class="auth-input" placeholder="you@example.com" required autocomplete="email" inputmode="email">
+    </div>
+    <div class="auth-field" style="margin-bottom:1rem;">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required autocomplete="current-password" minlength="6">
+    </div>
+    <button type="submit" class="notif-modal-btn primary" id="loginBtn" style="width:100%; padding:0.85rem;">
+      <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
     </button>
   </form>
-  <p style="text-align:center; font-size:0.72rem; color:var(--text-muted); margin-top:1rem; font-family:var(--font-heading);">
-    <i class="fas fa-shield-alt" style="color:var(--gold);"></i>
+  <p class="auth-note">
+    <i class="fas fa-shield-alt" aria-hidden="true"></i>
     Access is invitation-only. Accounts issued by KazInni admins.
   </p>
 </div>
 
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js" defer></script>
 <script>
+'use strict';
+
 // ============================================================
-// FIREBASE
+// CONFIG
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -1081,14 +1221,7 @@ const firebaseConfig = {
   databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "mugera-e51cc"
 };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const database = firebase.database();
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-// ============================================================
-// APP CONFIG
-// ============================================================
 const APPS = {
   'flexikazi': {
     name: 'FlexiKazi',
@@ -1113,6 +1246,14 @@ const APPS = {
   }
 };
 
+const CONFIG = {
+  notifListenersLimit: 50,
+  tickerRefreshMs: 60000,
+  clockRefreshMs: 1000,
+  notifStorageKey: 'kazinni_notif_lastseen',
+  maxNotifications: 20
+};
+
 // ============================================================
 // STATE
 // ============================================================
@@ -1121,28 +1262,34 @@ let currentTasker = null;
 let currentPerms = {};
 let notifications = [];
 let notifRefs = [];
+let appInitialized = false;
 
 // ============================================================
 // UTILS
 // ============================================================
 function showToast(msg, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
   const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<i class="fas ${icons[type]}"></i> <span>${escapeHtml(msg)}</span>`;
-  document.getElementById('toastContainer').appendChild(toast);
+  toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
+  toast.querySelector('span').textContent = msg;
+  container.appendChild(toast);
   setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transition = '0.35s';
-    setTimeout(() => toast.remove(), 350);
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 400);
   }, 4000);
 }
 
 function escapeHtml(text) {
   if (text === null || text === undefined) return '';
-  const div = document.createElement('div');
-  div.textContent = String(text);
-  return div.innerHTML;
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function getTimeAgo(ts) {
@@ -1160,8 +1307,7 @@ function getTimeAgo(ts) {
 function getFullTime(ts) {
   if (!ts) return '—';
   try {
-    const d = new Date(ts);
-    return d.toLocaleString('en-US', {
+    return new Date(ts).toLocaleString('en-US', {
       weekday: 'short', month: 'short', day: 'numeric',
       hour: '2-digit', minute: '2-digit'
     });
@@ -1177,10 +1323,135 @@ function lighten(hex, percent) {
   return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
 }
 
+function getLastSeen() {
+  return Number(localStorage.getItem(CONFIG.notifStorageKey) || 0);
+}
+
+function setLastSeen(ts) {
+  try { localStorage.setItem(CONFIG.notifStorageKey, String(ts)); } catch (e) {}
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const parts = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (parts.length === 0) return 'U';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 // ============================================================
-// AUTH
+// INIT
 // ============================================================
-auth.onAuthStateChanged(async (user) => {
+document.addEventListener('DOMContentLoaded', () => {
+  // Footer year
+  const yearEl = document.getElementById('footerYear');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Set up global interaction handlers
+  setupGlobalHandlers();
+  setupKeyboardHandlers();
+
+  // Boot Firebase
+  bootFirebase();
+});
+
+function setupGlobalHandlers() {
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('userMenuWrap');
+    const launcher = document.getElementById('launcherPanel');
+    const waffle = document.getElementById('waffleBtn');
+    const notif = document.getElementById('notifPanel');
+    const notifBtn = document.getElementById('notifBtn');
+
+    if (wrap && !wrap.contains(e.target)) closeUserDropdown();
+    if (launcher && waffle && !launcher.contains(e.target) && !waffle.contains(e.target)) closeLauncher();
+    if (notif && notifBtn && !notif.contains(e.target) && !notifBtn.contains(e.target)) closeNotifications();
+  });
+}
+
+function setupKeyboardHandlers() {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLauncher();
+      closeUserDropdown();
+      closeNotifications();
+      closeNotifModal();
+      closeAuthModal();
+    }
+    if (e.key === 'Tab') {
+      trapFocusInModals(e);
+    }
+  });
+
+  // Launcher footer link — keyboard support for role=button
+  document.addEventListener('keydown', (e) => {
+    const link = document.getElementById('launcherFooterLink');
+    if (link && document.activeElement === link && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      link.click();
+    }
+  });
+}
+
+function trapFocusInModals(e) {
+  const openModal = document.querySelector('.notif-modal.active');
+  if (!openModal) return;
+  const focusables = openModal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault(); last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault(); first.focus();
+  }
+}
+
+// ============================================================
+// FIREBASE BOOT
+// ============================================================
+function bootFirebase() {
+  if (typeof firebase === 'undefined') {
+    console.warn('Firebase SDK failed to load');
+    showToast('Could not load authentication service', 'error');
+    renderSignedOut();
+    loadPublicStatsFallback();
+    return;
+  }
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  } catch (e) {
+    console.warn('Firebase init error:', e);
+  }
+
+  const auth = firebase.auth();
+  const database = firebase.database();
+  window._auth = auth;
+  window._db = database;
+
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+
+  auth.onAuthStateChanged(handleAuthStateChanged);
+
+  appInitialized = true;
+}
+
+function loadPublicStatsFallback() {
+  setStat('psTaskers', '—');
+  setStat('psCompleted', '—');
+  setStat('psWorkspaces', '—');
+  buildPublicTicker();
+}
+
+// ============================================================
+// AUTH STATE
+// ============================================================
+async function handleAuthStateChanged(user) {
+  const auth = window._auth;
+  const db = window._db;
+
   if (!user) {
     currentUser = null;
     currentTasker = null;
@@ -1190,32 +1461,35 @@ auth.onAuthStateChanged(async (user) => {
     renderSignedOut();
     if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
     renderNotifications();
-    buildTicker();
+    loadPublicStats();
     return;
   }
 
+  // Verify account
   try {
-    const snap = await database.ref(`taskers/${user.uid}`).once('value');
+    const snap = await db.ref(`taskers/${user.uid}`).once('value');
     if (!snap.exists()) {
       await auth.signOut();
       showToast('This account is not registered on KazInni.', 'error');
       return;
     }
-    currentTasker = snap.val();
-    if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
+    const tasker = snap.val() || {};
+    if (tasker.verified !== true && tasker.status !== 'verified') {
       await auth.signOut();
       showToast('Your KazInni account is pending verification.', 'error');
       return;
     }
+    currentTasker = tasker;
   } catch (e) {
-    await auth.signOut();
+    try { await auth.signOut(); } catch (_) {}
     showToast('Could not verify your KazInni account.', 'error');
     return;
   }
 
+  // Load permissions
   try {
-    const permSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
-    currentPerms = permSnap.exists() ? permSnap.val() : {};
+    const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
+    currentPerms = permSnap.exists() ? (permSnap.val() || {}) : {};
   } catch (e) {
     currentPerms = {};
   }
@@ -1225,31 +1499,38 @@ auth.onAuthStateChanged(async (user) => {
   attachNotifListeners();
 
   if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
-});
+  loadPublicStats();
+}
 
 // ============================================================
 // SIGNED OUT
 // ============================================================
 function renderSignedOut() {
   const container = document.getElementById('headerAuthContainer');
+  if (!container) return;
   container.innerHTML = `
-    <button class="btn btn-primary" onclick="openAuthModal()">
-      <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+    <button type="button" class="btn btn-primary" onclick="openAuthModal()">
+      <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
     </button>
   `;
 
-  document.getElementById('heroCta').innerHTML = `
-    <button class="btn btn-primary btn-lg" onclick="openAuthModal()">
-      <i class="fas fa-arrow-right-to-bracket"></i> Sign in to KazInni
-    </button>
-    <button class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
-      <i class="fas fa-grip"></i> Explore apps
-    </button>
-  `;
-  document.getElementById('heroLede').textContent =
-    "One login. Every workspace. Run your day from a single account across FlexiKazi, Kasikazi, and the entire KazInni ecosystem.";
-
-  document.getElementById('notifBadge').classList.remove('visible');
+  const heroCta = document.getElementById('heroCta');
+  if (heroCta) {
+    heroCta.innerHTML = `
+      <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal()">
+        <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
+      </button>
+      <button type="button" class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
+        <i class="fas fa-grip" aria-hidden="true"></i> <span>Explore apps</span>
+      </button>
+    `;
+  }
+  const lede = document.getElementById('heroLede');
+  if (lede) {
+    lede.textContent = "One login. Every workspace. Run your day from a single account across FlexiKazi, Kasikazi, and the entire KazInni ecosystem.";
+  }
+  const badge = document.getElementById('notifBadge');
+  if (badge) badge.classList.remove('visible');
 }
 
 // ============================================================
@@ -1257,20 +1538,21 @@ function renderSignedOut() {
 // ============================================================
 function renderSignedIn(user, tasker) {
   const container = document.getElementById('headerAuthContainer');
-  const displayName = tasker.name || user.email.split('@')[0] || 'User';
-  const initials = displayName.split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+  if (!container) return;
+  const displayName = (tasker && tasker.name) || (user.email ? user.email.split('@')[0] : 'User');
+  const initials = getInitials(displayName);
   const email = user.email || '';
 
   container.innerHTML = `
     <div class="user-dropdown-wrap" id="userMenuWrap">
-      <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
-        <div class="m365-avatar">${initials}</div>
+      <button type="button" class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-haspopup="true" aria-expanded="false" aria-controls="userDropdown" aria-label="Account menu">
+        <div class="m365-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
         <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
-        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-chevron-down" aria-hidden="true"></i>
       </button>
-      <div class="user-dropdown" id="userDropdown">
+      <div class="user-dropdown" id="userDropdown" role="menu">
         <div class="ud-header">
-          <div class="m365-avatar">${initials}</div>
+          <div class="m365-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
           <div class="ud-header-info">
             <div class="ud-header-name">${escapeHtml(displayName)}</div>
             <div class="ud-header-email">${escapeHtml(email)}</div>
@@ -1278,36 +1560,42 @@ function renderSignedIn(user, tasker) {
         </div>
         <div class="ud-body">
           <div class="ud-section-label">Account</div>
-          <a href="account.html" class="ud-item"><i class="fas fa-user"></i> My account</a>
-          <a href="account-settings.html" class="ud-item"><i class="fas fa-gear"></i> Account settings</a>
-          <a href="wallet.html" class="ud-item"><i class="fas fa-wallet"></i> Wallet</a>
+          <a href="account.html" class="ud-item" role="menuitem"><i class="fas fa-user" aria-hidden="true"></i> My account</a>
+          <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Account settings</a>
+          <a href="wallet.html" class="ud-item" role="menuitem"><i class="fas fa-wallet" aria-hidden="true"></i> Wallet</a>
           <div class="ud-divider"></div>
           <div class="ud-section-label">Apps</div>
-          <a href="apps/flexikazi/" class="ud-item"><i class="fas fa-list-check"></i> FlexiKazi</a>
-          <a href="apps/kasikazi/" class="ud-item"><i class="fas fa-bullhorn"></i> Kasikazi</a>
+          <a href="apps/flexikazi/" class="ud-item" role="menuitem"><i class="fas fa-list-check" aria-hidden="true"></i> FlexiKazi</a>
+          <a href="apps/kasikazi/" class="ud-item" role="menuitem"><i class="fas fa-bullhorn" aria-hidden="true"></i> Kasikazi</a>
           <div class="ud-divider"></div>
-          <button class="ud-item danger" onclick="handleSignOut()">
-            <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+          <button type="button" class="ud-item danger" onclick="handleSignOut()" role="menuitem">
+            <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
           </button>
         </div>
       </div>
     </div>
   `;
 
-  const firstName = displayName.split(/[\s._-]/)[0];
+  const firstName = displayName.split(/[\s._-]/)[0] || 'there';
   const capitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
-  document.getElementById('heroLede').innerHTML =
-    `Welcome back, <strong>${escapeHtml(capitalized)}</strong>. Open the app launcher or jump into a workspace.`;
+  const lede = document.getElementById('heroLede');
+  if (lede) {
+    lede.innerHTML = `Welcome back, <strong></strong>. Open the app launcher or jump into a workspace.`;
+    lede.querySelector('strong').textContent = capitalized;
+  }
 
-  document.getElementById('heroCta').innerHTML = `
-    <button class="btn btn-primary btn-lg" onclick="openLauncher(event)">
-      <i class="fas fa-grip"></i> Open app launcher
-    </button>
-    <a href="account.html" class="btn btn-ghost btn-lg">
-      <i class="fas fa-user"></i> My Account
-    </a>
-  `;
+  const heroCta = document.getElementById('heroCta');
+  if (heroCta) {
+    heroCta.innerHTML = `
+      <button type="button" class="btn btn-primary btn-lg" onclick="openLauncher(event)">
+        <i class="fas fa-grip" aria-hidden="true"></i> <span>Open app launcher</span>
+      </button>
+      <a href="account.html" class="btn btn-ghost btn-lg">
+        <i class="fas fa-user" aria-hidden="true"></i> <span>My Account</span>
+      </a>
+    `;
+  }
 }
 
 // ============================================================
@@ -1317,6 +1605,7 @@ function openLauncher(e) {
   if (e) e.stopPropagation();
   const panel = document.getElementById('launcherPanel');
   const btn = document.getElementById('waffleBtn');
+  if (!panel) return;
   const isOpen = panel.classList.contains('active');
 
   closeUserDropdown();
@@ -1327,7 +1616,10 @@ function openLauncher(e) {
   } else {
     renderLauncher();
     panel.classList.add('active');
-    if (btn) btn.classList.add('active');
+    if (btn) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-expanded', 'true');
+    }
   }
 }
 
@@ -1335,7 +1627,10 @@ function closeLauncher() {
   const panel = document.getElementById('launcherPanel');
   const btn = document.getElementById('waffleBtn');
   if (panel) panel.classList.remove('active');
-  if (btn) btn.classList.remove('active');
+  if (btn) {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+  }
 }
 
 function renderLauncher() {
@@ -1343,6 +1638,7 @@ function renderLauncher() {
   const statusEl = document.getElementById('launcherStatus');
   const footerTextEl = document.getElementById('launcherFooterText');
   const footerLinkEl = document.getElementById('launcherFooterLink');
+  if (!grid) return;
 
   const signedIn = !!currentUser;
   const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
@@ -1358,17 +1654,17 @@ function renderLauncher() {
   if (visible.length === 0) {
     grid.innerHTML = `
       <div class="lp-empty" style="grid-column: 1 / -1;">
-        <i class="fas fa-lock"></i>
+        <i class="fas fa-lock" aria-hidden="true"></i>
         No apps have been granted to your account yet.<br>
         Contact your KazInni administrator.
       </div>
     `;
   } else {
     grid.innerHTML = visible.map(app => `
-      <a href="${app.link}" class="lp-app">
+      <a href="${escapeHtml(app.link)}" class="lp-app">
         ${app.badge ? `<span class="lp-app-badge">${escapeHtml(app.badge)}</span>` : ''}
-        <div class="lp-app-icon" style="background:linear-gradient(135deg, ${app.color}, ${lighten(app.color, 18)});">
-          <i class="fas ${app.icon}"></i>
+        <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
         <div>
           <div class="lp-app-name">${escapeHtml(app.name)}</div>
@@ -1377,6 +1673,8 @@ function renderLauncher() {
       </a>
     `).join('');
   }
+
+  if (!statusEl || !footerTextEl || !footerLinkEl) return;
 
   if (signedIn) {
     statusEl.textContent = `${visible.length} app${visible.length !== 1 ? 's' : ''}`;
@@ -1397,6 +1695,8 @@ function renderLauncher() {
 function toggleNotifications(e) {
   if (e) e.stopPropagation();
   const panel = document.getElementById('notifPanel');
+  const btn = document.getElementById('notifBtn');
+  if (!panel) return;
   const isOpen = panel.classList.contains('active');
 
   closeUserDropdown();
@@ -1406,41 +1706,61 @@ function toggleNotifications(e) {
     closeNotifications();
   } else {
     panel.classList.add('active');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
   }
 }
 
 function closeNotifications() {
   const panel = document.getElementById('notifPanel');
+  const btn = document.getElementById('notifBtn');
   if (panel) panel.classList.remove('active');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
 function attachNotifListeners() {
   detachNotifListeners();
   if (!currentUser) return;
+  const db = window._db;
+  if (!db) return;
 
   const uid = currentUser.uid;
   const email = (currentUser.email || '').toLowerCase();
 
-  const ref1 = database.ref('ekazi_assigned_tasks');
-  const cb1 = (snap) => updateFlexikaziNotifications(snap.val() || {}, email);
-  ref1.on('value', cb1);
-  notifRefs.push({ ref: ref1, cb: cb1 });
+  // FlexiKazi — query only this tasker's tasks (server-side filter via orderBy+equalTo)
+  try {
+    const ref1 = db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifListenersLimit);
+    const cb1 = (snap) => updateFlexikaziNotifications(snap.val() || {}, email);
+    ref1.on('value', cb1, (err) => console.warn('FlexiKazi listener:', err));
+    notifRefs.push({ ref: ref1, cb: cb1 });
+  } catch (e) {
+    console.warn('FlexiKazi listener setup failed:', e);
+  }
 
-  const ref2 = database.ref('kasikazi_tasks');
-  const cb2 = (snap) => {
-    updateKasikaziNotifications(snap.val() || {}, uid);
-    buildTicker();
-  };
-  ref2.on('value', cb2);
-  notifRefs.push({ ref: ref2, cb: cb2 });
+  // Kasikazi — query by claimedBy uid
+  try {
+    const ref2 = db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifListenersLimit);
+    const cb2 = (snap) => {
+      updateKasikaziNotifications(snap.val() || {}, uid);
+      buildTicker();
+    };
+    ref2.on('value', cb2, (err) => console.warn('Kasikazi listener:', err));
+    notifRefs.push({ ref: ref2, cb: cb2 });
+  } catch (e) {
+    console.warn('Kasikazi listener setup failed:', e);
+  }
 
-  const ref3 = database.ref('cashout_requests');
-  const cb3 = (snap) => {
-    updatePayoutNotifications(snap.val() || {}, uid);
-    buildTicker();
-  };
-  ref3.on('value', cb3);
-  notifRefs.push({ ref: ref3, cb: cb3 });
+  // Payouts — query by taskerId
+  try {
+    const ref3 = db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifListenersLimit);
+    const cb3 = (snap) => {
+      updatePayoutNotifications(snap.val() || {}, uid);
+      buildTicker();
+    };
+    ref3.on('value', cb3, (err) => console.warn('Payout listener:', err));
+    notifRefs.push({ ref: ref3, cb: cb3 });
+  } catch (e) {
+    console.warn('Payout listener setup failed:', e);
+  }
 }
 
 function detachNotifListeners() {
@@ -1451,52 +1771,45 @@ function detachNotifListeners() {
 }
 
 function updateFlexikaziNotifications(tasks, email) {
-  const mine = Object.entries(tasks)
-    .filter(([_, t]) => (t.taskerEmail || '').toLowerCase() === email)
-    .map(([id, t]) => ({ id, ...t }));
+  const mine = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
 
-  const recent = mine
-    .map(t => {
-      const status = (t.status || '').toLowerCase();
-      let type = 'info', icon = 'fa-info-circle', title = '', desc = '';
-      let ts = 0;
-      let details = '';
+  const recent = mine.map(t => {
+    const status = (t.status || '').toLowerCase();
+    let type = 'info', icon = 'fa-info-circle', title = '', desc = '';
+    let ts = 0;
+    let details = '';
 
-      if (status === 'approved' || status === 'completed') {
-        ts = t.approvedAt || t.reviewedAt || 0;
-        type = 'success'; icon = 'fa-circle-check';
-        title = 'Task approved';
-        desc = `${t.title || 'Your task'} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-        details = `Great work! Your task "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\nCategory: ${t.category || '—'}\n\nPayment will be processed within 48 hours.`;
-      } else if (status === 'revision') {
-        ts = t.reviewedAt || 0;
-        type = 'warning'; icon = 'fa-redo';
-        title = 'Revision requested';
-        desc = `${t.title || 'Task'}: ${t.reviewNote || 'Please review and resubmit.'}`;
-        details = `Your submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.reviewNote || 'Please review the brief and resubmit.'}\n\nOpen the task in FlexiKazi to see the full brief and submit a corrected version.`;
-      } else if (status === 'review' || status === 'submitted') {
-        ts = t.lastSubmittedAt || 0;
-        type = 'info'; icon = 'fa-clock';
-        title = 'Submission under review';
-        desc = t.title || 'Your work was submitted.';
-        details = `Your submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification as soon as a decision is made.`;
-      } else if (status === 'assigned' || status === 'new') {
-        ts = t.assignedAt || 0;
-        type = 'gold'; icon = 'fa-list-check';
-        title = 'New task assigned';
-        desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
-        details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nClient: ${t.clientName || 'KazInni'}\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\n\nOpen FlexiKazi to start working on it.`;
-      }
-      return { id: 'f_' + t.id, type, icon, title, desc, ts, details };
-    })
-    .filter(n => n.title && n.ts)
-    .sort((a, b) => b.ts - a.ts)
-    .slice(0, 8);
+    if (status === 'approved' || status === 'completed') {
+      ts = t.approvedAt || t.reviewedAt || 0;
+      type = 'success'; icon = 'fa-circle-check';
+      title = 'Task approved';
+      desc = `${t.title || 'Your task'} — KES ${Number(t.payRate || 0).toLocaleString()}`;
+      details = `Great work! Your task "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\nCategory: ${t.category || '—'}\n\nPayment will be processed within 48 hours.`;
+    } else if (status === 'revision') {
+      ts = t.reviewedAt || 0;
+      type = 'warning'; icon = 'fa-redo';
+      title = 'Revision requested';
+      desc = `${t.title || 'Task'}: ${t.reviewNote || 'Please review and resubmit.'}`;
+      details = `Your submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.reviewNote || 'Please review the brief and resubmit.'}\n\nOpen the task in FlexiKazi to see the full brief and submit a corrected version.`;
+    } else if (status === 'review' || status === 'submitted') {
+      ts = t.lastSubmittedAt || 0;
+      type = 'info'; icon = 'fa-clock';
+      title = 'Submission under review';
+      desc = t.title || 'Your work was submitted.';
+      details = `Your submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification as soon as a decision is made.`;
+    } else if (status === 'assigned' || status === 'new') {
+      ts = t.assignedAt || 0;
+      type = 'gold'; icon = 'fa-list-check';
+      title = 'New task assigned';
+      desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
+      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nClient: ${t.clientName || 'KazInni'}\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\n\nOpen FlexiKazi to start working on it.`;
+    }
+    return { id: 'f_' + t.id, type, icon, title, desc, ts, details, source: 'flexikazi' };
+  })
+  .filter(n => n.title && n.ts)
+  .sort((a, b) => b.ts - a.ts);
 
-  const map = new Map(notifications.map(n => [n.id, n]));
-  recent.forEach(n => map.set(n.id, n));
-  notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
-  renderNotifications();
+  mergeNotifications(recent, 8);
 }
 
 function updateKasikaziNotifications(tasks, uid) {
@@ -1504,346 +1817,231 @@ function updateKasikaziNotifications(tasks, uid) {
     .filter(([_, t]) => t.claimedBy && t.claimedBy[uid])
     .map(([id, t]) => ({ id, ...t, claim: t.claimedBy[uid] }));
 
-  const recent = mine
-    .map(t => {
-      const status = (t.claim.status || 'claimed').toLowerCase();
-      let type = 'info', icon = 'fa-bullhorn', title = '', desc = '';
-      let ts = 0;
-      let details = '';
+  const recent = mine.map(t => {
+    const status = (t.claim.status || 'claimed').toLowerCase();
+    let type = 'info', icon = 'fa-bullhorn', title = '', desc = '';
+    let ts = 0;
+    let details = '';
 
-      if (status === 'approved') {
-        ts = t.claim.reviewedAt || 0;
-        type = 'success'; icon = 'fa-circle-check';
-        title = 'Kasikazi task approved';
-        desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be processed within 48 hours.`;
-      } else if (status === 'revision') {
-        ts = t.claim.reviewedAt || 0;
-        type = 'warning'; icon = 'fa-redo';
-        title = 'Kasikazi revision requested';
-        desc = `${t.title}: ${t.claim.reviewNote || 'Check the brief.'}`;
-        details = `Your Kasikazi submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.claim.reviewNote || 'Please check the brief and resubmit.'}\n\nOpen the task in Kasikazi to see the full brief and submit a corrected version.`;
-      } else if (status === 'submitted') {
-        ts = t.claim.submittedAt || 0;
-        type = 'info'; icon = 'fa-clock';
-        title = 'Kasikazi submission in review';
-        desc = t.title;
-        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification when a decision is made.`;
-      } else {
-        ts = t.claim.claimedAt || 0;
-        type = 'gold'; icon = 'fa-hand-sparkles';
-        title = 'Task claimed';
-        desc = t.title;
-        details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\nClient: ${t.clientName || 'KazInni'}\n\nOpen the task to start working on it.`;
-      }
-      return { id: 'k_' + t.id, type, icon, title, desc, ts, details };
-    })
-    .filter(n => n.title && n.ts)
-    .sort((a, b) => b.ts - a.ts)
-    .slice(0, 8);
+    if (status === 'approved') {
+      ts = t.claim.reviewedAt || 0;
+      type = 'success'; icon = 'fa-circle-check';
+      title = 'Kasikazi task approved';
+      desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
+      details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be processed within 48 hours.`;
+    } else if (status === 'revision') {
+      ts = t.claim.reviewedAt || 0;
+      type = 'warning'; icon = 'fa-redo';
+      title = 'Kasikazi revision requested';
+      desc = `${t.title}: ${t.claim.reviewNote || 'Check the brief.'}`;
+      details = `Your Kasikazi submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.claim.reviewNote || 'Please check the brief and resubmit.'}\n\nOpen the task in Kasikazi to see the full brief and submit a corrected version.`;
+    } else if (status === 'submitted') {
+      ts = t.claim.submittedAt || 0;
+      type = 'info'; icon = 'fa-clock';
+      title = 'Kasikazi submission in review';
+      desc = t.title;
+      details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification when a decision is made.`;
+    } else {
+      ts = t.claim.claimedAt || 0;
+      type = 'gold'; icon = 'fa-hand-sparkles';
+      title = 'Task claimed';
+      desc = t.title;
+      details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\nClient: ${t.clientName || 'KazInni'}\n\nOpen the task to start working on it.`;
+    }
+    return { id: 'k_' + t.id, type, icon, title, desc, ts, details, source: 'kasikazi' };
+  })
+  .filter(n => n.title && n.ts)
+  .sort((a, b) => b.ts - a.ts);
 
-  const map = new Map(notifications.map(n => [n.id, n]));
-  recent.forEach(n => map.set(n.id, n));
-  notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
-  renderNotifications();
+  mergeNotifications(recent, 8);
 }
 
 function updatePayoutNotifications(payouts, uid) {
-  const mine = Object.entries(payouts)
-    .filter(([_, p]) => p.taskerId === uid)
-    .map(([id, p]) => ({ id, ...p }));
+  const mine = Object.entries(payouts).map(([id, p]) => ({ id, ...p }));
 
-  const recent = mine
-    .map(p => {
-      const status = (p.status || 'pending').toLowerCase();
-      let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '';
-      let ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-      let details = '';
+  const recent = mine.map(p => {
+    const status = (p.status || 'pending').toLowerCase();
+    let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '';
+    let ts = p.paidAt || p.approvedAt || p.timestamp || 0;
+    let details = '';
 
-      if (status === 'paid') {
-        type = 'success'; icon = 'fa-check-double';
-        title = 'Payout sent';
-        desc = `KES ${Number(p.amount || 0).toLocaleString()} sent to ${p.phone || 'M-Pesa'}`;
-        details = `Your payout has been successfully sent.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nSent to: ${p.phone || '—'}\nMethod: ${p.paymentMethod || 'M-Pesa'}\n${p.mpesaReference ? `Reference: ${p.mpesaReference}` : ''}\n\nPlease allow a few minutes for the funds to reflect.`;
-      } else if (status === 'approved') {
-        type = 'gold'; icon = 'fa-money-bill-wave';
-        title = 'Payout approved';
-        desc = `KES ${Number(p.amount || 0).toLocaleString()} — processing`;
-        details = `Your payout request has been approved.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nDestination: ${p.phone || '—'}\n\nFunds will be sent shortly.`;
-      } else if (status === 'rejected') {
-        type = 'danger'; icon = 'fa-times-circle';
-        title = 'Payout rejected';
-        desc = p.rejectionReason || 'Contact admin for details.';
-        details = `Your payout request was rejected.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nReason: ${p.rejectionReason || 'Not specified'}\n\nPlease contact your administrator for more information.`;
-      } else {
-        type = 'info'; icon = 'fa-hourglass-half';
-        title = 'Payout request pending';
-        desc = `KES ${Number(p.amount || 0).toLocaleString()} — awaiting approval`;
-        details = `Your payout request has been received.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nRequested to: ${p.phone || '—'}\n\nPlease allow up to 48 hours for processing.`;
-      }
-      return { id: 'p_' + p.id, type, icon, title, desc, ts, details };
-    })
-    .filter(n => n.title && n.ts)
-    .sort((a, b) => b.ts - a.ts)
-    .slice(0, 6);
+    if (status === 'paid') {
+      type = 'success'; icon = 'fa-check-double';
+      title = 'Payout sent';
+      desc = `KES ${Number(p.amount || 0).toLocaleString()} sent to ${p.phone || 'M-Pesa'}`;
+      details = `Your payout has been successfully sent.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nSent to: ${p.phone || '—'}\nMethod: ${p.paymentMethod || 'M-Pesa'}\n${p.mpesaReference ? `Reference: ${p.mpesaReference}\n` : ''}\nPlease allow a few minutes for the funds to reflect.`;
+    } else if (status === 'approved') {
+      type = 'gold'; icon = 'fa-money-bill-wave';
+      title = 'Payout approved';
+      desc = `KES ${Number(p.amount || 0).toLocaleString()} — processing`;
+      details = `Your payout request has been approved.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nDestination: ${p.phone || '—'}\n\nFunds will be sent shortly.`;
+    } else if (status === 'rejected') {
+      type = 'danger'; icon = 'fa-times-circle';
+      title = 'Payout rejected';
+      desc = p.rejectionReason || 'Contact admin for details.';
+      details = `Your payout request was rejected.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nReason: ${p.rejectionReason || 'Not specified'}\n\nPlease contact your administrator for more information.`;
+    } else {
+      type = 'info'; icon = 'fa-hourglass-half';
+      title = 'Payout request pending';
+      desc = `KES ${Number(p.amount || 0).toLocaleString()} — awaiting approval`;
+      details = `Your payout request has been received.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nRequested to: ${p.phone || '—'}\n\nPlease allow up to 48 hours for processing.`;
+    }
+    return { id: 'p_' + p.id, type, icon, title, desc, ts, details, source: 'wallet' };
+  })
+  .filter(n => n.title && n.ts)
+  .sort((a, b) => b.ts - a.ts);
 
+  mergeNotifications(recent, 6);
+}
+
+function mergeNotifications(recent, capPerSource) {
+  const capped = recent.slice(0, capPerSource);
   const map = new Map(notifications.map(n => [n.id, n]));
-  recent.forEach(n => map.set(n.id, n));
-  notifications = Array.from(map.values()).sort((a, b) => b.ts - a.ts).slice(0, 20);
+  capped.forEach(n => map.set(n.id, n));
+  notifications = Array.from(map.values())
+    .sort((a, b) => b.ts - a.ts)
+    .slice(0, CONFIG.maxNotifications);
   renderNotifications();
 }
 
 function renderNotifications() {
   const body = document.getElementById('notifBody');
   const badge = document.getElementById('notifBadge');
+  const clearBtn = document.getElementById('notifClearBtn');
+  if (!body || !badge) return;
 
   if (!currentUser) {
     body.innerHTML = `
       <div class="notif-empty">
-        <i class="far fa-bell-slash"></i>
+        <i class="far fa-bell-slash" aria-hidden="true"></i>
         <div>Sign in to see your notifications</div>
       </div>
     `;
     badge.classList.remove('visible');
+    if (clearBtn) clearBtn.disabled = true;
     return;
   }
 
   if (notifications.length === 0) {
     body.innerHTML = `
       <div class="notif-empty">
-        <i class="far fa-bell-slash"></i>
+        <i class="far fa-bell-slash" aria-hidden="true"></i>
         <div>No notifications yet</div>
         <div style="font-size: 0.72rem; margin-top: 0.4rem; opacity: 0.7;">Task updates and payouts will show here</div>
       </div>
     `;
     badge.classList.remove('visible');
+    if (clearBtn) clearBtn.disabled = true;
     return;
   }
 
-  const lastSeen = Number(localStorage.getItem('kazinni_notif_lastseen') || 0);
+  const lastSeen = getLastSeen();
   const unread = notifications.filter(n => n.ts > lastSeen).length;
 
   if (unread > 0) {
     badge.textContent = unread > 9 ? '9+' : String(unread);
     badge.classList.add('visible');
+    if (clearBtn) clearBtn.disabled = false;
   } else {
     badge.classList.remove('visible');
+    if (clearBtn) clearBtn.disabled = true;
   }
 
   body.innerHTML = notifications.map(n => `
-    <div class="notif-item ${n.ts > lastSeen ? 'unread' : ''}" onclick="openNotifModal('${n.id}')">
-      <div class="notif-icon ${n.type}">
-        <i class="fas ${n.icon}"></i>
+    <button type="button" class="notif-item ${n.ts > lastSeen ? 'unread' : ''}" onclick="openNotifModal('${escapeHtml(n.id)}')">
+      <div class="notif-icon ${escapeHtml(n.type)}" aria-hidden="true">
+        <i class="fas ${escapeHtml(n.icon)}"></i>
       </div>
       <div class="notif-body-text">
         <div class="notif-title-text">${escapeHtml(n.title)}</div>
         <div class="notif-desc-text">${escapeHtml(n.desc)}</div>
       </div>
-      <div class="notif-time">${getTimeAgo(n.ts)}</div>
-    </div>
+      <div class="notif-time">${escapeHtml(getTimeAgo(n.ts))}</div>
+    </button>
   `).join('');
 }
 
 function clearNotifications() {
-  localStorage.setItem('kazinni_notif_lastseen', Date.now().toString());
+  setLastSeen(Date.now());
   renderNotifications();
 }
 
 // ============================================================
 // NOTIFICATION DETAIL MODAL
 // ============================================================
+let lastFocusedBeforeModal = null;
+
 function openNotifModal(notifId) {
   const n = notifications.find(x => x.id === notifId);
   if (!n) return;
 
-  const iconEl = document.getElementById('notifModalIcon');
-  iconEl.className = `notif-modal-icon ${n.type}`;
-  iconEl.innerHTML = `<i class="fas ${n.icon}"></i>`;
+  const modal = document.getElementById('notifModal');
+  const overlay = document.getElementById('notifModalOverlay');
+  if (!modal) return;
 
+  lastFocusedBeforeModal = document.activeElement;
+
+  const iconEl = document.getElementById('notifModalIcon');
+  if (iconEl) {
+    iconEl.className = `notif-modal-icon ${n.type}`;
+    iconEl.innerHTML = `<i class="fas ${escapeHtml(n.icon)}" aria-hidden="true"></i>`;
+  }
   document.getElementById('notifModalTitle').textContent = n.title;
   document.getElementById('notifModalSubtitle').textContent = n.desc;
-  document.getElementById('notifModalBody').innerHTML = escapeHtml(n.details || n.desc).replace(/\n/g, '<br>');
-  document.getElementById('notifModalTime').innerHTML = `<i class="far fa-clock"></i> ${getFullTime(n.ts)}`;
-  document.getElementById('notifModalType').innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(n.type)}`;
 
-  // Build action buttons based on type
+  const bodyEl = document.getElementById('notifModalBody');
+  bodyEl.innerHTML = '';
+  String(n.details || n.desc).split('\n').forEach((line, idx) => {
+    if (idx > 0) bodyEl.appendChild(document.createElement('br'));
+    bodyEl.appendChild(document.createTextNode(line));
+  });
+
+  document.getElementById('notifModalTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${escapeHtml(getFullTime(n.ts))}`;
+  document.getElementById('notifModalType').innerHTML = `<i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(n.type)}`;
+
+  // Contextual actions — FIX: route Kasikazi to Kasikazi
   const actions = document.getElementById('notifModalActions');
   const buttons = [];
-
-  if (n.id.startsWith('f_') || n.id.startsWith('k_')) {
-    buttons.push(`<a href="apps/flexikazi/" class="notif-modal-btn primary"><i class="fas fa-arrow-right"></i> Open FlexiKazi</a>`);
-  } else if (n.id.startsWith('p_')) {
-    buttons.push(`<a href="wallet.html" class="notif-modal-btn primary"><i class="fas fa-wallet"></i> View Wallet</a>`);
+  if (n.source === 'flexikazi') {
+    buttons.push(`<a href="apps/flexikazi/" class="notif-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open FlexiKazi</a>`);
+  } else if (n.source === 'kasikazi') {
+    buttons.push(`<a href="apps/kasikazi/" class="notif-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open Kasikazi</a>`);
+  } else if (n.source === 'wallet') {
+    buttons.push(`<a href="wallet.html" class="notif-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> View Wallet</a>`);
   }
-  buttons.push(`<button class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
-
+  buttons.push(`<button type="button" class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
   actions.innerHTML = buttons.join('');
 
-  document.getElementById('notifModal').classList.add('active');
-  document.getElementById('notifModalOverlay').classList.add('active');
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  if (overlay) overlay.classList.add('active');
 
-  // Auto-mark this notification as read
-  const lastSeen = Number(localStorage.getItem('kazinni_notif_lastseen') || 0);
+  // Focus first button
+  setTimeout(() => {
+    const first = modal.querySelector('button, [href]');
+    if (first) first.focus();
+  }, 50);
+
+  // Auto-mark read
+  const lastSeen = getLastSeen();
   if (n.ts > lastSeen) {
-    localStorage.setItem('kazinni_notif_lastseen', n.ts.toString());
+    setLastSeen(n.ts);
     renderNotifications();
   }
 }
 
 function closeNotifModal() {
-  document.getElementById('notifModal').classList.remove('active');
-  document.getElementById('notifModalOverlay').classList.remove('active');
-}
-
-// ============================================================
-// ACTIVITY TICKER
-// ============================================================
-async function buildTicker() {
-  const track = document.getElementById('psTicker');
-  if (!track) return;
-
-  if (!currentUser) {
-    const items = [
-      { icon: 'fa-circle-check', text: 'A task was approved' },
-      { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
-      { icon: 'fa-user-check', text: 'A tasker joined the network' },
-      { icon: 'fa-circle-check', text: 'A submission was approved' },
-      { icon: 'fa-bullhorn', text: 'A new suite went live' },
-      { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
-    ];
-    const html = items.map(it => `
-      <span class="ps-ticker-item">
-        <i class="fas ${it.icon}"></i>
-        <span>${it.text}</span>
-      </span>
-    `).join('');
-    track.innerHTML = html + html;
-    return;
+  const modal = document.getElementById('notifModal');
+  const overlay = document.getElementById('notifModalOverlay');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
   }
-
-  const uid = currentUser.uid;
-  const email = (currentUser.email || '').toLowerCase();
-  const items = [];
-
-  try {
-    const assignedSnap = await database.ref('ekazi_assigned_tasks').once('value');
-    const assigned = assignedSnap.val() || {};
-    Object.entries(assigned).forEach(([id, t]) => {
-      if ((t.taskerEmail || '').toLowerCase() !== email) return;
-      const s = (t.status || '').toLowerCase();
-      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
-      if (!ts) return;
-
-      if (s === 'approved' || s === 'completed') {
-        items.push({
-          icon: 'fa-circle-check',
-          html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      } else if (s === 'revision') {
-        items.push({
-          icon: 'fa-redo',
-          html: `Revision on <strong>${escapeHtml(t.title || 'task')}</strong>`,
-          ts
-        });
-      } else if (s === 'review' || s === 'submitted') {
-        items.push({
-          icon: 'fa-clock',
-          html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`,
-          ts
-        });
-      } else if (s === 'assigned' || s === 'new') {
-        items.push({
-          icon: 'fa-list-check',
-          html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      }
-    });
-
-    const kasSnap = await database.ref('kasikazi_tasks').once('value');
-    const kasikazi = kasSnap.val() || {};
-    Object.entries(kasikazi).forEach(([id, t]) => {
-      const c = t.claimedBy && t.claimedBy[uid];
-      if (!c) return;
-      const s = (c.status || 'claimed').toLowerCase();
-      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
-      if (!ts) return;
-
-      if (s === 'approved') {
-        items.push({
-          icon: 'fa-circle-check',
-          html: `Kasikazi approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      } else if (s === 'revision') {
-        items.push({
-          icon: 'fa-redo',
-          html: `Kasikazi revision: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      } else if (s === 'submitted') {
-        items.push({
-          icon: 'fa-clock',
-          html: `Kasikazi in review: <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      } else if (s === 'claimed') {
-        items.push({
-          icon: 'fa-hand-sparkles',
-          html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`,
-          ts
-        });
-      }
-    });
-
-    const paySnap = await database.ref('cashout_requests').once('value');
-    const payouts = paySnap.val() || {};
-    Object.entries(payouts).forEach(([id, p]) => {
-      if (p.taskerId !== uid) return;
-      const s = (p.status || 'pending').toLowerCase();
-      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-      if (!ts) return;
-
-      if (s === 'paid') {
-        items.push({
-          icon: 'fa-check-double',
-          html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`,
-          ts
-        });
-      } else if (s === 'approved') {
-        items.push({
-          icon: 'fa-money-bill-wave',
-          html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`,
-          ts
-        });
-      }
-    });
-  } catch (e) {
-    console.warn('Ticker error:', e);
+  if (overlay) overlay.classList.remove('active');
+  if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+    try { lastFocusedBeforeModal.focus(); } catch (e) {}
   }
-
-  items.sort((a, b) => b.ts - a.ts);
-
-  if (items.length === 0) {
-    track.innerHTML = `
-      <span class="ps-ticker-item">
-        <i class="fas fa-satellite-dish"></i>
-        <span>No recent activity — claim a task or complete work to see it here</span>
-      </span>
-    `;
-    return;
-  }
-
-  const top = items.slice(0, 12);
-  const html = top.map(it => `
-    <span class="ps-ticker-item">
-      <i class="fas ${it.icon}"></i>
-      <span>${it.html}</span>
-    </span>
-  `).join('');
-
-  track.innerHTML = html + html;
+  lastFocusedBeforeModal = null;
 }
 
 // ============================================================
@@ -1853,46 +2051,29 @@ function toggleUserDropdown(e) {
   if (e) e.stopPropagation();
   const menu = document.getElementById('userDropdown');
   const btn = document.getElementById('userMenuBtn');
-  if (!menu) return;
+  if (!menu || !btn) return;
   closeLauncher();
   closeNotifications();
-  menu.classList.toggle('active');
-  if (btn) btn.classList.toggle('active');
+  const isActive = menu.classList.toggle('active');
+  btn.classList.toggle('active', isActive);
+  btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
 }
 
 function closeUserDropdown() {
   const menu = document.getElementById('userDropdown');
   const btn = document.getElementById('userMenuBtn');
   if (menu) menu.classList.remove('active');
-  if (btn) btn.classList.remove('active');
+  if (btn) {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+  }
 }
 
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('userMenuWrap');
-  const launcher = document.getElementById('launcherPanel');
-  const waffle = document.getElementById('waffleBtn');
-  const notif = document.getElementById('notifPanel');
-  const notifBtn = document.getElementById('notifBtn');
-
-  if (wrap && !wrap.contains(e.target)) closeUserDropdown();
-  if (launcher && waffle && !launcher.contains(e.target) && !waffle.contains(e.target)) closeLauncher();
-  if (notif && notifBtn && !notif.contains(e.target) && !notifBtn.contains(e.target)) closeNotifications();
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeLauncher();
-    closeUserDropdown();
-    closeNotifications();
-    closeNotifModal();
-    closeAuthModal();
-  }
-});
-
 async function handleSignOut() {
+  const auth = window._auth;
   try {
     detachNotifListeners();
-    await auth.signOut();
+    if (auth) await auth.signOut();
     showToast('Signed out successfully', 'info');
   } catch (err) {
     showToast('Error signing out', 'error');
@@ -1906,36 +2087,88 @@ function openAuthModal() {
   closeLauncher();
   closeUserDropdown();
   closeNotifications();
-  document.getElementById('authModal').classList.add('active');
-  document.getElementById('authModalOverlay').classList.add('active');
+  const modal = document.getElementById('authModal');
+  const overlay = document.getElementById('authModalOverlay');
+  const err = document.getElementById('authError');
+  if (err) { err.classList.remove('visible'); err.textContent = ''; }
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+  if (overlay) overlay.classList.add('active');
+  lastFocusedBeforeModal = document.activeElement;
+  setTimeout(() => {
+    const email = document.getElementById('loginEmail');
+    if (email) email.focus();
+  }, 50);
 }
+
 function closeAuthModal() {
-  document.getElementById('authModal').classList.remove('active');
-  document.getElementById('authModalOverlay').classList.remove('active');
+  const modal = document.getElementById('authModal');
+  const overlay = document.getElementById('authModalOverlay');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  if (overlay) overlay.classList.remove('active');
   const btn = document.getElementById('loginBtn');
-  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Sign in'; }
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>';
+  }
+  const err = document.getElementById('authError');
+  if (err) { err.classList.remove('visible'); err.textContent = ''; }
+  if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+    try { lastFocusedBeforeModal.focus(); } catch (e) {}
+  }
+  lastFocusedBeforeModal = null;
 }
+
 async function handleLogin(e) {
   e.preventDefault();
+  const auth = window._auth;
   const btn = document.getElementById('loginBtn');
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value;
-  if (!email || !password) { showToast('Please enter email and password', 'error'); return; }
+  const errEl = document.getElementById('authError');
+  const emailEl = document.getElementById('loginEmail');
+  const passEl = document.getElementById('loginPassword');
+
+  if (!emailEl || !passEl) return;
+
+  const email = emailEl.value.trim();
+  const password = passEl.value;
+
+  const showError = (msg) => {
+    if (errEl) {
+      errEl.textContent = msg;
+      errEl.classList.add('visible');
+    }
+  };
+
+  if (errEl) { errEl.classList.remove('visible'); errEl.textContent = ''; }
+
+  if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
+  if (!password || password.length < 6) { showError('Password must be at least 6 characters.'); return; }
+
+  if (!auth) { showError('Authentication service not available. Please refresh.'); return; }
+
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Signing in…';
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> <span>Signing in…</span>';
+
   try {
     await auth.signInWithEmailAndPassword(email, password);
     showToast('Welcome to KazInni', 'success');
     closeAuthModal();
   } catch (err) {
-    let msg = err.message.replace('Firebase: ', '').replace(/\(auth\/.*\)\.?/, '').trim();
+    let msg = (err.message || '').replace('Firebase: ', '').replace(/\(auth\/.*\)\.?/, '').trim();
     if (err.code === 'auth/user-not-found') msg = 'No account found with this email';
     else if (err.code === 'auth/wrong-password') msg = 'Incorrect password';
+    else if (err.code === 'auth/invalid-email') msg = 'Please enter a valid email address';
     else if (err.code === 'auth/invalid-credential') msg = 'Invalid email or password';
     else if (err.code === 'auth/too-many-requests') msg = 'Too many attempts. Try again later.';
-    showToast(msg, 'error');
+    else if (err.code === 'auth/network-request-failed') msg = 'Network error. Check your connection.';
+    showError(msg || 'Sign in failed. Please try again.');
     btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Sign in';
+    btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>';
   }
 }
 
@@ -1943,43 +2176,45 @@ async function handleLogin(e) {
 // PUBLIC STATS
 // ============================================================
 async function loadPublicStats() {
+  const db = window._db;
+  if (!db) { loadPublicStatsFallback(); return; }
+
+  // Taskers
   try {
-    try {
-      const taskersSnap = await database.ref('taskers').once('value');
-      const taskers = taskersSnap.val() || {};
-      const verified = Object.values(taskers).filter(t =>
-        t && (t.verified === true || t.status === 'verified')
-      ).length;
-      setStat('psTaskers', verified);
-    } catch (e) { setStat('psTaskers', '—'); }
+    const snap = await db.ref('taskers').once('value');
+    const taskers = snap.val() || {};
+    const verified = Object.values(taskers).filter(t =>
+      t && (t.verified === true || t.status === 'verified')
+    ).length;
+    setStat('psTaskers', verified);
+  } catch (e) { setStat('psTaskers', '—'); }
 
-    let completed = 0;
-    try {
-      const assignedSnap = await database.ref('ekazi_assigned_tasks').once('value');
-      const assigned = assignedSnap.val() || {};
-      completed += Object.values(assigned).filter(t => {
-        const s = (t.status || '').toLowerCase();
-        return s === 'approved' || s === 'completed';
-      }).length;
-    } catch (e) {}
-    try {
-      const kasikaziSnap = await database.ref('kasikazi_tasks').once('value');
-      const kasikazi = kasikaziSnap.val() || {};
-      Object.values(kasikazi).forEach(t => {
-        if (!t.claimedBy) return;
-        Object.values(t.claimedBy).forEach(c => {
-          if ((c.status || '').toLowerCase() === 'approved') completed++;
-        });
+  // Completed
+  let completed = 0;
+  try {
+    const snap = await db.ref('ekazi_assigned_tasks').once('value');
+    const assigned = snap.val() || {};
+    completed += Object.values(assigned).filter(t => {
+      const s = (t.status || '').toLowerCase();
+      return s === 'approved' || s === 'completed';
+    }).length;
+  } catch (e) {}
+  try {
+    const snap = await db.ref('kasikazi_tasks').once('value');
+    const kas = snap.val() || {};
+    Object.values(kas).forEach(t => {
+      if (!t.claimedBy) return;
+      Object.values(t.claimedBy).forEach(c => {
+        if ((c.status || '').toLowerCase() === 'approved') completed++;
       });
-    } catch (e) {}
-    setStat('psCompleted', completed);
+    });
+  } catch (e) {}
+  setStat('psCompleted', completed);
 
-    setStat('psWorkspaces', 14);
+  // Workspaces — count known sub-apps + root apps
+  setStat('psWorkspaces', Object.keys(APPS).length + 12);
 
-    buildTicker();
-  } catch (e) {
-    console.warn('Stats error:', e);
-  }
+  buildTicker();
 }
 
 function setStat(id, value) {
@@ -1994,9 +2229,15 @@ function setStat(id, value) {
 }
 
 function animateCount(el, target) {
-  const duration = 900;
+  // Start from current numeric value (if any) rather than 0 — avoids re-count from zero
+  const currentText = (el.textContent || '').replace(/,/g, '').trim();
+  const currentVal = /^\d+$/.test(currentText) ? parseInt(currentText, 10) : 0;
+  if (currentVal === target) { el.textContent = target.toLocaleString(); return; }
+
+  const duration = 700;
   const start = performance.now();
-  const from = 0;
+  const from = currentVal;
+
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
     const eased = 1 - Math.pow(1 - t, 3);
@@ -2005,6 +2246,119 @@ function animateCount(el, target) {
     else el.textContent = target.toLocaleString();
   }
   requestAnimationFrame(step);
+}
+
+// ============================================================
+// ACTIVITY TICKER
+// ============================================================
+function buildPublicTicker() {
+  const track = document.getElementById('psTicker');
+  if (!track) return;
+  const items = [
+    { icon: 'fa-circle-check', text: 'A task was approved' },
+    { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
+    { icon: 'fa-user-check', text: 'A tasker joined the network' },
+    { icon: 'fa-circle-check', text: 'A submission was approved' },
+    { icon: 'fa-bullhorn', text: 'A new suite went live' },
+    { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
+  ];
+  const html = items.map(it => `
+    <span class="ps-ticker-item">
+      <i class="fas ${escapeHtml(it.icon)}" aria-hidden="true"></i>
+      <span>${escapeHtml(it.text)}</span>
+    </span>
+  `).join('');
+  track.innerHTML = html + html;
+}
+
+async function buildTicker() {
+  const track = document.getElementById('psTicker');
+  if (!track) return;
+
+  if (!currentUser) { buildPublicTicker(); return; }
+
+  const db = window._db;
+  if (!db) { buildPublicTicker(); return; }
+
+  const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
+  const items = [];
+
+  try {
+    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const assigned = snap.val() || {};
+    Object.entries(assigned).forEach(([id, t]) => {
+      const s = (t.status || '').toLowerCase();
+      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+      if (!ts) return;
+      if (s === 'approved' || s === 'completed') {
+        items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      } else if (s === 'revision') {
+        items.push({ icon: 'fa-redo', html: `Revision on <strong>${escapeHtml(t.title || 'task')}</strong>`, ts });
+      } else if (s === 'review' || s === 'submitted') {
+        items.push({ icon: 'fa-clock', html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`, ts });
+      } else if (s === 'assigned' || s === 'new') {
+        items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      }
+    });
+  } catch (e) { console.warn('Ticker FlexiKazi:', e); }
+
+  try {
+    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const kas = snap.val() || {};
+    Object.entries(kas).forEach(([id, t]) => {
+      const c = t.claimedBy && t.claimedBy[uid];
+      if (!c) return;
+      const s = (c.status || 'claimed').toLowerCase();
+      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
+      if (!ts) return;
+      if (s === 'approved') {
+        items.push({ icon: 'fa-circle-check', html: `Kasikazi approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      } else if (s === 'revision') {
+        items.push({ icon: 'fa-redo', html: `Kasikazi revision: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      } else if (s === 'submitted') {
+        items.push({ icon: 'fa-clock', html: `Kasikazi in review: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      } else {
+        items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      }
+    });
+  } catch (e) { console.warn('Ticker Kasikazi:', e); }
+
+  try {
+    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const payouts = snap.val() || {};
+    Object.entries(payouts).forEach(([id, p]) => {
+      const s = (p.status || 'pending').toLowerCase();
+      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
+      if (!ts) return;
+      if (s === 'paid') {
+        items.push({ icon: 'fa-check-double', html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
+      } else if (s === 'approved') {
+        items.push({ icon: 'fa-money-bill-wave', html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
+      }
+    });
+  } catch (e) { console.warn('Ticker payouts:', e); }
+
+  items.sort((a, b) => b.ts - a.ts);
+
+  if (items.length === 0) {
+    track.innerHTML = `
+      <span class="ps-ticker-item">
+        <i class="fas fa-satellite-dish" aria-hidden="true"></i>
+        <span>No recent activity — claim a task or complete work to see it here</span>
+      </span>
+    `;
+    return;
+  }
+
+  const top = items.slice(0, 12);
+  const html = top.map(it => `
+    <span class="ps-ticker-item">
+      <i class="fas ${escapeHtml(it.icon)}" aria-hidden="true"></i>
+      <span>${it.html}</span>
+    </span>
+  `).join('');
+  track.innerHTML = html + html;
 }
 
 // ============================================================
@@ -2031,15 +2385,15 @@ function updatePublicClock() {
 }
 
 // ============================================================
-// INIT
+// BOOT TIMERS + INIT
 // ============================================================
-renderSignedOut();
-loadPublicStats();
-updatePublicClock();
-renderNotifications();
-
-setInterval(loadPublicStats, 60000);
-setInterval(updatePublicClock, 1000);
+window.addEventListener('load', () => {
+  updatePublicClock();
+  setInterval(updatePublicClock, CONFIG.clockRefreshMs);
+  setInterval(() => {
+    if (appInitialized) loadPublicStats();
+  }, CONFIG.tickerRefreshMs);
+});
 
 window.addEventListener('beforeunload', () => {
   detachNotifListeners();
