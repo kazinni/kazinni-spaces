@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<meta name="description" content="KazInni Workspace — one account, every app. FlexiKazi, Kasikazi and the entire KazInni ecosystem in a single workspace.">
+<meta name="description" content="KazInni Workspace — one account, every app. FlexiKazi, Kasikazi, Learning and the entire KazInni ecosystem in a single workspace.">
 <title>KazInni Workspace</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -113,7 +113,7 @@ body {
 @keyframes orb { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(40px, -40px) scale(1.05); } 66% { transform: translate(-30px, 30px) scale(0.95); } }
 
 /* ============================================================
-   HEADER (shared)
+   HEADER
    ============================================================ */
 .ws-header {
   position: sticky; top: 0; z-index: 1000;
@@ -159,12 +159,7 @@ body {
 .ws-rail-toggle:hover { background: rgba(15,15,30,0.05); }
 body.mode-workspace .ws-rail-toggle { display: flex; }
 
-/* Search */
-.ws-search {
-  flex: 1; max-width: 520px;
-  display: none;
-  position: relative;
-}
+.ws-search { flex: 1; max-width: 520px; display: none; position: relative; }
 body.mode-workspace .ws-search { display: block; }
 .ws-search input {
   width: 100%;
@@ -177,8 +172,7 @@ body.mode-workspace .ws-search { display: block; }
   transition: all var(--t-fast);
 }
 .ws-search input:focus {
-  outline: none;
-  background: white;
+  outline: none; background: white;
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(202,138,4,0.12);
 }
@@ -189,11 +183,7 @@ body.mode-workspace .ws-search { display: block; }
   pointer-events: none;
 }
 
-/* Nav (signed-out only) */
-.ws-nav-links {
-  display: flex; align-items: center; gap: 1.2rem;
-  margin-left: 0.5rem;
-}
+.ws-nav-links { display: flex; align-items: center; gap: 1.2rem; margin-left: 0.5rem; }
 body.mode-workspace .ws-nav-links { display: none; }
 .ws-nav-link {
   color: var(--text-secondary); text-decoration: none;
@@ -205,11 +195,7 @@ body.mode-workspace .ws-nav-links { display: none; }
 }
 .ws-nav-link:hover { color: var(--ink); }
 
-.ws-header-right {
-  margin-left: auto;
-  display: flex; align-items: center; gap: 0.5rem;
-  flex-shrink: 0;
-}
+.ws-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
 .ws-icon-btn {
   width: 38px; height: 38px; border-radius: 50%;
@@ -249,7 +235,6 @@ body.mode-workspace .ws-nav-links { display: none; }
 }
 .ws-waffle.active span { background: var(--gold); }
 
-/* Account button */
 .ws-account-btn {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.25rem 0.7rem 0.25rem 0.25rem;
@@ -276,7 +261,6 @@ body.mode-workspace .ws-nav-links { display: none; }
 }
 .ws-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
 
-/* Sign-in button */
 .ws-btn {
   padding: 0.6rem 1.3rem; border: none; border-radius: var(--radius-pill);
   font-weight: 600; font-size: 0.85rem; cursor: pointer;
@@ -305,17 +289,13 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-btn-lg { padding: 0.85rem 1.75rem; font-size: 0.92rem; }
 
 /* ============================================================
-   SHELL — landing mode (default)
+   SHELL
    ============================================================ */
 .ws-shell { min-height: calc(100vh - var(--header-h)); }
 .ws-rail { display: none; }
 .ws-main { padding: 0; }
 
-/* ============================================================
-   SHELL — workspace mode (activated by body.mode-workspace)
-   ============================================================ */
 body.mode-workspace { background: var(--surface-2); }
-
 body.mode-workspace .ws-shell {
   display: grid;
   grid-template-columns: var(--rail-w) 1fr;
@@ -384,12 +364,15 @@ body.rail-collapsed .rail-label { opacity: 0; height: 0; padding: 0; }
   background: var(--gold-soft); color: var(--gold-dark);
   font-family: var(--font-heading);
 }
+.rail-item .rail-lock {
+  font-size: 0.68rem; color: var(--gold);
+}
 body.rail-collapsed .rail-item .rail-item-name,
-body.rail-collapsed .rail-item .rail-count { display: none; }
+body.rail-collapsed .rail-item .rail-count,
+body.rail-collapsed .rail-item .rail-lock { display: none; }
 body.rail-collapsed .rail-item { justify-content: center; padding: 0.7rem 0; }
 body.rail-collapsed .rail-item i { font-size: 1rem; }
 
-/* App sub-items */
 .rail-sub { display: flex; flex-direction: column; gap: 0.1rem; }
 .rail-sub-item {
   display: flex; align-items: center; gap: 0.7rem;
@@ -401,7 +384,6 @@ body.rail-collapsed .rail-item i { font-size: 1rem; }
   white-space: nowrap;
 }
 .rail-sub-item:hover { background: var(--surface-3); color: var(--ink); }
-.rail-sub-item i { font-size: 0.75rem; color: var(--text-muted); }
 .rail-sub-dot {
   width: 8px; height: 8px; border-radius: 3px;
   flex-shrink: 0;
@@ -411,7 +393,7 @@ body.rail-collapsed .rail-sub { display: none; }
 .rail-spacer { flex: 1; min-height: 0.5rem; }
 
 /* ============================================================
-   MAIN CONTENT AREA
+   CONTENT
    ============================================================ */
 .ws-content {
   padding: 2rem 2.5rem;
@@ -423,7 +405,7 @@ body.mode-workspace .ws-content { padding: 1.75rem 2rem; }
 body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 
 /* ============================================================
-   LANDING — HERO
+   HERO
    ============================================================ */
 .hero {
   position: relative;
@@ -499,14 +481,11 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .hero-strip-item i { color: var(--gold); font-size: 0.85rem; }
 
 /* ============================================================
-   LANDING — APP PREVIEW GRID
+   SECTIONS (landing)
    ============================================================ */
-.app-preview-section {
-  padding: 4rem 2rem;
-  background: white;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
-}
-.app-preview-inner { max-width: 1200px; margin: 0 auto; }
+.section { padding: 4rem 2rem; border-bottom: 1px solid rgba(15,15,30,0.05); background: white; }
+.section.alt { background: var(--surface-2); }
+.section-inner { max-width: 1200px; margin: 0 auto; }
 
 .section-header-center { text-align: center; margin-bottom: 2.6rem; }
 .section-label {
@@ -530,6 +509,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   max-width: 520px; margin: 0 auto;
 }
 
+/* Preview grid */
 .preview-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -546,6 +526,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: flex; flex-direction: column; gap: 0.85rem;
   overflow: hidden;
 }
+.section.alt .preview-card { background: white; }
 .preview-card::before {
   content: ''; position: absolute;
   top: 0; left: 0; right: 0; height: 3px;
@@ -572,10 +553,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-size: 1rem; color: var(--ink);
   letter-spacing: -0.01em;
 }
-.preview-desc {
-  font-size: 0.82rem; color: var(--text-muted);
-  line-height: 1.5;
-}
+.preview-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
 .preview-cta {
   display: inline-flex; align-items: center; gap: 0.35rem;
   font-family: var(--font-heading); font-weight: 600;
@@ -590,24 +568,14 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   border-radius: var(--radius-pill);
   background: var(--gold-soft); color: var(--gold-dark);
 }
+.preview-badge.premium { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; }
 
-/* ============================================================
-   LANDING — WHY STRIP
-   ============================================================ */
-.why-strip {
-  padding: 4rem 2rem;
-  background: var(--surface-2);
-  border-bottom: 1px solid rgba(15,15,30,0.05);
-}
-.why-inner { max-width: 1200px; margin: 0 auto; }
+/* Why grid */
 .why-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.4rem;
 }
-.why-item {
-  text-align: center;
-  padding: 1.5rem 1rem;
-}
+.why-item { text-align: center; padding: 1.5rem 1rem; }
 .why-icon {
   width: 52px; height: 52px; border-radius: 16px;
   background: white;
@@ -622,24 +590,96 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-size: 0.95rem; font-weight: 700;
   color: var(--ink); margin-bottom: 0.4rem;
 }
-.why-item p {
-  font-size: 0.82rem; color: var(--text-muted);
-  line-height: 1.55;
+.why-item p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+
+/* Learning section */
+.learning-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.learning-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  color: var(--ink); margin-bottom: 0.9rem;
+}
+.learning-copy p {
+  font-size: 0.95rem; color: var(--text-secondary);
+  line-height: 1.65; margin-bottom: 1.6rem;
+  max-width: 480px;
+}
+.learning-features {
+  display: flex; flex-direction: column; gap: 0.7rem;
+  margin-bottom: 1.8rem;
+}
+.learning-feature {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-size: 0.88rem; color: var(--text-secondary);
+  font-family: var(--font-heading); font-weight: 500;
+}
+.learning-feature i {
+  color: var(--gold); font-size: 0.9rem;
+  margin-top: 0.25rem; flex-shrink: 0;
+}
+.learning-feature .premium-tag {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 0.1rem 0.4rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
+  border-radius: var(--radius-pill);
+  margin-left: 0.4rem;
+  font-family: var(--font-heading);
+}
+.learning-cta { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.learning-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 40%, #fbbf24 100%);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(202,138,4,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.learning-visual-inner {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem; padding: 1.4rem; width: 100%;
+}
+.learning-card-demo {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1rem 0.9rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  box-shadow: 0 10px 24px rgba(15,15,30,0.08);
+}
+.learning-card-demo .lc-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: var(--gold-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+}
+.learning-card-demo .lc-title {
+  font-family: var(--font-heading);
+  font-size: 0.78rem; font-weight: 700; color: var(--ink);
+  line-height: 1.2;
+}
+.learning-card-demo .lc-meta {
+  font-size: 0.68rem; color: var(--text-muted);
+}
+.learning-card-demo .lc-bar {
+  height: 4px; background: var(--surface-3);
+  border-radius: 2px; overflow: hidden;
+}
+.learning-card-demo .lc-bar > span {
+  display: block; height: 100%;
+  background: var(--gold-gradient);
 }
 
-/* ============================================================
-   LANDING — STATS
-   ============================================================ */
-.stats-section {
-  padding: 4rem 2rem;
-  background: white;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
-}
-.stats-inner { max-width: 1200px; margin: 0 auto; }
-.ps-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1rem; margin-bottom: 1.5rem;
-}
+/* Stats */
+.ps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
 .ps-tile {
   background: white; border: 1px solid var(--border-light);
   border-radius: 18px; padding: 1.5rem 1.4rem 1.3rem;
@@ -683,7 +723,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   text-transform: uppercase; letter-spacing: 0.6px;
 }
 
-/* Ticker */
 .ps-ticker {
   background: white; border: 1px solid var(--border-light);
   border-radius: var(--radius-pill); padding: 0.8rem 0;
@@ -710,9 +749,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ps-ticker-item i { font-size: 0.7rem; color: var(--gold); }
 .ps-ticker-item strong { color: var(--ink); font-weight: 700; }
 
-/* ============================================================
-   LANDING — FOOTER
-   ============================================================ */
+/* Footer */
 .landing-footer {
   background: var(--surface-2);
   border-top: 1px solid rgba(15,15,30,0.06);
@@ -740,28 +777,21 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .landing-footer-copy { color: var(--text-muted); font-size: 0.74rem; font-family: var(--font-heading); }
 
 /* ============================================================
-   WORKSPACE — WELCOME + DASHBOARD
+   WORKSPACE
    ============================================================ */
-.ws-welcome {
-  margin-bottom: 1.6rem;
-}
+.ws-welcome { margin-bottom: 1.6rem; }
 .ws-welcome h1 {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   font-weight: 700; letter-spacing: -0.025em;
   color: var(--ink); margin-bottom: 0.3rem;
 }
-.ws-welcome p {
-  font-size: 0.88rem; color: var(--text-muted);
-}
+.ws-welcome p { font-size: 0.88rem; color: var(--text-muted); }
 
-.ws-section {
-  margin-bottom: 1.8rem;
-}
+.ws-section { margin-bottom: 1.8rem; }
 .ws-section-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 0.9rem;
-  gap: 1rem;
+  margin-bottom: 0.9rem; gap: 1rem;
 }
 .ws-section-title {
   font-family: var(--font-heading);
@@ -779,70 +809,64 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .ws-section-action:hover { color: var(--gold); }
 
-/* Card grid */
-.ws-cards {
+/* Completed task tiles — non-financial */
+.completed-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 0.9rem;
 }
-.ws-card {
+.completed-tile {
   background: white;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 1.15rem 1.2rem;
-  transition: all var(--t-fast);
+  padding: 1.05rem 1.1rem 1rem;
   text-decoration: none; color: inherit;
-  display: flex; flex-direction: column; gap: 0.6rem;
+  transition: all var(--t-fast);
+  display: flex; flex-direction: column; gap: 0.65rem;
   position: relative; overflow: hidden;
 }
-.ws-card:hover {
+.completed-tile:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   border-color: rgba(202,138,4,0.25);
 }
-.ws-card-top {
+.completed-tile-top {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
-.ws-card-icon {
-  width: 36px; height: 36px; border-radius: 10px;
+.completed-tile-icon {
+  width: 34px; height: 34px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 0.9rem; flex-shrink: 0;
+  color: white; font-size: 0.85rem; flex-shrink: 0;
 }
-.ws-card-tag {
+.completed-tile-status {
   font-family: var(--font-heading);
   font-size: 0.62rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.6px;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.55rem;
   border-radius: var(--radius-pill);
-  background: var(--surface-3); color: var(--text-secondary);
+  background: #d1fae5; color: #065f46;
+  white-space: nowrap;
 }
-.ws-card-tag.gold { background: var(--gold-soft); color: var(--gold-dark); }
-.ws-card-tag.success { background: #d1fae5; color: #065f46; }
-.ws-card-tag.warning { background: #fef3c7; color: #92400e; }
-.ws-card-tag.danger { background: #fee2e2; color: #991b1b; }
-.ws-card-tag.info { background: #dbeafe; color: #1e40af; }
+.completed-tile-status.review { background: #dbeafe; color: #1e40af; }
+.completed-tile-status.revision { background: #fef3c7; color: #92400e; }
 
-.ws-card-title {
+.completed-tile-title {
   font-family: var(--font-heading);
   font-size: 0.92rem; font-weight: 600;
   color: var(--ink); line-height: 1.3;
   overflow: hidden; text-overflow: ellipsis;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
-.ws-card-meta {
-  font-size: 0.76rem; color: var(--text-muted);
-  display: flex; align-items: center; gap: 0.6rem;
-  flex-wrap: wrap;
+.completed-tile-meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
 }
-.ws-card-meta i { font-size: 0.7rem; }
-.ws-card-value {
-  font-family: var(--font-display);
-  font-size: 1.5rem; font-weight: 700;
-  color: var(--ink); letter-spacing: -0.03em;
-  line-height: 1;
+.completed-tile-meta .dot-sep {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--text-muted); opacity: 0.5;
 }
-.ws-card-foot {
+.completed-tile-foot {
   margin-top: auto;
   padding-top: 0.6rem;
   border-top: 1px dashed var(--border-light);
@@ -850,9 +874,147 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-family: var(--font-heading);
   font-size: 0.72rem; color: var(--text-muted);
 }
-.ws-card-foot .ws-card-cta {
+.completed-tile-source {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-weight: 600;
+}
+.completed-tile-source .src-dot {
+  width: 8px; height: 8px; border-radius: 3px;
+}
+.completed-tile-cta {
   color: var(--gold-dark); font-weight: 700;
   display: inline-flex; align-items: center; gap: 0.3rem;
+}
+
+/* Generic app tiles */
+.ws-app-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+.ws-app-tile {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 1rem 0.9rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 0.7rem;
+  transition: all var(--t-fast);
+  position: relative;
+}
+.ws-app-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(202,138,4,0.25);
+}
+.ws-app-tile .tile-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1rem;
+}
+.ws-app-tile-name {
+  font-family: var(--font-heading);
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--ink); line-height: 1.2;
+}
+.ws-app-tile-desc {
+  font-size: 0.72rem; color: var(--text-muted);
+  line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+/* Learning dashboard card */
+.learning-dash {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid rgba(202,138,4,0.2);
+  border-radius: var(--radius-md);
+  padding: 1.3rem 1.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.1rem;
+  align-items: center;
+  text-decoration: none; color: inherit;
+  transition: all var(--t-fast);
+  position: relative;
+  overflow: hidden;
+}
+.learning-dash:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px rgba(202,138,4,0.15);
+  border-color: rgba(202,138,4,0.35);
+}
+.learning-dash.locked {
+  background: linear-gradient(135deg, #f8f7f5 0%, #f4f3f1 100%);
+  border-color: var(--border-light);
+}
+.learning-dash.locked:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-medium);
+}
+.learning-dash-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--gold-gradient);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  box-shadow: 0 10px 24px rgba(202,138,4,0.25);
+}
+.learning-dash.locked .learning-dash-icon {
+  background: linear-gradient(135deg, #9ca3af, #6b7280);
+  box-shadow: none;
+}
+.learning-dash-body { min-width: 0; }
+.learning-dash-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.2rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.learning-dash-desc {
+  font-size: 0.8rem; color: var(--text-secondary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.learning-dash-progress {
+  margin-top: 0.55rem;
+  height: 5px; background: rgba(15,15,30,0.06);
+  border-radius: 3px; overflow: hidden;
+}
+.learning-dash-progress > span {
+  display: block; height: 100%;
+  background: var(--gold-gradient);
+}
+.learning-dash-cta {
+  font-family: var(--font-heading);
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--gold-dark);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-pill);
+  background: white;
+  border: 1px solid rgba(202,138,4,0.25);
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all var(--t-fast);
+}
+.learning-dash:hover .learning-dash-cta {
+  background: var(--gold-gradient); color: white;
+  border-color: transparent;
+}
+.learning-dash.locked .learning-dash-cta {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white; border-color: transparent;
+}
+.learning-dash-premium-tag {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-family: var(--font-heading);
+  font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 0.15rem 0.5rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white;
+  border-radius: var(--radius-pill);
+  margin-left: 0.5rem;
 }
 
 /* Recent activity feed */
@@ -880,6 +1042,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ws-feed-icon.gold { background: var(--gold-gradient); }
 .ws-feed-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .ws-feed-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
+.ws-feed-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .ws-feed-body { flex: 1; min-width: 0; }
 .ws-feed-title {
   font-family: var(--font-heading);
@@ -906,56 +1069,20 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   opacity: 0.4; display: block; margin-bottom: 0.5rem;
 }
 
-/* App tiles in workspace */
-.ws-app-tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 0.8rem;
-}
-.ws-app-tile {
-  background: white;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 1rem 1rem 0.9rem;
-  text-decoration: none; color: inherit;
-  display: flex; flex-direction: column; gap: 0.7rem;
-  transition: all var(--t-fast);
-  position: relative;
-}
-.ws-app-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(202,138,4,0.25);
-}
-.ws-app-tile .ws-card-icon { width: 40px; height: 40px; font-size: 1rem; border-radius: var(--radius-md); }
-.ws-app-tile-name {
-  font-family: var(--font-heading);
-  font-size: 0.88rem; font-weight: 700;
-  color: var(--ink); line-height: 1.2;
-}
-.ws-app-tile-desc {
-  font-size: 0.72rem; color: var(--text-muted);
-  line-height: 1.4;
-  overflow: hidden; text-overflow: ellipsis;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-}
-
-/* Loading skeleton */
 .ws-skeleton {
-  height: 90px; border-radius: var(--radius-md);
+  height: 96px; border-radius: var(--radius-md);
   background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
 
 /* ============================================================
-   LAUNCHER PANEL
+   PANELS
    ============================================================ */
-.launcher-panel {
+.launcher-panel, .notif-panel {
   position: fixed;
   top: calc(var(--header-h) + 8px);
   right: 1rem;
-  width: 420px; max-width: calc(100vw - 2rem);
   background: white; border-radius: var(--radius-lg);
   box-shadow: var(--shadow-pop);
   border: 1px solid var(--border-light);
@@ -963,20 +1090,41 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   max-height: calc(100vh - var(--header-h) - 24px);
   flex-direction: column;
 }
-.launcher-panel.active { display: flex; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.lp-header {
+.launcher-panel { width: 420px; max-width: calc(100vw - 2rem); }
+.notif-panel { width: 400px; max-width: calc(100vw - 2rem); }
+.launcher-panel.active, .notif-panel.active {
+  display: flex;
+  animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.lp-header, .notif-header {
   padding: 1rem 1.2rem 0.8rem;
   border-bottom: 1px solid var(--border-light);
   display: flex; align-items: center; justify-content: space-between;
   flex-shrink: 0;
 }
-.lp-title {
+.lp-title, .notif-title {
   font-family: var(--font-heading); font-size: 0.76rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
 }
-.lp-header-right { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading); font-weight: 500; }
-.lp-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulseDot 2s infinite; }
-.lp-body { padding: 1rem; overflow-y: auto; flex: 1; }
+.lp-header-right {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+}
+.lp-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success); animation: pulseDot 2s infinite;
+}
+.notif-clear {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.72rem; font-weight: 600; color: var(--gold-dark);
+  font-family: var(--font-heading);
+}
+.notif-clear:hover:not(:disabled) { color: var(--gold); }
+.notif-clear:disabled { opacity: 0.4; cursor: not-allowed; }
+.lp-body, .notif-body { overflow-y: auto; flex: 1; }
+.lp-body { padding: 1rem; }
+.notif-body { padding: 0.4rem; }
 .lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 .lp-app {
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem;
@@ -1008,51 +1156,21 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   padding: 0.16rem 0.45rem; border-radius: var(--radius-pill);
   background: var(--gold-soft); color: var(--gold-dark);
 }
+.lp-app-badge.premium {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
+}
 .lp-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-heading); }
 .lp-empty i { display: block; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.6rem; }
 .lp-footer {
   padding: 0.85rem 1.2rem; border-top: 1px solid var(--border-light);
-  background: var(--surface-2); display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: space-between;
   font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading);
   flex-shrink: 0;
 }
 .lp-footer a { color: var(--gold-dark); text-decoration: none; font-weight: 600; cursor: pointer; }
 .lp-footer a:hover { color: var(--gold); }
 
-/* ============================================================
-   NOTIFICATIONS PANEL
-   ============================================================ */
-.notif-panel {
-  position: fixed;
-  top: calc(var(--header-h) + 8px);
-  right: 1rem;
-  width: 400px; max-width: calc(100vw - 2rem);
-  background: white; border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
-  border: 1px solid var(--border-light);
-  overflow: hidden; z-index: 1100; display: none;
-  max-height: calc(100vh - var(--header-h) - 24px);
-  flex-direction: column;
-}
-.notif-panel.active { display: flex; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.notif-header {
-  padding: 1rem 1.2rem 0.8rem;
-  border-bottom: 1px solid var(--border-light);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-shrink: 0;
-}
-.notif-title {
-  font-family: var(--font-heading); font-size: 0.76rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
-}
-.notif-clear {
-  background: none; border: none; cursor: pointer;
-  font-size: 0.72rem; font-weight: 600; color: var(--gold-dark);
-  font-family: var(--font-heading);
-}
-.notif-clear:hover:not(:disabled) { color: var(--gold); }
-.notif-clear:disabled { opacity: 0.4; cursor: not-allowed; }
-.notif-body { overflow-y: auto; padding: 0.4rem; flex: 1; }
 .notif-item {
   display: flex; align-items: flex-start; gap: 0.75rem;
   padding: 0.8rem 0.85rem;
@@ -1075,6 +1193,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .notif-icon.gold { background: var(--gold-gradient); }
 .notif-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .notif-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
+.notif-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .notif-body-text { flex: 1; min-width: 0; }
 .notif-title-text {
   font-family: var(--font-heading); font-weight: 600;
@@ -1134,6 +1253,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ws-modal-icon.gold { background: var(--gold-gradient); box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
 .ws-modal-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .ws-modal-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
+.ws-modal-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); box-shadow: 0 12px 30px rgba(139,92,246,0.28); }
 .ws-modal-header { text-align: center; margin-bottom: 1.4rem; }
 .ws-modal-header h3 {
   font-family: var(--font-display);
@@ -1141,10 +1261,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   letter-spacing: -0.02em;
   color: var(--ink); margin-bottom: 0.35rem;
 }
-.ws-modal-header p {
-  font-size: 0.78rem; color: var(--text-muted);
-  font-family: var(--font-heading);
-}
+.ws-modal-header p { font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-heading); }
 .ws-modal-body {
   background: var(--surface-2);
   border-radius: 14px;
@@ -1180,6 +1297,11 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   box-shadow: 0 8px 20px rgba(202,138,4,0.28);
 }
 .ws-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
+.ws-modal-btn.premium {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white;
+  box-shadow: 0 8px 20px rgba(139,92,246,0.28);
+}
+.ws-modal-btn.premium:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(139,92,246,0.38); }
 .ws-modal-btn.secondary {
   background: transparent;
   color: var(--text-secondary);
@@ -1196,7 +1318,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
 
-/* Auth form */
 .auth-field { display: flex; flex-direction: column; gap: 0.4rem; }
 .auth-field label {
   font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);
@@ -1275,6 +1396,15 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ud-item.danger { color: var(--danger); }
 .ud-item.danger i { color: var(--danger); }
 .ud-item.danger:hover { background: #fef2f2; }
+.ud-item .ud-premium-tag {
+  margin-left: auto;
+  font-size: 0.56rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 0.12rem 0.45rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
+  border-radius: var(--radius-pill);
+}
 .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
 .ud-section-label {
   font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
@@ -1305,6 +1435,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .toast.success i { color: #34d399; }
 .toast.error i { color: #f87171; }
 .toast.info i { color: #fbbf24; }
+.toast.premium i { color: #a78bfa; }
 .toast.leaving { opacity: 0; transform: translateX(24px); }
 
 /* ============================================================
@@ -1313,11 +1444,13 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 @media (max-width: 1100px) {
   body.mode-workspace .ws-shell { grid-template-columns: var(--rail-w-collapsed) 1fr; }
   body.mode-workspace .rail-item .rail-item-name,
-  body.mode-workspace .rail-item .rail-count { display: none; }
+  body.mode-workspace .rail-item .rail-count,
+  body.mode-workspace .rail-item .rail-lock { display: none; }
   body.mode-workspace .rail-item { justify-content: center; padding: 0.7rem 0; }
   body.mode-workspace .rail-item i { font-size: 1rem; }
   body.mode-workspace .rail-sub { display: none; }
   body.mode-workspace .rail-label { opacity: 0; height: 0; padding: 0; }
+  .learning-hero { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 @media (max-width: 900px) {
@@ -1327,13 +1460,12 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   .hero-lede { font-size: 1rem; }
   .hero-strip { gap: 1.4rem; }
   .hero-strip-item { font-size: 0.75rem; }
-  .app-preview-section, .why-strip, .stats-section { padding: 3rem 1.25rem; }
+  .section { padding: 3rem 1.25rem; }
   .landing-footer { padding: 2rem 1.25rem 1.5rem; }
   .landing-footer-inner { flex-direction: column; gap: 0.6rem; text-align: center; }
   .toast-container { right: 12px; left: 12px; align-items: stretch; }
   .toast { max-width: none; }
 
-  /* Workspace mobile: rail becomes slide-in overlay */
   body.mode-workspace .ws-shell { grid-template-columns: 1fr; }
   body.mode-workspace .ws-rail {
     position: fixed; top: var(--header-h); left: 0; bottom: 0;
@@ -1344,11 +1476,10 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
     box-shadow: 0 20px 60px rgba(15,15,30,0.18);
   }
   body.mode-workspace.rail-open .ws-rail { transform: translateX(0); }
-  body.mode-workspace.rail-collapsed .ws-rail {
-    display: flex;
-  }
+  body.mode-workspace.rail-collapsed .ws-rail { display: flex; }
   body.mode-workspace .rail-item .rail-item-name,
-  body.mode-workspace .rail-item .rail-count { display: block; }
+  body.mode-workspace .rail-item .rail-count,
+  body.mode-workspace .rail-item .rail-lock { display: block; }
   body.mode-workspace .rail-item { justify-content: flex-start; padding: 0.6rem 0.85rem; }
   body.mode-workspace .rail-sub { display: flex; }
   body.mode-workspace .rail-label { opacity: 1; height: auto; padding: 0.55rem 0.85rem 0.35rem; }
@@ -1359,17 +1490,18 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   .ws-nav-links { display: none; }
   .ws-account-name { display: none; }
   .launcher-panel, .notif-panel { right: 0.5rem; width: calc(100vw - 1rem); }
+  .learning-dash { grid-template-columns: auto 1fr; }
+  .learning-dash-cta { grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
 }
 
 @media (max-width: 560px) {
   .ps-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 1.9rem; }
   .ws-modal { padding: 1.6rem 1.4rem 1.4rem; }
-  .ws-cards { grid-template-columns: 1fr; }
   .lp-grid { grid-template-columns: 1fr; }
+  .completed-grid { grid-template-columns: 1fr; }
 }
 
-/* Rail backdrop for mobile */
 .rail-backdrop {
   position: fixed; inset: 0;
   background: rgba(15,15,30,0.45);
@@ -1378,21 +1510,17 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   z-index: 899; display: none;
 }
 body.rail-open .rail-backdrop { display: block; }
-@media (min-width: 901px) {
-  .rail-backdrop { display: none !important; }
-}
+@media (min-width: 901px) { .rail-backdrop { display: none !important; } }
 </style>
 </head>
 <body class="mode-landing">
 
-<!-- Skip link -->
 <a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
 
-<!-- Toast container -->
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="false"></div>
 
 <!-- ============================================================
-     HEADER (shared across modes)
+     HEADER
      ============================================================ -->
 <header class="ws-header">
   <div class="ws-header-inner">
@@ -1408,8 +1536,8 @@ body.rail-open .rail-backdrop { display: block; }
     <nav class="ws-nav-links" aria-label="Primary navigation">
       <a href="#features" class="ws-nav-link">Features</a>
       <a href="#apps" class="ws-nav-link">Apps</a>
+      <a href="#learning" class="ws-nav-link">Learning</a>
       <a href="#activity" class="ws-nav-link">Activity</a>
-      <a href="#pricing" class="ws-nav-link" onclick="showToast('Pricing page coming soon', 'info'); return false;">Pricing</a>
     </nav>
 
     <div class="ws-search" role="search">
@@ -1429,22 +1557,18 @@ body.rail-open .rail-backdrop { display: block; }
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </button>
 
-      <div id="headerAccount">
-        <!-- Filled by JS -->
-      </div>
+      <div id="headerAccount"></div>
     </div>
   </div>
 </header>
 
-<!-- Rail backdrop (mobile) -->
 <div class="rail-backdrop" id="railBackdrop" onclick="closeRail()" aria-hidden="true"></div>
 
 <!-- ============================================================
-     SHELL — rail + main
+     SHELL
      ============================================================ -->
 <div class="ws-shell">
 
-  <!-- Side rail (only visible in workspace mode) -->
   <aside class="ws-rail" id="wsRail" aria-label="Workspace navigation">
     <div class="rail-group">
       <button type="button" class="rail-item active" onclick="navigateTo('home')" data-nav="home">
@@ -1464,14 +1588,17 @@ body.rail-open .rail-backdrop { display: block; }
 
     <div class="rail-group">
       <div class="rail-label">Apps</div>
-      <div class="rail-sub" id="railApps">
-        <!-- Filled by JS based on permissions -->
-      </div>
+      <div class="rail-sub" id="railApps"></div>
     </div>
 
     <div class="rail-spacer"></div>
 
     <div class="rail-group">
+      <button type="button" class="rail-item" onclick="navigateTo('learning')" data-nav="learning" id="railLearning">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+        <span class="rail-item-name">Learning</span>
+        <span class="rail-lock" id="railLearningLock" aria-hidden="true" style="display:none;"><i class="fas fa-lock"></i></span>
+      </button>
       <button type="button" class="rail-item" onclick="navigateTo('wallet')" data-nav="wallet">
         <i class="fas fa-wallet" aria-hidden="true"></i>
         <span class="rail-item-name">Wallet</span>
@@ -1487,11 +1614,8 @@ body.rail-open .rail-backdrop { display: block; }
     </div>
   </aside>
 
-  <!-- Main content — swapped between landing and workspace -->
   <main class="ws-main" id="main">
-    <div class="ws-content" id="wsContent">
-      <!-- Filled by JS: renderLanding() or renderWorkspace() -->
-    </div>
+    <div class="ws-content" id="wsContent"></div>
   </main>
 </div>
 
@@ -1584,6 +1708,33 @@ body.rail-open .rail-backdrop { display: block; }
 </div>
 
 <!-- ============================================================
+     UPGRADE MODAL (Premium)
+     ============================================================ -->
+<div class="modal-overlay" id="upgradeModalOverlay" onclick="closeUpgradeModal()"></div>
+<div class="ws-modal" id="upgradeModal" role="dialog" aria-modal="true" aria-labelledby="upgradeModalTitle" aria-hidden="true" style="max-width: 460px;">
+  <button type="button" class="ws-modal-close" onclick="closeUpgradeModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="ws-modal-icon premium"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+  <div class="ws-modal-header">
+    <h3 id="upgradeModalTitle">Unlock KazInni Learning</h3>
+    <p>Full course library, certificates and mentorship</p>
+  </div>
+  <div class="ws-modal-body">
+    <strong style="display:block;color:var(--ink);margin-bottom:0.6rem;font-family:var(--font-heading);">What's included</strong>
+    ✦ Full course library — practical, Kenya-focused lessons<br>
+    ✦ Downloadable certificates on completion<br>
+    ✦ Progress tracking &amp; streaks<br>
+    ✦ 1:1 mentor sessions (Pro tier)<br>
+    ✦ Portfolio reviews (Pro tier)
+  </div>
+  <div class="ws-modal-actions">
+    <button type="button" class="ws-modal-btn secondary" onclick="closeUpgradeModal()">Not now</button>
+    <a href="pricing.html" class="ws-modal-btn premium">
+      <i class="fas fa-crown" aria-hidden="true"></i> See plans
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
      SCRIPTS
      ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
@@ -1634,6 +1785,19 @@ const APPS = {
     permission: null,
     alwaysVisible: false,
     signedInOnly: true
+  },
+  'learning': {
+    name: 'Learning',
+    desc: 'Practical courses, certificates and mentorship for the Kenyan gig economy.',
+    icon: 'fa-graduation-cap',
+    color: '#f59e0b',
+    link: 'learning.html',
+    badge: 'Premium',
+    badgeClass: 'premium',
+    permission: null,
+    alwaysVisible: false,
+    signedInOnly: true,
+    premium: true
   }
 };
 
@@ -1643,7 +1807,8 @@ const CONFIG = {
   clockRefreshMs: 1000,
   notifStorageKey: 'kazinni_notif_lastseen',
   maxNotifications: 20,
-  recentActivityMax: 6
+  recentActivityMax: 6,
+  completedTilesMax: 6
 };
 
 // ============================================================
@@ -1652,13 +1817,13 @@ const CONFIG = {
 let currentUser = null;
 let currentTasker = null;
 let currentPerms = {};
+let currentEntitlements = {};
 let notifications = [];
 let recentActivity = [];
+let completedTiles = [];
 let notifRefs = [];
 let appInitialized = false;
 let lastFocusedBeforeModal = null;
-let currentUserData = null;
-let currentStats = { taskers: 0, completed: 0, workspaces: 0 };
 
 // ============================================================
 // UTILS
@@ -1666,7 +1831,7 @@ let currentStats = { taskers: 0, completed: 0, workspaces: 0 };
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
   if (!container) return;
-  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle', premium: 'fa-crown' };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
@@ -1727,12 +1892,8 @@ function lighten(hex, percent) {
   return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
 }
 
-function getLastSeen() {
-  return Number(localStorage.getItem(CONFIG.notifStorageKey) || 0);
-}
-function setLastSeen(ts) {
-  try { localStorage.setItem(CONFIG.notifStorageKey, String(ts)); } catch (e) {}
-}
+function getLastSeen() { return Number(localStorage.getItem(CONFIG.notifStorageKey) || 0); }
+function setLastSeen(ts) { try { localStorage.setItem(CONFIG.notifStorageKey, String(ts)); } catch (e) {} }
 
 function getInitials(name) {
   if (!name) return 'U';
@@ -1744,15 +1905,17 @@ function getInitials(name) {
 
 function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 
+function hasEntitlement(key) {
+  return currentEntitlements && currentEntitlements[key] === true;
+}
+
 // ============================================================
 // BOOT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  const yearEl = document.getElementById('footerYear');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   setupGlobalHandlers();
   setupKeyboardHandlers();
+  setupSearch();
   bootFirebase();
 });
 
@@ -1773,14 +1936,17 @@ function setupGlobalHandlers() {
 function setupKeyboardHandlers() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      closeLauncher();
-      closeUserDropdown();
-      closeNotifications();
-      closeNotifModal();
-      closeAuthModal();
-      closeRail();
+      closeLauncher(); closeUserDropdown(); closeNotifications();
+      closeNotifModal(); closeAuthModal(); closeUpgradeModal(); closeRail();
     }
     if (e.key === 'Tab') trapFocusInModals(e);
+  });
+  // Launcher footer link keyboard support
+  document.addEventListener('keydown', (e) => {
+    const link = document.getElementById('launcherFooterLink');
+    if (link && document.activeElement === link && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault(); link.click();
+    }
   });
 }
 
@@ -1793,11 +1959,21 @@ function trapFocusInModals(e) {
   if (focusables.length === 0) return;
   const first = focusables[0];
   const last = focusables[focusables.length - 1];
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault(); last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault(); first.focus();
-  }
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+function setupSearch() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('wsSearch');
+    if (search) {
+      search.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && search.value.trim()) {
+          showToast(`Search for "${search.value.trim()}" — coming soon`, 'info');
+        }
+      });
+    }
+  });
 }
 
 // ============================================================
@@ -1822,7 +1998,6 @@ function bootFirebase() {
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
   auth.onAuthStateChanged(handleAuthStateChanged);
 
-  // Initial landing render (before auth resolves)
   renderLanding();
   loadPublicStats();
   updatePublicClock();
@@ -1833,28 +2008,26 @@ function bootFirebase() {
 }
 
 // ============================================================
-// AUTH STATE
+// AUTH
 // ============================================================
 async function handleAuthStateChanged(user) {
   const auth = window._auth;
   const db = window._db;
 
   if (!user) {
-    currentUser = null;
-    currentTasker = null;
-    currentPerms = {};
-    notifications = [];
-    recentActivity = [];
+    currentUser = null; currentTasker = null;
+    currentPerms = {}; currentEntitlements = {};
+    notifications = []; recentActivity = []; completedTiles = [];
     detachNotifListeners();
     switchMode('landing');
     renderLanding();
     renderRailApps();
+    updateRailLearning();
     renderNotifications();
     loadPublicStats();
     return;
   }
 
-  // Verify account
   try {
     const snap = await db.ref(`taskers/${user.uid}`).once('value');
     if (!snap.exists()) {
@@ -1875,16 +2048,21 @@ async function handleAuthStateChanged(user) {
     return;
   }
 
-  // Load permissions
   try {
     const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
     currentPerms = permSnap.exists() ? (permSnap.val() || {}) : {};
   } catch (e) { currentPerms = {}; }
 
+  try {
+    const entSnap = await db.ref(`entitlements/${user.uid}`).once('value');
+    currentEntitlements = entSnap.exists() ? (entSnap.val() || {}) : {};
+  } catch (e) { currentEntitlements = {}; }
+
   currentUser = user;
   switchMode('workspace');
   renderWorkspace();
   renderRailApps();
+  updateRailLearning();
   attachNotifListeners();
   loadWorkspaceData();
 }
@@ -1895,9 +2073,7 @@ async function handleAuthStateChanged(user) {
 function switchMode(mode) {
   document.body.classList.remove('mode-landing', 'mode-workspace');
   document.body.classList.add(mode === 'workspace' ? 'mode-workspace' : 'mode-landing');
-  if (mode !== 'workspace') {
-    document.body.classList.remove('rail-open', 'rail-collapsed');
-  }
+  if (mode !== 'workspace') document.body.classList.remove('rail-open', 'rail-collapsed');
   renderAccountButton();
 }
 
@@ -1912,12 +2088,17 @@ function toggleRail() {
   if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
 }
 
-function closeRail() {
-  document.body.classList.remove('rail-open');
+function closeRail() { document.body.classList.remove('rail-open'); }
+
+function updateRailLearning() {
+  const lock = document.getElementById('railLearningLock');
+  if (!lock) return;
+  const unlocked = currentUser && (hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship'));
+  lock.style.display = unlocked ? 'none' : '';
 }
 
 // ============================================================
-// ACCOUNT BUTTON (shared)
+// ACCOUNT BUTTON
 // ============================================================
 function renderAccountButton() {
   const container = document.getElementById('headerAccount');
@@ -1935,6 +2116,7 @@ function renderAccountButton() {
   const displayName = (currentTasker && currentTasker.name) || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
   const initials = getInitials(displayName);
   const email = currentUser.email || '';
+  const learningUnlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
 
   container.innerHTML = `
     <div class="ws-account-wrap" id="wsAccountWrap">
@@ -1957,9 +2139,13 @@ function renderAccountButton() {
           <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Settings</a>
           <a href="wallet.html" class="ud-item" role="menuitem"><i class="fas fa-wallet" aria-hidden="true"></i> Wallet</a>
           <div class="ud-divider"></div>
-          <div class="ud-section-label">Apps</div>
+          <div class="ud-section-label">Workspace</div>
           <a href="apps/flexikazi/" class="ud-item" role="menuitem"><i class="fas fa-list-check" aria-hidden="true"></i> FlexiKazi</a>
           <a href="apps/kasikazi/" class="ud-item" role="menuitem"><i class="fas fa-bullhorn" aria-hidden="true"></i> Kasikazi</a>
+          <a href="learning.html" class="ud-item" role="menuitem">
+            <i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning
+            ${!learningUnlocked ? '<span class="ud-premium-tag">Premium</span>' : ''}
+          </a>
           <div class="ud-divider"></div>
           <button type="button" class="ud-item danger" onclick="handleSignOut()" role="menuitem">
             <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
@@ -1975,8 +2161,7 @@ function toggleUserDropdown(e) {
   const menu = document.getElementById('wsUserDropdown');
   const btn = document.getElementById('wsAccountBtn');
   if (!menu || !btn) return;
-  closeLauncher();
-  closeNotifications();
+  closeLauncher(); closeNotifications();
   const isActive = menu.classList.toggle('active');
   btn.classList.toggle('active', isActive);
   btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
@@ -1986,10 +2171,7 @@ function closeUserDropdown() {
   const menu = document.getElementById('wsUserDropdown');
   const btn = document.getElementById('wsAccountBtn');
   if (menu) menu.classList.remove('active');
-  if (btn) {
-    btn.classList.remove('active');
-    btn.setAttribute('aria-expanded', 'false');
-  }
+  if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
 }
 
 async function handleSignOut() {
@@ -2001,7 +2183,7 @@ async function handleSignOut() {
 }
 
 // ============================================================
-// RENDER — LANDING MODE
+// LANDING RENDER
 // ============================================================
 function renderLanding() {
   const content = document.getElementById('wsContent');
@@ -2022,7 +2204,7 @@ function renderLanding() {
         <h1 id="heroTitle">Welcome to <span class="accent">KazInni</span></h1>
         <p class="hero-lede">
           One login. Every workspace. Run your day from a single account across
-          FlexiKazi, Kasikazi, and the entire KazInni ecosystem.
+          FlexiKazi, Kasikazi, Learning and the entire KazInni ecosystem.
         </p>
         <div class="hero-cta">
           <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
@@ -2035,14 +2217,14 @@ function renderLanding() {
         <div class="hero-strip">
           <div class="hero-strip-item"><i class="fas fa-shield-halved" aria-hidden="true"></i> Verified accounts only</div>
           <div class="hero-strip-item"><i class="fas fa-bolt" aria-hidden="true"></i> Single sign-on everywhere</div>
-          <div class="hero-strip-item"><i class="fas fa-wallet" aria-hidden="true"></i> Instant M-Pesa payouts</div>
+          <div class="hero-strip-item"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Learn &amp; grow your skills</div>
           <div class="hero-strip-item"><i class="fas fa-globe" aria-hidden="true"></i> Kenya-built</div>
         </div>
       </div>
     </section>
 
-    <section class="app-preview-section" id="apps" aria-labelledby="appsTitle">
-      <div class="app-preview-inner">
+    <section class="section" id="apps" aria-labelledby="appsTitle">
+      <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Explore</span>
           <h2 id="appsTitle">Preview the apps</h2>
@@ -2052,8 +2234,8 @@ function renderLanding() {
       </div>
     </section>
 
-    <section class="why-strip" id="features" aria-labelledby="whyTitle">
-      <div class="why-inner">
+    <section class="section alt" id="features" aria-labelledby="whyTitle">
+      <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Why KazInni</span>
           <h2 id="whyTitle">Built for how you actually work</h2>
@@ -2071,21 +2253,83 @@ function renderLanding() {
             <p>Admins approve every tasker before they can access apps or claim work.</p>
           </div>
           <div class="why-item">
+            <div class="why-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+            <h3>Learning built-in</h3>
+            <p>Upskill on client communication, M-Pesa security, portfolio craft and more.</p>
+          </div>
+          <div class="why-item">
             <div class="why-icon"><i class="fas fa-mobile-screen" aria-hidden="true"></i></div>
             <h3>Instant M-Pesa</h3>
             <p>Request payouts from your wallet and receive them straight to M-Pesa.</p>
-          </div>
-          <div class="why-item">
-            <div class="why-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-            <h3>Live activity</h3>
-            <p>Watch tasks move through the network in real time, from claim to payout.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="stats-section" id="activity" aria-labelledby="statsTitle">
-      <div class="stats-inner">
+    <section class="section" id="learning" aria-labelledby="learnTitle">
+      <div class="section-inner">
+        <div class="learning-hero">
+          <div class="learning-copy">
+            <span class="section-label">Learn · Earn · Grow</span>
+            <h2 id="learnTitle">Short courses built for the Kenyan gig economy</h2>
+            <p>Practical lessons you can apply the same day — from client communication to M-Pesa security and portfolio building.</p>
+            <div class="learning-features">
+              <div class="learning-feature">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <div>Free preview lessons on every track</div>
+              </div>
+              <div class="learning-feature">
+                <i class="fas fa-certificate" aria-hidden="true"></i>
+                <div>Full course library &amp; certificates<span class="premium-tag">Premium</span></div>
+              </div>
+              <div class="learning-feature">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <div>1:1 mentor sessions &amp; portfolio reviews<span class="premium-tag">Premium</span></div>
+              </div>
+            </div>
+            <div class="learning-cta">
+              <a href="learning.html" class="ws-btn ws-btn-primary">
+                <i class="fas fa-play" aria-hidden="true"></i> <span>Browse free previews</span>
+              </a>
+              <a href="pricing.html" class="ws-btn ws-btn-ghost">
+                <i class="fas fa-crown" aria-hidden="true"></i> <span>See plans</span>
+              </a>
+            </div>
+          </div>
+          <div class="learning-visual" aria-hidden="true">
+            <div class="learning-visual-inner">
+              <div class="learning-card-demo">
+                <div class="lc-icon"><i class="fas fa-comments"></i></div>
+                <div class="lc-title">Client Communication 101</div>
+                <div class="lc-meta">62% · 12 min left</div>
+                <div class="lc-bar"><span style="width:62%;"></span></div>
+              </div>
+              <div class="learning-card-demo">
+                <div class="lc-icon"><i class="fas fa-shield-halved"></i></div>
+                <div class="lc-title">M-Pesa Safety</div>
+                <div class="lc-meta">8 lessons · 45 min</div>
+                <div class="lc-bar"><span style="width:20%;"></span></div>
+              </div>
+              <div class="learning-card-demo">
+                <div class="lc-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="lc-title">Portfolio Craft</div>
+                <div class="lc-meta">5 lessons · 30 min</div>
+                <div class="lc-bar"><span style="width:0%;"></span></div>
+              </div>
+              <div class="learning-card-demo">
+                <div class="lc-icon"><i class="fas fa-coins"></i></div>
+                <div class="lc-title">Pricing Your Work</div>
+                <div class="lc-meta">4 lessons · 25 min</div>
+                <div class="lc-bar"><span style="width:0%;"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="activity" aria-labelledby="statsTitle">
+      <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Live</span>
           <h2 id="statsTitle">Platform activity</h2>
@@ -2094,17 +2338,17 @@ function renderLanding() {
         <div class="ps-grid">
           <div class="ps-tile">
             <div class="ps-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-            <div class="ps-value loading" id="psTaskers" aria-label="Active taskers">—</div>
+            <div class="ps-value loading" id="psTaskers">—</div>
             <div class="ps-label">Active Taskers</div>
           </div>
           <div class="ps-tile">
             <div class="ps-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
-            <div class="ps-value loading" id="psCompleted" aria-label="Tasks completed">—</div>
+            <div class="ps-value loading" id="psCompleted">—</div>
             <div class="ps-label">Tasks Completed</div>
           </div>
           <div class="ps-tile">
             <div class="ps-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
-            <div class="ps-value loading" id="psWorkspaces" aria-label="Live workspaces">—</div>
+            <div class="ps-value loading" id="psWorkspaces">—</div>
             <div class="ps-label">Live Workspaces</div>
           </div>
           <div class="ps-tile clock-tile">
@@ -2115,7 +2359,6 @@ function renderLanding() {
             <div class="ps-label" id="psClockDate">Loading…</div>
           </div>
         </div>
-
         <div class="ps-ticker" aria-label="Recent platform activity">
           <div class="ps-ticker-track" id="psTicker">
             <span class="ps-ticker-item"><i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Loading activity…</span>
@@ -2133,7 +2376,7 @@ function renderLanding() {
           <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
           <a href="mailto:operations@kazinni.com">Contact</a>
         </nav>
-        <div class="landing-footer-copy">© <span id="footerYear">${new Date().getFullYear()}</span> Teleio Savour · KazInni</div>
+        <div class="landing-footer-copy">© ${new Date().getFullYear()} Teleio Savour · KazInni</div>
       </div>
     </footer>
   `;
@@ -2149,14 +2392,24 @@ function renderPreviewGrid() {
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   grid.innerHTML = apps.map(app => {
-    const target = app.signedInOnly ? 'openAuthModal()' : `openLauncher(event)`;
-    const cta = app.signedInOnly ? 'Sign in to open' : 'Preview';
+    let target, cta;
+    if (app.premium) {
+      target = "openUpgradeModal()";
+      cta = 'Premium';
+    } else if (app.signedInOnly) {
+      target = "openAuthModal()";
+      cta = 'Sign in to open';
+    } else {
+      target = "openLauncher(event)";
+      cta = 'Preview';
+    }
+    const badgeClass = app.badgeClass ? ` ${app.badgeClass}` : '';
     return `
       <div class="preview-card" role="button" tabindex="0"
            onclick="${target}"
            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${target}}"
-           aria-label="${escapeHtml(app.name)} — ${cta}">
-        ${app.badge ? `<span class="preview-badge">${escapeHtml(app.badge)}</span>` : ''}
+           aria-label="${escapeHtml(app.name)} — ${escapeHtml(cta)}">
+        ${app.badge ? `<span class="preview-badge${badgeClass}">${escapeHtml(app.badge)}</span>` : ''}
         <div class="preview-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
           <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
@@ -2172,7 +2425,7 @@ function renderPreviewGrid() {
 }
 
 // ============================================================
-// RENDER — WORKSPACE MODE
+// WORKSPACE RENDER
 // ============================================================
 function renderWorkspace() {
   const content = document.getElementById('wsContent');
@@ -2184,22 +2437,32 @@ function renderWorkspace() {
 
   content.innerHTML = `
     <section class="ws-welcome">
-      <h1 id="wsGreeting">${getGreeting()}, ${escapeHtml(capitalized)}</h1>
+      <h1>${getGreeting()}, ${escapeHtml(capitalized)}</h1>
       <p>Here's what's happening across your KazInni workspace today.</p>
     </section>
 
-    <section class="ws-section" aria-labelledby="yourWorkTitle">
+    <section class="ws-section" aria-labelledby="recentWorkTitle">
       <div class="ws-section-header">
-        <h2 class="ws-section-title" id="yourWorkTitle">
-          <i class="fas fa-briefcase" aria-hidden="true"></i> Your work
+        <h2 class="ws-section-title" id="recentWorkTitle">
+          <i class="fas fa-circle-check" aria-hidden="true"></i> Recently completed
         </h2>
         <a href="apps/flexikazi/" class="ws-section-action">View all →</a>
       </div>
-      <div class="ws-cards" id="wsWorkCards">
+      <div class="completed-grid" id="completedTiles">
         <div class="ws-skeleton"></div>
         <div class="ws-skeleton"></div>
         <div class="ws-skeleton"></div>
       </div>
+    </section>
+
+    <section class="ws-section" aria-labelledby="learningTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="learningTitle">
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning
+        </h2>
+        <a href="learning.html" class="ws-section-action">Browse library →</a>
+      </div>
+      <div id="learningDash"></div>
     </section>
 
     <section class="ws-section" aria-labelledby="yourAppsTitle">
@@ -2229,6 +2492,7 @@ function renderWorkspace() {
   `;
 
   renderWorkspaceApps();
+  renderLearningDash();
   loadWorkspaceData();
 }
 
@@ -2245,18 +2509,13 @@ function renderWorkspaceApps() {
     });
 
   if (apps.length === 0) {
-    tiles.innerHTML = `
-      <div class="ws-feed-empty" style="grid-column:1/-1;">
-        <i class="fas fa-lock" aria-hidden="true"></i>
-        No apps granted yet — contact your admin.
-      </div>
-    `;
+    tiles.innerHTML = `<div class="ws-feed-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
     return;
   }
 
   tiles.innerHTML = apps.map(app => `
     <a href="${escapeHtml(app.link)}" class="ws-app-tile">
-      <div class="ws-card-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+      <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
         <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
       </div>
       <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
@@ -2292,6 +2551,42 @@ function renderRailApps() {
   });
 }
 
+function renderLearningDash() {
+  const container = document.getElementById('learningDash');
+  if (!container) return;
+
+  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
+
+  if (unlocked) {
+    container.innerHTML = `
+      <a href="learning.html" class="learning-dash">
+        <div class="learning-dash-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+        <div class="learning-dash-body">
+          <div class="learning-dash-title">Continue where you left off</div>
+          <div class="learning-dash-desc">Client Communication 101 · 62% complete</div>
+          <div class="learning-dash-progress"><span style="width:62%;"></span></div>
+        </div>
+        <span class="learning-dash-cta">
+          <i class="fas fa-play" aria-hidden="true"></i> Continue
+        </span>
+      </a>
+    `;
+  } else {
+    container.innerHTML = `
+      <button type="button" class="learning-dash locked" onclick="openUpgradeModal()" style="text-align:left;">
+        <div class="learning-dash-icon"><i class="fas fa-lock" aria-hidden="true"></i></div>
+        <div class="learning-dash-body">
+          <div class="learning-dash-title">Unlock the full learning library<span class="learning-dash-premium-tag">Premium</span></div>
+          <div class="learning-dash-desc">Certificates, mentor sessions, and portfolio reviews</div>
+        </div>
+        <span class="learning-dash-cta">
+          <i class="fas fa-crown" aria-hidden="true"></i> Upgrade
+        </span>
+      </button>
+    `;
+  }
+}
+
 // ============================================================
 // WORKSPACE DATA
 // ============================================================
@@ -2303,73 +2598,47 @@ async function loadWorkspaceData() {
   const uid = currentUser.uid;
   const email = (currentUser.email || '').toLowerCase();
 
-  const cards = [];
   const activities = [];
+  const completed = [];
 
-  // Active FlexiKazi tasks
+  // FlexiKazi
   try {
     const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
     const tasks = snap.val() || {};
-    const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
-
-    const active = list.filter(t => {
-      const s = (t.status || '').toLowerCase();
-      return ['assigned', 'new', 'review', 'submitted', 'revision'].includes(s);
-    });
-
-    const approved = list.filter(t => {
-      const s = (t.status || '').toLowerCase();
-      return s === 'approved' || s === 'completed';
-    });
-
-    if (active.length > 0) {
-      cards.push({
-        icon: 'fa-list-check',
-        color: APPS.flexikazi.color,
-        tag: 'Active task',
-        tagClass: 'info',
-        title: active[0].title || 'Untitled task',
-        meta: `${escapeHtml(active[0].category || 'General')} · due ${escapeHtml(active[0].dueDate || 'soon')}`,
-        value: active.length > 1 ? `+${active.length - 1} more` : `KES ${Number(active[0].payRate || 0).toLocaleString()}`,
-        foot: 'FlexiKazi',
-        cta: 'Open',
-        link: 'apps/flexikazi/'
-      });
-    }
-
-    if (approved.length > 0) {
-      const totalApproved = approved.reduce((s, t) => s + Number(t.payRate || 0), 0);
-      cards.push({
-        icon: 'fa-circle-check',
-        color: '#10b981',
-        tag: 'Completed',
-        tagClass: 'success',
-        title: `${pluralize(approved.length, 'approved task')}`,
-        meta: 'Total earned on FlexiKazi',
-        value: `KES ${totalApproved.toLocaleString()}`,
-        foot: 'FlexiKazi',
-        cta: 'View',
-        link: 'apps/flexikazi/'
-      });
-
-      approved.slice(0, 3).forEach(t => {
-        const ts = t.approvedAt || t.reviewedAt || 0;
-        if (!ts) return;
-        activities.push({
-          icon: 'fa-circle-check',
-          type: 'success',
-          title: 'Task approved',
-          desc: t.title || 'Untitled task',
-          ts
-        });
-      });
-    }
+    const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t, _source: 'FlexiKazi' }));
 
     list.forEach(t => {
       const s = (t.status || '').toLowerCase();
-      const ts = t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
       if (!ts) return;
-      if (s === 'revision') {
+
+      if (s === 'approved' || s === 'completed') {
+        completed.push({
+          id: 'f_' + t.id,
+          title: t.title || 'Untitled task',
+          category: t.category || 'General',
+          client: t.clientName || 'KazInni',
+          status: 'completed',
+          statusLabel: 'Completed',
+          ts,
+          source: 'FlexiKazi',
+          sourceColor: APPS.flexikazi.color,
+          link: 'apps/flexikazi/'
+        });
+        activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Task approved', desc: t.title || 'Task', ts });
+      } else if (s === 'revision') {
+        completed.push({
+          id: 'f_' + t.id,
+          title: t.title || 'Untitled task',
+          category: t.category || 'General',
+          client: t.clientName || 'KazInni',
+          status: 'revision',
+          statusLabel: 'Revision',
+          ts,
+          source: 'FlexiKazi',
+          sourceColor: APPS.flexikazi.color,
+          link: 'apps/flexikazi/'
+        });
         activities.push({ icon: 'fa-redo', type: 'warning', title: 'Revision requested', desc: t.title || 'Task', ts });
       } else if (s === 'review' || s === 'submitted') {
         activities.push({ icon: 'fa-clock', type: 'info', title: 'Submission under review', desc: t.title || 'Task', ts });
@@ -2377,9 +2646,9 @@ async function loadWorkspaceData() {
         activities.push({ icon: 'fa-list-check', type: 'gold', title: 'New task assigned', desc: t.title || 'Task', ts });
       }
     });
-  } catch (e) { console.warn('Work cards (FlexiKazi):', e); }
+  } catch (e) { console.warn('FlexiKazi data:', e); }
 
-  // Kasikazi claims
+  // Kasikazi
   try {
     const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit).once('value');
     const tasks = snap.val() || {};
@@ -2390,112 +2659,125 @@ async function loadWorkspaceData() {
       const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
       if (!ts) return;
 
-      if (s === 'claimed') {
-        activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
-      } else if (s === 'approved') {
+      if (s === 'approved') {
+        completed.push({
+          id: 'k_' + id,
+          title: t.title || 'Untitled task',
+          category: t.category || 'General',
+          client: t.clientName || 'KazInni',
+          status: 'completed',
+          statusLabel: 'Completed',
+          ts,
+          source: 'Kasikazi',
+          sourceColor: APPS.kasikazi.color,
+          link: 'apps/kasikazi/'
+        });
         activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Kasikazi task approved', desc: t.title || 'Task', ts });
       } else if (s === 'revision') {
+        completed.push({
+          id: 'k_' + id,
+          title: t.title || 'Untitled task',
+          category: t.category || 'General',
+          client: t.clientName || 'KazInni',
+          status: 'revision',
+          statusLabel: 'Revision',
+          ts,
+          source: 'Kasikazi',
+          sourceColor: APPS.kasikazi.color,
+          link: 'apps/kasikazi/'
+        });
         activities.push({ icon: 'fa-redo', type: 'warning', title: 'Kasikazi revision', desc: t.title || 'Task', ts });
       } else if (s === 'submitted') {
         activities.push({ icon: 'fa-clock', type: 'info', title: 'Kasikazi under review', desc: t.title || 'Task', ts });
+      } else {
+        activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
       }
     });
-  } catch (e) { console.warn('Work cards (Kasikazi):', e); }
+  } catch (e) { console.warn('Kasikazi data:', e); }
 
-  // Payouts
+  // Payouts — status only, NO amounts
   try {
     const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
     const payouts = snap.val() || {};
-    const list = Object.entries(payouts).map(([id, p]) => ({ id, ...p }));
-
-    const pending = list.filter(p => ['pending', 'approved'].includes((p.status || 'pending').toLowerCase()));
-    const paid = list.filter(p => (p.status || '').toLowerCase() === 'paid');
-
-    const pendingTotal = pending.reduce((s, p) => s + Number(p.amount || 0), 0);
-    if (pendingTotal > 0) {
-      cards.push({
-        icon: 'fa-hourglass-half',
-        color: '#f59e0b',
-        tag: 'Pending payout',
-        tagClass: 'warning',
-        title: `${pluralize(pending.length, 'payout')} in progress`,
-        meta: 'Awaiting approval or dispatch',
-        value: `KES ${pendingTotal.toLocaleString()}`,
-        foot: 'Wallet',
-        cta: 'View',
-        link: 'wallet.html'
-      });
-    }
-
-    const paidTotal = paid.reduce((s, p) => s + Number(p.amount || 0), 0);
-    if (paidTotal > 0) {
-      cards.push({
-        icon: 'fa-check-double',
-        color: '#10b981',
-        tag: 'Received',
-        tagClass: 'success',
-        title: `${pluralize(paid.length, 'payout')} sent`,
-        meta: 'Lifetime M-Pesa payouts',
-        value: `KES ${paidTotal.toLocaleString()}`,
-        foot: 'Wallet',
-        cta: 'History',
-        link: 'wallet.html'
-      });
-    }
-
-    paid.slice(0, 3).forEach(p => {
-      const ts = p.paidAt || p.timestamp || 0;
+    Object.entries(payouts).forEach(([id, p]) => {
+      const s = (p.status || 'pending').toLowerCase();
+      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
       if (!ts) return;
-      activities.push({
-        icon: 'fa-check-double',
-        type: 'success',
-        title: 'Payout sent',
-        desc: `KES ${Number(p.amount || 0).toLocaleString()} · ${p.phone || 'M-Pesa'}`,
-        ts
-      });
+      if (s === 'paid') activities.push({ icon: 'fa-check-double', type: 'success', title: 'Payout received', desc: 'Wallet updated', ts });
+      else if (s === 'approved') activities.push({ icon: 'fa-money-bill-wave', type: 'gold', title: 'Payout approved', desc: 'Being dispatched', ts });
+      else if (s === 'pending') activities.push({ icon: 'fa-hourglass-half', type: 'info', title: 'Payout requested', desc: 'Awaiting approval', ts });
     });
-  } catch (e) { console.warn('Work cards (Wallet):', e); }
+  } catch (e) { console.warn('Payout data:', e); }
 
-  // Sort + cap recent
+  // Learning activity (only if entitled)
+  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
+  if (unlocked) {
+    try {
+      const snap = await db.ref(`learningProgress/${uid}`).orderByChild('updatedAt').limitToLast(5).once('value');
+      const progress = snap.val() || {};
+      Object.entries(progress).forEach(([courseId, p]) => {
+        const ts = p.completedAt || p.updatedAt || 0;
+        if (!ts) return;
+        if (p.completedAt) activities.push({ icon: 'fa-certificate', type: 'premium', title: 'Course completed', desc: p.title || 'Learning module', ts });
+      });
+    } catch (e) {}
+  }
+
   activities.sort((a, b) => b.ts - a.ts);
-  recentActivity = activities.slice(0, CONFIG.recentActivityMax);
+  completed.sort((a, b) => b.ts - a.ts);
 
-  renderWorkCards(cards);
+  recentActivity = activities.slice(0, CONFIG.recentActivityMax);
+  completedTiles = completed.slice(0, CONFIG.completedTilesMax);
+
+  renderCompletedTiles(completedTiles);
   renderFeed(recentActivity);
 }
 
-function renderWorkCards(cards) {
-  const container = document.getElementById('wsWorkCards');
+function renderCompletedTiles(tiles) {
+  const container = document.getElementById('completedTiles');
   if (!container) return;
 
-  if (cards.length === 0) {
+  if (!tiles || tiles.length === 0) {
     container.innerHTML = `
       <div class="ws-feed-empty" style="grid-column:1/-1;">
         <i class="fas fa-inbox" aria-hidden="true"></i>
-        <div>No active work yet</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi task or wait for a FlexiKazi assignment.</div>
+        <div>No completed tasks yet</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi task or wait for a FlexiKazi assignment to get started.</div>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = cards.map(c => `
-    <a href="${escapeHtml(c.link)}" class="ws-card">
-      <div class="ws-card-top">
-        <div class="ws-card-icon" style="background:linear-gradient(135deg, ${escapeHtml(c.color)}, ${escapeHtml(lighten(c.color, 18))});">
-          <i class="fas ${escapeHtml(c.icon)}" aria-hidden="true"></i>
+  container.innerHTML = tiles.map(t => {
+    const statusClass = t.status === 'revision' ? 'revision' : (t.status === 'completed' ? '' : 'review');
+    const icon = t.status === 'completed' ? 'fa-circle-check' : (t.status === 'revision' ? 'fa-redo' : 'fa-clock');
+    const iconColor = t.status === 'completed' ? '#10b981' : (t.status === 'revision' ? '#f59e0b' : '#3b82f6');
+    return `
+      <a href="${escapeHtml(t.link)}" class="completed-tile">
+        <div class="completed-tile-top">
+          <div class="completed-tile-icon" style="background:linear-gradient(135deg, ${iconColor}, ${lighten(iconColor, 15)});">
+            <i class="fas ${icon}" aria-hidden="true"></i>
+          </div>
+          <span class="completed-tile-status ${statusClass}">${escapeHtml(t.statusLabel)}</span>
         </div>
-        <span class="ws-card-tag ${escapeHtml(c.tagClass)}">${escapeHtml(c.tag)}</span>
-      </div>
-      <div class="ws-card-value">${escapeHtml(c.value)}</div>
-      <div class="ws-card-title">${escapeHtml(c.title)}</div>
-      <div class="ws-card-meta">${c.meta}</div>
-      <div class="ws-card-foot">
-        <span>${escapeHtml(c.foot)}</span>
-        <span class="ws-card-cta">${escapeHtml(c.cta)} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-      </div>
-    </a>
-  `).join('');
+        <div class="completed-tile-title">${escapeHtml(t.title)}</div>
+        <div class="completed-tile-meta">
+          <span>${escapeHtml(t.category)}</span>
+          <span class="dot-sep" aria-hidden="true"></span>
+          <span>${escapeHtml(t.client)}</span>
+        </div>
+        <div class="completed-tile-foot">
+          <span class="completed-tile-source">
+            <span class="src-dot" style="background:${escapeHtml(t.sourceColor)};" aria-hidden="true"></span>
+            ${escapeHtml(t.source)}
+          </span>
+          <span class="completed-tile-cta">
+            ${escapeHtml(getTimeAgo(t.ts))} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </span>
+        </div>
+      </a>
+    `;
+  }).join('');
 }
 
 function renderFeed(items) {
@@ -2529,9 +2811,11 @@ function renderFeed(items) {
   `).join('');
 }
 
+// ============================================================
+// NAVIGATION
+// ============================================================
 function navigateTo(section) {
   closeRail();
-  // Update rail active state
   document.querySelectorAll('.rail-item').forEach(el => el.classList.remove('active'));
   const target = document.querySelector(`.rail-item[data-nav="${section}"]`);
   if (target) target.classList.add('active');
@@ -2541,6 +2825,13 @@ function navigateTo(section) {
   } else if (section === 'recent' || section === 'activity') {
     const el = document.getElementById('recentTitle');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (section === 'learning') {
+    const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
+    if (unlocked) {
+      window.location.href = 'learning.html';
+    } else {
+      openUpgradeModal();
+    }
   } else if (section === 'wallet') {
     window.location.href = 'wallet.html';
   } else if (section === 'account') {
@@ -2549,7 +2840,7 @@ function navigateTo(section) {
 }
 
 // ============================================================
-// APP LAUNCHER
+// LAUNCHER
 // ============================================================
 function openLauncher(e) {
   if (e) e.stopPropagation();
@@ -2558,18 +2849,13 @@ function openLauncher(e) {
   if (!panel) return;
   const isOpen = panel.classList.contains('active');
 
-  closeUserDropdown();
-  closeNotifications();
+  closeUserDropdown(); closeNotifications();
 
-  if (isOpen) {
-    closeLauncher();
-  } else {
+  if (isOpen) closeLauncher();
+  else {
     renderLauncher();
     panel.classList.add('active');
-    if (btn) {
-      btn.classList.add('active');
-      btn.setAttribute('aria-expanded', 'true');
-    }
+    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-expanded', 'true'); }
   }
 }
 
@@ -2577,10 +2863,7 @@ function closeLauncher() {
   const panel = document.getElementById('launcherPanel');
   const btn = document.getElementById('waffleBtn');
   if (panel) panel.classList.remove('active');
-  if (btn) {
-    btn.classList.remove('active');
-    btn.setAttribute('aria-expanded', 'false');
-  }
+  if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
 }
 
 function renderLauncher() {
@@ -2594,7 +2877,7 @@ function renderLauncher() {
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   const visible = apps.filter(app => {
-    if (!signedIn) return app.alwaysVisible === true;
+    if (!signedIn) return !app.premium && app.alwaysVisible === true;
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
@@ -2602,25 +2885,23 @@ function renderLauncher() {
   });
 
   if (visible.length === 0) {
-    grid.innerHTML = `
-      <div class="lp-empty" style="grid-column:1/-1;">
-        <i class="fas fa-lock" aria-hidden="true"></i>
-        No apps granted yet.
-      </div>
-    `;
+    grid.innerHTML = `<div class="lp-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
   } else {
-    grid.innerHTML = visible.map(app => `
-      <a href="${escapeHtml(app.link)}" class="lp-app">
-        ${app.badge ? `<span class="lp-app-badge">${escapeHtml(app.badge)}</span>` : ''}
-        <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
-          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-        </div>
-        <div>
-          <div class="lp-app-name">${escapeHtml(app.name)}</div>
-          <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
-        </div>
-      </a>
-    `).join('');
+    grid.innerHTML = visible.map(app => {
+      const badgeClass = app.badgeClass ? ` ${app.badgeClass}` : '';
+      return `
+        <a href="${escapeHtml(app.link)}" class="lp-app">
+          ${app.badge ? `<span class="lp-app-badge${badgeClass}">${escapeHtml(app.badge)}</span>` : ''}
+          <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="lp-app-name">${escapeHtml(app.name)}</div>
+            <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
+          </div>
+        </a>
+      `;
+    }).join('');
   }
 
   if (!statusEl || !footerTextEl || !footerLinkEl) return;
@@ -2647,13 +2928,9 @@ function toggleNotifications(e) {
   const btn = document.getElementById('notifBtn');
   if (!panel) return;
   const isOpen = panel.classList.contains('active');
-
-  closeUserDropdown();
-  closeLauncher();
-
-  if (isOpen) {
-    closeNotifications();
-  } else {
+  closeUserDropdown(); closeLauncher();
+  if (isOpen) closeNotifications();
+  else {
     panel.classList.add('active');
     if (btn) btn.setAttribute('aria-expanded', 'true');
   }
@@ -2695,27 +2972,35 @@ function attachNotifListeners() {
     ref3.on('value', cb3, (err) => console.warn('Payout listener:', err));
     notifRefs.push({ ref: ref3, cb: cb3 });
   } catch (e) { console.warn(e); }
+
+  // Learning notifications (only if entitled)
+  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
+  if (unlocked) {
+    try {
+      const ref4 = db.ref(`learningProgress/${uid}`).limitToLast(20);
+      const cb4 = (snap) => updateLearningNotifications(snap.val() || {});
+      ref4.on('value', cb4, (err) => console.warn('Learning listener:', err));
+      notifRefs.push({ ref: ref4, cb: cb4 });
+    } catch (e) { console.warn(e); }
+  }
 }
 
 function detachNotifListeners() {
-  notifRefs.forEach(({ ref, cb }) => {
-    try { ref.off('value', cb); } catch (e) {}
-  });
+  notifRefs.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
   notifRefs = [];
 }
 
 function updateFlexikaziNotifications(tasks, email) {
   const recent = Object.entries(tasks).map(([id, t]) => {
     const s = (t.status || '').toLowerCase();
-    let type = 'info', icon = 'fa-info-circle', title = '', desc = '', details = '';
-    let ts = 0;
+    let type = 'info', icon = 'fa-info-circle', title = '', desc = '', details = '', ts = 0;
 
     if (s === 'approved' || s === 'completed') {
       ts = t.approvedAt || t.reviewedAt || 0;
       type = 'success'; icon = 'fa-circle-check';
       title = 'Task approved';
-      desc = `${t.title || 'Your task'} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-      details = `Your task "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be processed within 48 hours.`;
+      desc = t.title || 'Your task';
+      details = `Your task "${t.title || 'Untitled'}" has been approved.\n\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be reflected in your Wallet within 48 hours.`;
     } else if (s === 'revision') {
       ts = t.reviewedAt || 0;
       type = 'warning'; icon = 'fa-redo';
@@ -2733,7 +3018,7 @@ function updateFlexikaziNotifications(tasks, email) {
       type = 'gold'; icon = 'fa-list-check';
       title = 'New task assigned';
       desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
-      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}`;
+      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nDue: ${t.dueDate || 'Not set'}\n\nOpen FlexiKazi to see the full brief.`;
     }
     return { id: 'f_' + id, type, icon, title, desc, ts, details, source: 'flexikazi' };
   })
@@ -2749,15 +3034,14 @@ function updateKasikaziNotifications(tasks, uid) {
     .map(([id, t]) => {
       const c = t.claimedBy[uid];
       const s = (c.status || 'claimed').toLowerCase();
-      let type = 'info', icon = 'fa-bullhorn', title = '', desc = '', details = '';
-      let ts = 0;
+      let type = 'info', icon = 'fa-bullhorn', title = '', desc = '', details = '', ts = 0;
 
       if (s === 'approved') {
         ts = c.reviewedAt || 0;
         type = 'success'; icon = 'fa-circle-check';
         title = 'Kasikazi task approved';
-        desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}`;
+        desc = t.title || 'Task';
+        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nPayment will be reflected in your Wallet within 48 hours.`;
       } else if (s === 'revision') {
         ts = c.reviewedAt || 0;
         type = 'warning'; icon = 'fa-redo';
@@ -2768,14 +3052,14 @@ function updateKasikaziNotifications(tasks, uid) {
         ts = c.submittedAt || 0;
         type = 'info'; icon = 'fa-clock';
         title = 'Kasikazi submission in review';
-        desc = t.title;
+        desc = t.title || 'Task';
         details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.`;
       } else {
         ts = c.claimedAt || 0;
         type = 'gold'; icon = 'fa-hand-sparkles';
         title = 'Task claimed';
-        desc = t.title;
-        details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}`;
+        desc = t.title || 'Task';
+        details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nDue: ${t.dueDate || 'Not set'}\n\nOpen Kasikazi to start working on it.`;
       }
       return { id: 'k_' + id, type, icon, title, desc, ts, details, source: 'kasikazi' };
     })
@@ -2794,23 +3078,23 @@ function updatePayoutNotifications(payouts, uid) {
     if (s === 'paid') {
       type = 'success'; icon = 'fa-check-double';
       title = 'Payout sent';
-      desc = `KES ${Number(p.amount || 0).toLocaleString()} sent to ${p.phone || 'M-Pesa'}`;
-      details = `Your payout has been successfully sent.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nSent to: ${p.phone || '—'}\nMethod: ${p.paymentMethod || 'M-Pesa'}`;
+      desc = `Sent to ${p.phone || 'M-Pesa'}`;
+      details = `Your payout has been successfully sent to ${p.phone || 'M-Pesa'}.\n\nOpen your Wallet to see the full transaction details.`;
     } else if (s === 'approved') {
       type = 'gold'; icon = 'fa-money-bill-wave';
       title = 'Payout approved';
-      desc = `KES ${Number(p.amount || 0).toLocaleString()} — processing`;
-      details = `Your payout has been approved and will be dispatched shortly.`;
+      desc = 'Being dispatched';
+      details = `Your payout has been approved and will be dispatched shortly.\n\nOpen your Wallet for details.`;
     } else if (s === 'rejected') {
       type = 'danger'; icon = 'fa-times-circle';
       title = 'Payout rejected';
       desc = p.rejectionReason || 'Contact admin for details.';
-      details = `Your payout was rejected.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nReason: ${p.rejectionReason || 'Not specified'}`;
+      details = `Your payout request was rejected.\n\nReason: ${p.rejectionReason || 'Not specified'}\n\nPlease contact your administrator.`;
     } else {
       type = 'info'; icon = 'fa-hourglass-half';
       title = 'Payout request pending';
-      desc = `KES ${Number(p.amount || 0).toLocaleString()} — awaiting approval`;
-      details = `Your payout request has been received and is awaiting approval.`;
+      desc = 'Awaiting approval';
+      details = `Your payout request has been received and is awaiting approval.\n\nOpen your Wallet for details.`;
     }
     return { id: 'p_' + id, type, icon, title, desc, ts, details, source: 'wallet' };
   })
@@ -2818,6 +3102,33 @@ function updatePayoutNotifications(payouts, uid) {
   .sort((a, b) => b.ts - a.ts);
 
   mergeNotifications(recent, 6);
+}
+
+function updateLearningNotifications(progress) {
+  const recent = Object.entries(progress).map(([courseId, p]) => {
+    let type = 'premium', icon = 'fa-graduation-cap', title = '', desc = '', details = '';
+    const ts = p.completedAt || p.updatedAt || 0;
+
+    if (p.completedAt) {
+      type = 'premium'; icon = 'fa-certificate';
+      title = 'Course completed';
+      desc = p.title || 'Learning module';
+      details = `Well done! You've completed "${p.title || 'a learning module'}".\n\nYour certificate is now available in the Learning section.`;
+    } else if (p.milestone) {
+      title = 'Milestone reached';
+      desc = `${p.title || 'Course'}: ${p.milestone}`;
+      details = `You've hit a milestone in "${p.title || 'your course'}".\n\n${p.milestone}`;
+    } else if (p.updatedAt && p.progress) {
+      title = 'Course in progress';
+      desc = `${p.title || 'Course'} — ${p.progress}% complete`;
+      details = `Keep going! You're ${p.progress}% through "${p.title || 'your course'}".`;
+    }
+    return { id: 'l_' + courseId, type, icon, title, desc, ts, details, source: 'learning' };
+  })
+  .filter(n => n.title && n.ts)
+  .sort((a, b) => b.ts - a.ts);
+
+  mergeNotifications(recent, 5);
 }
 
 function mergeNotifications(recent, capPerSource) {
@@ -2837,25 +3148,14 @@ function renderNotifications() {
   if (!body || !badge) return;
 
   if (!currentUser) {
-    body.innerHTML = `
-      <div class="notif-empty">
-        <i class="far fa-bell-slash" aria-hidden="true"></i>
-        <div>Sign in to see your notifications</div>
-      </div>
-    `;
+    body.innerHTML = `<div class="notif-empty"><i class="far fa-bell-slash" aria-hidden="true"></i><div>Sign in to see your notifications</div></div>`;
     badge.classList.remove('visible');
     if (clearBtn) clearBtn.disabled = true;
     return;
   }
 
   if (notifications.length === 0) {
-    body.innerHTML = `
-      <div class="notif-empty">
-        <i class="far fa-bell-slash" aria-hidden="true"></i>
-        <div>No notifications yet</div>
-        <div style="font-size:0.72rem;margin-top:0.4rem;opacity:0.7;">Task updates and payouts will show here</div>
-      </div>
-    `;
+    body.innerHTML = `<div class="notif-empty"><i class="far fa-bell-slash" aria-hidden="true"></i><div>No notifications yet</div><div style="font-size:0.72rem;margin-top:0.4rem;opacity:0.7;">Task updates and payouts will show here</div></div>`;
     badge.classList.remove('visible');
     if (clearBtn) clearBtn.disabled = true;
     return;
@@ -2887,10 +3187,7 @@ function renderNotifications() {
   `).join('');
 }
 
-function clearNotifications() {
-  setLastSeen(Date.now());
-  renderNotifications();
-}
+function clearNotifications() { setLastSeen(Date.now()); renderNotifications(); }
 
 function openNotifModal(id) {
   const n = notifications.find(x => x.id === id);
@@ -2923,7 +3220,8 @@ function openNotifModal(id) {
   const buttons = [];
   if (n.source === 'flexikazi') buttons.push(`<a href="apps/flexikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open FlexiKazi</a>`);
   else if (n.source === 'kasikazi') buttons.push(`<a href="apps/kasikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open Kasikazi</a>`);
-  else if (n.source === 'wallet') buttons.push(`<a href="wallet.html" class="ws-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> View Wallet</a>`);
+  else if (n.source === 'wallet') buttons.push(`<a href="wallet.html" class="ws-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> Open Wallet</a>`);
+  else if (n.source === 'learning') buttons.push(`<a href="learning.html" class="ws-modal-btn premium"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Open Learning</a>`);
   buttons.push(`<button type="button" class="ws-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
   actions.innerHTML = buttons.join('');
 
@@ -2937,19 +3235,13 @@ function openNotifModal(id) {
   }, 50);
 
   const lastSeen = getLastSeen();
-  if (n.ts > lastSeen) {
-    setLastSeen(n.ts);
-    renderNotifications();
-  }
+  if (n.ts > lastSeen) { setLastSeen(n.ts); renderNotifications(); }
 }
 
 function closeNotifModal() {
   const modal = document.getElementById('notifModal');
   const overlay = document.getElementById('notifModalOverlay');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-  }
+  if (modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }
   if (overlay) overlay.classList.remove('active');
   if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
     try { lastFocusedBeforeModal.focus(); } catch (e) {}
@@ -2961,32 +3253,21 @@ function closeNotifModal() {
 // AUTH MODAL
 // ============================================================
 function openAuthModal() {
-  closeLauncher();
-  closeUserDropdown();
-  closeNotifications();
+  closeLauncher(); closeUserDropdown(); closeNotifications();
   const modal = document.getElementById('authModal');
   const overlay = document.getElementById('authModalOverlay');
   const err = document.getElementById('authError');
   if (err) { err.classList.remove('visible'); err.textContent = ''; }
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-  }
+  if (modal) { modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); }
   if (overlay) overlay.classList.add('active');
   lastFocusedBeforeModal = document.activeElement;
-  setTimeout(() => {
-    const email = document.getElementById('loginEmail');
-    if (email) email.focus();
-  }, 50);
+  setTimeout(() => { const e = document.getElementById('loginEmail'); if (e) e.focus(); }, 50);
 }
 
 function closeAuthModal() {
   const modal = document.getElementById('authModal');
   const overlay = document.getElementById('authModalOverlay');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-  }
+  if (modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }
   if (overlay) overlay.classList.remove('active');
   const btn = document.getElementById('loginBtn');
   if (btn) {
@@ -3012,10 +3293,7 @@ async function handleLogin(e) {
 
   const email = emailEl.value.trim();
   const password = passEl.value;
-
-  const showError = (msg) => {
-    if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
-  };
+  const showError = (msg) => { if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); } };
 
   if (errEl) { errEl.classList.remove('visible'); errEl.textContent = ''; }
   if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
@@ -3044,17 +3322,38 @@ async function handleLogin(e) {
 }
 
 // ============================================================
-// PUBLIC STATS (landing)
+// UPGRADE MODAL
+// ============================================================
+function openUpgradeModal() {
+  closeLauncher(); closeUserDropdown(); closeNotifications();
+  const modal = document.getElementById('upgradeModal');
+  const overlay = document.getElementById('upgradeModalOverlay');
+  if (modal) { modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); }
+  if (overlay) overlay.classList.add('active');
+  lastFocusedBeforeModal = document.activeElement;
+  setTimeout(() => {
+    const first = modal ? modal.querySelector('button, [href]') : null;
+    if (first) first.focus();
+  }, 50);
+}
+
+function closeUpgradeModal() {
+  const modal = document.getElementById('upgradeModal');
+  const overlay = document.getElementById('upgradeModalOverlay');
+  if (modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }
+  if (overlay) overlay.classList.remove('active');
+  if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+    try { lastFocusedBeforeModal.focus(); } catch (e) {}
+  }
+  lastFocusedBeforeModal = null;
+}
+
+// ============================================================
+// PUBLIC STATS
 // ============================================================
 async function loadPublicStats() {
   const db = window._db;
-  if (!db || document.body.classList.contains('mode-workspace')) {
-    // Workspace mode — skip landing stats
-    if (!db) {
-      setStat('psTaskers', '—'); setStat('psCompleted', '—'); setStat('psWorkspaces', '—');
-    }
-    return;
-  }
+  if (!db || document.body.classList.contains('mode-workspace')) return;
 
   try {
     const snap = await db.ref('taskers').once('value');
@@ -3083,7 +3382,6 @@ async function loadPublicStats() {
     });
   } catch (e) {}
   setStat('psCompleted', completed);
-
   setStat('psWorkspaces', Object.keys(APPS).length + 12);
   buildTicker();
 }
@@ -3100,11 +3398,9 @@ function animateCount(el, target) {
   const currentText = (el.textContent || '').replace(/,/g, '').trim();
   const currentVal = /^\d+$/.test(currentText) ? parseInt(currentText, 10) : 0;
   if (currentVal === target) { el.textContent = target.toLocaleString(); return; }
-
   const duration = 700;
   const start = performance.now();
   const from = currentVal;
-
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
     const eased = 1 - Math.pow(1 - t, 3);
@@ -3125,7 +3421,7 @@ function buildPublicTicker() {
     { icon: 'fa-circle-check', text: 'A task was approved' },
     { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
     { icon: 'fa-user-check', text: 'A tasker joined the network' },
-    { icon: 'fa-circle-check', text: 'A submission was approved' },
+    { icon: 'fa-certificate', text: 'A learning module was completed' },
     { icon: 'fa-bullhorn', text: 'A new suite went live' },
     { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
   ];
@@ -3157,8 +3453,6 @@ async function buildTicker() {
       const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
       if (!ts) return;
       if (s === 'approved' || s === 'completed') items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      else if (s === 'revision') items.push({ icon: 'fa-redo', html: `Revision on <strong>${escapeHtml(t.title || 'task')}</strong>`, ts });
-      else if (s === 'review' || s === 'submitted') items.push({ icon: 'fa-clock', html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`, ts });
       else if (s === 'assigned' || s === 'new') items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
     });
   } catch (e) {}
@@ -3169,23 +3463,9 @@ async function buildTicker() {
     Object.entries(kas).forEach(([id, t]) => {
       const c = t.claimedBy && t.claimedBy[uid];
       if (!c) return;
-      const s = (c.status || 'claimed').toLowerCase();
       const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
       if (!ts) return;
-      if (s === 'approved') items.push({ icon: 'fa-circle-check', html: `Kasikazi approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      else if (s === 'claimed') items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-    });
-  } catch (e) {}
-
-  try {
-    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
-    const payouts = snap.val() || {};
-    Object.entries(payouts).forEach(([id, p]) => {
-      const s = (p.status || 'pending').toLowerCase();
-      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-      if (!ts) return;
-      if (s === 'paid') items.push({ icon: 'fa-check-double', html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
-      else if (s === 'approved') items.push({ icon: 'fa-money-bill-wave', html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
+      items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
     });
   } catch (e) {}
 
@@ -3235,25 +3515,16 @@ function updatePublicClock() {
 }
 
 // ============================================================
-// SEARCH (basic — extend later)
+// SEARCH
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-  const search = document.getElementById('wsSearch');
-  if (search) {
-    search.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && search.value.trim()) {
-        showToast(`Search for "${search.value.trim()}" — coming soon`, 'info');
-      }
-    });
-  }
-});
+(function() {
+  // handled on DOMContentLoaded in setupSearch
+})();
 
 // ============================================================
 // CLEANUP
 // ============================================================
-window.addEventListener('beforeunload', () => {
-  detachNotifListeners();
-});
+window.addEventListener('beforeunload', () => { detachNotifListeners(); });
 </script>
 </body>
 </html>
