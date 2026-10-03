@@ -1,5 +1,3 @@
-'use strict';
-
 // ============================================================
 // CONFIG — same Firebase project as all other workspaces
 // ============================================================
@@ -196,6 +194,30 @@ function renderAccountChip() {
     </a>
   `;
 }
+// ============================================================
+// CERTIFICATE ID GENERATION
+// ============================================================
+// Format: KAZ-YYYY-XXXXXX  (e.g., KAZ-2026-A7B3F9)
+// Ambiguous characters removed: 0/O, 1/I/L
+function generateCertificateCode() {
+  const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const year = new Date().getFullYear();
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += alphabet[Math.floor(Math.random() * alphabet.length)];
+  }
+  return `KAZ-${year}-${code}`;
+}
+
+async function generateUniqueCertificateId() {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const candidate = generateCertificateCode();
+    const snap = await window._db.ref(`learning_certificate_index/${candidate}`).once('value');
+    if (!snap.exists()) return candidate;
+  }
+  // Fallback — statistically near-impossible
+  return `KAZ-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+}
 
 // ============================================================
 // BOOT
@@ -205,3 +227,59 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   bootFirebase();
 });
+
+// ============================================================
+// ISSUE CERTIFICATE
+// Writes two records:
+//   1. learning_certificates/{uid}/{courseId}      — user's private record
+//   2. learning_certificate_index/{certificateId}  — public verifiable entry
+// ============================================================
+async function issueCertificate(courseId, courseTitle, options = {}) {
+  if (!currentUser) {
+    console.warn('[issueCertificate] No current user');
+    return null;
+  }
+
+  const status = options.status || 'auto_issued'; // auto_issued | quiz_passed | verified
+  const grade = typeof options.grade === 'number' ? options.grade : undefined;
+
+  const certificateId = await generateUniqueCertificateId();
+  const issuedAt = Date.now();
+  const recipientName = currentUser.displayName
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
+
+  const userPayload = {
+    courseId,
+    courseTitle,
+    certificateId,
+    issuedAt,
+    status
+  };
+  if (typeof grade === 'number') userPayload.grade = grade;
+
+  const indexPayload = {
+    uid: currentUser.uid,
+    recipientName,
+    courseId,
+    courseTitle,
+    issuedAt,
+    status
+  };
+  if (typeof grade === 'number') indexPayload.grade = grade;
+
+  try {
+    await Promise.all([
+      window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set(userPayload),
+      window._db.ref(`learning_certificate_index/${certificateId}`).set(indexPayload)
+    ]);
+    console.log('[issueCertificate] Issued:', certificateId);
+    return userPayload;
+  } catch (e) {
+    console.error('[issueCertificate] Failed:', e);
+    throw e;
+  }
+}
+
+// Expose globally so course.html can call it without duplicating code
+window.issueCertificate = issueCertificate;
+window.generateUniqueCertificateId = generateUniqueCertificateId;
