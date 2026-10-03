@@ -22,7 +22,7 @@
   --brand-soft: #ecfeff; --brand-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #22d3ee 100%);
   --ink: #0f0f1e; --ink-3: #2d2d4a;
   --success: #10b981; --danger: #ef4444; --info: #3b82f6; --purple: #8b5cf6;
-  --warning: #f59e0b;
+  --warning: #f59e0b; --rose: #e11d48;
   --text-primary: #0f0f1e; --text-secondary: #4a4a5e; --text-muted: #6b7280;
   --border-light: #e9ecef; --border-medium: #d1d5db;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
@@ -46,10 +46,14 @@ body {
 @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); } 50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } }
 @keyframes pulseBrand { 0%,100% { box-shadow: 0 0 0 0 rgba(8,145,178,0.4); } 50% { box-shadow: 0 0 0 12px rgba(8,145,178,0); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-@keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+.noscript-warning { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; padding: 2rem; z-index: 99999; text-align: center; font-family: system-ui, sans-serif; }
+.noscript-warning h2 { font-size: 1.5rem; color: #0f0f1e; margin-bottom: 0.5rem; }
+.noscript-warning p { color: #6b7280; max-width: 400px; }
 
 .ambient { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .ambient .glow { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.5; }
@@ -279,8 +283,35 @@ body {
 .vc-row i { font-size: 0.7rem; }
 .vc-row .check { color: var(--success); }
 .vc-row .pending { color: var(--brand); }
+.vc-row .revision { color: var(--rose); }
 .vc-row .label { flex: 1; }
 .vc-row .time { color: var(--text-muted); font-size: 0.7rem; }
+
+/* NEW-TASKS BANNER */
+.new-tasks-banner {
+  display: none;
+  margin: 1rem 0;
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(135deg, #cffafe 0%, #ecfeff 100%);
+  border: 1px solid rgba(8,145,178,0.25);
+  border-radius: 16px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--brand-dark);
+  align-items: center; gap: 0.75rem;
+  animation: fadeUp 0.4s;
+}
+.new-tasks-banner.visible { display: flex; }
+.new-tasks-banner .new-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); animation: pulseDot 1.5s infinite; }
+.new-tasks-banner .new-tasks-actions { margin-left: auto; display: flex; gap: 0.5rem; }
+.new-tasks-banner .new-tasks-actions button {
+  background: white; border: 1px solid rgba(8,145,178,0.3);
+  color: var(--brand-dark); padding: 0.35rem 0.85rem;
+  border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+  cursor: pointer; font-family: var(--font-heading);
+  transition: all 0.2s;
+}
+.new-tasks-banner .new-tasks-actions button:hover { background: var(--brand-gradient); color: white; border-color: transparent; }
 
 /* TRUST */
 .trust-strip {
@@ -309,6 +340,37 @@ body {
 .board-header-left p { font-size: 0.9rem; color: var(--text-muted); }
 .board-header-right { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-heading); }
 .board-header-right .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulseDot 2s infinite; }
+
+/* FILTERS BAR */
+.filters-bar {
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.filter-search {
+  flex: 1; min-width: 220px; position: relative;
+}
+.filter-search input {
+  width: 100%; padding: 0.65rem 0.9rem 0.65rem 2.5rem;
+  border: 1.5px solid var(--border-light); border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.85rem;
+  background: white; color: var(--text-primary);
+  transition: all 0.2s;
+}
+.filter-search input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(8,145,178,0.1); }
+.filter-search i { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem; pointer-events: none; }
+.filter-select {
+  padding: 0.65rem 2.2rem 0.65rem 1rem;
+  border: 1.5px solid var(--border-light); border-radius: 100px;
+  font-family: var(--font-heading); font-size: 0.8rem; font-weight: 600;
+  background: white; color: var(--text-secondary);
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236b7280' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  transition: all 0.2s;
+}
+.filter-select:focus { outline: none; border-color: var(--brand); }
+.filter-select:hover { border-color: var(--brand); }
 
 /* SUITE CHIPS */
 .ws-chips {
@@ -352,6 +414,7 @@ body {
 .task-card.claimed { border-color: rgba(16,185,129,0.25); background: linear-gradient(135deg, #f0fdf4, #ffffff); }
 .task-card.claimed::before { background: linear-gradient(135deg, #10b981, #34d399); }
 .task-card.slots-full { opacity: 0.65; }
+.task-card.is-new { box-shadow: 0 0 0 2px rgba(8,145,178,0.25), var(--shadow-sm); }
 .task-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.6rem; }
 .task-card-suite {
   display: inline-flex; align-items: center; gap: 0.35rem;
@@ -367,6 +430,7 @@ body {
 .task-card-badge.open { background: rgba(8,145,178,0.1); color: var(--brand-dark); }
 .task-card-badge.claimed { background: rgba(16,185,129,0.1); color: #065f46; }
 .task-card-badge.closed { background: rgba(107,114,128,0.1); color: #4b5563; }
+.task-card-badge.new { background: linear-gradient(135deg, #0891b2, #22d3ee); color: white; }
 .task-card-title {
   font-family: var(--font-heading); font-weight: 700;
   font-size: 1rem; color: var(--text-primary); line-height: 1.3;
@@ -511,6 +575,8 @@ body {
 .modal-btn.brand:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(8,145,178,0.4); }
 .modal-btn.secondary { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-light); }
 .modal-btn.secondary:hover { background: #faf9f7; border-color: var(--border-medium); color: var(--text-primary); }
+.modal-btn.danger { background: #fef2f2; color: var(--danger); border: 1.5px solid rgba(239,68,68,0.3); }
+.modal-btn.danger:hover { background: var(--danger); color: white; border-color: var(--danger); }
 .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 /* TOASTS */
@@ -527,6 +593,7 @@ body {
 .toast.success i { color: #34d399; }
 .toast.error i { color: #f87171; }
 .toast.info i { color: #22d3ee; }
+.toast.warning i { color: #fbbf24; }
 
 /* RESPONSIVE */
 @media (max-width: 1100px) {
@@ -555,10 +622,23 @@ body {
   .footer-content { padding: 0 1.25rem; flex-direction: column; justify-content: center; gap: 0.2rem; }
   .footer-links { display: none; }
   .user-menu-btn .user-email { display: none; }
+  .filters-bar { flex-direction: column; align-items: stretch; }
+  .filter-search { min-width: 100%; }
+  .new-tasks-banner { flex-wrap: wrap; }
+  .new-tasks-banner .new-tasks-actions { margin-left: 0; width: 100%; }
 }
 </style>
 </head>
 <body>
+
+<noscript>
+<div class="noscript-warning">
+  <div>
+    <h2>JavaScript Required</h2>
+    <p>Kasikazi needs JavaScript to load tasks and manage your claims. Please enable JavaScript and reload.</p>
+  </div>
+</div>
+</noscript>
 
 <div class="ambient">
   <div class="glow glow-1"></div>
@@ -693,6 +773,11 @@ body {
           <span class="time" id="vcMyReview">0</span>
         </div>
         <div class="vc-row">
+          <i class="fas fa-circle revision"></i>
+          <span class="label">Needs Revision</span>
+          <span class="time" id="vcMyRevision">0</span>
+        </div>
+        <div class="vc-row">
           <i class="fas fa-circle-check check"></i>
           <span class="label">Approved</span>
           <span class="time" id="vcMyApproved">0</span>
@@ -703,7 +788,7 @@ body {
         <div class="vc-head">
           <div class="vc-icon green"><i class="fas fa-wallet"></i></div>
           <div>
-            <div class="vc-title">Earned</div>
+            <div class="vc-title">Approved Earnings</div>
             <div class="vc-sub">All-time</div>
           </div>
         </div>
@@ -732,6 +817,30 @@ body {
       <span class="live-dot"></span>
       <span id="boardCount">Loading…</span>
     </div>
+  </div>
+
+  <!-- NEW TASKS BANNER -->
+  <div class="new-tasks-banner" id="newTasksBanner">
+    <span class="new-dot"></span>
+    <span id="newTasksText">New tasks available</span>
+    <div class="new-tasks-actions">
+      <button onclick="scrollToBoard()">Show me</button>
+      <button onclick="dismissNewTasks()">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="filter-search">
+      <i class="fas fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search tasks by title or category…" oninput="onSearchInput()">
+    </div>
+    <select class="filter-select" id="sortSelect" onchange="onSortChange()">
+      <option value="newest">Newest first</option>
+      <option value="pay-high">Highest pay</option>
+      <option value="pay-low">Lowest pay</option>
+      <option value="due">Due soonest</option>
+    </select>
   </div>
 
   <!-- SUITE CHIPS -->
@@ -830,17 +939,25 @@ let userPermissions = {};
 let allOpenTasks = [];
 let myClaims = [];
 let currentSuiteFilter = 'all';
+let currentSort = 'newest';
+let currentSearch = '';
 let taskListenerRef = null;
 let currentDetailTask = null;
+let lastSeenTimestamp = 0;
+let initialLoadComplete = false;
+const newTasksQueue = [];
 
 // ============================================================
 // UTILITIES
 // ============================================================
 function escapeHtml(s) {
   if (s === null || s === undefined) return '';
-  const d = document.createElement('div');
-  d.textContent = String(s);
-  return d.innerHTML;
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 function getTimeAgo(ts) {
   if (!ts) return '';
@@ -862,7 +979,7 @@ function formatDate(str) {
   } catch (e) { return str; }
 }
 function showToast(m, type = 'info') {
-  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle', warning: 'exclamation-triangle' };
   const t = document.createElement('div');
   t.className = `toast ${type}`;
   t.innerHTML = `<i class="fas ${icons[type] || 'info-circle'}"></i><span>${escapeHtml(m)}</span>`;
@@ -899,6 +1016,13 @@ auth.onAuthStateChanged(async (user) => {
   const initials = name.split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'K';
   document.getElementById('userAvatar').textContent = initials;
   document.getElementById('userEmail').textContent = user.email || '';
+
+  // Load last-seen timestamp for "new tasks" indicator
+  try {
+    const seenRef = database.ref(`kazinni_prefs/${user.uid}/kasikaziLastSeen`);
+    const seenSnap = await seenRef.once('value');
+    lastSeenTimestamp = seenSnap.val() || 0;
+  } catch (e) { lastSeenTimestamp = 0; }
 
   document.getElementById('mainContent').style.display = 'block';
   attachListener();
@@ -953,13 +1077,53 @@ function processTasks(data) {
     return claimedCount < slots;
   });
 
+  // Detect new tasks (posted after last seen)
+  if (initialLoadComplete && lastSeenTimestamp > 0) {
+    open.forEach(t => {
+      if (t.postedAt && t.postedAt > lastSeenTimestamp) {
+        if (!newTasksQueue.find(x => x.id === t.id)) newTasksQueue.push(t);
+      }
+    });
+    updateNewTasksBanner();
+  }
+
   allOpenTasks = open;
   myClaims = all.filter(t => t.claimedBy && t.claimedBy[currentUser.uid]);
 
   updateHero();
   updateChips();
   renderTasks();
+
+  if (!initialLoadComplete) {
+    initialLoadComplete = true;
+    // Persist the current visit as the new "last seen" after a delay
+    setTimeout(() => {
+      database.ref(`kazinni_prefs/${currentUser.uid}/kasikaziLastSeen`).set(Date.now()).catch(() => {});
+    }, 3000);
+  }
 }
+
+// ============================================================
+// NEW TASKS BANNER
+// ============================================================
+function updateNewTasksBanner() {
+  const banner = document.getElementById('newTasksBanner');
+  const text = document.getElementById('newTasksText');
+  if (newTasksQueue.length === 0) {
+    banner.classList.remove('visible');
+    return;
+  }
+  text.textContent = `${newTasksQueue.length} new task${newTasksQueue.length !== 1 ? 's' : ''} since your last visit`;
+  banner.classList.add('visible');
+}
+window.dismissNewTasks = function() {
+  newTasksQueue.length = 0;
+  document.getElementById('newTasksBanner').classList.remove('visible');
+  database.ref(`kazinni_prefs/${currentUser.uid}/kasikaziLastSeen`).set(Date.now()).catch(() => {});
+};
+window.scrollToBoard = function() {
+  document.getElementById('board').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
 // ============================================================
 // HERO UPDATE
@@ -980,8 +1144,12 @@ function updateHero() {
 
   const myReview = myClaims.filter(t => {
     const c = t.claimedBy[currentUser.uid];
-    const s = (c.status || 'claimed').toLowerCase();
-    return s === 'submitted' || s === 'revision';
+    return (c.status || '').toLowerCase() === 'submitted';
+  }).length;
+
+  const myRevision = myClaims.filter(t => {
+    const c = t.claimedBy[currentUser.uid];
+    return (c.status || '').toLowerCase() === 'revision';
   }).length;
 
   const myApproved = myClaims.filter(t => {
@@ -994,13 +1162,14 @@ function updateHero() {
     .reduce((sum, t) => sum + (Number(t.payRate) || 0), 0);
 
   document.getElementById('heroOpenCount').textContent = openCount;
-  document.getElementById('heroMyClaims').textContent = myActive + myReview;
+  document.getElementById('heroMyClaims').textContent = myActive + myReview + myRevision;
   document.getElementById('heroSlots').textContent = totalSlots;
 
   document.getElementById('vcOpenTasks').innerHTML = `${openCount}<span class="unit">tasks</span>`;
   document.getElementById('vcOpenProgress').style.width = Math.min(100, (openCount / 20) * 100) + '%';
   document.getElementById('vcMyClaims').textContent = myActive;
   document.getElementById('vcMyReview').textContent = myReview;
+  document.getElementById('vcMyRevision').textContent = myRevision;
   document.getElementById('vcMyApproved').textContent = myApproved;
   document.getElementById('vcEarned').innerHTML = earned.toLocaleString() + '<span class="unit">KES</span>';
 
@@ -1044,6 +1213,16 @@ window.setSuiteFilter = function(k) {
   renderTasks();
 };
 
+window.onSearchInput = function() {
+  currentSearch = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+  renderTasks();
+};
+
+window.onSortChange = function() {
+  currentSort = document.getElementById('sortSelect').value;
+  renderTasks();
+};
+
 // ============================================================
 // RENDER TASKS
 // ============================================================
@@ -1054,15 +1233,39 @@ function renderTasks() {
   if (currentSuiteFilter !== 'all') {
     list = list.filter(t => (t.workspace || t.suite) === currentSuiteFilter);
   }
+  if (currentSearch) {
+    list = list.filter(t =>
+      (t.title || '').toLowerCase().includes(currentSearch) ||
+      (t.category || '').toLowerCase().includes(currentSearch)
+    );
+  }
 
-  if (list.length === 0) {
+  // Sort
+  const sorted = [...list];
+  if (currentSort === 'newest') {
+    sorted.sort((a, b) => (b.postedAt || 0) - (a.postedAt || 0));
+  } else if (currentSort === 'pay-high') {
+    sorted.sort((a, b) => (Number(b.payRate) || 0) - (Number(a.payRate) || 0));
+  } else if (currentSort === 'pay-low') {
+    sorted.sort((a, b) => (Number(a.payRate) || 0) - (Number(b.payRate) || 0));
+  } else if (currentSort === 'due') {
+    sorted.sort((a, b) => {
+      const da = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+      const db = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+      return da - db;
+    });
+  }
+
+  if (sorted.length === 0) {
     grid.innerHTML = `
       <div class="empty-data">
         <i class="fas fa-inbox"></i>
-        <h3>No open tasks right now</h3>
-        <p>${currentSuiteFilter === 'all'
-          ? 'Check back later — new tasks are posted regularly.'
-          : 'No open tasks in this suite. Try another suite or check back later.'}</p>
+        <h3>No open tasks found</h3>
+        <p>${currentSearch
+          ? 'No tasks match your search. Try a different keyword.'
+          : (currentSuiteFilter === 'all'
+              ? 'Check back later — new tasks are posted regularly.'
+              : 'No open tasks in this suite. Try another suite or check back later.')}</p>
       </div>
     `;
     document.getElementById('boardSubtitle').textContent = 'No tasks available';
@@ -1070,9 +1273,9 @@ function renderTasks() {
   }
 
   document.getElementById('boardSubtitle').textContent =
-    `${list.length} open task${list.length !== 1 ? 's' : ''} you can claim`;
+    `${sorted.length} open task${sorted.length !== 1 ? 's' : ''} you can claim`;
 
-  grid.innerHTML = list.map(t => {
+  grid.innerHTML = sorted.map(t => {
     const cfg = SUITE_CONFIG[t.workspace || t.suite] || { name: 'Suite', icon: 'fa-cube', color: '#0891b2', bgColor: '#cffafe' };
     const pay = `KES ${Number(t.payRate || 0).toLocaleString()}`;
     const due = t.dueDate ? formatDate(t.dueDate) : '—';
@@ -1082,12 +1285,17 @@ function renderTasks() {
     const iClaimed = t.claimedBy && t.claimedBy[currentUser.uid];
     const status = (t.status || 'open').toLowerCase();
 
+    const isNew = t.postedAt && t.postedAt > lastSeenTimestamp && lastSeenTimestamp > 0;
     const cardClass = iClaimed ? 'claimed' : (available <= 0 ? 'slots-full' : '');
-    const badgeClass = iClaimed ? 'claimed' : (status === 'closed' ? 'closed' : 'open');
-    const badgeText = iClaimed ? 'Claimed' : (status === 'closed' ? 'Closed' : 'Open');
+    const newClass = isNew ? 'is-new' : '';
+    let badgeClass = 'open';
+    let badgeText = 'Open';
+    if (iClaimed) { badgeClass = 'claimed'; badgeText = 'Claimed'; }
+    else if (isNew) { badgeClass = 'new'; badgeText = 'New'; }
+    else if (status === 'closed') { badgeClass = 'closed'; badgeText = 'Closed'; }
 
     return `
-      <div class="task-card ${cardClass}" onclick="viewTask('${t.id}')">
+      <div class="task-card ${cardClass} ${newClass}" onclick="viewTask('${escapeHtml(t.id)}')">
         <div class="task-card-top">
           <span class="task-card-suite" style="background:${cfg.bgColor};color:${cfg.color};">
             <i class="fas ${cfg.icon}" style="font-size:0.6rem;"></i> ${escapeHtml(cfg.name)}
@@ -1163,7 +1371,7 @@ window.viewTask = function(taskId) {
         </div>
       </div>
       <div class="action-row">
-        <button class="modal-btn brand" id="claimBtn" onclick="claimTask('${t.id}')">
+        <button class="modal-btn brand" id="claimBtn" onclick="claimTask('${escapeHtml(t.id)}')">
           <i class="fas fa-hand-sparkles"></i> Claim Task
         </button>
         <button class="modal-btn secondary" onclick="closeDetailModal()">Not Now</button>
@@ -1244,53 +1452,64 @@ window.closeDetailModal = function() {
 };
 
 // ============================================================
-// CLAIM TASK
+// CLAIM TASK — ATOMIC TRANSACTION
 // ============================================================
 window.claimTask = async function(taskId) {
   const t = allOpenTasks.find(x => x.id === taskId);
   if (!t) { showToast('Task not found', 'error'); return; }
 
+  if (!confirm(`Claim "${t.title || 'this task'}" for KES ${Number(t.payRate || 0).toLocaleString()}?`)) return;
+
   const btn = document.getElementById('claimBtn');
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Claiming…'; }
 
   try {
-    const now = Date.now();
-    const claimedCount = t.claimedBy ? Object.keys(t.claimedBy).length : 0;
-    const slots = t.slots || 1;
+    const result = await database.ref(`kasikazi_tasks/${taskId}`).transaction(current => {
+      if (!current) return current; // task deleted — abort
 
-    if (claimedCount >= slots) {
-      showToast('Sorry, this task just filled up', 'error');
+      const claimed = current.claimedBy || {};
+      if (claimed[currentUser.uid]) {
+        // Already claimed by me — no change
+        return;
+      }
+
+      const slots = current.slots || 1;
+      if (Object.keys(claimed).length >= slots) {
+        // All slots full — abort
+        return;
+      }
+
+      claimed[currentUser.uid] = {
+        name: taskerProfile.name || currentUser.email,
+        email: currentUser.email,
+        claimedAt: Date.now(),
+        status: 'claimed'
+      };
+      current.claimedBy = claimed;
+      current.claimedCount = Object.keys(claimed).length;
+      if (current.claimedCount >= slots) {
+        current.status = 'closed';
+      }
+      return current;
+    });
+
+    if (!result.committed) {
+      showToast('Sorry, all slots were just filled', 'warning');
       if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-hand-sparkles"></i> Claim Task'; }
       return;
     }
 
-    const claim = {
-      name: taskerProfile.name || currentUser.email,
-      email: currentUser.email,
-      claimedAt: now,
-      status: 'claimed'
-    };
-
-    const updates = {};
-    updates[`kasikazi_tasks/${taskId}/claimedBy/${currentUser.uid}`] = claim;
-    updates[`kasikazi_tasks/${taskId}/claimedCount`] = claimedCount + 1;
-
-    if (claimedCount + 1 >= slots) {
-      updates[`kasikazi_tasks/${taskId}/status`] = 'closed';
-    }
-
-    await database.ref().update(updates);
-
+    // Audit log (fire-and-forget — never blocks the user)
     try {
       const logId = database.ref('admin_logs').push().key;
-      await database.ref(`admin_logs/${logId}`).set({
+      database.ref(`admin_logs/${logId}`).set({
         action: 'kasikazi_task_claimed',
         taskId: taskId,
         actor: currentUser.email,
         actorUid: currentUser.uid,
         workspace: t.workspace || t.suite,
         timestamp: firebase.database.ServerValue.TIMESTAMP
-      });
+      }).catch(() => {});
     } catch (e) { /* silent */ }
 
     showToast('Task claimed! View it on My Tasks.', 'success');
