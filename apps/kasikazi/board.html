@@ -51,6 +51,10 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
+.noscript-warning { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; padding: 2rem; z-index: 99999; text-align: center; font-family: system-ui, sans-serif; }
+.noscript-warning h2 { font-size: 1.5rem; color: #0f0f1e; margin-bottom: 0.5rem; }
+.noscript-warning p { color: #6b7280; max-width: 400px; }
+
 .ambient { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .ambient .glow { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.5; }
 .glow-1 { width: 700px; height: 700px; background: #a5f3fc; top: -220px; left: -200px; }
@@ -265,9 +269,11 @@ body {
   white-space: nowrap;
 }
 .tab-btn.active { background: var(--brand-gradient); color: white; box-shadow: 0 4px 12px rgba(8,145,178,0.25); }
+.tab-btn.revision-tab.active { background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 4px 12px rgba(225,29,72,0.25); }
 .tab-badge { font-size: 0.6rem; padding: 1px 7px; border-radius: 10px; font-weight: 700; }
 .tab-btn.active .tab-badge { background: rgba(255,255,255,0.3); }
 .tab-btn:not(.active) .tab-badge { background: rgba(8,145,178,0.1); color: var(--brand-dark); }
+.tab-btn.revision-tab:not(.active) .tab-badge { background: rgba(225,29,72,0.1); color: #e11d48; }
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: fadeUp 0.35s ease; }
 
@@ -277,6 +283,7 @@ body {
   padding: 0.5rem; background: white;
   border: 1px solid var(--border-light); border-radius: 16px;
 }
+.ws-chips:empty { display: none; }
 .ws-chip {
   padding: 0.4rem 0.85rem; border-radius: 100px;
   background: #faf9f7; border: 1.5px solid transparent;
@@ -328,6 +335,7 @@ body {
   font-size: 0.62rem; color: var(--brand-dark); font-weight: 600;
   font-family: var(--font-heading); display: inline-flex; align-items: center; gap: 0.25rem;
 }
+.task-action-hint.revision-hint { color: #e11d48; }
 .badge {
   padding: 0.25rem 0.7rem; border-radius: 40px; font-size: 0.65rem;
   font-weight: 700; text-transform: uppercase; font-family: var(--font-heading);
@@ -483,6 +491,8 @@ body {
 .modal-btn.brand:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(8,145,178,0.4); }
 .modal-btn.secondary { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-light); }
 .modal-btn.secondary:hover { background: #faf9f7; border-color: var(--border-medium); color: var(--text-primary); }
+.modal-btn.danger { background: #fef2f2; color: var(--danger); border: 1.5px solid rgba(239,68,68,0.3); }
+.modal-btn.danger:hover { background: var(--danger); color: white; border-color: var(--danger); }
 .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 /* LINK INPUT */
@@ -565,6 +575,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 .toast.success i { color: #34d399; }
 .toast.error i { color: #f87171; }
 .toast.info i { color: #22d3ee; }
+.toast.warning i { color: #fbbf24; }
 
 /* RESPONSIVE */
 @media (max-width: 1100px) {
@@ -588,6 +599,15 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 </style>
 </head>
 <body>
+
+<noscript>
+<div class="noscript-warning">
+  <div>
+    <h2>JavaScript Required</h2>
+    <p>Kasikazi needs JavaScript to load your tasks and manage submissions. Please enable JavaScript and reload.</p>
+  </div>
+</div>
+</noscript>
 
 <div class="ambient">
   <div class="glow glow-1"></div>
@@ -679,17 +699,17 @@ textarea.form-control { resize: vertical; min-height: 80px; }
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:#ecfdf5;color:#059669;"><i class="fas fa-circle-check"></i></div>
+      <div class="stat-icon" style="background:#fdf2f8;color:#e11d48;"><i class="fas fa-redo"></i></div>
       <div>
-        <div class="stat-value" style="color:#059669;" id="statApproved">0</div>
-        <div class="stat-label">Approved</div>
+        <div class="stat-value" style="color:#e11d48;" id="statRevision">0</div>
+        <div class="stat-label">Needs Revision</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon" style="background:#fdf2f8;color:#ec4899;"><i class="fas fa-wallet"></i></div>
       <div>
-        <div class="stat-value" style="color:#ec4899;" id="statEarned">0</div>
-        <div class="stat-label">Earned (KES)</div>
+        <div class="stat-value" style="color:#ec4899;font-size:1.2rem;" id="statEarned">0</div>
+        <div class="stat-label">Approved Earnings</div>
       </div>
     </div>
   </div>
@@ -714,6 +734,9 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <button class="tab-btn" data-tab="review" onclick="switchTab('review')">
       <i class="fas fa-clock"></i> In Review <span class="tab-badge" id="badgeReview">0</span>
     </button>
+    <button class="tab-btn revision-tab" data-tab="revision" onclick="switchTab('revision')">
+      <i class="fas fa-redo"></i> Needs Revision <span class="tab-badge" id="badgeRevision">0</span>
+    </button>
     <button class="tab-btn" data-tab="approved" onclick="switchTab('approved')">
       <i class="fas fa-check-double"></i> Approved <span class="tab-badge" id="badgeApproved">0</span>
     </button>
@@ -733,6 +756,13 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   <div class="tab-content" id="tab-review">
     <div class="task-list-card">
       <div id="reviewList"></div>
+    </div>
+  </div>
+
+  <!-- NEEDS REVISION -->
+  <div class="tab-content" id="tab-revision">
+    <div class="task-list-card">
+      <div id="revisionList"></div>
     </div>
   </div>
 
@@ -766,7 +796,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
       <a href="../../index.html">KazInni Suite</a>
       <a href="mailto:operations@kazinni.com">Contact</a>
     </div>
-    <div class="footer-text">© 2026 Teleio Savour · Kasikazi</div>
+    <div class="footer-text">© 2026 Teleovour · Kasikazi</div>
   </div>
 </footer>
 
@@ -869,15 +899,20 @@ let currentDetailTask = null;
 let weeklyChart = null;
 let statusChart = null;
 let listenerRef = null;
+let lastRenderSignature = '';
+let lastChartSignature = '';
 
 // ============================================================
 // UTILITIES
 // ============================================================
 function escapeHtml(s) {
   if (s === null || s === undefined) return '';
-  const d = document.createElement('div');
-  d.textContent = String(s);
-  return d.innerHTML;
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 function getTimeAgo(ts) {
   if (!ts) return '';
@@ -899,7 +934,7 @@ function formatDate(str) {
   } catch (e) { return str; }
 }
 function showToast(m, type = 'info') {
-  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+  const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle', warning: 'exclamation-triangle' };
   const t = document.createElement('div');
   t.className = `toast ${type}`;
   t.innerHTML = `<i class="fas ${icons[type] || 'info-circle'}"></i><span>${escapeHtml(m)}</span>`;
@@ -987,33 +1022,54 @@ function processMyTasks(data) {
 // RENDER
 // ============================================================
 function render() {
+  // Build a signature — skip re-render if nothing changed
+  const sig = JSON.stringify(myTasks.map(t => ({
+    id: t.id,
+    s: t.claimedBy[currentUser.uid].status,
+    sub: t.claimedBy[currentUser.uid].submittedAt,
+    rev: t.claimedBy[currentUser.uid].reviewedAt
+  })));
+
+  if (sig === lastRenderSignature) return;
+  lastRenderSignature = sig;
+
   updateStats();
   updateChips();
   renderTabLists();
   updateCharts();
 }
 
-function updateStats() {
-  const counts = { active: 0, review: 0, approved: 0 };
-  let earned = 0;
+function getStatusBuckets() {
+  const active = [];
+  const review = [];
+  const revision = [];
+  const approved = [];
 
   myTasks.forEach(t => {
     const c = t.claimedBy[currentUser.uid];
     const s = (c.status || 'claimed').toLowerCase();
-    const pay = Number(t.payRate) || 0;
-    if (s === 'approved') { counts.approved++; earned += pay; }
-    else if (s === 'submitted' || s === 'revision') counts.review++;
-    else counts.active++;
+    if (s === 'approved') approved.push(t);
+    else if (s === 'submitted') review.push(t);
+    else if (s === 'revision') revision.push(t);
+    else active.push(t);
   });
 
-  document.getElementById('statActive').textContent = counts.active;
-  document.getElementById('statReview').textContent = counts.review;
-  document.getElementById('statApproved').textContent = counts.approved;
+  return { active, review, revision, approved };
+}
+
+function updateStats() {
+  const { active, review, revision, approved } = getStatusBuckets();
+  const earned = approved.reduce((sum, t) => sum + (Number(t.payRate) || 0), 0);
+
+  document.getElementById('statActive').textContent = active.length;
+  document.getElementById('statReview').textContent = review.length;
+  document.getElementById('statRevision').textContent = revision.length;
   document.getElementById('statEarned').textContent = earned.toLocaleString();
 
-  document.getElementById('badgeActive').textContent = counts.active;
-  document.getElementById('badgeReview').textContent = counts.review;
-  document.getElementById('badgeApproved').textContent = counts.approved;
+  document.getElementById('badgeActive').textContent = active.length;
+  document.getElementById('badgeReview').textContent = review.length;
+  document.getElementById('badgeRevision').textContent = revision.length;
+  document.getElementById('badgeApproved').textContent = approved.length;
 }
 
 function updateChips() {
@@ -1055,28 +1111,20 @@ function filterBySuite(list) {
 }
 
 function renderTabLists() {
-  const active = filterBySuite(myTasks.filter(t => {
-    const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
-    return s === 'claimed' || s === 'working';
-  }));
-  const review = filterBySuite(myTasks.filter(t => {
-    const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
-    return s === 'submitted' || s === 'revision';
-  }));
-  const approved = filterBySuite(myTasks.filter(t => {
-    return (t.claimedBy[currentUser.uid].status || '').toLowerCase() === 'approved';
-  }));
+  const { active, review, revision, approved } = getStatusBuckets();
 
-  document.getElementById('activeList').innerHTML = renderTaskList(active, 'active');
-  document.getElementById('reviewList').innerHTML = renderTaskList(review, 'review');
-  document.getElementById('approvedList').innerHTML = renderTaskList(approved, 'approved');
+  document.getElementById('activeList').innerHTML = renderTaskList(filterBySuite(active), 'active');
+  document.getElementById('reviewList').innerHTML = renderTaskList(filterBySuite(review), 'review');
+  document.getElementById('revisionList').innerHTML = renderTaskList(filterBySuite(revision), 'revision');
+  document.getElementById('approvedList').innerHTML = renderTaskList(filterBySuite(approved), 'approved');
 }
 
 function renderTaskList(list, mode) {
   if (list.length === 0) {
     const msgs = {
-      active: { title: 'No active tasks', desc: 'Claim tasks from the Open Board to see them here.' },
+      active: { title: 'No active tasks', desc: 'Claim tasks from the Open Board to see them here.', cta: true },
       review: { title: 'Nothing in review', desc: 'Submitted tasks appear here while waiting for admin review.' },
+      revision: { title: 'No revisions needed', desc: 'When a reviewer requests changes, those tasks appear here.' },
       approved: { title: 'No approved tasks yet', desc: 'Completed tasks you\'ve earned on will appear here.' }
     };
     const m = msgs[mode] || { title: 'No tasks', desc: '' };
@@ -1084,7 +1132,7 @@ function renderTaskList(list, mode) {
       <i class="fas fa-inbox"></i>
       <h3>${m.title}</h3>
       <p>${m.desc}</p>
-      ${mode === 'active' ? '<a href="index.html" class="btn btn-brand" style="margin-top:1rem;"><i class="fas fa-bullhorn"></i> Browse Open Board</a>' : ''}
+      ${m.cta ? '<a href="index.html" class="btn btn-brand" style="margin-top:1rem;"><i class="fas fa-bullhorn"></i> Browse Open Board</a>' : ''}
     </div>`;
   }
 
@@ -1108,14 +1156,15 @@ function renderTaskList(list, mode) {
 
     let hint = 'View details';
     let hintIcon = 'fa-eye';
+    let hintClass = '';
     if (s === 'claimed') { hint = 'Start Task'; hintIcon = 'fa-play'; }
     else if (s === 'working') { hint = 'Mark Complete'; hintIcon = 'fa-check'; }
     else if (s === 'submitted') { hint = 'Awaiting Review'; hintIcon = 'fa-clock'; }
-    else if (s === 'revision') { hint = 'Fix & Resubmit'; hintIcon = 'fa-redo'; }
+    else if (s === 'revision') { hint = 'Fix & Resubmit'; hintIcon = 'fa-redo'; hintClass = 'revision-hint'; }
     else if (s === 'approved') { hint = 'Completed'; hintIcon = 'fa-check-double'; }
 
     return `
-      <div class="task-row" onclick="viewTask('${t.id}')">
+      <div class="task-row" onclick="viewTask('${escapeHtml(t.id)}')">
         <div class="task-row-icon" style="background:${cfg.bgColor};color:${cfg.color};"><i class="fas ${cfg.icon}"></i></div>
         <div class="task-row-body">
           <div class="task-row-title">${escapeHtml(t.title || 'Untitled')}</div>
@@ -1124,7 +1173,7 @@ function renderTaskList(list, mode) {
             <span><i class="fas fa-calendar"></i> Due ${escapeHtml(due)}</span>
             <span><i class="fas fa-user"></i> ${escapeHtml(t.clientName || 'KazInni')}</span>
           </div>
-          <div class="task-action-hint" style="margin-top:0.4rem;">
+          <div class="task-action-hint ${hintClass}" style="margin-top:0.4rem;">
             <i class="fas ${hintIcon}"></i> ${hint}
           </div>
         </div>
@@ -1138,10 +1187,13 @@ function renderTaskList(list, mode) {
 }
 
 // ============================================================
-// CHARTS
+// CHARTS — only rebuild when data actually changes
 // ============================================================
 function updateCharts() {
   try {
+    const { active, review, revision, approved } = getStatusBuckets();
+
+    // Weekly data
     const now = new Date();
     const weeks = [];
     for (let i = 7; i >= 0; i--) {
@@ -1158,62 +1210,85 @@ function updateCharts() {
       weeks.push({ label: `${weekStart.getMonth() + 1}/${weekStart.getDate()}`, count });
     }
 
-    if (weeklyChart) weeklyChart.destroy();
-    const ctx1 = document.getElementById('weeklyChart').getContext('2d');
-    weeklyChart = new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        labels: weeks.map(w => w.label),
-        datasets: [{
-          data: weeks.map(w => w.count),
-          backgroundColor: 'rgba(8,145,178,0.7)',
-          borderColor: '#0891b2',
-          borderWidth: 2,
-          borderRadius: 8,
-          maxBarThickness: 40
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
-          x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-        }
-      }
+    const chartSig = JSON.stringify({
+      weeks: weeks.map(w => w.count),
+      active: active.length,
+      review: review.length,
+      revision: revision.length,
+      approved: approved.length
     });
 
-    const counts = { active: 0, review: 0, approved: 0 };
-    myTasks.forEach(t => {
-      const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
-      if (s === 'approved') counts.approved++;
-      else if (s === 'submitted' || s === 'revision') counts.review++;
-      else counts.active++;
-    });
+    if (chartSig === lastChartSignature && weeklyChart && statusChart) return;
+    lastChartSignature = chartSig;
 
-    const total = counts.active + counts.review + counts.approved;
-    if (statusChart) statusChart.destroy();
-    const ctx2 = document.getElementById('statusChart').getContext('2d');
-    statusChart = new Chart(ctx2, {
-      type: 'doughnut',
-      data: {
-        labels: ['Active', 'In Review', 'Approved'],
-        datasets: [{
-          data: total === 0 ? [1] : [counts.active, counts.review, counts.approved],
-          backgroundColor: total === 0 ? ['#e5e7eb'] : ['#0891b2', '#8b5cf6', '#10b981'],
-          borderWidth: 2, borderColor: '#ffffff'
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, cutout: '60%',
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { padding: 12, usePointStyle: true, font: { size: 10 } }
+    // Weekly bar chart
+    if (weeklyChart) {
+      weeklyChart.data.datasets[0].data = weeks.map(w => w.count);
+      weeklyChart.update('none');
+    } else {
+      const ctx1 = document.getElementById('weeklyChart').getContext('2d');
+      weeklyChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: weeks.map(w => w.label),
+          datasets: [{
+            data: weeks.map(w => w.count),
+            backgroundColor: 'rgba(8,145,178,0.7)',
+            borderColor: '#0891b2',
+            borderWidth: 2,
+            borderRadius: 8,
+            maxBarThickness: 40
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+            x: { grid: { display: false }, ticks: { font: { size: 10 } } }
           }
         }
-      }
-    });
+      });
+    }
+
+    // Status doughnut
+    const total = active.length + review.length + revision.length + approved.length;
+    const doughnutData = total === 0
+      ? [1]
+      : [active.length, review.length, revision.length, approved.length];
+    const doughnutColors = total === 0
+      ? ['#e5e7eb']
+      : ['#0891b2', '#8b5cf6', '#e11d48', '#10b981'];
+
+    if (statusChart) {
+      statusChart.data.datasets[0].data = doughnutData;
+      statusChart.data.datasets[0].backgroundColor = doughnutColors;
+      statusChart.update('none');
+    } else {
+      const ctx2 = document.getElementById('statusChart').getContext('2d');
+      statusChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Active', 'In Review', 'Needs Revision', 'Approved'],
+          datasets: [{
+            data: doughnutData,
+            backgroundColor: doughnutColors,
+            borderWidth: 2, borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '60%',
+          animation: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { padding: 12, usePointStyle: true, font: { size: 10 }, boxWidth: 10 }
+            }
+          }
+        }
+      });
+    }
   } catch (e) { console.warn('Chart error:', e); }
 }
 
@@ -1338,7 +1413,11 @@ window.viewTask = function(taskId) {
     actionHtml = `
       <div class="action-row">
         <button class="modal-btn brand" id="markCompleteBtn" onclick="markComplete()"><i class="fas fa-check"></i> Mark as Complete</button>
-        <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
+        <button class="modal-btn danger" id="withdrawBtn" onclick="withdrawClaim()"><i class="fas fa-undo"></i> Withdraw</button>
+      </div>
+      <div class="action-banner warning" style="margin-top:1rem;">
+        <i class="fas fa-info-circle"></i>
+        <div>Withdrawing releases your slot and removes the task from your board.</div>
       </div>
     `;
   } else {
@@ -1349,7 +1428,7 @@ window.viewTask = function(taskId) {
       </div>
       <div class="action-row">
         <button class="modal-btn brand" id="startTaskBtn" onclick="startTask()"><i class="fas fa-play"></i> Start Task</button>
-        <button class="modal-btn secondary" onclick="closeDetailModal()">Not Now</button>
+        <button class="modal-btn danger" id="withdrawBtn" onclick="withdrawClaim()"><i class="fas fa-undo"></i> Withdraw</button>
       </div>
     `;
   }
@@ -1420,6 +1499,45 @@ window.markComplete = function() {
   if (!confirm('Mark this task as complete? You\'ll then submit your work for review.')) return;
   closeDetailModal();
   openSubmitModal(t);
+};
+
+window.withdrawClaim = async function() {
+  const t = currentDetailTask;
+  if (!t) return;
+
+  const s = (t.claimedBy[currentUser.uid].status || 'claimed').toLowerCase();
+  if (s !== 'claimed') {
+    showToast('You can only withdraw a task you haven\'t started.', 'warning');
+    return;
+  }
+
+  if (!confirm(`Withdraw from "${t.title || 'this task'}"? Your slot will be released.`)) return;
+
+  const btn = document.getElementById('withdrawBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Withdrawing…'; }
+
+  try {
+    await database.ref(`kasikazi_tasks/${t.id}`).transaction(current => {
+      if (!current) return current;
+      const claimed = current.claimedBy || {};
+      if (!claimed[currentUser.uid]) return current;
+      delete claimed[currentUser.uid];
+      current.claimedBy = claimed;
+      current.claimedCount = Object.keys(claimed).length;
+      // Re-open the task if it was closed due to full slots
+      if (current.status === 'closed' && current.claimedCount < (current.slots || 1)) {
+        current.status = 'open';
+      }
+      return current;
+    });
+
+    showToast('Withdrawn. Slot released.', 'info');
+    closeDetailModal();
+  } catch (err) {
+    console.error(err);
+    showToast('Could not withdraw: ' + err.message, 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-undo"></i> Withdraw'; }
+  }
 };
 
 window.openSubmitFromDetail = function() {
@@ -1497,6 +1615,18 @@ window.submitWork = async function(e) {
       submissionLinks: links,
       submissionNotes: notes || ''
     });
+
+    // Fire a notification to the tasker's own feed
+    try {
+      const notifRef = database.ref(`kazinni_notifications/${currentUser.uid}`).push();
+      await notifRef.set({
+        type: 'learning',
+        title: 'Work submitted',
+        body: `"${t.title || 'Task'}" sent for review`,
+        read: false,
+        timestamp: Date.now()
+      });
+    } catch (e) { /* silent */ }
 
     showToast('Work submitted! Your coordinator will review it shortly.', 'success');
     closeSubmitModal();
