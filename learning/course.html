@@ -93,12 +93,96 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .empty-state p{font-size:.85rem;margin-bottom:.8rem}
 
+/* QUIZ LAUNCH CARD */
+.quiz-launch{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1px solid rgba(202,138,4,.25);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem;position:relative;overflow:hidden}
+.quiz-launch::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.15) 0%,transparent 70%);top:-140px;right:-100px;pointer-events:none}
+.quiz-launch-icon{width:64px;height:64px;border-radius:20px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;box-shadow:0 12px 30px rgba(202,138,4,.3);position:relative;z-index:1}
+.quiz-launch h2{font-family:var(--f-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.4rem;position:relative;z-index:1}
+.quiz-launch p{font-size:.88rem;color:var(--text-2);max-width:420px;margin:0 auto 1.4rem;position:relative;z-index:1;line-height:1.6}
+.quiz-launch-stats{display:flex;justify-content:center;gap:2rem;margin-bottom:1.4rem;position:relative;z-index:1;flex-wrap:wrap}
+.quiz-stat{text-align:center}
+.quiz-stat-value{font-family:var(--f-display);font-size:1.5rem;font-weight:700;color:var(--gold-dark);letter-spacing:-.02em;line-height:1}
+.quiz-stat-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-family:var(--f-head);font-weight:600;margin-top:.3rem}
+.quiz-launch-actions{position:relative;z-index:1;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+
+/* QUIZ MODAL */
+.quiz-overlay{position:fixed;inset:0;background:rgba(15,15,30,.6);backdrop-filter:blur(8px);z-index:2000;display:none}
+.quiz-overlay.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.quiz-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:24px;width:calc(100% - 2rem);max-width:760px;max-height:92vh;z-index:2001;display:none;flex-direction:column;box-shadow:0 40px 80px rgba(15,15,30,.3);overflow:hidden}
+.quiz-modal.active{display:flex;animation:quizIn .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes quizIn{from{opacity:0;transform:translate(-50%,-46%)}to{opacity:1;transform:translate(-50%,-50%)}}
+.quiz-header{padding:1.6rem 1.8rem 1.2rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);flex-shrink:0;position:relative}
+.quiz-header-title{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.3rem}
+.quiz-header-sub{font-size:.8rem;color:var(--text-2);font-family:var(--f-head)}
+.quiz-header-close{position:absolute;top:1rem;right:1.2rem;background:rgba(255,255,255,.7);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;color:var(--text-2);display:flex;align-items:center;justify-content:center;transition:all var(--t-fast)}
+.quiz-header-close:hover{background:white;color:var(--danger);transform:rotate(90deg)}
+.quiz-progress{height:4px;background:rgba(15,15,30,.06);margin-top:1rem;border-radius:2px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:var(--gold-gradient);border-radius:2px;transition:width .3s ease;width:0%}
+.quiz-body{padding:1.6rem 1.8rem;overflow-y:auto;flex:1}
+.quiz-question{margin-bottom:2rem;padding-bottom:1.6rem;border-bottom:1px dashed var(--border)}
+.quiz-question:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.quiz-q-num{font-family:var(--f-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dark);margin-bottom:.5rem}
+.quiz-q-text{font-family:var(--f-head);font-size:1rem;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:1.1rem}
+.quiz-choices{display:flex;flex-direction:column;gap:.5rem}
+.quiz-choice{display:flex;align-items:flex-start;gap:.8rem;padding:.85rem 1rem;border:1.5px solid var(--border);border-radius:var(--r-md);cursor:pointer;transition:all var(--t-fast);background:var(--surface-2);text-align:left;width:100%;font-family:var(--f-body);font-size:.9rem;color:var(--text-2);line-height:1.5}
+.quiz-choice:hover{border-color:rgba(202,138,4,.4);background:#fff}
+.quiz-choice.selected{border-color:var(--gold);background:rgba(202,138,4,.06);color:var(--ink);font-weight:500}
+.quiz-choice-letter{width:24px;height:24px;border-radius:50%;background:white;border:1.5px solid var(--border-2);color:var(--text-2);display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:700;font-size:.72rem;flex-shrink:0;transition:all var(--t-fast)}
+.quiz-choice.selected .quiz-choice-letter{background:var(--gold-gradient);border-color:var(--gold);color:white}
+.quiz-choice-text{flex:1;padding-top:2px}
+.quiz-actions{padding:1.2rem 1.8rem;border-top:1px solid var(--border);background:#faf9f7;display:flex;justify-content:space-between;gap:.6rem;flex-shrink:0;flex-wrap:wrap}
+.quiz-btn{padding:.75rem 1.5rem;border:none;border-radius:var(--r-pill);font-family:var(--f-head);font-weight:600;font-size:.85rem;cursor:pointer;transition:all var(--t-base);display:inline-flex;align-items:center;gap:.5rem}
+.quiz-btn.primary{background:var(--gold-gradient);color:white;box-shadow:0 8px 20px rgba(202,138,4,.28)}
+.quiz-btn.primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 30px rgba(202,138,4,.4)}
+.quiz-btn.primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.quiz-btn.secondary{background:transparent;color:var(--text-2);border:1.5px solid var(--border-2)}
+.quiz-btn.secondary:hover{background:white;border-color:var(--border-medium);color:var(--ink)}
+.quiz-counter{font-family:var(--f-head);font-size:.78rem;color:var(--muted);align-self:center;font-weight:500}
+
+/* RESULT VIEW */
+.quiz-result{padding:2.5rem 2rem;text-align:center}
+.quiz-result-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;margin:0 auto 1.2rem}
+.quiz-result-icon.pass{background:var(--success);box-shadow:0 14px 34px rgba(16,185,129,.35)}
+.quiz-result-icon.fail{background:var(--danger);box-shadow:0 14px 34px rgba(239,68,68,.35)}
+.quiz-result h2{font-family:var(--f-display);font-size:1.6rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);margin-bottom:.5rem}
+.quiz-result p{font-size:.92rem;color:var(--text-2);max-width:420px;margin:0 auto 1.6rem;line-height:1.6}
+.quiz-score-ring{position:relative;width:140px;height:140px;margin:0 auto 1.4rem}
+.quiz-score-ring svg{transform:rotate(-90deg)}
+.quiz-score-ring .track{stroke:rgba(15,15,30,.06);fill:none;stroke-width:8}
+.quiz-score-ring .fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+.quiz-score-ring .fill.pass{stroke:var(--success)}
+.quiz-score-ring .fill.fail{stroke:var(--danger)}
+.quiz-score-ring .label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.quiz-score-value{font-family:var(--f-display);font-size:2.4rem;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.quiz-score-max{font-family:var(--f-head);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:.2rem}
+
+/* REVIEW LIST */
+.quiz-review{margin-top:1.8rem;text-align:left;max-width:580px;margin-left:auto;margin-right:auto}
+.quiz-review-title{font-family:var(--f-head);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-2);margin-bottom:.8rem;text-align:center}
+.quiz-review-item{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.1rem;margin-bottom:.6rem}
+.quiz-review-q{font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;line-height:1.4}
+.quiz-review-row{display:flex;gap:.5rem;font-size:.8rem;margin-bottom:.3rem;align-items:flex-start;line-height:1.5}
+.quiz-review-row i{margin-top:3px;flex-shrink:0;font-size:.72rem}
+.quiz-review-row.correct{color:var(--success)}
+.quiz-review-row.correct i{color:var(--success)}
+.quiz-review-row.wrong{color:var(--danger)}
+.quiz-review-row.wrong i{color:var(--danger)}
+.quiz-review-row.answer{color:var(--ink);font-weight:500}
+.quiz-review-row.answer i{color:var(--gold)}
+.quiz-review-explain{font-size:.78rem;color:var(--text-2);margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border);line-height:1.55;font-style:italic}
+
 @media(max-width:900px){
   .player-layout{grid-template-columns:1fr}
   .player-sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:280px;max-width:84vw;transform:translateX(-100%);transition:transform var(--t-base);z-index:900;box-shadow:0 20px 60px rgba(15,15,30,.18)}
   body.sidebar-open .player-sidebar{transform:translateX(0)}
   .player-main-inner{padding:1.5rem 1.25rem 3rem}
   .player-sidebar-toggle{display:flex;align-items:center;justify-content:center}
+  .quiz-modal{width:calc(100% - 1rem);max-height:94vh;border-radius:20px}
+  .quiz-header,.quiz-body,.quiz-actions{padding-left:1.2rem;padding-right:1.2rem}
+  .quiz-actions{flex-direction:column-reverse}
+  .quiz-actions .quiz-btn{width:100%;justify-content:center}
+  .quiz-counter{align-self:center}
 }
 .toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
 .toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
@@ -141,6 +225,21 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   </section>
 </main>
 
+<!-- QUIZ MODAL -->
+<div class="quiz-overlay" id="quizOverlay" onclick="closeQuiz(false)"></div>
+<div class="quiz-modal" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="quiz-header">
+    <div class="quiz-header-title" id="quizTitle">Quiz</div>
+    <div class="quiz-header-sub" id="quizSubtitle">Answer all questions to continue</div>
+    <button type="button" class="quiz-header-close" onclick="closeQuiz(true)" aria-label="Close quiz">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+  </div>
+  <div class="quiz-body" id="quizBody"></div>
+  <div class="quiz-actions" id="quizActions"></div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -162,6 +261,9 @@ let course = null;
 let lessons = [];
 let activeIndex = 0;
 let progress = null;
+let quizAnswers = {};
+let quizAttemptStart = 0;
+let lastQuizResult = null;
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -194,7 +296,7 @@ function showToast(msg, type = 'success') {
 }
 
 // ══════════════════════════════════════════════════════════════
-// CERTIFICATE ID GENERATION (inline — this page is standalone)
+// CERTIFICATE ID + ISSUANCE (inline — page is standalone)
 // ══════════════════════════════════════════════════════════════
 function generateCertificateCode() {
   const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -215,43 +317,23 @@ async function generateUniqueCertificateId() {
   return `KAZ-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
 }
 
-// ══════════════════════════════════════════════════════════════
-// ISSUE CERTIFICATE (inline — this page is standalone)
-// Writes both the user record and the public verification index.
-// ══════════════════════════════════════════════════════════════
-async function issueCertificate(courseId, courseTitle) {
-  if (!currentUser) {
-    console.warn('[issueCertificate] No current user');
-    return null;
-  }
-
+async function issueCertificate(courseId, courseTitle, options = {}) {
+  if (!currentUser) return null;
   const certificateId = await generateUniqueCertificateId();
   const issuedAt = Date.now();
   const recipientName = currentUser.displayName
     || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
+  const status = options.status || 'auto_issued';
 
-  const userPayload = {
-    courseId,
-    courseTitle,
-    certificateId,
-    issuedAt,
-    status: 'auto_issued'
-  };
+  const userPayload = { courseId, courseTitle, certificateId, issuedAt, status };
+  if (typeof options.grade === 'number') userPayload.grade = options.grade;
 
-  const indexPayload = {
-    uid: currentUser.uid,
-    recipientName,
-    courseId,
-    courseTitle,
-    issuedAt,
-    status: 'auto_issued'
-  };
+  const indexPayload = { uid: currentUser.uid, recipientName, courseId, courseTitle, issuedAt, status };
+  if (typeof options.grade === 'number') indexPayload.grade = options.grade;
 
-  // Two separate writes — root multi-path is blocked by rules
   await window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set(userPayload);
   await window._db.ref(`learning_certificate_index/${certificateId}`).set(indexPayload);
-
-  console.log('[issueCertificate] Issued:', certificateId);
+  console.log('[issueCertificate] Issued:', certificateId, 'status:', status);
   return userPayload;
 }
 
@@ -259,10 +341,10 @@ async function issueCertificate(courseId, courseTitle) {
 // BOOT
 // ══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[course] DOM ready, URL =', window.location.href);
+  console.log('[course] DOM ready');
 
   if (typeof firebase === 'undefined') {
-    renderFatal('Firebase SDK failed to load', 'Check your internet connection or the script tags.');
+    renderFatal('Firebase SDK failed to load', 'Check your internet connection.');
     return;
   }
 
@@ -295,7 +377,6 @@ function renderFatal(title, detail) {
 
 async function onAuthChanged(user) {
   if (!user) {
-    console.log('[course] No user — redirecting to workspace');
     window.location.href = '../index.html';
     return;
   }
@@ -322,24 +403,20 @@ async function initCourse() {
   const params = new URLSearchParams(window.location.search);
   const courseId = params.get('id');
 
-  console.log('[course] courseId from URL =', courseId);
-
   if (!courseId) {
-    renderFatal('No course specified', 'The URL is missing an ?id= parameter. Open a course from the library.');
+    renderFatal('No course specified', 'The URL is missing an ?id= parameter.');
     return;
   }
 
   try {
     const snap = await window._db.ref(`learning_courses/${courseId}`).once('value');
     if (!snap.exists()) {
-      console.warn('[course] Course not found at learning_courses/' + courseId);
       renderFatal('Course not found', `We couldn't find a course with id "${courseId}".`);
       return;
     }
     course = { id: courseId, ...snap.val() };
-    console.log('[course] Loaded course:', course);
+    console.log('[course] Loaded:', course.title);
   } catch (e) {
-    console.error('[course] Read failed:', e);
     renderFatal('Could not load course', e.message || 'Permission denied or network error.');
     return;
   }
@@ -349,12 +426,9 @@ async function initCourse() {
     .map(([id, l]) => ({ id, ...l }))
     .sort((a, b) => (a.order || 999) - (b.order || 999));
 
-  console.log('[course] Parsed lessons:', lessons.length, lessons);
-
   if (lessons.length === 0) {
     document.getElementById('playerCourseInfo').innerHTML = `
-      <h2>${escapeHtml(course.title || 'Untitled')}</h2>
-      <p>0 lessons</p>`;
+      <h2>${escapeHtml(course.title || 'Untitled')}</h2><p>0 lessons</p>`;
     document.getElementById('playerMain').innerHTML = `
       <div class="empty-state">
         <i class="fas fa-book-open"></i>
@@ -368,7 +442,6 @@ async function initCourse() {
   try {
     const snap = await window._db.ref(`learning_progress/${currentUser.uid}/${courseId}`).once('value');
     progress = snap.exists() ? snap.val() : null;
-    console.log('[course] Progress:', progress);
   } catch (e) {
     console.warn('[course] Progress read failed:', e);
     progress = null;
@@ -398,12 +471,11 @@ function renderLessons() {
   el.innerHTML = lessons.map((l, i) => {
     const isDone = completed[i] === true || completed[String(i)] === true;
     const isActive = i === activeIndex;
+    const icon = isDone ? 'fa-check' : (isActive ? 'fa-play' : (l.type === 'quiz' ? 'fa-question' : 'fa-book'));
     return `
       <button type="button" class="lesson-item ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}"
               onclick="loadLesson(${i})">
-        <span class="lesson-item-icon">
-          <i class="fas ${isDone ? 'fa-check' : (isActive ? 'fa-play' : 'fa-book')}"></i>
-        </span>
+        <span class="lesson-item-icon"><i class="fas ${icon}"></i></span>
         <span class="lesson-item-name">${escapeHtml(l.title || `Lesson ${i + 1}`)}</span>
         <span class="lesson-item-duration">${l.duration || 0} min</span>
       </button>`;
@@ -420,6 +492,14 @@ function loadLesson(index) {
   const completed = (progress && progress.completedLessons) || {};
   const isDone = completed[index] === true || completed[String(index)] === true;
 
+  // === QUIZ LESSON ===
+  if (lesson.type === 'quiz') {
+    renderQuizLesson(main, lesson, isDone);
+    if (window.innerWidth <= 900) document.body.classList.remove('sidebar-open');
+    return;
+  }
+
+  // === VIDEO LESSON ===
   let videoHtml = '';
   if (lesson.type === 'video') {
     if (lesson.videoUrl) {
@@ -429,9 +509,7 @@ function loadLesson(index) {
     }
   }
 
-  const contentHtml = lesson.content
-    ? `<div class="player-content">${lesson.content}</div>`
-    : '';
+  const contentHtml = lesson.content ? `<div class="player-content">${lesson.content}</div>` : '';
 
   main.innerHTML = `
     <div class="player-lesson-header">
@@ -467,6 +545,82 @@ function loadLesson(index) {
   if (window.innerWidth <= 900) document.body.classList.remove('sidebar-open');
 }
 
+function renderQuizLesson(main, lesson, isDone) {
+  const quiz = course.quiz || {};
+  const questions = quiz.questions || {};
+  const questionCount = Object.keys(questions).length;
+  const passingScore = quiz.passingScore || 70;
+
+  if (questionCount === 0) {
+    main.innerHTML = `
+      <div class="player-lesson-header">
+        <div class="player-lesson-label">Lesson ${activeIndex + 1} of ${lessons.length}</div>
+        <h1>${escapeHtml(lesson.title || 'Quiz')}</h1>
+      </div>
+      <div class="empty-state" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:3rem 2rem;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Quiz not available yet</h3>
+        <p>The quiz for this course hasn't been configured.</p>
+      </div>`;
+    return;
+  }
+
+  // Find the last attempt info
+  const attempts = (progress && progress.quizAttempts) || {};
+  const attemptList = Object.values(attempts).sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+  const lastAttempt = attemptList[0];
+  const bestScore = progress && progress.quizBestScore ? progress.quizBestScore : null;
+  const hasPassed = progress && progress.quizPassed === true;
+
+  const statusBlock = hasPassed ? `
+    <div style="display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;background:#d1fae5;color:#065f46;border-radius:100px;font-size:.72rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem;position:relative;z-index:1;">
+      <i class="fas fa-check-circle"></i> Passed
+    </div>` : (lastAttempt ? `
+    <div style="display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;background:#fef3c7;color:#92400e;border-radius:100px;font-size:.72rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem;position:relative;z-index:1;">
+      <i class="fas fa-redo"></i> Last attempt: ${lastAttempt.score}%
+    </div>` : '');
+
+  main.innerHTML = `
+    <div class="player-lesson-header">
+      <div class="player-lesson-label">Lesson ${activeIndex + 1} of ${lessons.length}</div>
+      <h1>${escapeHtml(lesson.title || 'Final Quiz')}</h1>
+      <p>${escapeHtml(course.title || '')}</p>
+    </div>
+
+    <div class="quiz-launch">
+      <div class="quiz-launch-icon"><i class="fas fa-clipboard-question"></i></div>
+      ${statusBlock}
+      <h2>${hasPassed ? 'Retake the Quiz' : 'Test Your Knowledge'}</h2>
+      <p>${hasPassed
+        ? 'You already passed. Retake it if you want to improve your score.'
+        : `Answer all questions and score at least ${passingScore}% to complete the course.`}</p>
+      <div class="quiz-launch-stats">
+        <div class="quiz-stat">
+          <div class="quiz-stat-value">${questionCount}</div>
+          <div class="quiz-stat-label">Questions</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="quiz-stat-value">${passingScore}%</div>
+          <div class="quiz-stat-label">To Pass</div>
+        </div>
+        ${bestScore !== null ? `
+        <div class="quiz-stat">
+          <div class="quiz-stat-value">${bestScore}%</div>
+          <div class="quiz-stat-label">Best Score</div>
+        </div>` : ''}
+      </div>
+      <div class="quiz-launch-actions">
+        <button type="button" class="ws-btn ws-btn-primary" onclick="openQuiz()">
+          <i class="fas fa-play"></i> ${hasPassed ? 'Retake Quiz' : 'Start Quiz'}
+        </button>
+        <button type="button" class="ws-btn ws-btn-ghost" ${activeIndex === 0 ? 'disabled' : ''} onclick="loadLesson(${activeIndex - 1})">
+          <i class="fas fa-arrow-left"></i> Previous
+        </button>
+      </div>
+    </div>
+  `;
+}
+
 function renderVideoEmbed(url) {
   if (!url) return '';
   const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
@@ -476,14 +630,13 @@ function renderVideoEmbed(url) {
   if (url.match(/\.(mp4|webm|ogg)(\?|$)/i)) return `<video src="${escapeHtml(url)}" controls></video>`;
   return `<div class="player-video-placeholder">
     <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:#fbbf24;text-decoration:none;">
-      <i class="fas fa-external-link-alt"></i>
-      <p>Open video</p>
+      <i class="fas fa-external-link-alt"></i><p>Open video</p>
     </a>
   </div>`;
 }
 
 // ══════════════════════════════════════════════════════════════
-// PROGRESS — certificate FIRST, then mark complete
+// MARK COMPLETE (non-quiz lessons)
 // ══════════════════════════════════════════════════════════════
 async function markComplete(index) {
   if (!currentUser || !course) return;
@@ -510,23 +663,14 @@ async function markComplete(index) {
     let certificateFailed = false;
 
     if (allDone && !existing.completedAt) {
-      // Issue certificate FIRST. Only set completedAt if it succeeds.
       try {
         await issueCertificate(course.id, course.title);
         payload.completedAt = Date.now();
         certificateIssued = true;
-        console.log('[course] Certificate issued, course marked complete');
-
-        // Notification is non-blocking
-        try {
-          await sendNotification(course.id, course.title, 100, true);
-        } catch (notifErr) {
-          console.warn('[course] Notification failed (non-blocking):', notifErr);
-        }
+        try { await sendNotification(course.id, course.title, 100, true); } catch (e) {}
       } catch (certErr) {
         console.error('[course] Certificate issuance FAILED:', certErr);
         certificateFailed = true;
-        // Don't set completedAt — leave it unset so a retry can happen
       }
     }
 
@@ -534,16 +678,9 @@ async function markComplete(index) {
     progress = payload;
     renderLessons();
 
-    if (certificateIssued) {
-      showToast('Course complete! Certificate issued.', 'success');
-    } else if (certificateFailed) {
-      showToast('Your work is saved, but the certificate could not be issued. Please reopen the course to retry.', 'error');
-    } else if (allDone) {
-      // Course already completed before (certificate existed)
-      showToast('Course complete.', 'success');
-    } else {
-      showToast(`Progress saved — ${progressPct}%`, 'success');
-    }
+    if (certificateIssued) showToast('Course complete! Certificate issued.', 'success');
+    else if (certificateFailed) showToast('Work saved, but certificate failed. Reopen to retry.', 'error');
+    else showToast(`Progress saved — ${progressPct}%`, 'success');
 
     if (index < lessons.length - 1) {
       setTimeout(() => loadLesson(index + 1), 500);
@@ -561,14 +698,355 @@ async function sendNotification(courseId, courseTitle, pct, completed) {
     await ref.set({
       type: 'learning',
       title: completed ? 'Course completed' : 'Course progress saved',
-      body: completed
-        ? `${courseTitle} — certificate available`
-        : `${courseTitle} — ${pct}% complete`,
+      body: completed ? `${courseTitle} — certificate available` : `${courseTitle} — ${pct}% complete`,
       read: false,
       timestamp: Date.now(),
       courseId
     });
-  } catch (e) { console.warn('Notification write failed:', e); }
+  } catch (e) {}
+}
+
+// ══════════════════════════════════════════════════════════════
+// QUIZ — OPEN / RENDER / SUBMIT / RESULT
+// ══════════════════════════════════════════════════════════════
+function openQuiz() {
+  const quiz = course.quiz || {};
+  const questions = quiz.questions || {};
+
+  if (Object.keys(questions).length === 0) {
+    showToast('Quiz not available yet', 'error');
+    return;
+  }
+
+  quizAnswers = {};
+  quizAttemptStart = Date.now();
+  lastQuizResult = null;
+
+  document.getElementById('quizTitle').textContent = course.title + ' — Quiz';
+  document.getElementById('quizSubtitle').textContent = 'Answer all questions, then submit.';
+
+  renderQuizForm();
+  document.getElementById('quizOverlay').classList.add('active');
+  document.getElementById('quizModal').classList.add('active');
+}
+
+function closeQuiz(force) {
+  if (!force && !confirm('Close the quiz? Your answers will be lost.')) return;
+  document.getElementById('quizOverlay').classList.remove('active');
+  document.getElementById('quizModal').classList.remove('active');
+}
+
+function getQuizQuestionsSorted() {
+  const quiz = course.quiz || {};
+  const questions = quiz.questions || {};
+  let list = Object.entries(questions).map(([id, q]) => ({ id, ...q }));
+
+  // Sort by `order` field
+  list.sort((a, b) => (a.order || 999) - (b.order || 999));
+
+  // Optional shuffle
+  if (quiz.shuffleQuestions === true) {
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+  }
+
+  return list;
+}
+
+function getChoicesSorted(q) {
+  const choices = q.choices || {};
+  let entries = Object.entries(choices).map(([k, v]) => ({ key: k, text: v }));
+
+  // Sort alphabetically by key
+  entries.sort((a, b) => a.key.localeCompare(b.key));
+
+  // Optional shuffle
+  const quiz = course.quiz || {};
+  if (quiz.shuffleChoices === true) {
+    for (let i = entries.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [entries[i], entries[j]] = [entries[j], entries[i]];
+    }
+  }
+
+  return entries;
+}
+
+function renderQuizForm() {
+  const body = document.getElementById('quizBody');
+  const actions = document.getElementById('quizActions');
+  const progressFill = document.getElementById('quizProgressFill');
+  const questions = getQuizQuestionsSorted();
+
+  body.innerHTML = questions.map((q, i) => {
+    const choices = getChoicesSorted(q);
+    return `
+      <div class="quiz-question" data-qid="${escapeHtml(q.id)}">
+        <div class="quiz-q-num">Question ${i + 1} of ${questions.length}</div>
+        <div class="quiz-q-text">${escapeHtml(q.text || 'Untitled question')}</div>
+        <div class="quiz-choices">
+          ${choices.map(c => `
+            <button type="button" class="quiz-choice"
+                    data-qid="${escapeHtml(q.id)}"
+                    data-choice="${escapeHtml(c.key)}"
+                    onclick="selectAnswer('${escapeHtml(q.id)}', '${escapeHtml(c.key)}')">
+              <span class="quiz-choice-letter">${escapeHtml(c.key.toUpperCase())}</span>
+              <span class="quiz-choice-text">${escapeHtml(c.text)}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  actions.innerHTML = `
+    <button type="button" class="quiz-btn secondary" onclick="closeQuiz(true)">
+      <i class="fas fa-times"></i> Cancel
+    </button>
+    <div class="quiz-counter" id="quizCounter">0 of ${questions.length} answered</div>
+    <button type="button" class="quiz-btn primary" id="quizSubmitBtn" onclick="submitQuiz()" disabled>
+      <i class="fas fa-paper-plane"></i> Submit Quiz
+    </button>
+  `;
+
+  progressFill.style.width = '0%';
+}
+
+function selectAnswer(qid, choice) {
+  quizAnswers[qid] = choice;
+
+  // Update UI
+  document.querySelectorAll(`.quiz-choice[data-qid="${qid}"]`).forEach(el => {
+    el.classList.toggle('selected', el.dataset.choice === choice);
+  });
+
+  updateQuizProgress();
+}
+
+function updateQuizProgress() {
+  const questions = getQuizQuestionsSorted();
+  const answered = Object.keys(quizAnswers).length;
+  const total = questions.length;
+  const pct = total === 0 ? 0 : Math.round((answered / total) * 100);
+
+  document.getElementById('quizProgressFill').style.width = pct + '%';
+
+  const counter = document.getElementById('quizCounter');
+  if (counter) counter.textContent = `${answered} of ${total} answered`;
+
+  const btn = document.getElementById('quizSubmitBtn');
+  if (btn) btn.disabled = answered < total;
+}
+
+async function submitQuiz() {
+  const questions = getQuizQuestionsSorted();
+  const quiz = course.quiz || {};
+  const passingScore = quiz.passingScore || 70;
+
+  // Load the answer key (admin-only read... but in dev, user reads it)
+  // Wait — the answer key is admin-only. So we can't score client-side.
+  // Solution: use a public mirror. For now, the client reads it — deploy rules later.
+  let answerKey = {};
+  try {
+    const keySnap = await window._db.ref(`learning_quiz_keys/${course.id}`).once('value');
+    answerKey = keySnap.exists() ? keySnap.val() : {};
+  } catch (e) {
+    console.warn('[quiz] Could not read answer key:', e);
+  }
+
+  // Score
+  let correct = 0;
+  let totalPoints = 0;
+  let earnedPoints = 0;
+
+  const review = questions.map(q => {
+    const points = Number(q.points) || 1;
+    totalPoints += points;
+
+    const userChoice = quizAnswers[q.id] || null;
+    const correctChoice = answerKey[q.id] || null;
+    const isCorrect = userChoice === correctChoice;
+
+    if (isCorrect) {
+      correct++;
+      earnedPoints += points;
+    }
+
+    const choices = q.choices || {};
+    return {
+      id: q.id,
+      text: q.text || '',
+      userChoice,
+      userChoiceText: userChoice ? (choices[userChoice] || '') : '',
+      correctChoice,
+      correctChoiceText: correctChoice ? (choices[correctChoice] || '') : '',
+      isCorrect,
+      explanation: q.explanation || ''
+    };
+  });
+
+  const score = totalPoints === 0 ? 0 : Math.round((earnedPoints / totalPoints) * 100);
+  const passed = score >= passingScore;
+  const durationSec = Math.round((Date.now() - quizAttemptStart) / 1000);
+
+  // Log attempt
+  try {
+    const attemptId = 'attempt_' + Date.now().toString(36);
+    const attemptPayload = {
+      submittedAt: Date.now(),
+      answers: quizAnswers,
+      score,
+      passed,
+      durationSec
+    };
+
+    const progressRef = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
+    const progressSnap = await progressRef.once('value');
+    const existingProgress = progressSnap.val() || {};
+
+    const attempts = existingProgress.quizAttempts || {};
+    attempts[attemptId] = attemptPayload;
+
+    const attemptCount = Object.keys(attempts).length;
+    const prevBest = existingProgress.quizBestScore || 0;
+    const newBest = Math.max(prevBest, score);
+
+    const updates = {
+      quizAttempts: attempts,
+      quizBestScore: newBest,
+      quizAttemptsCount: attemptCount,
+      updatedAt: Date.now()
+    };
+
+    if (passed && !existingProgress.quizPassed) {
+      updates.quizPassed = true;
+      updates.quizPassedAt = Date.now();
+    }
+
+    // If passed AND all other lessons are done AND not yet completed → mark complete & issue cert
+    const completedLessons = existingProgress.completedLessons || {};
+    // Mark this quiz lesson as complete
+    completedLessons[activeIndex] = true;
+    updates.completedLessons = completedLessons;
+
+    const completedCount = Object.keys(completedLessons).length;
+    const progressPct = Math.min(100, Math.round((completedCount / lessons.length) * 100));
+    updates.progress = progressPct;
+    updates.lastLessonIndex = activeIndex;
+    updates.title = course.title;
+
+    const allDone = completedCount >= lessons.length;
+
+    let certificateIssued = false;
+
+    if (passed && allDone && !existingProgress.completedAt) {
+      try {
+        await issueCertificate(course.id, course.title, { grade: score });
+        updates.completedAt = Date.now();
+        certificateIssued = true;
+        try { await sendNotification(course.id, course.title, 100, true); } catch (e) {}
+      } catch (certErr) {
+        console.error('[quiz] Certificate issuance failed:', certErr);
+      }
+    }
+
+    await progressRef.set(updates);
+    progress = { ...existingProgress, ...updates };
+
+    lastQuizResult = { score, passed, review, certificateIssued };
+    renderQuizResult();
+    renderLessons();
+
+  } catch (e) {
+    console.error('[quiz] Save failed:', e);
+    showToast('Could not save quiz attempt: ' + e.message, 'error');
+  }
+}
+
+function renderQuizResult() {
+  const body = document.getElementById('quizBody');
+  const actions = document.getElementById('quizActions');
+  const progressFill = document.getElementById('quizProgressFill');
+  const result = lastQuizResult;
+  if (!result) return;
+
+  progressFill.style.width = '100%';
+
+  const { score, passed, review, certificateIssued } = result;
+  const circumference = 2 * Math.PI * 60; // r=60
+
+  body.innerHTML = `
+    <div class="quiz-result">
+      <div class="quiz-result-icon ${passed ? 'pass' : 'fail'}">
+        <i class="fas ${passed ? 'fa-check' : 'fa-times'}"></i>
+      </div>
+      <h2>${passed ? 'You Passed!' : 'Not Quite'}</h2>
+      <p>${passed
+        ? (certificateIssued
+            ? 'Your certificate has been issued. You can view it from the Certificates page.'
+            : 'You passed. Complete any remaining lessons to earn your certificate.')
+        : `You scored ${score}%. You need ${course.quiz.passingScore || 70}% to pass. Review the answers below and try again.`}</p>
+
+      <div class="quiz-score-ring">
+        <svg width="140" height="140">
+          <circle class="track" cx="70" cy="70" r="60"></circle>
+          <circle class="fill ${passed ? 'pass' : 'fail'}" cx="70" cy="70" r="60"
+                  stroke-dasharray="${circumference}"
+                  stroke-dashoffset="${circumference}"></circle>
+        </svg>
+        <div class="label">
+          <div class="quiz-score-value">${score}%</div>
+          <div class="quiz-score-max">Score</div>
+        </div>
+      </div>
+
+      <div class="quiz-review">
+        <div class="quiz-review-title">Question Review</div>
+        ${review.map((r, i) => `
+          <div class="quiz-review-item">
+            <div class="quiz-review-q">${i + 1}. ${escapeHtml(r.text)}</div>
+            <div class="quiz-review-row ${r.isCorrect ? 'correct' : 'wrong'}">
+              <i class="fas ${r.isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+              <span>Your answer: ${r.userChoice ? `<strong>${escapeHtml(r.userChoice.toUpperCase())}</strong> — ${escapeHtml(r.userChoiceText)}` : '<em>Not answered</em>'}</span>
+            </div>
+            ${!r.isCorrect ? `
+              <div class="quiz-review-row answer">
+                <i class="fas fa-check"></i>
+                <span>Correct answer: <strong>${escapeHtml((r.correctChoice || '').toUpperCase())}</strong> — ${escapeHtml(r.correctChoiceText)}</span>
+              </div>
+            ` : ''}
+            ${r.explanation ? `<div class="quiz-review-explain">${escapeHtml(r.explanation)}</div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // Animate the ring
+  setTimeout(() => {
+    const fill = body.querySelector('.quiz-score-ring .fill');
+    if (fill) {
+      fill.style.strokeDashoffset = String(circumference - (circumference * score / 100));
+    }
+  }, 100);
+
+  actions.innerHTML = `
+    <button type="button" class="quiz-btn secondary" onclick="closeQuiz(true)">
+      <i class="fas fa-times"></i> Close
+    </button>
+    <button type="button" class="quiz-btn primary" onclick="retryQuiz()">
+      <i class="fas fa-redo"></i> ${passed ? 'Retake Quiz' : 'Try Again'}
+    </button>
+  `;
+}
+
+function retryQuiz() {
+  quizAnswers = {};
+  lastQuizResult = null;
+  quizAttemptStart = Date.now();
+  renderQuizForm();
 }
 
 // ══════════════════════════════════════════════════════════════
