@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ca8a04">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Verify a KazInni Learning certificate by its ID.">
+<title>Verify Certificate — KazInni</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+:root{
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
+  --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
+  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;
+  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
+  --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
+  --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
+  --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
+  --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
+  --t-fast:.15s cubic-bezier(.2,.8,.2,1);
+  --t-base:.25s cubic-bezier(.2,.8,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:var(--f-body);
+  background:
+    radial-gradient(circle at 15% 15%, #fef3c7 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, #fde68a 0%, transparent 40%),
+    #faf9f7;
+  color:var(--ink);
+  line-height:1.6;
+  letter-spacing:-.005em;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 1rem;
+  overflow-x:hidden;
+}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
+
+.verify-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:3rem 2.5rem 2.5rem;
+  max-width:560px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(15,15,30,.08), 0 4px 12px rgba(15,15,30,.04);
+  animation:fadeUp .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.verify-brand{
+  display:flex;align-items:center;justify-content:center;
+  gap:.5rem;
+  margin-bottom:2rem;
+  font-family:var(--f-display);
+  font-weight:800;font-size:1.05rem;
+  letter-spacing:-.4px;
+}
+.verify-brand img{height:32px}
+.verify-brand .accent{
+  background:var(--gold-gradient);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.verify-brand .sub{
+  font-weight:600;opacity:.5;font-size:.85rem;
+  font-family:var(--f-head);
+}
+
+.verify-icon{
+  width:84px;height:84px;border-radius:24px;
+  margin:0 auto 1.5rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:#fff;
+  transition:all .3s cubic-bezier(.2,.8,.2,1);
+}
+.verify-icon.valid{background:var(--success);box-shadow:0 12px 30px rgba(16,185,129,.28)}
+.verify-icon.invalid{background:var(--danger);box-shadow:0 12px 30px rgba(239,68,68,.28)}
+.verify-icon.loading{background:var(--gold-gradient);animation:pulse 2s infinite}
+.verify-icon.idle{background:var(--gold-soft);color:var(--gold-dark)}
+
+.verify-title{
+  font-family:var(--f-display);
+  font-size:1.6rem;font-weight:700;
+  letter-spacing:-.025em;
+  text-align:center;margin-bottom:.5rem;
+  color:var(--ink);
+}
+.verify-subtitle{
+  color:var(--text-2);
+  font-size:.9rem;
+  text-align:center;
+  margin-bottom:2rem;
+  line-height:1.6;
+}
+
+.cert-details{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.4rem 1.4rem 1.2rem;
+  margin-bottom:1.5rem;
+  animation:fadeUp .4s cubic-bezier(.2,.8,.2,1);
+}
+
+.cert-id-display{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:#fff;
+  border:1px dashed rgba(202,138,4,.4);
+  border-radius:12px;
+  padding:.9rem 1rem;
+  font-size:1.05rem;
+  letter-spacing:2px;
+  color:var(--gold-dark);
+  font-weight:700;
+  text-align:center;
+  margin-bottom:1.2rem;
+}
+
+.cert-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:1rem;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--border);
+  font-size:.88rem;
+}
+.cert-row:last-child{border-bottom:none}
+.cert-row .label{
+  color:var(--muted);
+  font-weight:600;
+  font-family:var(--f-head);
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  flex-shrink:0;
+}
+.cert-row .value{
+  color:var(--ink);
+  font-weight:600;
+  text-align:right;
+  max-width:65%;
+  word-break:break-word;
+}
+
+.verify-status-pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.32rem .85rem;
+  border-radius:var(--r-pill);
+  font-size:.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.6px;
+  font-family:var(--f-head);
+}
+.verify-status-pill.completion{background:#dbeafe;color:#1e40af}
+.verify-status-pill.achievement{background:#fef3c7;color:#92400e}
+.verify-status-pill.verified{background:#d1fae5;color:#065f46}
+
+.search-form{
+  display:flex;gap:.5rem;
+  margin-top:1rem;
+}
+.search-form input{
+  flex:1;
+  padding:.9rem 1.1rem;
+  border:1.5px solid var(--border);
+  border-radius:var(--r-pill);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.9rem;
+  letter-spacing:1.5px;
+  background:#faf9f7;
+  text-transform:uppercase;
+  transition:all var(--t-fast);
+  min-width:0;
+}
+.search-form input:focus{
+  outline:none;
+  border-color:var(--gold);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(202,138,4,.1);
+}
+.search-form input::placeholder{
+  text-transform:none;
+  letter-spacing:.3px;
+  font-family:var(--f-body);
+  color:var(--muted);
+}
+.search-form button{
+  padding:.9rem 1.6rem;
+  border:none;
+  background:var(--ink);
+  color:#fff;
+  border-radius:var(--r-pill);
+  font-family:var(--f-head);
+  font-weight:600;
+  font-size:.88rem;
+  cursor:pointer;
+  transition:all var(--t-base);
+  white-space:nowrap;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.search-form button:hover{
+  background:var(--gold);
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(202,138,4,.3);
+}
+.search-form button:disabled{
+  opacity:.5;cursor:not-allowed;transform:none;
+  background:var(--ink);box-shadow:none;
+}
+
+.verify-footer{
+  text-align:center;
+  margin-top:2rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:.78rem;
+  color:var(--muted);
+  font-family:var(--f-head);
+}
+.verify-footer i{color:var(--gold);margin-right:.3rem}
+
+@media(max-width:560px){
+  .verify-card{padding:2rem 1.5rem}
+  .verify-title{font-size:1.35rem}
+  .cert-row{flex-direction:column;gap:.2rem;align-items:flex-start}
+  .cert-row .value{text-align:left;max-width:100%}
+  .search-form{flex-direction:column}
+  .search-form button{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="verify-card">
+
+  <div class="verify-brand">
+    <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+    <span>Kaz<span class="accent">Inni</span></span>
+    <span class="sub">Learning</span>
+  </div>
+
+  <div class="verify-icon idle" id="verifyIcon">
+    <i class="fas fa-certificate" aria-hidden="true"></i>
+  </div>
+
+  <h1 class="verify-title" id="verifyTitle">Verify a Certificate</h1>
+  <p class="verify-subtitle" id="verifySubtitle">
+    Enter the certificate ID printed on the certificate to confirm it was issued by KazInni.
+  </p>
+
+  <div id="certDetails" style="display:none;">
+    <div class="cert-id-display" id="certIdDisplay">—</div>
+    <div class="cert-details">
+      <div class="cert-row">
+        <span class="label">Recipient</span>
+        <span class="value" id="vRecipient">—</span>
+      </div>
+      <div class="cert-row">
+        <span class="label">Course</span>
+        <span class="value" id="vCourse">—</span>
+      </div>
+      <div class="cert-row">
+        <span class="label">Issued</span>
+        <span class="value" id="vIssued">—</span>
+      </div>
+      <div class="cert-row">
+        <span class="label">Level</span>
+        <span class="value" id="vLevel">—</span>
+      </div>
+    </div>
+  </div>
+
+  <form class="search-form" id="searchForm" onsubmit="handleSearch(event)">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="KAZ-2026-XXXXXX"
+      autocomplete="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      aria-label="Certificate ID">
+    <button type="submit" id="verifyBtn">
+      <i class="fas fa-magnifying-glass" aria-hidden="true"></i> Verify
+    </button>
+  </form>
+
+  <div class="verify-footer">
+    <i class="fas fa-shield-halved" aria-hidden="true"></i>
+    Certificates are issued and indexed by KazInni Learning
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+// ============================================================
+// FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+try {
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+} catch (e) { console.warn('Firebase init failed:', e); }
+
+const db = firebase.database();
+
+// ============================================================
+// HELPERS
+// ============================================================
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function getFullDate(ts) {
+  if (!ts) return '—';
+  try {
+    return new Date(ts).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  } catch (e) { return '—'; }
+}
+
+// Normalize user input: strip whitespace, uppercase
+function normalizeCertId(input) {
+  return String(input || '')
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, '');
+}
+
+// ============================================================
+// UI STATE
+// ============================================================
+function setIcon(state, iconClass) {
+  const el = document.getElementById('verifyIcon');
+  el.className = 'verify-icon ' + state;
+  el.innerHTML = `<i class="fas ${iconClass}" aria-hidden="true"></i>`;
+}
+
+function setTitle(text) {
+  document.getElementById('verifyTitle').textContent = text;
+}
+
+function setSubtitle(html) {
+  document.getElementById('verifySubtitle').innerHTML = html;
+}
+
+function hideDetails() {
+  document.getElementById('certDetails').style.display = 'none';
+}
+
+function showDetails() {
+  document.getElementById('certDetails').style.display = 'block';
+}
+
+// ============================================================
+// VERIFY
+// ============================================================
+async function verify(certId) {
+  const clean = normalizeCertId(certId);
+  if (!clean) return;
+
+  // Update the input so the URL and input stay in sync
+  document.getElementById('searchInput').value = clean;
+
+  // Reset state
+  setIcon('loading', 'fa-circle-notch fa-spin');
+  setTitle('Verifying certificate…');
+  setSubtitle(`Looking up <code style="font-family:ui-monospace,monospace;background:#fff;padding:.15rem .4rem;border-radius:4px;font-size:.8em;">${escapeHtml(clean)}</code>`);
+  hideDetails();
+
+  try {
+    const snap = await db.ref(`learning_certificate_index/${clean}`).once('value');
+
+    if (!snap.exists()) {
+      setIcon('invalid', 'fa-times');
+      setTitle('Certificate not found');
+      setSubtitle(`No certificate matches <strong>${escapeHtml(clean)}</strong>.<br>Check the ID printed on the certificate and try again.`);
+      return;
+    }
+
+    const c = snap.val();
+
+    setIcon('valid', 'fa-check');
+    setTitle('Certificate Verified');
+    setSubtitle('This certificate was issued by KazInni Learning.');
+
+    document.getElementById('certIdDisplay').textContent = clean;
+    document.getElementById('vRecipient').textContent = c.recipientName || '—';
+    document.getElementById('vCourse').textContent = c.courseTitle || '—';
+    document.getElementById('vIssued').textContent = getFullDate(c.issuedAt);
+
+    const levelMap = {
+      'auto_issued': { label: 'Completion', cls: 'completion' },
+      'quiz_passed': { label: 'Achievement', cls: 'achievement' },
+      'verified':    { label: 'Verified',    cls: 'verified' }
+    };
+    const level = levelMap[c.status] || levelMap['auto_issued'];
+
+    let levelHtml = `<span class="verify-status-pill ${level.cls}">${escapeHtml(level.label)}</span>`;
+    if (typeof c.grade === 'number') {
+      levelHtml += ` <span style="font-size:.8rem;color:var(--muted);margin-left:.4rem;">Score: ${c.grade}%</span>`;
+    }
+    document.getElementById('vLevel').innerHTML = levelHtml;
+
+    showDetails();
+  } catch (e) {
+    console.error('[verify]', e);
+    setIcon('invalid', 'fa-exclamation-triangle');
+    setTitle('Verification failed');
+    setSubtitle('Could not reach the verification service. Please try again in a moment.');
+  }
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+function handleSearch(e) {
+  e.preventDefault();
+  const id = normalizeCertId(document.getElementById('searchInput').value);
+  if (!id) return;
+
+  // Update URL so the verification is shareable
+  const newUrl = `${window.location.pathname}?id=${encodeURIComponent(id)}`;
+  history.replaceState(null, '', newUrl);
+
+  verify(id);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = normalizeCertId(params.get('id'));
+
+  if (id) {
+    document.getElementById('searchInput').value = id;
+    verify(id);
+  }
+  // else: leave the idle state visible — user types or pastes an ID
+});
+</script>
+</body>
+</html>
