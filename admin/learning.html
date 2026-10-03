@@ -27,18 +27,13 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .ws-btn-primary:hover{background:var(--gold)}
 .ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
 .ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.ws-btn-danger{background:transparent;color:var(--danger);border:1.5px solid var(--danger)}
-.ws-btn-danger:hover{background:var(--danger);color:#fff}
 .ws-btn:disabled{opacity:.5;cursor:not-allowed}
 .ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
 .ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem}
-
 .admin-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;gap:.3rem;overflow-x:auto}
 .admin-tab{padding:1rem 1.2rem;font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;transition:color var(--t-fast),border-color var(--t-fast);display:flex;align-items:center;gap:.5rem}
 .admin-tab:hover{color:var(--ink)}
 .admin-tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
-.admin-tab i{font-size:.85rem}
-
 .admin-main{flex:1;padding:2rem 2.5rem;max-width:1600px;margin:0 auto;width:100%}
 .admin-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.4rem;flex-wrap:wrap}
 .admin-toolbar-left{display:flex;align-items:center;gap:.8rem;flex:1;min-width:0}
@@ -47,7 +42,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .search-box input{width:100%;padding:.6rem 1rem .6rem 2.4rem;border:1.5px solid var(--border);border-radius:var(--r-pill);background:#fff;font-family:var(--f-body);font-size:.85rem;color:var(--ink)}
 .search-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.12)}
 .search-box i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;pointer-events:none}
-
 .admin-table{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
 .admin-row{display:grid;grid-template-columns:48px 2fr 1fr 1fr 100px 100px 90px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
 .admin-row:last-child{border-bottom:none}
@@ -58,8 +52,8 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .admin-row-sub{font-size:.72rem;color:var(--muted);margin-top:.15rem}
 .admin-badge{display:inline-block;font-family:var(--f-head);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.2rem .55rem;border-radius:var(--r-pill);white-space:nowrap}
 .admin-badge.free{background:#d1fae5;color:#065f46}
-.admin-badge.premium{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff}
-.admin-badge.published{background:#dbeafe;color:#1e40af}
+.admin-badge.paid{background:#dbeafe;color:#1e40af}
+.admin-badge.published{background:#d1fae5;color:#065f46}
 .admin-badge.draft{background:#fef3c7;color:#92400e}
 .admin-badge.learner{background:#fef3c7;color:#92400e}
 .admin-badge.pro{background:#ede9fe;color:#6d28d9}
@@ -73,12 +67,22 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .skeleton{height:220px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-
-/* Editor modal */
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.diag-panel{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;margin-bottom:1.5rem;font-family:var(--f-head)}
+.diag-panel h3{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.diag-panel h3 i{color:var(--gold)}
+.diag-item{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;padding:.5rem 0;border-bottom:1px dashed var(--border)}
+.diag-item:last-child{border-bottom:none}
+.diag-item i{font-size:.85rem;margin-top:.2rem;flex-shrink:0}
+.diag-item.ok i{color:var(--success)}
+.diag-item.warn i{color:var(--warning)}
+.diag-item.err i{color:var(--danger)}
+.diag-item strong{color:var(--ink);font-weight:600}
+.diag-item code{background:var(--surface-3);padding:.1rem .35rem;border-radius:4px;font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.diag-actions{display:flex;gap:.5rem;margin-top:1rem}
 .ws-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:var(--r-xl);padding:0;max-width:900px;width:calc(100% - 2rem);max-height:90vh;overflow-y:auto;z-index:2001;box-shadow:0 40px 80px rgba(15,15,30,.3);display:none}
-.ws-modal.active{display:block;animation:fadeUp .3s cubic-bezier(.2,.8,.2,1)}
-.ws-modal.small{max-width:460px;padding:2rem 2rem 1.8rem}
-@keyframes fadeUp{from{opacity:0;transform:translate(-50%,-46%)}to{opacity:1;transform:translate(-50%,-50%)}}
+.ws-modal.active{display:block}
 .modal-header{padding:1.5rem 1.5rem 0;display:flex;align-items:center;justify-content:space-between}
 .modal-header h3{font-family:var(--f-display);font-size:1.2rem;font-weight:700;color:var(--ink)}
 .ws-modal-close{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
@@ -90,7 +94,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .editor-field:last-child{margin-bottom:0}
 .editor-field label{display:block;font-family:var(--f-head);font-size:.72rem;font-weight:600;color:var(--text-2);margin-bottom:.4rem}
 .editor-field label .req{color:var(--danger)}
-.editor-input,.editor-textarea,.editor-select{width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--f-body);font-size:.88rem;background:var(--surface-2);color:var(--ink);transition:border-color var(--t-fast),background var(--t-fast)}
+.editor-input,.editor-textarea,.editor-select{width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--f-body);font-size:.88rem;background:var(--surface-2);color:var(--ink)}
 .editor-input:focus,.editor-textarea:focus,.editor-select:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(202,138,4,.12)}
 .editor-textarea{min-height:80px;resize:vertical;line-height:1.6}
 .editor-textarea.tall{min-height:140px}
@@ -113,14 +117,12 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .toggle-switch.on::after{transform:translateX(18px)}
 .modal-actions{display:flex;gap:.6rem;padding:1rem 1.5rem 1.5rem;justify-content:flex-end;border-top:1px solid var(--border)}
 .modal-actions .ws-btn{min-width:120px;justify-content:center}
-
 .lesson-list{display:flex;flex-direction:column;gap:.5rem}
 .lesson-row{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:.85rem 1rem;display:grid;grid-template-columns:28px 1fr auto;gap:.8rem;align-items:center}
 .lesson-row-title{font-family:var(--f-head);font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.3}
 .lesson-row-meta{font-size:.7rem;color:var(--muted);margin-top:.15rem;font-family:var(--f-head)}
 .lesson-row-actions{display:flex;gap:.3rem}
 .grip{color:var(--muted);font-size:.75rem;cursor:grab}
-
 .entitlement-row{display:grid;grid-template-columns:1fr 100px 100px 100px 80px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
 .entitlement-row:last-child{border-bottom:none}
 .entitlement-row:hover{background:var(--surface-2)}
@@ -129,25 +131,13 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .entitlement-row .toggle-mini.on{background:var(--success)}
 .entitlement-row .toggle-mini.on::after{transform:translateX(16px)}
 .entitlement-row .toggle-mini.off{background:var(--border-2)}
-
 .modal-overlay{position:fixed;inset:0;background:rgba(15,15,30,.55);backdrop-filter:blur(8px);z-index:2000;display:none}
 .modal-overlay.active{display:block}
-
 .toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
 .toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
 .toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
-
-@media(max-width:900px){
-  .admin-tabs{padding:0 1rem}
-  .admin-main{padding:1.5rem 1.25rem}
-  .admin-row{grid-template-columns:40px 1fr 80px;gap:.8rem;padding:.8rem}
-  .admin-row.header{display:none}
-  .admin-row>*:not(.admin-row-thumb):not(.admin-row-title-cell):not(.admin-row-actions){display:none}
-  .entitlement-row{grid-template-columns:1fr 60px 60px 60px 60px;padding:.7rem .9rem;font-size:.78rem}
-  .toast-container{right:12px;left:12px;align-items:stretch}
-  .toast{max-width:none}
-}
+@media(max-width:900px){.admin-tabs{padding:0 1rem}.admin-main{padding:1.5rem 1.25rem}.admin-row{grid-template-columns:40px 1fr 80px;gap:.8rem;padding:.8rem}.admin-row.header{display:none}.admin-row>*:not(.admin-row-thumb):not(.admin-row-title-cell):not(.admin-row-actions){display:none}.entitlement-row{grid-template-columns:1fr 60px 60px 60px 60px;padding:.7rem .9rem;font-size:.78rem}.toast-container{right:12px;left:12px;align-items:stretch}.toast{max-width:none}}
 </style>
 </head>
 <body>
@@ -182,11 +172,20 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 </nav>
 
 <main id="main" class="admin-main">
-  <div id="tab-courses"></div>
+  <div id="tab-courses">
+    <div class="diag-panel" id="diagPanel">
+      <h3><i class="fas fa-circle-notch fa-spin"></i> Loading admin console…</h3>
+      <div id="diagBody">
+        <div class="diag-item">
+          <i class="fas fa-circle-notch fa-spin"></i>
+          <div>Initializing Firebase and checking your access…</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="tab-entitlements" style="display:none;"></div>
 </main>
 
-<!-- Course editor modal -->
 <div class="modal-overlay" id="courseModalOverlay" onclick="closeCourseEditor()"></div>
 <div class="ws-modal" id="courseModal" role="dialog" aria-modal="true">
   <div class="modal-header">
@@ -248,7 +247,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
           <div class="toggle-row">
             <div class="toggle-label">
               <strong>Free course</strong>
-              <span>Available to all users</span>
+              <span>Available to all signed-in users</span>
             </div>
             <button type="button" class="toggle-switch" id="toggleFree" onclick="toggleField('free')"></button>
           </div>
@@ -283,7 +282,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   </div>
 </div>
 
-<!-- Lesson editor modal -->
 <div class="modal-overlay" id="lessonModalOverlay" onclick="closeLessonEditor()"></div>
 <div class="ws-modal" id="lessonModal" role="dialog" aria-modal="true" style="max-width:720px;">
   <div class="modal-header">
@@ -321,7 +319,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     <div class="toggle-row" style="border-top:1px solid var(--border);margin-top:.8rem;padding-top:.8rem;">
       <div class="toggle-label">
         <strong>Free preview</strong>
-        <span>Available even without premium</span>
+        <span>Available even in paid courses</span>
       </div>
       <button type="button" class="toggle-switch" id="toggleLessonFree" onclick="toggleLessonFree()"></button>
     </div>
@@ -337,42 +335,273 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="../js/learning-core.js"></script>
 <script>
 'use strict';
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
+// CONFIG — same Firebase project as the rest of KazInni
+// ══════════════════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+// ══════════════════════════════════════════════════════════════
 // STATE
-// ============================================================
+// ══════════════════════════════════════════════════════════════
+let currentUser = null;
+let currentPerms = {};
+let currentEntitlements = {};
+let isAdminUser = false;
 let allCourses = [];
 let editingCourseId = null;
 let courseDraft = null;
 let activeLessonId = null;
 let activeLessonFree = false;
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function slugify(s) {
+  return String(s || '').toLowerCase().trim()
+    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+    .replace(/-+/g, '-').slice(0, 60);
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function lighten(hex, percent) {
+  const num = parseInt(hex.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.min(255, (num >> 16) + amt);
+  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+  const B = Math.min(255, (num & 0x0000FF) + amt);
+  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+}
+
+function showToast(msg, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span></span>`;
+  toast.querySelector('span').textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}
+
+const LEARNING_CATEGORIES = [
+  { id: 'communication', label: 'Communication' },
+  { id: 'finance', label: 'Finance' },
+  { id: 'career', label: 'Career' },
+  { id: 'tech', label: 'Tech' },
+  { id: 'business', label: 'Business' },
+  { id: 'wellness', label: 'Wellness' }
+];
+const LEARNING_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
+const LEARNING_ICONS = [
+  'fa-comments','fa-shield-halved','fa-briefcase','fa-coins','fa-pen-fancy','fa-clock',
+  'fa-chart-line','fa-lightbulb','fa-handshake','fa-mobile-screen','fa-users','fa-rocket',
+  'fa-graduation-cap','fa-book','fa-code','fa-palette','fa-heart-pulse','fa-utensils',
+  'fa-truck-fast','fa-store'
+];
+const LEARNING_COLORS = [
+  '#10b981','#0891b2','#f59e0b','#7c3aed','#ec4899',
+  '#3b82f6','#ef4444','#ca8a04','#059669','#6366f1'
+];
+
+// ══════════════════════════════════════════════════════════════
+// DIAGNOSTIC RENDERER
+// ══════════════════════════════════════════════════════════════
+function diag(html) {
+  const el = document.getElementById('diagBody');
+  if (el) el.innerHTML = html;
+}
+function diagItem(status, label, detail) {
+  const iconClass = status === 'ok' ? 'fa-check-circle'
+    : status === 'warn' ? 'fa-exclamation-triangle'
+    : status === 'err' ? 'fa-times-circle'
+    : 'fa-circle-notch fa-spin';
+  return `<div class="diag-item ${status}">
+    <i class="fas ${iconClass}"></i>
+    <div><strong>${escapeHtml(label)}</strong>${detail ? `<br>${detail}` : ''}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
 // BOOT
-// ============================================================
-document.addEventListener('learning:ready', async () => {
-  if (!isAdmin) {
-    // Enforce admin-only at the UI level; rules enforce it server-side
-    document.getElementById('main').innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-lock"></i>
-        <h3>Admin access required</h3>
-        <p>You do not have permission to manage courses.</p>
-        <a href="../index.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">Back to workspace</a>
-      </div>`;
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  diag('<h3><i class="fas fa-circle-notch fa-spin"></i> Booting…</h3>' + diagItem('pending', 'Starting Firebase…'));
+
+  if (typeof firebase === 'undefined') {
+    diag(`<h3><i class="fas fa-times-circle" style="color:var(--danger)"></i> Firebase SDK failed to load</h3>
+      ${diagItem('err', 'Firebase SDK', 'Check your internet connection or the script tags at the bottom of the page.')}`);
     return;
   }
 
-  allCourses = await loadAllCourses();
-  renderCoursesTab();
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  } catch (e) {
+    diag(`<h3><i class="fas fa-times-circle" style="color:var(--danger)"></i> Firebase init error</h3>
+      ${diagItem('err', 'Initialization failed', `<code>${escapeHtml(e.message)}</code>`)}`);
+    return;
+  }
+
+  const auth = firebase.auth();
+  const db = firebase.database();
+  window._auth = auth;
+  window._db = db;
+
+  auth.onAuthStateChanged(handleAuthStateChanged);
 });
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
+// AUTH STATE
+// ══════════════════════════════════════════════════════════════
+async function handleAuthStateChanged(user) {
+  if (!user) {
+    diag(`<h3><i class="fas fa-times-circle" style="color:var(--danger)"></i> Not signed in</h3>
+      ${diagItem('err', 'No active session', 'You are not signed in. Please sign in on the main KazInni page first.')}
+      <div class="diag-actions">
+        <a href="../index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-left"></i> Back to sign-in</a>
+      </div>`);
+    return;
+  }
+
+  currentUser = user;
+
+  diag(
+    diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+    diagItem('pending', 'Reading admin status…')
+  );
+
+  // Read admin status
+  let adminReadError = null;
+  try {
+    const snap = await window._db.ref(`admins/${user.uid}`).once('value');
+    isAdminUser = snap.val() === true;
+  } catch (e) {
+    adminReadError = e;
+    isAdminUser = false;
+  }
+
+  if (adminReadError) {
+    diag(
+      diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+      diagItem('err', 'Could not read admin status', `<code>${escapeHtml(adminReadError.message)}</code>`) +
+      diagItem('warn', 'Likely cause', 'Your <code>admins/{uid}</code> rule blocks read, or the path <code>admins/' + escapeHtml(user.uid) + '</code> doesn\'t exist.') +
+      `<div class="diag-actions">
+        <button class="ws-btn ws-btn-primary" onclick="location.reload()"><i class="fas fa-redo"></i> Retry</button>
+      </div>`
+    );
+    return;
+  }
+
+  if (!isAdminUser) {
+    diag(
+      diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+      diagItem('warn', 'Not an admin', `Your UID <code>${escapeHtml(user.uid)}</code> is not set to <code>true</code> under <code>admins/</code>. Contact a super-admin to grant access.`) +
+      `<div class="diag-actions">
+        <a href="../index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-left"></i> Back to workspace</a>
+      </div>`
+    );
+    return;
+  }
+
+  renderAccountChip(user);
+
+  diag(
+    diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+    diagItem('ok', 'Admin access confirmed') +
+    diagItem('pending', 'Loading workspace permissions…')
+  );
+
+  // Read workspacePermissions (informational, not required for admins)
+  try {
+    const snap = await window._db.ref(`workspacePermissions/${user.uid}`).once('value');
+    currentPerms = snap.exists() ? (snap.val() || {}) : {};
+  } catch (e) { currentPerms = {}; }
+
+  // Read learning_entitlements (informational)
+  try {
+    const snap = await window._db.ref(`learning_entitlements/${user.uid}`).once('value');
+    currentEntitlements = snap.exists() ? (snap.val() || {}) : {};
+  } catch (e) { currentEntitlements = {}; }
+
+  diag(
+    diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+    diagItem('ok', 'Admin access confirmed') +
+    diagItem('ok', 'Permissions loaded', `${Object.keys(currentPerms).length} workspace permissions`) +
+    diagItem('pending', 'Loading courses…')
+  );
+
+  // Load courses
+  let coursesError = null;
+  try {
+    const snap = await window._db.ref('learning_courses').once('value');
+    const val = snap.val() || {};
+    allCourses = Object.entries(val)
+      .map(([id, c]) => ({ id, ...c }))
+      .sort((a, b) => (a.order || 999) - (b.order || 999));
+  } catch (e) {
+    coursesError = e;
+    allCourses = [];
+  }
+
+  if (coursesError) {
+    diag(
+      diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
+      diagItem('ok', 'Admin access confirmed') +
+      diagItem('err', 'Could not read learning_courses', `<code>${escapeHtml(coursesError.message)}</code>`) +
+      diagItem('warn', 'Likely cause', 'Rules for <code>learning_courses</code> are not published, or the read rule is too strict.') +
+      diagItem('info', 'Fix', 'Publish the Learning rules patch: <code>learning_courses: { ".read": "auth != null" }</code>') +
+      `<div class="diag-actions">
+        <button class="ws-btn ws-btn-primary" onclick="location.reload()"><i class="fas fa-redo"></i> Retry</button>
+      </div>`
+    );
+    return;
+  }
+
+  // Success — clear diagnostic, render the real page
+  const diagEl = document.getElementById('diagPanel');
+  if (diagEl) diagEl.style.display = 'none';
+  renderCoursesTab();
+}
+
+function renderAccountChip(user) {
+  const el = document.getElementById('headerAccount');
+  if (!el) return;
+  const name = user.displayName || user.email.split('@')[0] || 'User';
+  el.innerHTML = `
+    <a href="../index.html" class="ws-account-chip" title="Back to workspace">
+      <div class="ws-avatar">${escapeHtml(getInitials(name))}</div>
+      <span>${escapeHtml(name)}</span>
+    </a>`;
+}
+
+// ══════════════════════════════════════════════════════════════
 // TABS
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 function switchTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   document.getElementById('tab-courses').style.display = tab === 'courses' ? '' : 'none';
@@ -380,9 +609,9 @@ function switchTab(tab) {
   if (tab === 'entitlements') renderEntitlementsTab();
 }
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 // COURSES TAB
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 function renderCoursesTab() {
   const el = document.getElementById('tab-courses');
   el.innerHTML = `
@@ -444,8 +673,8 @@ function renderCourseTable(list) {
       const color = c.color || '#ca8a04';
       const icon = c.icon || 'fa-graduation-cap';
       const lessonCount = c.lessons ? Object.keys(c.lessons).length : 0;
-      const badgeClass = c.free ? 'free' : 'premium';
-      const badgeText = c.free ? 'Free' : 'Premium';
+      const accessClass = c.free ? 'free' : 'paid';
+      const accessText = c.free ? 'Free' : 'Paid';
       const statusClass = c.published ? 'published' : 'draft';
       const statusText = c.published ? 'Published' : 'Draft';
       return `
@@ -459,7 +688,7 @@ function renderCourseTable(list) {
           </div>
           <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.category || '—')}</div>
           <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.level || '—')}</div>
-          <div><span class="admin-badge ${badgeClass}">${badgeText}</span></div>
+          <div><span class="admin-badge ${accessClass}">${accessText}</span></div>
           <div><span class="admin-badge ${statusClass}">${statusText}</span></div>
           <div class="admin-row-actions">
             <button type="button" class="admin-icon-btn" onclick="openCourseEditor('${escapeHtml(c.id)}')" title="Edit">
@@ -484,13 +713,13 @@ function confirmDelete(courseId, title) {
     })
     .catch((e) => {
       console.error(e);
-      showToast('Could not delete course', 'error');
+      showToast('Could not delete course: ' + e.message, 'error');
     });
 }
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 // COURSE EDITOR
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 function openCourseEditor(courseId) {
   editingCourseId = courseId;
 
@@ -528,25 +757,22 @@ function closeCourseEditor() {
 }
 
 function buildCategorySelect() {
-  const el = document.getElementById('fCategory');
-  el.innerHTML = LEARNING_CATEGORIES.filter(c => c.id !== 'all')
+  document.getElementById('fCategory').innerHTML = LEARNING_CATEGORIES
     .map(c => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.label)}</option>`).join('');
 }
 function buildLevelSelect() {
-  const el = document.getElementById('fLevel');
-  el.innerHTML = LEARNING_LEVELS.map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('');
+  document.getElementById('fLevel').innerHTML = LEARNING_LEVELS
+    .map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('');
 }
 function buildIconPicker() {
-  const el = document.getElementById('iconPicker');
-  el.innerHTML = LEARNING_ICONS.map(ic => `
+  document.getElementById('iconPicker').innerHTML = LEARNING_ICONS.map(ic => `
     <button type="button" class="icon-choice ${ic === courseDraft.icon ? 'active' : ''}"
             onclick="pickIcon('${escapeHtml(ic)}')" aria-label="${escapeHtml(ic)}">
       <i class="fas ${escapeHtml(ic)}"></i>
     </button>`).join('');
 }
 function buildColorPicker() {
-  const el = document.getElementById('colorPicker');
-  el.innerHTML = LEARNING_COLORS.map(c => `
+  document.getElementById('colorPicker').innerHTML = LEARNING_COLORS.map(c => `
     <button type="button" class="color-choice ${c === courseDraft.color ? 'active' : ''}"
             style="background:${escapeHtml(c)}" onclick="pickColor('${escapeHtml(c)}')" aria-label="${escapeHtml(c)}"></button>`).join('');
 }
@@ -589,9 +815,6 @@ function toggleField(field) {
     .classList.toggle('on', courseDraft[field]);
 }
 
-// ============================================================
-// LESSONS
-// ============================================================
 function renderLessonList() {
   const el = document.getElementById('lessonList');
   const lessons = Object.entries(courseDraft.lessons || {})
@@ -639,7 +862,6 @@ function openLessonEditor(lessonId) {
   document.getElementById('lContent').value = existing ? (existing.content || '') : '';
   activeLessonFree = existing ? (existing.free === true) : false;
   document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
-
   document.getElementById('lessonModal').classList.add('active');
   document.getElementById('lessonModalOverlay').classList.add('active');
   setTimeout(() => document.getElementById('lTitle').focus(), 50);
@@ -666,8 +888,7 @@ function saveLesson() {
   const order = existing ? existing.order : Object.keys(lessons).length + 1;
 
   lessons[id] = {
-    order,
-    title,
+    order, title,
     type: document.getElementById('lType').value,
     duration: Number(document.getElementById('lDuration').value) || 0,
     videoUrl: document.getElementById('lVideoUrl').value.trim(),
@@ -677,7 +898,6 @@ function saveLesson() {
   };
   courseDraft.lessons = lessons;
 
-  // Auto-sum duration if not manually set
   if (!courseDraft.duration) {
     courseDraft.duration = Object.values(lessons).reduce((s, l) => s + (l.duration || 0), 0);
     document.getElementById('fDuration').value = courseDraft.duration;
@@ -697,9 +917,6 @@ function deleteLesson(lessonId) {
   showToast('Lesson removed', 'info');
 }
 
-// ============================================================
-// SAVE COURSE
-// ============================================================
 async function saveCourse() {
   const btn = document.getElementById('saveCourseBtn');
   btn.disabled = true;
@@ -723,17 +940,14 @@ async function saveCourse() {
       authorName: existing ? existing.authorName : (currentUser ? (currentUser.displayName || currentUser.email) : ''),
       createdAt: existing ? existing.createdAt : now,
       updatedAt: now,
-      version: (existing && existing.version ? existing.version : 0) + 1
+      version: ((existing && existing.version) ? existing.version : 0) + 1
     };
-
-    // First-time publish sets publishedAt
-    if (payload.published && !existing?.publishedAt) {
+    if (payload.published && !(existing && existing.publishedAt)) {
       payload.publishedAt = now;
     }
 
     await window._db.ref(`learning_courses/${courseId}`).set(payload);
 
-    // Update local cache
     const idx = allCourses.findIndex(c => c.id === courseId);
     const merged = { id: courseId, ...payload };
     if (idx >= 0) allCourses[idx] = merged;
@@ -751,9 +965,9 @@ async function saveCourse() {
   }
 }
 
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 // ENTITLEMENTS TAB
-// ============================================================
+// ══════════════════════════════════════════════════════════════
 async function renderEntitlementsTab() {
   const el = document.getElementById('tab-entitlements');
   el.innerHTML = `
@@ -767,29 +981,37 @@ async function renderEntitlementsTab() {
     </div>
     <div class="admin-table" id="entTable">
       <div class="empty-state" style="padding:3rem 1rem;">
-        <i class="fas fa-circle-notch fa-spin" style="opacity:1;color:var(--gold);"></i>
+        <div class="spinner"></div>
         <p>Loading users…</p>
       </div>
     </div>
   `;
 
-  // Load all users (rules allow admins to read `users`)
   let users = [];
+  let readError = null;
   try {
     const snap = await window._db.ref('users').once('value');
     const val = snap.val() || {};
     users = Object.entries(val).map(([uid, u]) => ({ uid, ...u }));
   } catch (e) {
-    console.error(e);
+    readError = e;
+  }
+
+  if (readError) {
     document.getElementById('entTable').innerHTML = `
       <div class="empty-state">
         <i class="fas fa-exclamation-triangle"></i>
         <h3>Could not load users</h3>
+        <p style="margin-top:.6rem;font-size:.8rem;color:var(--muted);">
+          <code>${escapeHtml(readError.message)}</code>
+        </p>
+        <p style="margin-top:.6rem;font-size:.8rem;color:var(--muted);">
+          Your <code>users</code> rule probably doesn't allow admin read of the whole node.
+        </p>
       </div>`;
     return;
   }
 
-  // Load entitlements
   let entitlements = {};
   try {
     const snap = await window._db.ref('learning_entitlements').once('value');
@@ -880,7 +1102,6 @@ async function toggleEntitlement(uid, key, current) {
     };
     updates[key] = !current;
 
-    // Auto-set planId based on highest tier granted
     if (key === 'mentorship' && !current) updates.planId = 'pro';
     else if (key === 'advancedCourses' && !current) updates.planId = 'pro';
     else if (key === 'learning' && !current) updates.planId = 'learner';
@@ -888,26 +1109,16 @@ async function toggleEntitlement(uid, key, current) {
 
     await ref.update(updates);
     showToast('Entitlement updated', 'success');
-
-    // Re-render
     renderEntitlementsTab();
   } catch (e) {
     console.error(e);
-    showToast('Could not update entitlement', 'error');
+    showToast('Could not update entitlement: ' + e.message, 'error');
   }
 }
 
-// Utility to lighten a hex (matches client code)
-function lighten(hex, percent) {
-  const num = parseInt(hex.replace('#', ''), 16);
-  const amt = Math.round(2.55 * percent);
-  const R = Math.min(255, (num >> 16) + amt);
-  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
-  const B = Math.min(255, (num & 0x0000FF) + amt);
-  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
-}
-
-// Escape to close modals
+// ══════════════════════════════════════════════════════════════
+// GLOBAL HANDLERS
+// ══════════════════════════════════════════════════════════════
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeCourseEditor();
