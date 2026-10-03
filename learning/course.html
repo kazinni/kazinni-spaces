@@ -13,22 +13,24 @@
 :root{
   --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
   --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
-  --premium-gradient:linear-gradient(135deg,#8b5cf6 0%,#a78bfa 100%);
-  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;
+  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;
   --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
   --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
   --header-h:60px;
   --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
   --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
   --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
-  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-pill:100px;
-  --t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
+  --t-fast:.15s cubic-bezier(.2,.8,.2,1);
+  --t-base:.25s cubic-bezier(.2,.8,.2,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased}
-body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* HEADER */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none}
@@ -37,14 +39,18 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .ws-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
 .ws-btn{padding:.6rem 1.2rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.84rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-head);white-space:nowrap}
-.ws-btn-primary{background:var(--ink);color:#fff}
-.ws-btn-primary:hover{background:var(--gold);transform:translateY(-1px)}
+.ws-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,.18);position:relative;overflow:hidden}
+.ws-btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold-gradient);opacity:0;transition:opacity var(--t-base)}
+.ws-btn-primary>*{position:relative;z-index:1}
+.ws-btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(202,138,4,.3)}
+.ws-btn-primary:hover::before{opacity:1}
 .ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
 .ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.ws-btn:disabled{opacity:.5;cursor:not-allowed}
+.ws-btn:disabled{opacity:.45;cursor:not-allowed}
 .ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
 .ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem}
 
+/* LAYOUT */
 .player-layout{display:grid;grid-template-columns:320px 1fr;flex:1;min-height:calc(100vh - var(--header-h))}
 .player-sidebar{background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:1.5rem 1rem}
 .player-course-info{margin-bottom:1.5rem;padding:0 .5rem}
@@ -54,7 +60,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .lesson-item{display:flex;align-items:center;gap:.7rem;padding:.7rem .8rem;border-radius:var(--r-sm);color:var(--text-2);text-decoration:none;font-family:var(--f-head);font-size:.83rem;font-weight:500;transition:background var(--t-fast),color var(--t-fast);cursor:pointer;background:none;border:none;width:100%;text-align:left}
 .lesson-item:hover{background:var(--surface-2);color:var(--ink)}
 .lesson-item.active{background:rgba(202,138,4,.1);color:var(--gold-dark);font-weight:600}
-.lesson-item.locked{opacity:.5;cursor:not-allowed}
 .lesson-item-icon{width:26px;height:26px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);flex-shrink:0}
 .lesson-item.completed .lesson-item-icon{background:#d1fae5;color:#065f46}
 .lesson-item.active .lesson-item-icon{background:var(--gold-gradient);color:#fff}
@@ -81,11 +86,19 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .player-content code{background:var(--surface-3);padding:.15rem .4rem;border-radius:4px;font-size:.85em}
 .player-content blockquote{border-left:3px solid var(--gold);padding-left:1rem;margin:1rem 0;color:var(--muted);font-style:italic}
 .player-actions{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:space-between;padding-top:1rem;border-top:1px dashed var(--border)}
-.player-actions-right{display:flex;gap:.7rem}
+.player-actions-right{display:flex;gap:.7rem;flex-wrap:wrap}
 .player-sidebar-toggle{display:none;position:fixed;bottom:1.2rem;right:1.2rem;width:52px;height:52px;border-radius:50%;background:var(--gold-gradient);color:#fff;border:none;cursor:pointer;box-shadow:0 12px 30px rgba(202,138,4,.4);font-size:1.1rem;z-index:950}
 .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
 .empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.empty-state p{font-size:.85rem;margin-bottom:.8rem}
+
+/* Diagnostic banner */
+.diag-banner{background:#fff7ed;border:1px solid #fed7aa;border-radius:var(--r-md);padding:1rem 1.2rem;margin-bottom:1.5rem;font-family:var(--f-head);font-size:.82rem}
+.diag-banner strong{color:#9a3412;display:block;margin-bottom:.4rem;font-weight:700}
+.diag-banner code{background:#fff;padding:.1rem .35rem;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;color:#7c2d12}
+.diag-banner pre{background:#fff;padding:.6rem;border-radius:6px;font-size:.72rem;overflow-x:auto;margin-top:.5rem;color:#7c2d12;border:1px solid #fed7aa}
+
 @media(max-width:900px){
   .player-layout{grid-template-columns:1fr}
   .player-sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:280px;max-width:84vw;transform:translateX(-100%);transition:transform var(--t-base);z-index:900;box-shadow:0 20px 60px rgba(15,15,30,.18)}
@@ -94,7 +107,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   .player-sidebar-toggle{display:flex;align-items:center;justify-content:center}
 }
 .toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;box-shadow:0 20px 40px rgba(15,15,30,.22);display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .35s,transform .35s}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
 .toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
 </style>
@@ -112,7 +125,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     </a>
     <div class="ws-header-right">
       <a href="index.html" class="ws-btn ws-btn-ghost">
-        <i class="fas fa-arrow-left"></i> <span>Library</span>
+        <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Library</span>
       </a>
       <div id="headerAccount"></div>
     </div>
@@ -125,88 +138,220 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     <nav class="player-lessons" id="playerLessons"></nav>
   </aside>
   <section class="player-main">
-    <div class="player-main-inner" id="playerMain"></div>
+    <div class="player-main-inner" id="playerMain">
+      <div class="empty-state">
+        <i class="fas fa-circle-notch fa-spin" style="opacity:1;color:var(--gold);"></i>
+        <p>Loading course…</p>
+      </div>
+    </div>
   </section>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="../js/learning-core.js"></script>
 <script>
 'use strict';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentUser = null;
 let course = null;
 let lessons = [];
 let activeIndex = 0;
 let progress = null;
 
-document.addEventListener('learning:ready', async () => {
+// ══════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
+}
+
+// ══════════════════════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('[course] DOM ready, URL =', window.location.href);
+
+  if (typeof firebase === 'undefined') {
+    renderFatal('Firebase SDK failed to load', 'Check your internet connection or the script tags.');
+    return;
+  }
+
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  } catch (e) {
+    renderFatal('Firebase init failed', e.message);
+    return;
+  }
+
+  const auth = firebase.auth();
+  const db = firebase.database();
+  window._auth = auth;
+  window._db = db;
+
+  auth.onAuthStateChanged(onAuthChanged);
+});
+
+function renderFatal(title, detail) {
+  document.getElementById('playerMain').innerHTML = `
+    <div class="empty-state">
+      <i class="fas fa-exclamation-triangle" style="color:var(--danger);opacity:1;"></i>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(detail)}</p>
+      <a href="index.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">
+        <i class="fas fa-arrow-left"></i> Back to library
+      </a>
+    </div>`;
+}
+
+async function onAuthChanged(user) {
+  if (!user) {
+    console.log('[course] No user — redirecting to workspace');
+    window.location.href = '../index.html';
+    return;
+  }
+  currentUser = user;
+  renderAccountChip(user);
+  await initCourse();
+}
+
+function renderAccountChip(user) {
+  const el = document.getElementById('headerAccount');
+  if (!el) return;
+  const name = user.displayName || user.email.split('@')[0] || 'User';
+  el.innerHTML = `
+    <a href="../index.html" class="ws-account-chip" title="Back to workspace">
+      <div class="ws-avatar">${escapeHtml(getInitials(name))}</div>
+      <span>${escapeHtml(name)}</span>
+    </a>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// COURSE INIT
+// ══════════════════════════════════════════════════════════════
+async function initCourse() {
   const params = new URLSearchParams(window.location.search);
   const courseId = params.get('id');
-  if (!courseId) { window.location.href = 'index.html'; return; }
 
-  course = await loadCourse(courseId);
-  if (!course) {
+  console.log('[course] courseId from URL =', courseId);
+
+  if (!courseId) {
+    renderFatal('No course specified', 'The URL is missing an ?id= parameter. Open a course from the library.');
+    return;
+  }
+
+  // Load the course
+  try {
+    const snap = await window._db.ref(`learning_courses/${courseId}`).once('value');
+    if (!snap.exists()) {
+      console.warn('[course] Course not found at learning_courses/' + courseId);
+      renderFatal('Course not found', `We couldn't find a course with id "${courseId}".`);
+      return;
+    }
+    course = { id: courseId, ...snap.val() };
+    console.log('[course] Loaded course:', course);
+  } catch (e) {
+    console.error('[course] Read failed:', e);
+    renderFatal('Could not load course', e.message || 'Permission denied or network error.');
+    return;
+  }
+
+  // Extract lessons
+  const lessonsRaw = course.lessons || {};
+  lessons = Object.entries(lessonsRaw)
+    .map(([id, l]) => ({ id, ...l }))
+    .sort((a, b) => (a.order || 999) - (b.order || 999));
+
+  console.log('[course] Parsed lessons:', lessons.length, lessons);
+
+  if (lessons.length === 0) {
+    document.getElementById('playerCourseInfo').innerHTML = `
+      <h2>${escapeHtml(course.title || 'Untitled')}</h2>
+      <p>0 lessons</p>`;
     document.getElementById('playerMain').innerHTML = `
       <div class="empty-state">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h3>Course not found</h3>
-        <p>The course you're looking for doesn't exist or was removed.</p>
+        <i class="fas fa-book-open"></i>
+        <h3>No lessons yet</h3>
+        <p>This course doesn't have any published lessons.</p>
         <a href="index.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">Back to library</a>
       </div>`;
     return;
   }
 
-  if (!course.free && !isLearningUnlocked()) {
-    window.location.href = 'index.html';
-    showToast('That course is Premium', 'premium');
-    return;
+  // Load progress
+  try {
+    const snap = await window._db.ref(`learning_progress/${currentUser.uid}/${courseId}`).once('value');
+    progress = snap.exists() ? snap.val() : null;
+    console.log('[course] Progress:', progress);
+  } catch (e) {
+    console.warn('[course] Progress read failed:', e);
+    progress = null;
   }
 
-  lessons = Object.entries(course.lessons || {})
-    .map(([id, l]) => ({ id, ...l }))
-    .sort((a, b) => (a.order || 999) - (b.order || 999));
-
-  if (lessons.length === 0) {
-    document.getElementById('playerMain').innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-book-open"></i>
-        <h3>No lessons yet</h3>
-        <p>This course doesn't have any lessons published.</p>
-      </div>`;
-    return;
-  }
-
-  progress = await getCourseProgress(courseId);
-
+  // Render sidebar header
   document.getElementById('playerCourseInfo').innerHTML = `
     <h2>${escapeHtml(course.title || 'Untitled')}</h2>
     <p>${lessons.length} lesson${lessons.length === 1 ? '' : 's'} · ${course.duration || 0} min</p>`;
 
-  const startIndex = progress && typeof progress.lastLessonIndex === 'number'
+  // Determine start lesson
+  const startIndex = (progress && typeof progress.lastLessonIndex === 'number' && progress.lastLessonIndex < lessons.length)
     ? progress.lastLessonIndex
     : 0;
+
   renderLessons();
   loadLesson(startIndex);
   addMobileSidebarToggle();
-});
+}
 
+// ══════════════════════════════════════════════════════════════
+// LESSON RENDERING
+// ══════════════════════════════════════════════════════════════
 function renderLessons() {
   const el = document.getElementById('playerLessons');
+  if (!el) return;
   const completed = (progress && progress.completedLessons) || {};
-  const unlocked = isLearningUnlocked();
 
   el.innerHTML = lessons.map((l, i) => {
-    const isDone = completed[i] === true;
+    const isDone = completed[i] === true || completed[String(i)] === true;
     const isActive = i === activeIndex;
-    const isLocked = !course.free && !l.free && !unlocked;
     return `
-      <button type="button" class="lesson-item ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''} ${isLocked ? 'locked' : ''}"
-              ${isLocked ? 'disabled' : ''}
-              onclick="${isLocked ? '' : `loadLesson(${i})`}">
+      <button type="button" class="lesson-item ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}"
+              onclick="loadLesson(${i})">
         <span class="lesson-item-icon">
-          <i class="fas ${isDone ? 'fa-check' : (isActive ? 'fa-play' : (isLocked ? 'fa-lock' : 'fa-book'))}"></i>
+          <i class="fas ${isDone ? 'fa-check' : (isActive ? 'fa-play' : 'fa-book')}"></i>
         </span>
         <span class="lesson-item-name">${escapeHtml(l.title || `Lesson ${i + 1}`)}</span>
         <span class="lesson-item-duration">${l.duration || 0} min</span>
@@ -221,32 +366,23 @@ function loadLesson(index) {
 
   const lesson = lessons[index];
   const main = document.getElementById('playerMain');
-  const unlocked = isLearningUnlocked();
-  const isLocked = !course.free && !lesson.free && !unlocked;
+  const completed = (progress && progress.completedLessons) || {};
+  const isDone = completed[index] === true || completed[String(index)] === true;
 
-  if (isLocked) {
-    main.innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-lock"></i>
-        <h3>This lesson is Premium</h3>
-        <p>Upgrade to unlock all lessons in this course.</p>
-        <a href="pricing.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">See plans</a>
-      </div>`;
-    return;
+  // Build video HTML
+  let videoHtml = '';
+  if (lesson.type === 'video') {
+    if (lesson.videoUrl) {
+      videoHtml = `<div class="player-video">${renderVideoEmbed(lesson.videoUrl)}</div>`;
+    } else {
+      videoHtml = `<div class="player-video"><div class="player-video-placeholder"><i class="fas fa-play-circle"></i><p>Video coming soon</p></div></div>`;
+    }
   }
 
-  const videoHtml = lesson.type === 'video' && lesson.videoUrl
-    ? renderVideoEmbed(lesson.videoUrl)
-    : (lesson.type === 'video'
-        ? `<div class="player-video-placeholder"><i class="fas fa-play-circle"></i><p>Video coming soon</p></div>`
-        : '');
-
-  const contentHtml = lesson.type === 'text' && lesson.content
+  // Build text content HTML
+  const contentHtml = lesson.content
     ? `<div class="player-content">${lesson.content}</div>`
     : '';
-
-  const completed = (progress && progress.completedLessons) || {};
-  const isDone = completed[index] === true;
 
   main.innerHTML = `
     <div class="player-lesson-header">
@@ -254,8 +390,13 @@ function loadLesson(index) {
       <h1>${escapeHtml(lesson.title || `Lesson ${index + 1}`)}</h1>
       <p>${escapeHtml(course.title || '')}</p>
     </div>
-    ${videoHtml ? `<div class="player-video">${videoHtml}</div>` : ''}
+    ${videoHtml}
     ${contentHtml}
+    ${(!videoHtml && !contentHtml) ? `
+      <div class="empty-state" style="padding:2rem 1rem;background:#fff;border-radius:16px;border:1px solid var(--border);margin-bottom:1.6rem;">
+        <i class="fas fa-file-lines" style="opacity:.4;color:var(--muted);"></i>
+        <p>This lesson doesn't have content yet.</p>
+      </div>` : ''}
     <div class="player-actions">
       <button type="button" class="ws-btn ws-btn-ghost" ${index === 0 ? 'disabled' : ''}
               onclick="loadLesson(${index - 1})">
@@ -278,15 +419,12 @@ function loadLesson(index) {
 }
 
 function renderVideoEmbed(url) {
-  // YouTube
+  if (!url) return '';
   const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
   if (yt) return `<iframe src="https://www.youtube.com/embed/${yt[1]}" allowfullscreen></iframe>`;
-  // Vimeo
   const vm = url.match(/vimeo\.com\/(\d+)/);
   if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}" allowfullscreen></iframe>`;
-  // Direct video
   if (url.match(/\.(mp4|webm|ogg)(\?|$)/i)) return `<video src="${escapeHtml(url)}" controls></video>`;
-  // Fallback — external link
   return `<div class="player-video-placeholder">
     <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:#fbbf24;text-decoration:none;">
       <i class="fas fa-external-link-alt"></i>
@@ -295,30 +433,92 @@ function renderVideoEmbed(url) {
   </div>`;
 }
 
+// ══════════════════════════════════════════════════════════════
+// PROGRESS
+// ══════════════════════════════════════════════════════════════
 async function markComplete(index) {
   if (!currentUser || !course) return;
   try {
-    const result = await saveCourseProgress(course.id, course.title, index, lessons.length);
-    progress = result;
-    renderLessons();
+    const ref = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
+    const snap = await ref.once('value');
+    const existing = snap.val() || {};
+    const completedLessons = existing.completedLessons || {};
+    completedLessons[index] = true;
 
-    if (result.completedAt) {
-      showToast('Course complete! Certificate issued.', 'success');
-    } else {
-      showToast(`Progress saved — ${result.progress}%`, 'success');
+    const completedCount = Object.keys(completedLessons).length;
+    const progressPct = Math.min(100, Math.round((completedCount / lessons.length) * 100));
+    const allDone = completedCount >= lessons.length;
+
+    const payload = {
+      title: course.title,
+      completedLessons,
+      lastLessonIndex: index,
+      progress: progressPct,
+      updatedAt: Date.now()
+    };
+
+    if (allDone && !existing.completedAt) {
+      payload.completedAt = Date.now();
+      await issueCertificate(course.id, course.title);
+      await sendNotification(course.id, course.title, progressPct, true);
+    } else if (!allDone) {
+      await sendNotification(course.id, course.title, progressPct, false);
     }
 
-    // Auto-advance
-    if (index < lessons.length - 1 && !(progress.completedLessons || {})[index + 1]) {
+    await ref.set(payload);
+    progress = payload;
+    renderLessons();
+
+    if (allDone) {
+      showToast('Course complete! Certificate issued.', 'success');
+    } else {
+      showToast(`Progress saved — ${progressPct}%`, 'success');
+    }
+
+    if (index < lessons.length - 1) {
       setTimeout(() => loadLesson(index + 1), 500);
     }
   } catch (e) {
-    console.error(e);
-    showToast('Could not save progress. Try again.', 'error');
+    console.error('[markComplete]', e);
+    showToast('Could not save progress: ' + e.message, 'error');
   }
 }
 
+async function issueCertificate(courseId, courseTitle) {
+  if (!currentUser) return;
+  const certId = `${currentUser.uid}_${courseId}_${Date.now()}`;
+  try {
+    await window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set({
+      courseId,
+      courseTitle,
+      certificateId: certId,
+      issuedAt: Date.now()
+    });
+  } catch (e) { console.warn('Cert issue failed:', e); }
+}
+
+async function sendNotification(courseId, courseTitle, pct, completed) {
+  if (!currentUser) return;
+  try {
+    const ref = window._db.ref(`kazinni_notifications/${currentUser.uid}`).push();
+    await ref.set({
+      type: 'learning',
+      title: completed ? 'Course completed' : 'Course progress saved',
+      body: completed
+        ? `${courseTitle} — certificate available`
+        : `${courseTitle} — ${pct}% complete`,
+      read: false,
+      timestamp: Date.now(),
+      courseId
+    });
+  } catch (e) { console.warn('Notification write failed:', e); }
+}
+
+// ══════════════════════════════════════════════════════════════
+// MOBILE SIDEBAR
+// ══════════════════════════════════════════════════════════════
 function addMobileSidebarToggle() {
+  if (document.querySelector('.player-sidebar-toggle')) return;
   const btn = document.createElement('button');
   btn.className = 'player-sidebar-toggle';
   btn.setAttribute('aria-label', 'Toggle lessons');
