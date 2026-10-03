@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<meta name="description" content="KazInni Workspace — one account, every app. FlexiKazi, Kasikazi, Learning and the entire KazInni ecosystem in a single workspace.">
-<title>KazInni Workspace</title>
+<meta name="description" content="KazInni Suite — one account, every workspace.">
+<title>KazInni Suite</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -364,12 +364,8 @@ body.rail-collapsed .rail-label { opacity: 0; height: 0; padding: 0; }
   background: var(--gold-soft); color: var(--gold-dark);
   font-family: var(--font-heading);
 }
-.rail-item .rail-lock {
-  font-size: 0.68rem; color: var(--gold);
-}
 body.rail-collapsed .rail-item .rail-item-name,
-body.rail-collapsed .rail-item .rail-count,
-body.rail-collapsed .rail-item .rail-lock { display: none; }
+body.rail-collapsed .rail-item .rail-count { display: none; }
 body.rail-collapsed .rail-item { justify-content: center; padding: 0.7rem 0; }
 body.rail-collapsed .rail-item i { font-size: 1rem; }
 
@@ -384,6 +380,7 @@ body.rail-collapsed .rail-item i { font-size: 1rem; }
   white-space: nowrap;
 }
 .rail-sub-item:hover { background: var(--surface-3); color: var(--ink); }
+.rail-sub-item i { font-size: 0.75rem; color: var(--text-muted); }
 .rail-sub-dot {
   width: 8px; height: 8px; border-radius: 3px;
   flex-shrink: 0;
@@ -405,7 +402,7 @@ body.mode-workspace .ws-content { padding: 1.75rem 2rem; }
 body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 
 /* ============================================================
-   HERO
+   HERO (landing)
    ============================================================ */
 .hero {
   position: relative;
@@ -560,15 +557,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-size: 0.76rem; color: var(--gold-dark);
   margin-top: auto;
 }
-.preview-badge {
-  position: absolute; top: 1rem; right: 1rem;
-  font-size: 0.6rem; font-weight: 700;
-  font-family: var(--font-heading); text-transform: uppercase;
-  letter-spacing: 0.5px; padding: 0.18rem 0.5rem;
-  border-radius: var(--radius-pill);
-  background: var(--gold-soft); color: var(--gold-dark);
-}
-.preview-badge.premium { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; }
 
 /* Why grid */
 .why-grid {
@@ -592,7 +580,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .why-item p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 
-/* Learning section */
+/* Learning section on landing */
 .learning-hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -622,16 +610,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .learning-feature i {
   color: var(--gold); font-size: 0.9rem;
   margin-top: 0.25rem; flex-shrink: 0;
-}
-.learning-feature .premium-tag {
-  display: inline-block;
-  font-size: 0.6rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.1rem 0.4rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
-  border-radius: var(--radius-pill);
-  margin-left: 0.4rem;
-  font-family: var(--font-heading);
 }
 .learning-cta { display: flex; gap: 0.7rem; flex-wrap: wrap; }
 .learning-visual {
@@ -809,7 +787,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .ws-section-action:hover { color: var(--gold); }
 
-/* Completed task tiles — non-financial */
+/* Completed task tiles */
 .completed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -850,7 +828,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .completed-tile-status.review { background: #dbeafe; color: #1e40af; }
 .completed-tile-status.revision { background: #fef3c7; color: #92400e; }
-
 .completed-tile-title {
   font-family: var(--font-heading);
   font-size: 0.92rem; font-weight: 600;
@@ -886,7 +863,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: inline-flex; align-items: center; gap: 0.3rem;
 }
 
-/* Generic app tiles */
+/* App tiles */
 .ws-app-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -924,7 +901,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 
-/* Learning dashboard card */
+/* Learning dashboard card (no premium wording, no lock) */
 .learning-dash {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
   border: 1px solid rgba(202,138,4,0.2);
@@ -944,14 +921,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   box-shadow: 0 20px 48px rgba(202,138,4,0.15);
   border-color: rgba(202,138,4,0.35);
 }
-.learning-dash.locked {
-  background: linear-gradient(135deg, #f8f7f5 0%, #f4f3f1 100%);
-  border-color: var(--border-light);
-}
-.learning-dash.locked:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-medium);
-}
 .learning-dash-icon {
   width: 48px; height: 48px; border-radius: 14px;
   background: var(--gold-gradient);
@@ -960,10 +929,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-size: 1.15rem;
   flex-shrink: 0;
   box-shadow: 0 10px 24px rgba(202,138,4,0.25);
-}
-.learning-dash.locked .learning-dash-icon {
-  background: linear-gradient(135deg, #9ca3af, #6b7280);
-  box-shadow: none;
 }
 .learning-dash-body { min-width: 0; }
 .learning-dash-title {
@@ -1001,21 +966,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   background: var(--gold-gradient); color: white;
   border-color: transparent;
 }
-.learning-dash.locked .learning-dash-cta {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: white; border-color: transparent;
-}
-.learning-dash-premium-tag {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  font-family: var(--font-heading);
-  font-size: 0.6rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.15rem 0.5rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: white;
-  border-radius: var(--radius-pill);
-  margin-left: 0.5rem;
-}
 
 /* Recent activity feed */
 .ws-feed {
@@ -1042,7 +992,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ws-feed-icon.gold { background: var(--gold-gradient); }
 .ws-feed-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .ws-feed-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
-.ws-feed-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .ws-feed-body { flex: 1; min-width: 0; }
 .ws-feed-title {
   font-family: var(--font-heading);
@@ -1149,16 +1098,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   letter-spacing: -0.01em; line-height: 1.2;
 }
 .lp-app-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.4; }
-.lp-app-badge {
-  position: absolute; top: 0.65rem; right: 0.65rem;
-  font-size: 0.56rem; font-weight: 700; font-family: var(--font-heading);
-  text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.16rem 0.45rem; border-radius: var(--radius-pill);
-  background: var(--gold-soft); color: var(--gold-dark);
-}
-.lp-app-badge.premium {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
-}
 .lp-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-heading); }
 .lp-empty i { display: block; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.6rem; }
 .lp-footer {
@@ -1193,7 +1132,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .notif-icon.gold { background: var(--gold-gradient); }
 .notif-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .notif-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
-.notif-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .notif-body-text { flex: 1; min-width: 0; }
 .notif-title-text {
   font-family: var(--font-heading); font-weight: 600;
@@ -1253,7 +1191,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ws-modal-icon.gold { background: var(--gold-gradient); box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
 .ws-modal-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .ws-modal-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
-.ws-modal-icon.premium { background: linear-gradient(135deg, #8b5cf6, #a78bfa); box-shadow: 0 12px 30px rgba(139,92,246,0.28); }
 .ws-modal-header { text-align: center; margin-bottom: 1.4rem; }
 .ws-modal-header h3 {
   font-family: var(--font-display);
@@ -1297,11 +1234,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   box-shadow: 0 8px 20px rgba(202,138,4,0.28);
 }
 .ws-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
-.ws-modal-btn.premium {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white;
-  box-shadow: 0 8px 20px rgba(139,92,246,0.28);
-}
-.ws-modal-btn.premium:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(139,92,246,0.38); }
 .ws-modal-btn.secondary {
   background: transparent;
   color: var(--text-secondary);
@@ -1396,15 +1328,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .ud-item.danger { color: var(--danger); }
 .ud-item.danger i { color: var(--danger); }
 .ud-item.danger:hover { background: #fef2f2; }
-.ud-item .ud-premium-tag {
-  margin-left: auto;
-  font-size: 0.56rem; font-weight: 700;
-  font-family: var(--font-heading);
-  text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.12rem 0.45rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white;
-  border-radius: var(--radius-pill);
-}
 .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
 .ud-section-label {
   font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
@@ -1435,7 +1358,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 .toast.success i { color: #34d399; }
 .toast.error i { color: #f87171; }
 .toast.info i { color: #fbbf24; }
-.toast.premium i { color: #a78bfa; }
 .toast.leaving { opacity: 0; transform: translateX(24px); }
 
 /* ============================================================
@@ -1444,8 +1366,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 @media (max-width: 1100px) {
   body.mode-workspace .ws-shell { grid-template-columns: var(--rail-w-collapsed) 1fr; }
   body.mode-workspace .rail-item .rail-item-name,
-  body.mode-workspace .rail-item .rail-count,
-  body.mode-workspace .rail-item .rail-lock { display: none; }
+  body.mode-workspace .rail-item .rail-count { display: none; }
   body.mode-workspace .rail-item { justify-content: center; padding: 0.7rem 0; }
   body.mode-workspace .rail-item i { font-size: 1rem; }
   body.mode-workspace .rail-sub { display: none; }
@@ -1478,8 +1399,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   body.mode-workspace.rail-open .ws-rail { transform: translateX(0); }
   body.mode-workspace.rail-collapsed .ws-rail { display: flex; }
   body.mode-workspace .rail-item .rail-item-name,
-  body.mode-workspace .rail-item .rail-count,
-  body.mode-workspace .rail-item .rail-lock { display: block; }
+  body.mode-workspace .rail-item .rail-count { display: block; }
   body.mode-workspace .rail-item { justify-content: flex-start; padding: 0.6rem 0.85rem; }
   body.mode-workspace .rail-sub { display: flex; }
   body.mode-workspace .rail-label { opacity: 1; height: auto; padding: 0.55rem 0.85rem 0.35rem; }
@@ -1519,16 +1439,13 @@ body.rail-open .rail-backdrop { display: block; }
 
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="false"></div>
 
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
 <header class="ws-header">
   <div class="ws-header-inner">
     <button type="button" class="ws-rail-toggle" id="railToggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleRail()">
       <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
 
-    <a href="index.html" class="ws-logo" aria-label="KazInni Workspace home">
+    <a href="index.html" class="ws-logo" aria-label="KazInni Suite home">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
       <span class="ws-logo-text">Kaz<span class="accent">Inni</span></span>
     </a>
@@ -1564,9 +1481,6 @@ body.rail-open .rail-backdrop { display: block; }
 
 <div class="rail-backdrop" id="railBackdrop" onclick="closeRail()" aria-hidden="true"></div>
 
-<!-- ============================================================
-     SHELL
-     ============================================================ -->
 <div class="ws-shell">
 
   <aside class="ws-rail" id="wsRail" aria-label="Workspace navigation">
@@ -1597,7 +1511,6 @@ body.rail-open .rail-backdrop { display: block; }
       <button type="button" class="rail-item" onclick="navigateTo('learning')" data-nav="learning" id="railLearning">
         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
         <span class="rail-item-name">Learning</span>
-        <span class="rail-lock" id="railLearningLock" aria-hidden="true" style="display:none;"><i class="fas fa-lock"></i></span>
       </button>
       <button type="button" class="rail-item" onclick="navigateTo('wallet')" data-nav="wallet">
         <i class="fas fa-wallet" aria-hidden="true"></i>
@@ -1619,9 +1532,7 @@ body.rail-open .rail-backdrop { display: block; }
   </main>
 </div>
 
-<!-- ============================================================
-     LAUNCHER PANEL
-     ============================================================ -->
+<!-- LAUNCHER PANEL -->
 <div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="KazInni apps">
   <div class="lp-header">
     <div class="lp-title">KazInni apps</div>
@@ -1639,9 +1550,7 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- ============================================================
-     NOTIFICATIONS PANEL
-     ============================================================ -->
+<!-- NOTIFICATIONS PANEL -->
 <div class="notif-panel" id="notifPanel" role="dialog" aria-modal="false" aria-label="Notifications">
   <div class="notif-header">
     <div class="notif-title">Notifications</div>
@@ -1655,9 +1564,7 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- ============================================================
-     NOTIFICATION DETAIL MODAL
-     ============================================================ -->
+<!-- NOTIFICATION DETAIL MODAL -->
 <div class="modal-overlay" id="notifModalOverlay" onclick="closeNotifModal()"></div>
 <div class="ws-modal" id="notifModal" role="dialog" aria-modal="true" aria-labelledby="notifModalTitle" aria-hidden="true">
   <button type="button" class="ws-modal-close" onclick="closeNotifModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
@@ -1676,9 +1583,7 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- ============================================================
-     AUTH MODAL
-     ============================================================ -->
+<!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModalOverlay" onclick="closeAuthModal()"></div>
 <div class="ws-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="max-width: 420px;">
   <button type="button" class="ws-modal-close" onclick="closeAuthModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
@@ -1707,36 +1612,6 @@ body.rail-open .rail-backdrop { display: block; }
   </p>
 </div>
 
-<!-- ============================================================
-     UPGRADE MODAL (Premium)
-     ============================================================ -->
-<div class="modal-overlay" id="upgradeModalOverlay" onclick="closeUpgradeModal()"></div>
-<div class="ws-modal" id="upgradeModal" role="dialog" aria-modal="true" aria-labelledby="upgradeModalTitle" aria-hidden="true" style="max-width: 460px;">
-  <button type="button" class="ws-modal-close" onclick="closeUpgradeModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
-  <div class="ws-modal-icon premium"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
-  <div class="ws-modal-header">
-    <h3 id="upgradeModalTitle">Unlock KazInni Learning</h3>
-    <p>Full course library, certificates and mentorship</p>
-  </div>
-  <div class="ws-modal-body">
-    <strong style="display:block;color:var(--ink);margin-bottom:0.6rem;font-family:var(--font-heading);">What's included</strong>
-    ✦ Full course library — practical, Kenya-focused lessons<br>
-    ✦ Downloadable certificates on completion<br>
-    ✦ Progress tracking &amp; streaks<br>
-    ✦ 1:1 mentor sessions (Pro tier)<br>
-    ✦ Portfolio reviews (Pro tier)
-  </div>
-  <div class="ws-modal-actions">
-    <button type="button" class="ws-modal-btn secondary" onclick="closeUpgradeModal()">Not now</button>
-    <a href="pricing.html" class="ws-modal-btn premium">
-      <i class="fas fa-crown" aria-hidden="true"></i> See plans
-    </a>
-  </div>
-</div>
-
-<!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js" defer></script>
@@ -1753,6 +1628,8 @@ const firebaseConfig = {
   projectId: "mugera-e51cc"
 };
 
+// App registry — only apps with a real link live here.
+// Learning has no lock icon and no premium badge.
 const APPS = {
   'flexikazi': {
     name: 'FlexiKazi',
@@ -1760,7 +1637,6 @@ const APPS = {
     icon: 'fa-list-check',
     color: '#059669',
     link: 'apps/flexikazi/',
-    badge: 'Active',
     permission: 'ekazi',
     alwaysVisible: true
   },
@@ -1770,7 +1646,6 @@ const APPS = {
     icon: 'fa-bullhorn',
     color: '#0891b2',
     link: 'apps/kasikazi/',
-    badge: 'New',
     permission: 'kasikazi',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
@@ -1781,7 +1656,6 @@ const APPS = {
     icon: 'fa-wallet',
     color: '#7c3aed',
     link: 'wallet.html',
-    badge: '',
     permission: null,
     alwaysVisible: false,
     signedInOnly: true
@@ -1791,13 +1665,10 @@ const APPS = {
     desc: 'Practical courses, certificates and mentorship for the Kenyan gig economy.',
     icon: 'fa-graduation-cap',
     color: '#f59e0b',
-    link: 'learning.html',
-    badge: 'Premium',
-    badgeClass: 'premium',
-    permission: null,
+    link: 'learning/index.html',
+    permission: 'learning',
     alwaysVisible: false,
-    signedInOnly: true,
-    premium: true
+    signedInOnly: true
   }
 };
 
@@ -1831,7 +1702,7 @@ let lastFocusedBeforeModal = null;
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
   if (!container) return;
-  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle', premium: 'fa-crown' };
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
@@ -1905,8 +1776,10 @@ function getInitials(name) {
 
 function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 
-function hasEntitlement(key) {
-  return currentEntitlements && currentEntitlements[key] === true;
+// Learning is treated like any other workspace permission.
+// No premium semantics here — the Learning app itself decides what a user sees.
+function hasLearningAccess() {
+  return currentPerms && currentPerms.learning === true;
 }
 
 // ============================================================
@@ -1937,11 +1810,10 @@ function setupKeyboardHandlers() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLauncher(); closeUserDropdown(); closeNotifications();
-      closeNotifModal(); closeAuthModal(); closeUpgradeModal(); closeRail();
+      closeNotifModal(); closeAuthModal(); closeRail();
     }
     if (e.key === 'Tab') trapFocusInModals(e);
   });
-  // Launcher footer link keyboard support
   document.addEventListener('keydown', (e) => {
     const link = document.getElementById('launcherFooterLink');
     if (link && document.activeElement === link && (e.key === 'Enter' || e.key === ' ')) {
@@ -1964,16 +1836,14 @@ function trapFocusInModals(e) {
 }
 
 function setupSearch() {
-  document.addEventListener('DOMContentLoaded', () => {
-    const search = document.getElementById('wsSearch');
-    if (search) {
-      search.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && search.value.trim()) {
-          showToast(`Search for "${search.value.trim()}" — coming soon`, 'info');
-        }
-      });
-    }
-  });
+  const search = document.getElementById('wsSearch');
+  if (search) {
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && search.value.trim()) {
+        showToast(`Search for "${search.value.trim()}" — coming soon`, 'info');
+      }
+    });
+  }
 }
 
 // ============================================================
@@ -2022,47 +1892,42 @@ async function handleAuthStateChanged(user) {
     switchMode('landing');
     renderLanding();
     renderRailApps();
-    updateRailLearning();
     renderNotifications();
     loadPublicStats();
     return;
   }
 
+  // Verify the account exists in `users/{uid}` (works for every signed-in user)
   try {
-    const snap = await db.ref(`taskers/${user.uid}`).once('value');
-    if (!snap.exists()) {
-      await auth.signOut();
-      showToast('This account is not registered on KazInni.', 'error');
-      return;
-    }
-    const tasker = snap.val() || {};
-    if (tasker.verified !== true && tasker.status !== 'verified') {
-      await auth.signOut();
-      showToast('Your KazInni account is pending verification.', 'error');
-      return;
-    }
-    currentTasker = tasker;
-  } catch (e) {
-    try { await auth.signOut(); } catch (_) {}
-    showToast('Could not verify your KazInni account.', 'error');
-    return;
-  }
+    await db.ref(`users/${user.uid}`).once('value');
+  } catch (e) { console.warn('users read failed:', e); }
 
+  // Load permissions — the single source of truth for what this user can access
   try {
     const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
     currentPerms = permSnap.exists() ? (permSnap.val() || {}) : {};
   } catch (e) { currentPerms = {}; }
 
+  // Load learning entitlements (parallel to workspacePermissions)
   try {
-    const entSnap = await db.ref(`entitlements/${user.uid}`).once('value');
+    const entSnap = await db.ref(`learning_entitlements/${user.uid}`).once('value');
     currentEntitlements = entSnap.exists() ? (entSnap.val() || {}) : {};
   } catch (e) { currentEntitlements = {}; }
+
+  // Optionally load tasker profile — but ONLY if the user actually has eKazi access
+  if (currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref(`taskers/${user.uid}`).once('value');
+      currentTasker = snap.exists() ? snap.val() : null;
+    } catch (e) { currentTasker = null; }
+  } else {
+    currentTasker = null;
+  }
 
   currentUser = user;
   switchMode('workspace');
   renderWorkspace();
   renderRailApps();
-  updateRailLearning();
   attachNotifListeners();
   loadWorkspaceData();
 }
@@ -2090,13 +1955,6 @@ function toggleRail() {
 
 function closeRail() { document.body.classList.remove('rail-open'); }
 
-function updateRailLearning() {
-  const lock = document.getElementById('railLearningLock');
-  if (!lock) return;
-  const unlocked = currentUser && (hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship'));
-  lock.style.display = unlocked ? 'none' : '';
-}
-
 // ============================================================
 // ACCOUNT BUTTON
 // ============================================================
@@ -2113,10 +1971,11 @@ function renderAccountButton() {
     return;
   }
 
-  const displayName = (currentTasker && currentTasker.name) || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
+  const displayName = (currentTasker && currentTasker.name)
+    || (currentUser.displayName)
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
   const initials = getInitials(displayName);
   const email = currentUser.email || '';
-  const learningUnlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
 
   container.innerHTML = `
     <div class="ws-account-wrap" id="wsAccountWrap">
@@ -2142,9 +2001,8 @@ function renderAccountButton() {
           <div class="ud-section-label">Workspace</div>
           <a href="apps/flexikazi/" class="ud-item" role="menuitem"><i class="fas fa-list-check" aria-hidden="true"></i> FlexiKazi</a>
           <a href="apps/kasikazi/" class="ud-item" role="menuitem"><i class="fas fa-bullhorn" aria-hidden="true"></i> Kasikazi</a>
-          <a href="learning.html" class="ud-item" role="menuitem">
+          <a href="learning/index.html" class="ud-item" role="menuitem">
             <i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning
-            ${!learningUnlocked ? '<span class="ud-premium-tag">Premium</span>' : ''}
           </a>
           <div class="ud-divider"></div>
           <button type="button" class="ud-item danger" onclick="handleSignOut()" role="menuitem">
@@ -2204,7 +2062,7 @@ function renderLanding() {
         <h1 id="heroTitle">Welcome to <span class="accent">KazInni</span></h1>
         <p class="hero-lede">
           One login. Every workspace. Run your day from a single account across
-          FlexiKazi, Kasikazi, Learning and the entire KazInni ecosystem.
+          every KazInni workspace.
         </p>
         <div class="hero-cta">
           <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
@@ -2276,23 +2134,20 @@ function renderLanding() {
             <div class="learning-features">
               <div class="learning-feature">
                 <i class="fas fa-book-open" aria-hidden="true"></i>
-                <div>Free preview lessons on every track</div>
+                <div>Short, focused lessons you can finish in one sitting</div>
               </div>
               <div class="learning-feature">
                 <i class="fas fa-certificate" aria-hidden="true"></i>
-                <div>Full course library &amp; certificates<span class="premium-tag">Premium</span></div>
+                <div>Certificates issued when you complete a course</div>
               </div>
               <div class="learning-feature">
                 <i class="fas fa-users" aria-hidden="true"></i>
-                <div>1:1 mentor sessions &amp; portfolio reviews<span class="premium-tag">Premium</span></div>
+                <div>1:1 mentor sessions &amp; portfolio reviews</div>
               </div>
             </div>
             <div class="learning-cta">
-              <a href="learning.html" class="ws-btn ws-btn-primary">
-                <i class="fas fa-play" aria-hidden="true"></i> <span>Browse free previews</span>
-              </a>
-              <a href="pricing.html" class="ws-btn ws-btn-ghost">
-                <i class="fas fa-crown" aria-hidden="true"></i> <span>See plans</span>
+              <a href="learning/index.html" class="ws-btn ws-btn-primary">
+                <i class="fas fa-play" aria-hidden="true"></i> <span>Browse library</span>
               </a>
             </div>
           </div>
@@ -2369,7 +2224,7 @@ function renderLanding() {
 
     <footer class="landing-footer">
       <div class="landing-footer-inner">
-        <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Workspace</div>
+        <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Suite</div>
         <nav class="landing-footer-links" aria-label="Footer navigation">
           <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
@@ -2393,23 +2248,18 @@ function renderPreviewGrid() {
 
   grid.innerHTML = apps.map(app => {
     let target, cta;
-    if (app.premium) {
-      target = "openUpgradeModal()";
-      cta = 'Premium';
-    } else if (app.signedInOnly) {
+    if (app.signedInOnly) {
       target = "openAuthModal()";
       cta = 'Sign in to open';
     } else {
       target = "openLauncher(event)";
       cta = 'Preview';
     }
-    const badgeClass = app.badgeClass ? ` ${app.badgeClass}` : '';
     return `
       <div class="preview-card" role="button" tabindex="0"
            onclick="${target}"
            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${target}}"
            aria-label="${escapeHtml(app.name)} — ${escapeHtml(cta)}">
-        ${app.badge ? `<span class="preview-badge${badgeClass}">${escapeHtml(app.badge)}</span>` : ''}
         <div class="preview-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
           <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
@@ -2431,7 +2281,10 @@ function renderWorkspace() {
   const content = document.getElementById('wsContent');
   if (!content || !currentUser) return;
 
-  const displayName = (currentTasker && currentTasker.name) || currentUser.email.split('@')[0] || 'there';
+  const displayName = (currentTasker && currentTasker.name)
+    || (currentUser.displayName)
+    || currentUser.email.split('@')[0]
+    || 'there';
   const firstName = displayName.split(/[\s._-]/)[0];
   const capitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
@@ -2460,7 +2313,7 @@ function renderWorkspace() {
         <h2 class="ws-section-title" id="learningTitle">
           <i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning
         </h2>
-        <a href="learning.html" class="ws-section-action">Browse library →</a>
+        <a href="learning/index.html" class="ws-section-action">Browse library →</a>
       </div>
       <div id="learningDash"></div>
     </section>
@@ -2555,36 +2408,19 @@ function renderLearningDash() {
   const container = document.getElementById('learningDash');
   if (!container) return;
 
-  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
-
-  if (unlocked) {
-    container.innerHTML = `
-      <a href="learning.html" class="learning-dash">
-        <div class="learning-dash-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
-        <div class="learning-dash-body">
-          <div class="learning-dash-title">Continue where you left off</div>
-          <div class="learning-dash-desc">Client Communication 101 · 62% complete</div>
-          <div class="learning-dash-progress"><span style="width:62%;"></span></div>
-        </div>
-        <span class="learning-dash-cta">
-          <i class="fas fa-play" aria-hidden="true"></i> Continue
-        </span>
-      </a>
-    `;
-  } else {
-    container.innerHTML = `
-      <button type="button" class="learning-dash locked" onclick="openUpgradeModal()" style="text-align:left;">
-        <div class="learning-dash-icon"><i class="fas fa-lock" aria-hidden="true"></i></div>
-        <div class="learning-dash-body">
-          <div class="learning-dash-title">Unlock the full learning library<span class="learning-dash-premium-tag">Premium</span></div>
-          <div class="learning-dash-desc">Certificates, mentor sessions, and portfolio reviews</div>
-        </div>
-        <span class="learning-dash-cta">
-          <i class="fas fa-crown" aria-hidden="true"></i> Upgrade
-        </span>
-      </button>
-    `;
-  }
+  // No premium wording, no lock. Everyone sees the same tile.
+  container.innerHTML = `
+    <a href="learning/index.html" class="learning-dash">
+      <div class="learning-dash-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+      <div class="learning-dash-body">
+        <div class="learning-dash-title">Explore the KazInni Learning library</div>
+        <div class="learning-dash-desc">Courses, certificates and mentorship — pick a track and start.</div>
+      </div>
+      <span class="learning-dash-cta">
+        <i class="fas fa-arrow-right" aria-hidden="true"></i> Open
+      </span>
+    </a>
+  `;
 }
 
 // ============================================================
@@ -2602,100 +2438,104 @@ async function loadWorkspaceData() {
   const completed = [];
 
   // FlexiKazi
-  try {
-    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
-    const tasks = snap.val() || {};
-    const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t, _source: 'FlexiKazi' }));
+  if (currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
+      const tasks = snap.val() || {};
+      const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
 
-    list.forEach(t => {
-      const s = (t.status || '').toLowerCase();
-      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
-      if (!ts) return;
+      list.forEach(t => {
+        const s = (t.status || '').toLowerCase();
+        const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+        if (!ts) return;
 
-      if (s === 'approved' || s === 'completed') {
-        completed.push({
-          id: 'f_' + t.id,
-          title: t.title || 'Untitled task',
-          category: t.category || 'General',
-          client: t.clientName || 'KazInni',
-          status: 'completed',
-          statusLabel: 'Completed',
-          ts,
-          source: 'FlexiKazi',
-          sourceColor: APPS.flexikazi.color,
-          link: 'apps/flexikazi/'
-        });
-        activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Task approved', desc: t.title || 'Task', ts });
-      } else if (s === 'revision') {
-        completed.push({
-          id: 'f_' + t.id,
-          title: t.title || 'Untitled task',
-          category: t.category || 'General',
-          client: t.clientName || 'KazInni',
-          status: 'revision',
-          statusLabel: 'Revision',
-          ts,
-          source: 'FlexiKazi',
-          sourceColor: APPS.flexikazi.color,
-          link: 'apps/flexikazi/'
-        });
-        activities.push({ icon: 'fa-redo', type: 'warning', title: 'Revision requested', desc: t.title || 'Task', ts });
-      } else if (s === 'review' || s === 'submitted') {
-        activities.push({ icon: 'fa-clock', type: 'info', title: 'Submission under review', desc: t.title || 'Task', ts });
-      } else if (s === 'assigned' || s === 'new') {
-        activities.push({ icon: 'fa-list-check', type: 'gold', title: 'New task assigned', desc: t.title || 'Task', ts });
-      }
-    });
-  } catch (e) { console.warn('FlexiKazi data:', e); }
+        if (s === 'approved' || s === 'completed') {
+          completed.push({
+            id: 'f_' + t.id,
+            title: t.title || 'Untitled task',
+            category: t.category || 'General',
+            client: t.clientName || 'KazInni',
+            status: 'completed',
+            statusLabel: 'Completed',
+            ts,
+            source: 'FlexiKazi',
+            sourceColor: APPS.flexikazi.color,
+            link: 'apps/flexikazi/'
+          });
+          activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Task approved', desc: t.title || 'Task', ts });
+        } else if (s === 'revision') {
+          completed.push({
+            id: 'f_' + t.id,
+            title: t.title || 'Untitled task',
+            category: t.category || 'General',
+            client: t.clientName || 'KazInni',
+            status: 'revision',
+            statusLabel: 'Revision',
+            ts,
+            source: 'FlexiKazi',
+            sourceColor: APPS.flexikazi.color,
+            link: 'apps/flexikazi/'
+          });
+          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Revision requested', desc: t.title || 'Task', ts });
+        } else if (s === 'review' || s === 'submitted') {
+          activities.push({ icon: 'fa-clock', type: 'info', title: 'Submission under review', desc: t.title || 'Task', ts });
+        } else if (s === 'assigned' || s === 'new') {
+          activities.push({ icon: 'fa-list-check', type: 'gold', title: 'New task assigned', desc: t.title || 'Task', ts });
+        }
+      });
+    } catch (e) { console.warn('FlexiKazi data:', e); }
+  }
 
   // Kasikazi
-  try {
-    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit).once('value');
-    const tasks = snap.val() || {};
-    Object.entries(tasks).forEach(([id, t]) => {
-      const c = t.claimedBy && t.claimedBy[uid];
-      if (!c) return;
-      const s = (c.status || 'claimed').toLowerCase();
-      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
-      if (!ts) return;
+  if (currentPerms.kasikazi === true || currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref('kasikazi_tasks').once('value');
+      const tasks = snap.val() || {};
+      Object.entries(tasks).forEach(([id, t]) => {
+        const c = t.claimedBy && t.claimedBy[uid];
+        if (!c) return;
+        const s = (c.status || 'claimed').toLowerCase();
+        const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
+        if (!ts) return;
 
-      if (s === 'approved') {
-        completed.push({
-          id: 'k_' + id,
-          title: t.title || 'Untitled task',
-          category: t.category || 'General',
-          client: t.clientName || 'KazInni',
-          status: 'completed',
-          statusLabel: 'Completed',
-          ts,
-          source: 'Kasikazi',
-          sourceColor: APPS.kasikazi.color,
-          link: 'apps/kasikazi/'
-        });
-        activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Kasikazi task approved', desc: t.title || 'Task', ts });
-      } else if (s === 'revision') {
-        completed.push({
-          id: 'k_' + id,
-          title: t.title || 'Untitled task',
-          category: t.category || 'General',
-          client: t.clientName || 'KazInni',
-          status: 'revision',
-          statusLabel: 'Revision',
-          ts,
-          source: 'Kasikazi',
-          sourceColor: APPS.kasikazi.color,
-          link: 'apps/kasikazi/'
-        });
-        activities.push({ icon: 'fa-redo', type: 'warning', title: 'Kasikazi revision', desc: t.title || 'Task', ts });
-      } else if (s === 'submitted') {
-        activities.push({ icon: 'fa-clock', type: 'info', title: 'Kasikazi under review', desc: t.title || 'Task', ts });
-      } else {
-        activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
-      }
-    });
-  } catch (e) { console.warn('Kasikazi data:', e); }
+        if (s === 'approved') {
+          completed.push({
+            id: 'k_' + id,
+            title: t.title || 'Untitled task',
+            category: t.category || 'General',
+            client: t.clientName || 'KazInni',
+            status: 'completed',
+            statusLabel: 'Completed',
+            ts,
+            source: 'Kasikazi',
+            sourceColor: APPS.kasikazi.color,
+            link: 'apps/kasikazi/'
+          });
+          activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Kasikazi task approved', desc: t.title || 'Task', ts });
+        } else if (s === 'revision') {
+          completed.push({
+            id: 'k_' + id,
+            title: t.title || 'Untitled task',
+            category: t.category || 'General',
+            client: t.clientName || 'KazInni',
+            status: 'revision',
+            statusLabel: 'Revision',
+            ts,
+            source: 'Kasikazi',
+            sourceColor: APPS.kasikazi.color,
+            link: 'apps/kasikazi/'
+          });
+          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Kasikazi revision', desc: t.title || 'Task', ts });
+        } else if (s === 'submitted') {
+          activities.push({ icon: 'fa-clock', type: 'info', title: 'Kasikazi under review', desc: t.title || 'Task', ts });
+        } else {
+          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
+        }
+      });
+    } catch (e) { console.warn('Kasikazi data:', e); }
+  }
 
-  // Payouts — status only, NO amounts
+  // Payouts — status only, no amounts
   try {
     const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
     const payouts = snap.val() || {};
@@ -2709,19 +2549,17 @@ async function loadWorkspaceData() {
     });
   } catch (e) { console.warn('Payout data:', e); }
 
-  // Learning activity (only if entitled)
-  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
-  if (unlocked) {
-    try {
-      const snap = await db.ref(`learningProgress/${uid}`).orderByChild('updatedAt').limitToLast(5).once('value');
-      const progress = snap.val() || {};
-      Object.entries(progress).forEach(([courseId, p]) => {
-        const ts = p.completedAt || p.updatedAt || 0;
-        if (!ts) return;
-        if (p.completedAt) activities.push({ icon: 'fa-certificate', type: 'premium', title: 'Course completed', desc: p.title || 'Learning module', ts });
-      });
-    } catch (e) {}
-  }
+  // Learning activity (progress)
+  try {
+    const snap = await db.ref(`learning_progress/${uid}`).once('value');
+    const progress = snap.val() || {};
+    Object.entries(progress).forEach(([courseId, p]) => {
+      const ts = p.completedAt || p.updatedAt || 0;
+      if (!ts) return;
+      if (p.completedAt) activities.push({ icon: 'fa-certificate', type: 'gold', title: 'Course completed', desc: p.title || 'Learning module', ts });
+      else activities.push({ icon: 'fa-graduation-cap', type: 'gold', title: 'Course in progress', desc: `${p.title || 'Course'} — ${p.progress || 0}%`, ts });
+    });
+  } catch (e) {}
 
   activities.sort((a, b) => b.ts - a.ts);
   completed.sort((a, b) => b.ts - a.ts);
@@ -2826,12 +2664,7 @@ function navigateTo(section) {
     const el = document.getElementById('recentTitle');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else if (section === 'learning') {
-    const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
-    if (unlocked) {
-      window.location.href = 'learning.html';
-    } else {
-      openUpgradeModal();
-    }
+    window.location.href = 'learning/index.html';
   } else if (section === 'wallet') {
     window.location.href = 'wallet.html';
   } else if (section === 'account') {
@@ -2877,7 +2710,7 @@ function renderLauncher() {
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   const visible = apps.filter(app => {
-    if (!signedIn) return !app.premium && app.alwaysVisible === true;
+    if (!signedIn) return app.alwaysVisible === true;
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
@@ -2887,21 +2720,17 @@ function renderLauncher() {
   if (visible.length === 0) {
     grid.innerHTML = `<div class="lp-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
   } else {
-    grid.innerHTML = visible.map(app => {
-      const badgeClass = app.badgeClass ? ` ${app.badgeClass}` : '';
-      return `
-        <a href="${escapeHtml(app.link)}" class="lp-app">
-          ${app.badge ? `<span class="lp-app-badge${badgeClass}">${escapeHtml(app.badge)}</span>` : ''}
-          <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
-            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-          </div>
-          <div>
-            <div class="lp-app-name">${escapeHtml(app.name)}</div>
-            <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
-          </div>
-        </a>
-      `;
-    }).join('');
+    grid.innerHTML = visible.map(app => `
+      <a href="${escapeHtml(app.link)}" class="lp-app">
+        <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+        </div>
+        <div>
+          <div class="lp-app-name">${escapeHtml(app.name)}</div>
+          <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
+        </div>
+      </a>
+    `).join('');
   }
 
   if (!statusEl || !footerTextEl || !footerLinkEl) return;
@@ -2920,7 +2749,7 @@ function renderLauncher() {
 }
 
 // ============================================================
-// NOTIFICATIONS
+// NOTIFICATIONS — read from kazinni_notifications
 // ============================================================
 function toggleNotifications(e) {
   if (e) e.stopPropagation();
@@ -2950,195 +2779,26 @@ function attachNotifListeners() {
   if (!db) return;
 
   const uid = currentUser.uid;
-  const email = (currentUser.email || '').toLowerCase();
 
+  // Primary source — your existing kazinni_notifications node
   try {
-    const ref1 = db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit);
-    const cb1 = (snap) => updateFlexikaziNotifications(snap.val() || {}, email);
-    ref1.on('value', cb1, (err) => console.warn('FlexiKazi listener:', err));
-    notifRefs.push({ ref: ref1, cb: cb1 });
+    const ref = db.ref(`kazinni_notifications/${uid}`).orderByChild('timestamp').limitToLast(CONFIG.notifLimit);
+    const cb = (snap) => {
+      const val = snap.val() || {};
+      notifications = Object.entries(val)
+        .map(([id, n]) => ({ id, ...n }))
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .slice(0, CONFIG.maxNotifications);
+      renderNotifications();
+    };
+    ref.on('value', cb, (err) => console.warn('notifications listener:', err));
+    notifRefs.push({ ref, cb });
   } catch (e) { console.warn(e); }
-
-  try {
-    const ref2 = db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit);
-    const cb2 = (snap) => updateKasikaziNotifications(snap.val() || {}, uid);
-    ref2.on('value', cb2, (err) => console.warn('Kasikazi listener:', err));
-    notifRefs.push({ ref: ref2, cb: cb2 });
-  } catch (e) { console.warn(e); }
-
-  try {
-    const ref3 = db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit);
-    const cb3 = (snap) => updatePayoutNotifications(snap.val() || {}, uid);
-    ref3.on('value', cb3, (err) => console.warn('Payout listener:', err));
-    notifRefs.push({ ref: ref3, cb: cb3 });
-  } catch (e) { console.warn(e); }
-
-  // Learning notifications (only if entitled)
-  const unlocked = hasEntitlement('learning') || hasEntitlement('advancedCourses') || hasEntitlement('mentorship');
-  if (unlocked) {
-    try {
-      const ref4 = db.ref(`learningProgress/${uid}`).limitToLast(20);
-      const cb4 = (snap) => updateLearningNotifications(snap.val() || {});
-      ref4.on('value', cb4, (err) => console.warn('Learning listener:', err));
-      notifRefs.push({ ref: ref4, cb: cb4 });
-    } catch (e) { console.warn(e); }
-  }
 }
 
 function detachNotifListeners() {
   notifRefs.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
   notifRefs = [];
-}
-
-function updateFlexikaziNotifications(tasks, email) {
-  const recent = Object.entries(tasks).map(([id, t]) => {
-    const s = (t.status || '').toLowerCase();
-    let type = 'info', icon = 'fa-info-circle', title = '', desc = '', details = '', ts = 0;
-
-    if (s === 'approved' || s === 'completed') {
-      ts = t.approvedAt || t.reviewedAt || 0;
-      type = 'success'; icon = 'fa-circle-check';
-      title = 'Task approved';
-      desc = t.title || 'Your task';
-      details = `Your task "${t.title || 'Untitled'}" has been approved.\n\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be reflected in your Wallet within 48 hours.`;
-    } else if (s === 'revision') {
-      ts = t.reviewedAt || 0;
-      type = 'warning'; icon = 'fa-redo';
-      title = 'Revision requested';
-      desc = `${t.title || 'Task'}: ${t.reviewNote || 'Please review and resubmit.'}`;
-      details = `Your submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.reviewNote || 'Please check the brief and resubmit.'}`;
-    } else if (s === 'review' || s === 'submitted') {
-      ts = t.lastSubmittedAt || 0;
-      type = 'info'; icon = 'fa-clock';
-      title = 'Submission under review';
-      desc = t.title || 'Your work was submitted.';
-      details = `Your submission for "${t.title || 'Untitled'}" is now being reviewed.`;
-    } else if (s === 'assigned' || s === 'new') {
-      ts = t.assignedAt || 0;
-      type = 'gold'; icon = 'fa-list-check';
-      title = 'New task assigned';
-      desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
-      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nDue: ${t.dueDate || 'Not set'}\n\nOpen FlexiKazi to see the full brief.`;
-    }
-    return { id: 'f_' + id, type, icon, title, desc, ts, details, source: 'flexikazi' };
-  })
-  .filter(n => n.title && n.ts)
-  .sort((a, b) => b.ts - a.ts);
-
-  mergeNotifications(recent, 8);
-}
-
-function updateKasikaziNotifications(tasks, uid) {
-  const recent = Object.entries(tasks)
-    .filter(([_, t]) => t.claimedBy && t.claimedBy[uid])
-    .map(([id, t]) => {
-      const c = t.claimedBy[uid];
-      const s = (c.status || 'claimed').toLowerCase();
-      let type = 'info', icon = 'fa-bullhorn', title = '', desc = '', details = '', ts = 0;
-
-      if (s === 'approved') {
-        ts = c.reviewedAt || 0;
-        type = 'success'; icon = 'fa-circle-check';
-        title = 'Kasikazi task approved';
-        desc = t.title || 'Task';
-        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nPayment will be reflected in your Wallet within 48 hours.`;
-      } else if (s === 'revision') {
-        ts = c.reviewedAt || 0;
-        type = 'warning'; icon = 'fa-redo';
-        title = 'Kasikazi revision requested';
-        desc = `${t.title}: ${c.reviewNote || 'Check the brief.'}`;
-        details = `Your Kasikazi submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${c.reviewNote || 'Please check the brief and resubmit.'}`;
-      } else if (s === 'submitted') {
-        ts = c.submittedAt || 0;
-        type = 'info'; icon = 'fa-clock';
-        title = 'Kasikazi submission in review';
-        desc = t.title || 'Task';
-        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.`;
-      } else {
-        ts = c.claimedAt || 0;
-        type = 'gold'; icon = 'fa-hand-sparkles';
-        title = 'Task claimed';
-        desc = t.title || 'Task';
-        details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nDue: ${t.dueDate || 'Not set'}\n\nOpen Kasikazi to start working on it.`;
-      }
-      return { id: 'k_' + id, type, icon, title, desc, ts, details, source: 'kasikazi' };
-    })
-    .filter(n => n.title && n.ts)
-    .sort((a, b) => b.ts - a.ts);
-
-  mergeNotifications(recent, 8);
-}
-
-function updatePayoutNotifications(payouts, uid) {
-  const recent = Object.entries(payouts).map(([id, p]) => {
-    const s = (p.status || 'pending').toLowerCase();
-    let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '', details = '';
-    const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-
-    if (s === 'paid') {
-      type = 'success'; icon = 'fa-check-double';
-      title = 'Payout sent';
-      desc = `Sent to ${p.phone || 'M-Pesa'}`;
-      details = `Your payout has been successfully sent to ${p.phone || 'M-Pesa'}.\n\nOpen your Wallet to see the full transaction details.`;
-    } else if (s === 'approved') {
-      type = 'gold'; icon = 'fa-money-bill-wave';
-      title = 'Payout approved';
-      desc = 'Being dispatched';
-      details = `Your payout has been approved and will be dispatched shortly.\n\nOpen your Wallet for details.`;
-    } else if (s === 'rejected') {
-      type = 'danger'; icon = 'fa-times-circle';
-      title = 'Payout rejected';
-      desc = p.rejectionReason || 'Contact admin for details.';
-      details = `Your payout request was rejected.\n\nReason: ${p.rejectionReason || 'Not specified'}\n\nPlease contact your administrator.`;
-    } else {
-      type = 'info'; icon = 'fa-hourglass-half';
-      title = 'Payout request pending';
-      desc = 'Awaiting approval';
-      details = `Your payout request has been received and is awaiting approval.\n\nOpen your Wallet for details.`;
-    }
-    return { id: 'p_' + id, type, icon, title, desc, ts, details, source: 'wallet' };
-  })
-  .filter(n => n.title && n.ts)
-  .sort((a, b) => b.ts - a.ts);
-
-  mergeNotifications(recent, 6);
-}
-
-function updateLearningNotifications(progress) {
-  const recent = Object.entries(progress).map(([courseId, p]) => {
-    let type = 'premium', icon = 'fa-graduation-cap', title = '', desc = '', details = '';
-    const ts = p.completedAt || p.updatedAt || 0;
-
-    if (p.completedAt) {
-      type = 'premium'; icon = 'fa-certificate';
-      title = 'Course completed';
-      desc = p.title || 'Learning module';
-      details = `Well done! You've completed "${p.title || 'a learning module'}".\n\nYour certificate is now available in the Learning section.`;
-    } else if (p.milestone) {
-      title = 'Milestone reached';
-      desc = `${p.title || 'Course'}: ${p.milestone}`;
-      details = `You've hit a milestone in "${p.title || 'your course'}".\n\n${p.milestone}`;
-    } else if (p.updatedAt && p.progress) {
-      title = 'Course in progress';
-      desc = `${p.title || 'Course'} — ${p.progress}% complete`;
-      details = `Keep going! You're ${p.progress}% through "${p.title || 'your course'}".`;
-    }
-    return { id: 'l_' + courseId, type, icon, title, desc, ts, details, source: 'learning' };
-  })
-  .filter(n => n.title && n.ts)
-  .sort((a, b) => b.ts - a.ts);
-
-  mergeNotifications(recent, 5);
-}
-
-function mergeNotifications(recent, capPerSource) {
-  const capped = recent.slice(0, capPerSource);
-  const map = new Map(notifications.map(n => [n.id, n]));
-  capped.forEach(n => map.set(n.id, n));
-  notifications = Array.from(map.values())
-    .sort((a, b) => b.ts - a.ts)
-    .slice(0, CONFIG.maxNotifications);
-  renderNotifications();
 }
 
 function renderNotifications() {
@@ -3162,7 +2822,7 @@ function renderNotifications() {
   }
 
   const lastSeen = getLastSeen();
-  const unread = notifications.filter(n => n.ts > lastSeen).length;
+  const unread = notifications.filter(n => (n.timestamp || 0) > lastSeen && n.read !== true).length;
 
   if (unread > 0) {
     badge.textContent = unread > 9 ? '9+' : String(unread);
@@ -3174,20 +2834,40 @@ function renderNotifications() {
   }
 
   body.innerHTML = notifications.map(n => `
-    <button type="button" class="notif-item ${n.ts > lastSeen ? 'unread' : ''}" onclick="openNotifModal('${escapeHtml(n.id)}')">
-      <div class="notif-icon ${escapeHtml(n.type)}" aria-hidden="true">
-        <i class="fas ${escapeHtml(n.icon)}"></i>
+    <button type="button" class="notif-item ${(n.timestamp || 0) > lastSeen && n.read !== true ? 'unread' : ''}" onclick="openNotifModal('${escapeHtml(n.id)}')">
+      <div class="notif-icon ${escapeHtml(mapNotifType(n.type))}" aria-hidden="true">
+        <i class="fas ${escapeHtml(mapNotifIcon(n.type))}"></i>
       </div>
       <div class="notif-body-text">
-        <div class="notif-title-text">${escapeHtml(n.title)}</div>
-        <div class="notif-desc-text">${escapeHtml(n.desc)}</div>
+        <div class="notif-title-text">${escapeHtml(n.title || 'Notification')}</div>
+        <div class="notif-desc-text">${escapeHtml(n.body || '')}</div>
       </div>
-      <div class="notif-time">${escapeHtml(getTimeAgo(n.ts))}</div>
+      <div class="notif-time">${escapeHtml(getTimeAgo(n.timestamp))}</div>
     </button>
   `).join('');
 }
 
-function clearNotifications() { setLastSeen(Date.now()); renderNotifications(); }
+function mapNotifType(t) {
+  if (t === 'learning') return 'gold';
+  if (t === 'task' || t === 'payment') return 'success';
+  if (t === 'warning') return 'warning';
+  if (t === 'error') return 'danger';
+  return 'info';
+}
+
+function mapNotifIcon(t) {
+  if (t === 'learning') return 'fa-graduation-cap';
+  if (t === 'task') return 'fa-list-check';
+  if (t === 'payment') return 'fa-money-bill-wave';
+  if (t === 'warning') return 'fa-exclamation-triangle';
+  if (t === 'error') return 'fa-times-circle';
+  return 'fa-bell';
+}
+
+function clearNotifications() {
+  setLastSeen(Date.now());
+  renderNotifications();
+}
 
 function openNotifModal(id) {
   const n = notifications.find(x => x.id === id);
@@ -3200,28 +2880,28 @@ function openNotifModal(id) {
 
   const iconEl = document.getElementById('notifModalIcon');
   if (iconEl) {
-    iconEl.className = `ws-modal-icon ${n.type}`;
-    iconEl.innerHTML = `<i class="fas ${escapeHtml(n.icon)}" aria-hidden="true"></i>`;
+    const type = mapNotifType(n.type);
+    iconEl.className = `ws-modal-icon ${type}`;
+    iconEl.innerHTML = `<i class="fas ${escapeHtml(mapNotifIcon(n.type))}" aria-hidden="true"></i>`;
   }
-  document.getElementById('notifModalTitle').textContent = n.title;
-  document.getElementById('notifModalSubtitle').textContent = n.desc;
+  document.getElementById('notifModalTitle').textContent = n.title || 'Notification';
+  document.getElementById('notifModalSubtitle').textContent = n.body || '';
 
   const bodyEl = document.getElementById('notifModalBody');
   bodyEl.innerHTML = '';
-  String(n.details || n.desc).split('\n').forEach((line, i) => {
+  String(n.body || '').split('\n').forEach((line, i) => {
     if (i > 0) bodyEl.appendChild(document.createElement('br'));
     bodyEl.appendChild(document.createTextNode(line));
   });
 
-  document.getElementById('notifModalTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${escapeHtml(getFullTime(n.ts))}`;
-  document.getElementById('notifModalType').innerHTML = `<i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(n.type)}`;
+  document.getElementById('notifModalTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${escapeHtml(getFullTime(n.timestamp))}`;
+  document.getElementById('notifModalType').innerHTML = `<i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(n.type || 'info')}`;
 
   const actions = document.getElementById('notifModalActions');
   const buttons = [];
-  if (n.source === 'flexikazi') buttons.push(`<a href="apps/flexikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open FlexiKazi</a>`);
-  else if (n.source === 'kasikazi') buttons.push(`<a href="apps/kasikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open Kasikazi</a>`);
-  else if (n.source === 'wallet') buttons.push(`<a href="wallet.html" class="ws-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> Open Wallet</a>`);
-  else if (n.source === 'learning') buttons.push(`<a href="learning.html" class="ws-modal-btn premium"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Open Learning</a>`);
+  if (n.type === 'learning' && n.courseId) {
+    buttons.push(`<a href="learning/course.html?id=${encodeURIComponent(n.courseId)}" class="ws-modal-btn primary"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Open course</a>`);
+  }
   buttons.push(`<button type="button" class="ws-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
   actions.innerHTML = buttons.join('');
 
@@ -3233,9 +2913,6 @@ function openNotifModal(id) {
     const first = modal.querySelector('button, [href]');
     if (first) first.focus();
   }, 50);
-
-  const lastSeen = getLastSeen();
-  if (n.ts > lastSeen) { setLastSeen(n.ts); renderNotifications(); }
 }
 
 function closeNotifModal() {
@@ -3319,33 +2996,6 @@ async function handleLogin(e) {
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>';
   }
-}
-
-// ============================================================
-// UPGRADE MODAL
-// ============================================================
-function openUpgradeModal() {
-  closeLauncher(); closeUserDropdown(); closeNotifications();
-  const modal = document.getElementById('upgradeModal');
-  const overlay = document.getElementById('upgradeModalOverlay');
-  if (modal) { modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); }
-  if (overlay) overlay.classList.add('active');
-  lastFocusedBeforeModal = document.activeElement;
-  setTimeout(() => {
-    const first = modal ? modal.querySelector('button, [href]') : null;
-    if (first) first.focus();
-  }, 50);
-}
-
-function closeUpgradeModal() {
-  const modal = document.getElementById('upgradeModal');
-  const overlay = document.getElementById('upgradeModalOverlay');
-  if (modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }
-  if (overlay) overlay.classList.remove('active');
-  if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
-    try { lastFocusedBeforeModal.focus(); } catch (e) {}
-  }
-  lastFocusedBeforeModal = null;
 }
 
 // ============================================================
@@ -3445,29 +3095,19 @@ async function buildTicker() {
   const email = (currentUser.email || '').toLowerCase();
   const items = [];
 
-  try {
-    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
-    const assigned = snap.val() || {};
-    Object.entries(assigned).forEach(([id, t]) => {
-      const s = (t.status || '').toLowerCase();
-      const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
-      if (!ts) return;
-      if (s === 'approved' || s === 'completed') items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      else if (s === 'assigned' || s === 'new') items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-    });
-  } catch (e) {}
-
-  try {
-    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit).once('value');
-    const kas = snap.val() || {};
-    Object.entries(kas).forEach(([id, t]) => {
-      const c = t.claimedBy && t.claimedBy[uid];
-      if (!c) return;
-      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
-      if (!ts) return;
-      items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-    });
-  } catch (e) {}
+  if (currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
+      const assigned = snap.val() || {};
+      Object.entries(assigned).forEach(([id, t]) => {
+        const s = (t.status || '').toLowerCase();
+        const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+        if (!ts) return;
+        if (s === 'approved' || s === 'completed') items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+        else if (s === 'assigned' || s === 'new') items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      });
+    } catch (e) {}
+  }
 
   items.sort((a, b) => b.ts - a.ts);
 
@@ -3513,13 +3153,6 @@ function updatePublicClock() {
     });
   }
 }
-
-// ============================================================
-// SEARCH
-// ============================================================
-(function() {
-  // handled on DOMContentLoaded in setupSearch
-})();
 
 // ============================================================
 // CLEANUP
