@@ -40,7 +40,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* HEADER — matches the workspace shell */
+/* HEADER */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
@@ -284,14 +284,19 @@ async function onAuthChanged(user) {
   currentUser = user;
   renderAccountChip(user);
 
- // Fire-and-forget course cache load — used to show categories on certificates
+  // Fire-and-forget course cache load
   window._db.ref('learning_courses').once('value')
     .then(snap => { coursesCache = snap.val() || {}; })
     .catch(() => { coursesCache = {}; });
 
   await loadCertificates();
 
-  // Backfill any missing verification-index entries (async, silent)
+  // Reconcile any completed courses missing certificates
+  reconcileMissingCertificates().catch(e =>
+    console.warn('[certificate] reconcile failed:', e)
+  );
+
+  // Backfill any missing verification-index entries
   backfillMissingIndexEntries(certificatesCache).catch(e =>
     console.warn('[certificate] backfill failed:', e)
   );
@@ -309,10 +314,114 @@ function renderAccountChip(user) {
 }
 
 // ══════════════════════════════════════════════════════════════
+// RECONCILE MISSING CERTIFICATES
+// If a user has completed a course but has no certificate for it,
+// issue one silently.
+// ══════════════════════════════════════════════════════════════
+async function reconcileMissingCertificates() {
+  if (!currentUser) return;
+
+  const uid = currentUser.uid;
+  let progress = {};
+  let certs = {};
+
+  try {
+    const [pSnap, cSnap] = await Promise.all([
+      window._db.ref(`learning_progress/${uid}`).once('value'),
+      window._db.ref(`learning_certificates/${uid}`).once('value')
+    ]);
+    progress = pSnap.val() || {};
+    certs = cSnap.val() || {};
+  } catch (e) {
+    console.warn('[reconcile] Could not load progress/certs:', e);
+    return;
+  }
+
+  const missing = [];
+  for (const [courseId, p] of Object.entries(progress)) {
+    if (!p || !p.completedAt) continue;
+    if (certs[courseId]) continue;
+    missing.push({
+      courseId,
+      title: p.title || 'Course',
+      completedAt: p.completedAt
+    });
+  }
+
+  if (missing.length === 0) return;
+
+  console.log(`[reconcile] Found ${missing.length} completed course(s) missing certificates`);
+
+  let anyIssued = false;
+
+  for (const m of missing) {
+    try {
+      let courseTitle = m.title;
+      try {
+        const cSnap = await window._db.ref(`learning_courses/${m.courseId}`).once('value');
+        const course = cSnap.val();
+        if (course && course.title) courseTitle = course.title;
+      } catch (e) { /* fall back */ }
+
+      const certId = await generateUniqueCertificateId();
+      const recipientName = currentUser.displayName
+        || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
+
+      const issuedAt = m.completedAt || Date.now();
+
+      const userPayload = {
+        courseId: m.courseId,
+        courseTitle,
+        certificateId: certId,
+        issuedAt,
+        status: 'auto_issued',
+        reconciled: true
+      };
+
+      const indexPayload = {
+        uid,
+        recipientName,
+        courseId: m.courseId,
+        courseTitle,
+        issuedAt,
+        status: 'auto_issued'
+      };
+
+      await window._db.ref(`learning_certificates/${uid}/${m.courseId}`).set(userPayload);
+      await window._db.ref(`learning_certificate_index/${certId}`).set(indexPayload);
+
+      console.log(`[reconcile] ✅ Issued certificate for "${courseTitle}" — ${certId}`);
+      anyIssued = true;
+    } catch (e) {
+      console.warn(`[reconcile] ❌ Failed for ${m.courseId}:`, e.message);
+    }
+  }
+
+  if (anyIssued) {
+    await loadCertificates();
+  }
+}
+
+async function generateUniqueCertificateId() {
+  const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const year = new Date().getFullYear();
+
+  for (let attempt = 0; attempt < 5; attempt++) {
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += alphabet[Math.floor(Math.random() * alphabet.length)];
+    }
+    const candidate = `KAZ-${year}-${code}`;
+    const snap = await window._db
+      .ref(`learning_certificate_index/${candidate}`)
+      .once('value');
+    if (!snap.exists()) return candidate;
+  }
+  return `KAZ-${year}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+}
+
+// ══════════════════════════════════════════════════════════════
 // BACKFILL VERIFICATION INDEX
-// For certificates created before the index existed, create the
-// public lookup entry on first visit. Rules allow users to create
-// their own index entries, but only if the entry doesn't exist.
 // ══════════════════════════════════════════════════════════════
 async function backfillMissingIndexEntries(certs) {
   if (!certs || certs.length === 0) return;
@@ -328,9 +437,8 @@ async function backfillMissingIndexEntries(certs) {
         .ref(`learning_certificate_index/${certId}`)
         .once('value');
 
-      if (snap.exists()) continue; // already indexed
+      if (snap.exists()) continue;
 
-      // Missing — create it
       await window._db.ref(`learning_certificate_index/${certId}`).set({
         uid: currentUser.uid,
         recipientName: recipientName,
@@ -342,11 +450,11 @@ async function backfillMissingIndexEntries(certs) {
 
       console.log('[certificate] Backfilled index entry:', certId);
     } catch (e) {
-      // Silently skip — likely a rules denial (index already exists, or user not owner)
       console.warn('[certificate] Could not backfill', certId, e.message);
     }
   }
 }
+
 // ══════════════════════════════════════════════════════════════
 // LOAD & RENDER CERTIFICATES
 // ══════════════════════════════════════════════════════════════
@@ -446,8 +554,6 @@ function renderEmpty(title, detail, isError) {
 
 // ══════════════════════════════════════════════════════════════
 // CERTIFICATE PDF GENERATION
-// Opens a styled A4-landscape certificate in a new window and
-// auto-triggers the browser print dialog → "Save as PDF".
 // ══════════════════════════════════════════════════════════════
 function getRecipientName() {
   if (!currentUser) return 'KazInni Learner';
@@ -764,8 +870,6 @@ function generateCertificateHtml(opts) {
   </div>
 
   <script>
-    // Auto-trigger print after fonts load so the PDF captures the right typefaces.
-    // If the browser blocks the auto-print, the user can still Ctrl/Cmd+P.
     document.fonts.ready.then(function() {
       setTimeout(function() {
         try { window.print(); } catch (e) { console.warn('Auto-print blocked:', e); }
@@ -818,7 +922,6 @@ async function shareCert(certId) {
       await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
       return;
     } catch (e) {
-      // user cancelled — fall through to clipboard
       if (e && e.name === 'AbortError') return;
     }
   }
