@@ -6,77 +6,149 @@
 <meta name="theme-color" content="#ca8a04">
 <title>Certificates — KazInni Learning</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;--gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);--ink:#0f0f1e;--success:#10b981;--text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;--surface:#fff;--surface-2:#faf9f7;--header-h:60px;--f-display:'Clash Display','Cabinet Grotesk',sans-serif;--f-head:'Satoshi','Cabinet Grotesk',sans-serif;--f-body:'Satoshi','Cabinet Grotesk',sans-serif;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-pill:100px;--t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1)}
+:root{
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
+  --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
+  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;
+  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
+  --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
+  --header-h:60px;
+  --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
+  --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
+  --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
+  --t-fast:.15s cubic-bezier(.2,.8,.2,1);
+  --t-base:.25s cubic-bezier(.2,.8,.2,1);
+  --shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08);
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
-:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden}
+:focus{outline:none}:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* HEADER — matches the workspace shell */
+.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem}
-.ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+.ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
 .ws-logo img{height:30px}
-.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:1.05rem;color:var(--ink)}
+.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:1.05rem;color:var(--ink);letter-spacing:-.4px;white-space:nowrap}
 .ws-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ws-nav-links{display:flex;align-items:center;gap:1.4rem;margin-left:1rem}
-.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.85rem;font-weight:500;font-family:var(--f-head);padding:.4rem 0}
+.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.85rem;font-weight:500;font-family:var(--f-head);transition:color var(--t-fast);padding:.4rem 0;white-space:nowrap}
+.ws-nav-link:hover{color:var(--ink)}
 .ws-nav-link.active{color:var(--gold-dark);font-weight:600}
 .ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
 .ws-btn{padding:.6rem 1.2rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.84rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-head);white-space:nowrap}
-.ws-btn-primary{background:var(--ink);color:#fff}
-.ws-btn-primary:hover{background:var(--gold)}
+.ws-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,.18);position:relative;overflow:hidden}
+.ws-btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold-gradient);opacity:0;transition:opacity var(--t-base)}
+.ws-btn-primary>*{position:relative;z-index:1}
+.ws-btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(202,138,4,.3)}
+.ws-btn-primary:hover::before{opacity:1}
 .ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
 .ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.ws-btn:disabled{opacity:.5;cursor:not-allowed}
 .ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
-.ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem}
-main{flex:1;padding:3rem 2rem 4rem}
-.inner{max-width:1000px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;background:#fff;border:1px solid rgba(202,138,4,.22);border-radius:var(--r-pill);font-size:.68rem;font-weight:700;color:var(--gold-dark);margin-bottom:1.4rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:1px}
-.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success)}
-h1{font-family:var(--f-display);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;letter-spacing:-.035em;margin-bottom:.5rem;text-align:center}
-h1 .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
-.hero-lede{text-align:center;color:var(--muted);max-width:520px;margin:0 auto 2.5rem}
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
-.cert-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem 1.3rem;display:flex;flex-direction:column;gap:1rem;transition:all var(--t-base)}
-.cert-card:hover{transform:translateY(-2px);box-shadow:0 20px 48px rgba(15,15,30,.08)}
-.cert-badge{width:48px;height:48px;border-radius:14px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 10px 24px rgba(202,138,4,.25)}
-.cert-title{font-family:var(--f-head);font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
-.cert-meta,.cert-id{font-size:.75rem;color:var(--muted);font-family:var(--f-head)}
-.cert-actions{display:flex;gap:.5rem;margin-top:auto;padding-top:.8rem;border-top:1px dashed var(--border)}
-.cert-actions .ws-btn{flex:1;justify-content:center}
-.empty-state{grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
-.empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
-.empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
-.skeleton{height:200px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;pointer-events:auto;transition:opacity .35s,transform .35s}
-.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
+.ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;font-family:var(--f-head)}
+
+/* HERO */
+.cert-hero{position:relative;padding:3.5rem 2rem 2.5rem;text-align:center;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);overflow:hidden}
+.cert-hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.cert-hero-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3}
+.cert-hero-bg .orb-1{width:400px;height:400px;background:#fde68a;top:-100px;left:-80px}
+.cert-hero-bg .orb-2{width:320px;height:320px;background:#fbbf24;bottom:-100px;right:-80px;opacity:.2}
+.cert-hero-inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;background:#fff;border:1px solid rgba(202,138,4,.22);border-radius:var(--r-pill);font-size:.68rem;font-weight:700;color:var(--gold-dark);margin-bottom:1.4rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 12px rgba(202,138,4,.08)}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+.cert-hero h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:700;line-height:1.08;margin-bottom:1rem;letter-spacing:-.04em;font-family:var(--f-display);color:var(--ink)}
+.cert-hero h1 .accent{background:var(--gold-gradient);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
+.cert-hero .hero-lede{font-size:1rem;color:var(--text-2);max-width:560px;margin:0 auto;line-height:1.65}
+
+/* GRID */
+.cert-main{flex:1;padding:3rem 2rem 4rem}
+.cert-inner{max-width:1100px;margin:0 auto}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.2rem}
+
+/* CARD */
+.cert-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem 1.5rem 1.3rem;display:flex;flex-direction:column;gap:1.2rem;transition:all var(--t-base);position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-gradient);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.cert-card:hover::before{transform:scaleX(1)}
+.cert-card:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(15,15,30,.08);border-color:rgba(202,138,4,.25)}
+
+.cert-card-top{display:flex;align-items:flex-start;gap:1rem}
+.cert-badge{width:56px;height:56px;border-radius:16px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.35rem;box-shadow:0 10px 24px rgba(202,138,4,.28);flex-shrink:0}
+.cert-card-info{min-width:0;flex:1}
+.cert-card-title{font-family:var(--f-head);font-size:1rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:.35rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cert-card-meta{font-size:.75rem;color:var(--muted);font-family:var(--f-head);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.cert-card-meta i{font-size:.7rem;opacity:.7}
+.cert-card-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.5}
+.cert-card-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;color:var(--muted);padding:.3rem .55rem;background:var(--surface-2);border-radius:6px;display:inline-block;border:1px solid var(--border);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.3px}
+
+.cert-actions{display:grid;grid-template-columns:1fr auto;gap:.5rem;margin-top:auto;padding-top:1rem;border-top:1px dashed var(--border)}
+.cert-actions .ws-btn{padding:.65rem 1.1rem;font-size:.82rem;justify-content:center}
+.cert-actions .ws-btn-primary{width:100%}
+.cert-actions .ws-btn.icon-only{padding:.65rem;width:auto;min-width:44px}
+
+/* Empty state */
+.empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg)}
+.empty-state i.empty-icon{font-size:3rem;color:var(--gold);opacity:.35;display:block;margin-bottom:1.2rem}
+.empty-state h3{font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;font-family:var(--f-head)}
+.empty-state p{font-size:.88rem;max-width:400px;margin:0 auto 1.5rem;line-height:1.6}
+
+/* Skeleton */
+.skeleton{height:180px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+
+/* TOASTS */
+.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;box-shadow:0 20px 40px rgba(15,15,30,.22);display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .35s,transform .35s;animation:slideInRight .3s cubic-bezier(.2,.8,.2,1)}
+.toast i{font-size:.95rem;flex-shrink:0}
+.toast.success i{color:#34d399}
+.toast.error i{color:#f87171}
+.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
-@media(max-width:900px){.ws-nav-links{display:none}main{padding:2rem 1.25rem 3rem}.cert-grid{grid-template-columns:1fr}}
+
+@media(max-width:900px){
+  .ws-nav-links{display:none}
+  .cert-hero{padding:2.5rem 1.25rem 2rem}
+  .cert-hero h1{font-size:1.8rem}
+  .cert-main{padding:2rem 1.25rem 3rem}
+  .cert-grid{grid-template-columns:1fr}
+  .toast-container{right:12px;left:12px;align-items:stretch}
+  .toast{max-width:none}
+}
 </style>
 </head>
 <body>
+
 <a href="#main" class="sr-only">Skip to main content</a>
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
 
 <header class="ws-header">
   <div class="ws-header-inner">
-    <a href="../index.html" class="ws-logo">
+    <a href="../index.html" class="ws-logo" aria-label="Back to KazInni">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
       <span class="ws-logo-text">Kaz<span class="accent">Inni</span> <span style="font-weight:600;opacity:.5;font-size:.85rem;">Learning</span></span>
     </a>
-    <nav class="ws-nav-links">
+    <nav class="ws-nav-links" aria-label="Learning navigation">
       <a href="index.html" class="ws-nav-link">Library</a>
       <a href="certificate.html" class="ws-nav-link active">Certificates</a>
-      <a href="pricing.html" class="ws-nav-link">Plans</a>
     </nav>
     <div class="ws-header-right">
       <a href="../index.html" class="ws-btn ws-btn-ghost">
-        <i class="fas fa-arrow-left"></i> <span>Workspace</span>
+        <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Workspace</span>
       </a>
       <div id="headerAccount"></div>
     </div>
@@ -84,75 +156,636 @@ h1 .accent{background:var(--gold-gradient);-webkit-background-clip:text;backgrou
 </header>
 
 <main id="main">
-  <div class="inner">
-    <div style="text-align:center;">
+  <section class="cert-hero">
+    <div class="cert-hero-bg" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="cert-hero-inner">
       <span class="hero-eyebrow"><span class="dot"></span> Achievements</span>
+      <h1>Your <span class="accent">certificates</span></h1>
+      <p class="hero-lede">Every course you complete earns a shareable certificate. Download as PDF, print, or share to your portfolio.</p>
     </div>
-    <h1>Your <span class="accent">certificates</span></h1>
-    <p class="hero-lede">Every completed course earns a shareable certificate. Download, print, or add to your portfolio.</p>
-    <div class="cert-grid" id="certGrid">
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
+  </section>
+
+  <section class="cert-main">
+    <div class="cert-inner">
+      <div class="cert-grid" id="certGrid">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
     </div>
-  </div>
+  </section>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="../js/learning-core.js"></script>
 <script>
 'use strict';
 
-document.addEventListener('learning:ready', async () => {
-  const grid = document.getElementById('certGrid');
+// ══════════════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentUser = null;
+let certificatesCache = [];
+let coursesCache = {};
+
+// ══════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function getFullTime(ts) {
+  if (!ts) return '—';
   try {
-    const snap = await window._db.ref(`learning_certificates/${currentUser.uid}`).once('value');
-    const val = snap.val() || {};
-    const list = Object.entries(val)
-      .map(([id, c]) => ({ id, ...c }))
-      .sort((a, b) => (b.issuedAt || 0) - (a.issuedAt || 0));
+    return new Date(ts).toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    });
+  } catch (e) { return '—'; }
+}
 
-    if (list.length === 0) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-certificate"></i>
-          <h3>No certificates yet</h3>
-          <p>Complete your first course to earn a certificate.</p>
-          <a href="index.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">Browse library</a>
-        </div>`;
-      return;
-    }
+function getFullDate(ts) {
+  if (!ts) return '—';
+  try {
+    return new Date(ts).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  } catch (e) { return '—'; }
+}
 
-    grid.innerHTML = list.map(c => `
-      <div class="cert-card">
-        <div class="cert-badge"><i class="fas fa-certificate"></i></div>
-        <div>
-          <div class="cert-title">${escapeHtml(c.courseTitle || 'Course')}</div>
-          <div class="cert-meta">Issued ${escapeHtml(getFullTime(c.issuedAt))}</div>
-          <div class="cert-id">ID: ${escapeHtml(c.certificateId || c.id)}</div>
-        </div>
-        <div class="cert-actions">
-          <button class="ws-btn ws-btn-ghost" onclick="downloadCert('${escapeHtml(c.id)}')">
-            <i class="fas fa-download"></i> Download
-          </button>
-          <button class="ws-btn ws-btn-ghost" onclick="shareCert('${escapeHtml(c.id)}')">
-            <i class="fas fa-share-nodes"></i> Share
-          </button>
-        </div>
-      </div>`).join('');
-  } catch (e) {
-    console.error(e);
-    grid.innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h3>Could not load certificates</h3>
-      </div>`;
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i><span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('leaving');
+    setTimeout(() => t.remove(), 400);
+  }, 4000);
+}
+
+// ══════════════════════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof firebase === 'undefined') {
+    showToast('Could not load certificate service', 'error');
+    renderEmpty('Service unavailable', 'The certificate service could not be loaded.');
+    return;
   }
+
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  } catch (e) { console.warn(e); }
+
+  const auth = firebase.auth();
+  const db = firebase.database();
+  window._auth = auth;
+  window._db = db;
+
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  auth.onAuthStateChanged(onAuthChanged);
 });
 
-function downloadCert(id) { showToast('Certificate download coming soon', 'info'); }
-function shareCert(id) { showToast('Certificate sharing coming soon', 'info'); }
+async function onAuthChanged(user) {
+  if (!user) {
+    window.location.href = '../index.html';
+    return;
+  }
+
+  currentUser = user;
+  renderAccountChip(user);
+
+  // Fire-and-forget course cache load — used to show categories on certificates
+  window._db.ref('learning_courses').once('value')
+    .then(snap => { coursesCache = snap.val() || {}; })
+    .catch(() => { coursesCache = {}; });
+
+  await loadCertificates();
+}
+
+function renderAccountChip(user) {
+  const el = document.getElementById('headerAccount');
+  if (!el) return;
+  const name = user.displayName || user.email.split('@')[0] || 'User';
+  el.innerHTML = `
+    <a href="../index.html" class="ws-account-chip" title="Back to workspace">
+      <div class="ws-avatar" aria-hidden="true">${escapeHtml(getInitials(name))}</div>
+      <span>${escapeHtml(name)}</span>
+    </a>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// LOAD & RENDER CERTIFICATES
+// ══════════════════════════════════════════════════════════════
+async function loadCertificates() {
+  const grid = document.getElementById('certGrid');
+  if (!grid) return;
+
+  let certs = {};
+  let loadError = null;
+
+  try {
+    const snap = await window._db.ref(`learning_certificates/${currentUser.uid}`).once('value');
+    certs = snap.val() || {};
+  } catch (e) {
+    loadError = e;
+  }
+
+  if (loadError) {
+    renderEmpty(
+      'Could not load certificates',
+      loadError.message || 'Please check your connection and try again.',
+      true
+    );
+    return;
+  }
+
+  const list = Object.entries(certs)
+    .map(([id, c]) => ({ id, ...c }))
+    .sort((a, b) => (b.issuedAt || 0) - (a.issuedAt || 0));
+
+  certificatesCache = list;
+
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-certificate empty-icon" aria-hidden="true"></i>
+        <h3>No certificates yet</h3>
+        <p>Complete a course to earn your first certificate. It will appear here automatically.</p>
+        <a href="index.html" class="ws-btn ws-btn-primary">
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
+        </a>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(c => {
+    const course = coursesCache[c.courseId] || {};
+    const category = course.category || '';
+    const lessonCount = course.lessons ? Object.keys(course.lessons).length : 0;
+    const certId = c.certificateId || c.id;
+    return `
+      <article class="cert-card">
+        <div class="cert-card-top">
+          <div class="cert-badge" aria-hidden="true">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <div class="cert-card-info">
+            <h3 class="cert-card-title">${escapeHtml(c.courseTitle || 'Course')}</h3>
+            <div class="cert-card-meta">
+              <span><i class="fas fa-calendar" aria-hidden="true"></i> ${escapeHtml(getFullTime(c.issuedAt))}</span>
+              ${category ? `<span class="dot-sep" aria-hidden="true"></span><span>${escapeHtml(category)}</span>` : ''}
+              ${lessonCount > 0 ? `<span class="dot-sep" aria-hidden="true"></span><span>${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-card-id" title="${escapeHtml(certId)}">
+          <i class="fas fa-fingerprint" aria-hidden="true" style="margin-right:.4rem;opacity:.6;"></i>${escapeHtml(certId)}
+        </div>
+
+        <div class="cert-actions">
+          <button type="button" class="ws-btn ws-btn-primary" onclick="downloadCert('${escapeHtml(c.id)}')">
+            <i class="fas fa-download" aria-hidden="true"></i> Download PDF
+          </button>
+          <button type="button" class="ws-btn ws-btn-ghost icon-only" onclick="shareCert('${escapeHtml(c.id)}')" aria-label="Share certificate" title="Share">
+            <i class="fas fa-share-nodes" aria-hidden="true"></i>
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function renderEmpty(title, detail, isError) {
+  const grid = document.getElementById('certGrid');
+  if (!grid) return;
+  grid.innerHTML = `
+    <div class="empty-state">
+      <i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-certificate'} empty-icon" aria-hidden="true"></i>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(detail)}</p>
+      <a href="index.html" class="ws-btn ws-btn-primary">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
+      </a>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CERTIFICATE PDF GENERATION
+// Opens a styled A4-landscape certificate in a new window and
+// auto-triggers the browser print dialog → "Save as PDF".
+// ══════════════════════════════════════════════════════════════
+function getRecipientName() {
+  if (!currentUser) return 'KazInni Learner';
+  return currentUser.displayName || currentUser.email.split('@')[0] || 'KazInni Learner';
+}
+
+function generateCertificateHtml(opts) {
+  const {
+    recipientName = 'KazInni Learner',
+    courseTitle = 'Course',
+    courseCategory = '',
+    certificateId = '',
+    issuedAt = Date.now(),
+    instructor = 'KazInni Learning'
+  } = opts || {};
+
+  const issued = getFullDate(issuedAt);
+  const certId = certificateId || `KZ-${Date.now().toString(36).toUpperCase()}`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate — ${escapeHtml(courseTitle)}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #faf9f7;
+    color: #0f0f1e;
+    overflow: hidden;
+  }
+  .cert {
+    width: 100%;
+    height: 100%;
+    padding: 12mm;
+    background:
+      radial-gradient(circle at 10% 10%, #fef3c7 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, #fef3c7 0%, transparent 40%),
+      #ffffff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .frame {
+    width: 100%;
+    height: 100%;
+    border: 3px solid #ca8a04;
+    border-radius: 4mm;
+    padding: 14mm 18mm;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+  }
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 3mm;
+    border: 1px solid #fbbf24;
+    border-radius: 2mm;
+    pointer-events: none;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4mm;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 11pt;
+    color: #0f0f1e;
+  }
+  .brand-mark {
+    width: 12mm;
+    height: 12mm;
+    border-radius: 3mm;
+    background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 16pt;
+    font-weight: 800;
+    font-family: 'Clash Display', sans-serif;
+  }
+  .brand-text .accent {
+    background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cert-id {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 7pt;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+    text-align: right;
+  }
+  .cert-id strong {
+    display: block;
+    font-size: 8pt;
+    color: #0f0f1e;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 1mm;
+    font-family: 'Courier New', monospace;
+  }
+
+  .body {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2mm 0;
+  }
+  .eyebrow {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #a16207;
+    margin-bottom: 3mm;
+  }
+  .cert-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 38pt;
+    line-height: 1;
+    color: #0f0f1e;
+    margin-bottom: 7mm;
+  }
+  .presented-to {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 9pt;
+    color: #6b7280;
+    margin-bottom: 3mm;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .recipient {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 28pt;
+    color: #0f0f1e;
+    margin-bottom: 5mm;
+    position: relative;
+    display: inline-block;
+    padding: 0 6mm;
+  }
+  .recipient::after {
+    content: '';
+    position: absolute;
+    left: 6mm;
+    right: 6mm;
+    bottom: -2mm;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ca8a04, transparent);
+  }
+  .completed {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 9.5pt;
+    color: #4a4a5e;
+    margin-bottom: 3mm;
+    line-height: 1.5;
+  }
+  .course-name {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 17pt;
+    color: #0f0f1e;
+    letter-spacing: -0.5px;
+    margin-bottom: 4mm;
+    max-width: 200mm;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .category {
+    display: inline-block;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 1.5mm 4mm;
+    background: #fef3c7;
+    color: #a16207;
+    border-radius: 100px;
+  }
+
+  .footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10mm;
+    align-items: end;
+    margin-top: 4mm;
+    padding-top: 5mm;
+    border-top: 1px dashed #e9ecef;
+  }
+  .footer-col {
+    text-align: center;
+  }
+  .footer-col .value {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 10pt;
+    font-weight: 600;
+    color: #0f0f1e;
+    margin-bottom: 2mm;
+  }
+  .footer-col .line {
+    height: 1px;
+    background: #0f0f1e;
+    margin-bottom: 2mm;
+  }
+  .footer-col .label {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 7pt;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .seal {
+    width: 22mm;
+    height: 22mm;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 7pt;
+    text-align: center;
+    line-height: 1.1;
+    box-shadow: 0 2mm 6mm rgba(202,138,4,0.35);
+    margin: 0 auto;
+    padding: 3mm;
+  }
+  .seal span {
+    display: block;
+    font-size: 5pt;
+    font-weight: 500;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-top: 1mm;
+  }
+
+  @media print {
+    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="cert">
+    <div class="frame">
+
+      <div class="header">
+        <div class="brand">
+          <div class="brand-mark">K</div>
+          <div class="brand-text">Kaz<span class="accent">Inni</span> Learning</div>
+        </div>
+        <div class="cert-id">
+          Certificate ID
+          <strong>${escapeHtml(certId)}</strong>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="eyebrow">Certificate of Completion</div>
+        <div class="cert-title">Certificate</div>
+        <div class="presented-to">This certificate is proudly presented to</div>
+        <div class="recipient">${escapeHtml(recipientName)}</div>
+        <div class="completed">for successfully completing the course</div>
+        <div class="course-name">${escapeHtml(courseTitle)}</div>
+        ${courseCategory ? `<div class="category">${escapeHtml(courseCategory)}</div>` : ''}
+      </div>
+
+      <div class="footer">
+        <div class="footer-col">
+          <div class="value">${escapeHtml(issued)}</div>
+          <div class="line"></div>
+          <div class="label">Date Issued</div>
+        </div>
+        <div class="footer-col">
+          <div class="seal">KAZINNI<span>VERIFIED</span></div>
+        </div>
+        <div class="footer-col">
+          <div class="value">${escapeHtml(instructor)}</div>
+          <div class="line"></div>
+          <div class="label">Instructor</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Auto-trigger print after fonts load so the PDF captures the right typefaces.
+    // If the browser blocks the auto-print, the user can still Ctrl/Cmd+P.
+    document.fonts.ready.then(function() {
+      setTimeout(function() {
+        try { window.print(); } catch (e) { console.warn('Auto-print blocked:', e); }
+      }, 400);
+    });
+  <\/script>
+</body>
+</html>`;
+}
+
+function downloadCert(certId) {
+  const cert = certificatesCache.find(c => c.id === certId);
+  if (!cert) {
+    showToast('Certificate not found', 'error');
+    return;
+  }
+
+  const course = coursesCache[cert.courseId] || {};
+  const html = generateCertificateHtml({
+    recipientName: getRecipientName(),
+    courseTitle: cert.courseTitle || 'Course',
+    courseCategory: course.category || '',
+    certificateId: cert.certificateId || cert.id,
+    issuedAt: cert.issuedAt || Date.now(),
+    instructor: 'KazInni Learning'
+  });
+
+  const win = window.open('', '_blank');
+  if (!win) {
+    showToast('Please allow pop-ups to download your certificate', 'error');
+    return;
+  }
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+
+  showToast('Opening certificate — save as PDF in the print dialog', 'info');
+}
+
+async function shareCert(certId) {
+  const cert = certificatesCache.find(c => c.id === certId);
+  if (!cert) return;
+
+  const shareUrl = window.location.origin + window.location.pathname.replace(/certificate\.html$/, 'index.html');
+  const shareTitle = `I completed ${cert.courseTitle} on KazInni Learning`;
+  const shareText = `I earned a certificate for "${cert.courseTitle}" — check it out on KazInni Learning.`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+      return;
+    } catch (e) {
+      // user cancelled — fall through to clipboard
+      if (e && e.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+    showToast('Certificate link copied to clipboard', 'success');
+  } catch (e) {
+    showToast('Sharing not available on this device', 'error');
+  }
+}
 </script>
 </body>
 </html>
