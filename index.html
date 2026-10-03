@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<meta name="description" content="KazInni Suite — one account, every workspace. Sign in once to access FlexiKazi, Kasikazi and the entire KazInni ecosystem.">
-<title>KazInni Suite — One account, every workspace</title>
+<meta name="description" content="KazInni Workspace — one account, every app. FlexiKazi, Kasikazi and the entire KazInni ecosystem in a single workspace.">
+<title>KazInni Workspace</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,10 +18,8 @@
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   RESET & TOKENS
+   TOKENS
    ============================================================ */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 :root {
   --gold: #ca8a04;
   --gold-dark: #a16207;
@@ -35,18 +33,20 @@
   --danger: #ef4444;
   --info: #3b82f6;
   --warning: #f59e0b;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --cyan: #0891b2;
   --text-primary: #0f0f1e;
   --text-secondary: #4a4a5e;
   --text-muted: #6b7280;
   --border-light: #e9ecef;
   --border-medium: #d1d5db;
-  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
-  --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
-  --shadow-gold: 0 20px 50px rgba(202, 138, 4, 0.22);
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --header-height: 64px;
+  --surface: #ffffff;
+  --surface-2: #faf9f7;
+  --surface-3: #f4f3f1;
+  --header-h: 60px;
+  --rail-w: 232px;
+  --rail-w-collapsed: 68px;
   --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
   --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
   --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -55,10 +55,17 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-pill: 100px;
-  --transition-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --transition-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --transition-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
+  --shadow-pop: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
 }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -72,64 +79,17 @@
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
   font-family: var(--font-body);
-  background: #ffffff;
+  background: var(--surface-2);
   color: var(--text-primary);
   line-height: 1.6;
+  letter-spacing: -0.005em;
+  overflow-x: hidden;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow-x: hidden;
-  letter-spacing: -0.005em;
-  display: flex;
-  flex-direction: column;
 }
 
-.main-wrap { flex: 1; display: flex; flex-direction: column; }
-
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes pulseDot {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
-  50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
-}
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes launcherIn {
-  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes orb {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -40px) scale(1.05); }
-  66% { transform: translate(-30px, 30px) scale(0.95); }
-}
-
-/* ============================================================
-   FOCUS VISIBLE
-   ============================================================ */
 :focus { outline: none; }
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-}
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px;
@@ -138,70 +98,130 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 /* ============================================================
-   HEADER
+   KEYFRAMES
    ============================================================ */
-.m365-nav {
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+}
+@keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes orb { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(40px, -40px) scale(1.05); } 66% { transform: translate(-30px, 30px) scale(0.95); } }
+
+/* ============================================================
+   HEADER (shared)
+   ============================================================ */
+.ws-header {
   position: sticky; top: 0; z-index: 1000;
-  height: var(--header-height);
-  background: var(--nav-bg);
+  height: var(--header-h);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(15,15,30,0.06);
-  padding: 0 2rem;
+  padding: 0 1rem;
+  display: flex; align-items: center;
+  gap: 1rem;
 }
-.m365-nav-inner {
-  max-width: 1600px; height: 100%; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+.ws-header-inner {
+  width: 100%;
+  display: flex; align-items: center; gap: 1rem;
 }
-.m365-left { display: flex; align-items: center; gap: 2.2rem; flex: 1; min-width: 0; }
-.m365-logo {
-  display: flex; align-items: center; gap: 0.65rem;
+.ws-logo {
+  display: flex; align-items: center; gap: 0.55rem;
   text-decoration: none; flex-shrink: 0;
-  padding: 0.3rem 0;
 }
-.m365-logo img { height: 34px; flex-shrink: 0; }
-.m365-logo-text {
+.ws-logo img { height: 30px; }
+.ws-logo-text {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--ink);
   letter-spacing: -0.4px;
   white-space: nowrap;
-  line-height: 1.2;
-  padding: 2px 0;
 }
-.m365-logo-text .accent {
+.ws-logo-text .accent {
   background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
+  -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  padding: 1px 0;
 }
-.m365-nav-links { display: flex; align-items: center; gap: 1.6rem; flex: 1; min-width: 0; }
-.m365-nav-link {
+
+.ws-rail-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: transparent; border: none; cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 0.95rem;
+  transition: background var(--t-fast);
+}
+.ws-rail-toggle:hover { background: rgba(15,15,30,0.05); }
+body.mode-workspace .ws-rail-toggle { display: flex; }
+
+/* Search */
+.ws-search {
+  flex: 1; max-width: 520px;
+  display: none;
+  position: relative;
+}
+body.mode-workspace .ws-search { display: block; }
+.ws-search input {
+  width: 100%;
+  padding: 0.5rem 0.9rem 0.5rem 2.3rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light);
+  background: var(--surface-3);
+  font-family: var(--font-body); font-size: 0.85rem;
+  color: var(--ink);
+  transition: all var(--t-fast);
+}
+.ws-search input:focus {
+  outline: none;
+  background: white;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(202,138,4,0.12);
+}
+.ws-search i {
+  position: absolute; left: 0.85rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted); font-size: 0.8rem;
+  pointer-events: none;
+}
+
+/* Nav (signed-out only) */
+.ws-nav-links {
+  display: flex; align-items: center; gap: 1.2rem;
+  margin-left: 0.5rem;
+}
+body.mode-workspace .ws-nav-links { display: none; }
+.ws-nav-link {
   color: var(--text-secondary); text-decoration: none;
   font-size: 0.85rem; font-weight: 500;
   font-family: var(--font-heading);
-  transition: color var(--transition-fast); padding: 0.4rem 0; white-space: nowrap;
-  position: relative; cursor: pointer; background: none; border: none;
+  transition: color var(--t-fast);
+  cursor: pointer; background: none; border: none; padding: 0.4rem 0;
+  white-space: nowrap;
 }
-.m365-nav-link:hover { color: var(--ink); }
-.m365-nav-link.active { color: var(--ink); font-weight: 600; }
-.m365-nav-link.active::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: -22px;
-  height: 3px; background: var(--gold-gradient); border-radius: 2px;
+.ws-nav-link:hover { color: var(--ink); }
+
+.ws-header-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-shrink: 0;
 }
-.m365-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
-.m365-icon-btn {
+
+.ws-icon-btn {
   width: 38px; height: 38px; border-radius: 50%;
   background: transparent; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-secondary); font-size: 0.95rem;
-  transition: all var(--transition-fast); position: relative;
+  transition: background var(--t-fast);
+  position: relative;
 }
-.m365-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
-.m365-icon-btn .dot-badge {
-  position: absolute; top: 6px; right: 6px;
+.ws-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+.ws-icon-btn .dot-badge {
+  position: absolute; top: 5px; right: 5px;
   min-width: 16px; height: 16px; padding: 0 4px;
   background: var(--danger); color: white;
   border-radius: var(--radius-pill); border: 2px solid white;
@@ -209,98 +229,794 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   display: none; align-items: center; justify-content: center;
   font-family: var(--font-heading);
 }
-.m365-icon-btn .dot-badge.visible { display: flex; }
-.m365-waffle {
+.ws-icon-btn .dot-badge.visible { display: flex; }
+
+.ws-waffle {
   width: 38px; height: 38px; border-radius: var(--radius-sm);
   background: transparent; border: none; cursor: pointer;
   display: grid; grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 3px; padding: 9px;
-  transition: background var(--transition-fast); position: relative;
+  transition: background var(--t-fast);
 }
-.m365-waffle:hover { background: rgba(15,15,30,0.05); }
-.m365-waffle.active { background: rgba(202,138,4,0.12); }
-.m365-waffle span {
+.ws-waffle:hover { background: rgba(15,15,30,0.05); }
+.ws-waffle.active { background: rgba(202,138,4,0.12); }
+.ws-waffle span {
   width: 4px; height: 4px; border-radius: 1px;
-  background: var(--text-secondary); transition: background var(--transition-fast);
+  background: var(--text-secondary);
   justify-self: center; align-self: center;
+  transition: background var(--t-fast);
 }
-.m365-waffle.active span { background: var(--gold); }
+.ws-waffle.active span { background: var(--gold); }
+
+/* Account button */
+.ws-account-btn {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+  border-radius: var(--radius-pill); background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  font-family: var(--font-body);
+}
+.ws-account-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.ws-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gold-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
+}
+.ws-account-name {
+  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-heading);
+}
+.ws-account-btn .fa-chevron-down {
+  font-size: 0.55rem; color: var(--text-muted);
+  transition: transform var(--t-base);
+}
+.ws-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+/* Sign-in button */
+.ws-btn {
+  padding: 0.6rem 1.3rem; border: none; border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 0.85rem; cursor: pointer;
+  transition: all var(--t-base);
+  text-decoration: none; display: inline-flex; align-items: center;
+  gap: 0.5rem; font-family: var(--font-heading); white-space: nowrap;
+}
+.ws-btn-primary {
+  background: var(--ink); color: white;
+  box-shadow: 0 4px 14px rgba(15,15,30,0.18);
+  position: relative; overflow: hidden;
+}
+.ws-btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold-gradient);
+  opacity: 0; transition: opacity var(--t-base);
+}
+.ws-btn-primary > * { position: relative; z-index: 1; }
+.ws-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.3); }
+.ws-btn-primary:hover::before { opacity: 1; }
+.ws-btn-ghost {
+  background: transparent; color: var(--ink);
+  border: 1.5px solid var(--border-medium);
+}
+.ws-btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
+.ws-btn-lg { padding: 0.85rem 1.75rem; font-size: 0.92rem; }
+
+/* ============================================================
+   SHELL — landing mode (default)
+   ============================================================ */
+.ws-shell { min-height: calc(100vh - var(--header-h)); }
+.ws-rail { display: none; }
+.ws-main { padding: 0; }
+
+/* ============================================================
+   SHELL — workspace mode (activated by body.mode-workspace)
+   ============================================================ */
+body.mode-workspace { background: var(--surface-2); }
+
+body.mode-workspace .ws-shell {
+  display: grid;
+  grid-template-columns: var(--rail-w) 1fr;
+  min-height: calc(100vh - var(--header-h));
+  transition: grid-template-columns var(--t-base);
+}
+body.mode-workspace.rail-collapsed .ws-shell {
+  grid-template-columns: var(--rail-w-collapsed) 1fr;
+}
+body.mode-workspace .ws-rail { display: flex; flex-direction: column; }
+
+/* ============================================================
+   RAIL
+   ============================================================ */
+.ws-rail {
+  background: var(--surface);
+  border-right: 1px solid rgba(15,15,30,0.06);
+  padding: 0.85rem 0.6rem;
+  gap: 0.15rem;
+  overflow-y: auto;
+  position: sticky; top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  height: calc(100dvh - var(--header-h));
+}
+.rail-group { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.35rem 0; }
+.rail-group + .rail-group { border-top: 1px solid var(--border-light); margin-top: 0.3rem; padding-top: 0.65rem; }
+.rail-label {
+  font-family: var(--font-heading);
+  font-size: 0.62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 0.55rem 0.85rem 0.35rem;
+  white-space: nowrap; overflow: hidden;
+}
+body.rail-collapsed .rail-label { opacity: 0; height: 0; padding: 0; }
+
+.rail-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-heading); font-size: 0.85rem; font-weight: 500;
+  transition: background var(--t-fast), color var(--t-fast);
+  cursor: pointer; background: none; border: none;
+  width: 100%; text-align: left; white-space: nowrap;
+  position: relative;
+}
+.rail-item:hover { background: var(--surface-3); color: var(--ink); }
+.rail-item.active { background: rgba(202,138,4,0.1); color: var(--gold-dark); font-weight: 600; }
+.rail-item.active::before {
+  content: ''; position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px; background: var(--gold-gradient);
+  border-radius: 2px;
+}
+.rail-item i {
+  width: 18px; text-align: center; font-size: 0.92rem;
+  color: var(--text-muted); transition: color var(--t-fast);
+  flex-shrink: 0;
+}
+.rail-item:hover i, .rail-item.active i { color: var(--gold); }
+.rail-item .rail-item-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.rail-item .rail-count {
+  font-size: 0.68rem; font-weight: 700;
+  padding: 0.1rem 0.45rem; border-radius: var(--radius-pill);
+  background: var(--gold-soft); color: var(--gold-dark);
+  font-family: var(--font-heading);
+}
+body.rail-collapsed .rail-item .rail-item-name,
+body.rail-collapsed .rail-item .rail-count { display: none; }
+body.rail-collapsed .rail-item { justify-content: center; padding: 0.7rem 0; }
+body.rail-collapsed .rail-item i { font-size: 1rem; }
+
+/* App sub-items */
+.rail-sub { display: flex; flex-direction: column; gap: 0.1rem; }
+.rail-sub-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.5rem 0.85rem 0.5rem 2.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.82rem; font-family: var(--font-body);
+  transition: background var(--t-fast), color var(--t-fast);
+  white-space: nowrap;
+}
+.rail-sub-item:hover { background: var(--surface-3); color: var(--ink); }
+.rail-sub-item i { font-size: 0.75rem; color: var(--text-muted); }
+.rail-sub-dot {
+  width: 8px; height: 8px; border-radius: 3px;
+  flex-shrink: 0;
+}
+body.rail-collapsed .rail-sub { display: none; }
+
+.rail-spacer { flex: 1; min-height: 0.5rem; }
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.ws-content {
+  padding: 2rem 2.5rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+body.mode-workspace .ws-content { padding: 1.75rem 2rem; }
+body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
+
+/* ============================================================
+   LANDING — HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(15,15,30,0.05);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.hero-bg .orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); opacity: 0.35;
+  will-change: transform;
+}
+.hero-bg .orb-1 { width: 480px; height: 480px; background: #fde68a; top: -150px; left: -120px; animation: orb 24s ease-in-out infinite; }
+.hero-bg .orb-2 { width: 380px; height: 380px; background: #fbbf24; bottom: -150px; right: -120px; opacity: 0.25; animation: orb 28s ease-in-out infinite; animation-delay: -8s; }
+.hero-bg .orb-3 { width: 320px; height: 320px; background: #fef3c7; top: 40%; left: 45%; opacity: 0.4; animation: orb 32s ease-in-out infinite; animation-delay: -16s; }
+.hero-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  background: white;
+  border: 1px solid rgba(202,138,4,0.22);
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 1.6rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(202,138,4,0.08);
+}
+.hero-eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success); animation: pulseDot 2s infinite;
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 5.2vw, 4rem);
+  font-weight: 700; line-height: 1.06;
+  margin-bottom: 1.2rem; letter-spacing: -0.045em;
+  font-family: var(--font-display); color: var(--ink);
+}
+.hero h1 .accent {
+  background: var(--gold-gradient);
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic; font-weight: 500;
+}
+.hero-lede {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 560px; margin: 0 auto 2.2rem;
+  line-height: 1.65;
+}
+.hero-cta {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.7rem; flex-wrap: wrap; margin-bottom: 3rem;
+}
+.hero-strip {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2.2rem; flex-wrap: wrap;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(15,15,30,0.06);
+}
+.hero-strip-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.82rem; color: var(--text-secondary);
+  font-family: var(--font-heading); font-weight: 500;
+}
+.hero-strip-item i { color: var(--gold); font-size: 0.85rem; }
+
+/* ============================================================
+   LANDING — APP PREVIEW GRID
+   ============================================================ */
+.app-preview-section {
+  padding: 4rem 2rem;
+  background: white;
+  border-bottom: 1px solid rgba(15,15,30,0.05);
+}
+.app-preview-inner { max-width: 1200px; margin: 0 auto; }
+
+.section-header-center { text-align: center; margin-bottom: 2.6rem; }
+.section-label {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  background: var(--gold-soft); color: var(--gold-dark);
+  border-radius: var(--radius-pill);
+  font-size: 0.68rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 1.2px;
+  margin-bottom: 0.9rem;
+}
+.section-header-center h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.section-header-center p {
+  font-size: 0.95rem; color: var(--text-muted);
+  max-width: 520px; margin: 0 auto;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.preview-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.3rem 1.3rem;
+  text-decoration: none; color: inherit;
+  transition: all var(--t-base);
+  cursor: pointer; position: relative;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  overflow: hidden;
+}
+.preview-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold-gradient);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-slow);
+}
+.preview-card:hover::before { transform: scaleX(1); }
+.preview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(15,15,30,0.08);
+  border-color: rgba(202,138,4,0.25);
+  background: white;
+}
+.preview-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem;
+  transition: transform var(--t-base);
+}
+.preview-card:hover .preview-icon { transform: scale(1.08) rotate(3deg); }
+.preview-name {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 1rem; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.preview-desc {
+  font-size: 0.82rem; color: var(--text-muted);
+  line-height: 1.5;
+}
+.preview-cta {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 0.76rem; color: var(--gold-dark);
+  margin-top: auto;
+}
+.preview-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  font-size: 0.6rem; font-weight: 700;
+  font-family: var(--font-heading); text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 0.18rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--gold-soft); color: var(--gold-dark);
+}
+
+/* ============================================================
+   LANDING — WHY STRIP
+   ============================================================ */
+.why-strip {
+  padding: 4rem 2rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid rgba(15,15,30,0.05);
+}
+.why-inner { max-width: 1200px; margin: 0 auto; }
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.4rem;
+}
+.why-item {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+.why-icon {
+  width: 52px; height: 52px; border-radius: 16px;
+  background: white;
+  border: 1px solid var(--border-light);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; margin: 0 auto 1rem;
+  box-shadow: var(--shadow-md);
+}
+.why-item h3 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.4rem;
+}
+.why-item p {
+  font-size: 0.82rem; color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   LANDING — STATS
+   ============================================================ */
+.stats-section {
+  padding: 4rem 2rem;
+  background: white;
+  border-bottom: 1px solid rgba(15,15,30,0.05);
+}
+.stats-inner { max-width: 1200px; margin: 0 auto; }
+.ps-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+.ps-tile {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: 18px; padding: 1.5rem 1.4rem 1.3rem;
+  position: relative; overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ps-tile::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold-gradient);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-slow);
+}
+.ps-tile:hover::before { transform: scaleX(1); }
+.ps-tile:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,15,30,0.08); border-color: rgba(202,138,4,0.25); }
+.ps-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  background: var(--gold-soft); color: var(--gold-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; margin-bottom: 1.1rem;
+}
+.ps-tile.clock-tile .ps-icon { background: var(--ink); color: white; }
+.ps-value {
+  font-family: var(--font-display); font-size: 2rem;
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.035em; line-height: 1;
+  margin-bottom: 0.4rem;
+  display: flex; align-items: baseline; gap: 0.2rem;
+}
+.ps-value.loading {
+  width: 60%; height: 2rem; border-radius: 6px;
+  color: transparent;
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+.ps-ampm { font-size: 0.8rem; color: var(--gold); font-weight: 700; letter-spacing: 0.05em; margin-left: 2px; }
+.ps-label {
+  font-family: var(--font-heading); font-size: 0.7rem;
+  font-weight: 500; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.6px;
+}
+
+/* Ticker */
+.ps-ticker {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill); padding: 0.8rem 0;
+  overflow: hidden; position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.ps-ticker::before, .ps-ticker::after {
+  content: ''; position: absolute; top: 0; bottom: 0;
+  width: 100px; z-index: 2; pointer-events: none;
+}
+.ps-ticker::before { left: 0; background: linear-gradient(90deg, white, transparent); }
+.ps-ticker::after { right: 0; background: linear-gradient(-90deg, white, transparent); }
+.ps-ticker-track {
+  display: flex; gap: 3rem;
+  animation: tickerScroll 50s linear infinite;
+  white-space: nowrap; padding: 0 2rem; width: max-content;
+}
+.ps-ticker:hover .ps-ticker-track { animation-play-state: paused; }
+.ps-ticker-item {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-heading); font-size: 0.8rem;
+  color: var(--text-secondary); flex-shrink: 0;
+}
+.ps-ticker-item i { font-size: 0.7rem; color: var(--gold); }
+.ps-ticker-item strong { color: var(--ink); font-weight: 700; }
+
+/* ============================================================
+   LANDING — FOOTER
+   ============================================================ */
+.landing-footer {
+  background: var(--surface-2);
+  border-top: 1px solid rgba(15,15,30,0.06);
+  padding: 2.4rem 2rem 1.8rem;
+}
+.landing-footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+.landing-footer-brand {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-weight: 700; font-size: 0.82rem; color: var(--ink);
+  font-family: var(--font-heading);
+}
+.landing-footer-brand i { color: var(--gold); }
+.landing-footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.landing-footer-links a, .landing-footer-links button {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.76rem; font-family: var(--font-heading);
+  font-weight: 500; transition: color var(--t-fast);
+  cursor: pointer; background: none; border: none; padding: 0;
+}
+.landing-footer-links a:hover, .landing-footer-links button:hover { color: var(--gold-dark); }
+.landing-footer-copy { color: var(--text-muted); font-size: 0.74rem; font-family: var(--font-heading); }
+
+/* ============================================================
+   WORKSPACE — WELCOME + DASHBOARD
+   ============================================================ */
+.ws-welcome {
+  margin-bottom: 1.6rem;
+}
+.ws-welcome h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 700; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 0.3rem;
+}
+.ws-welcome p {
+  font-size: 0.88rem; color: var(--text-muted);
+}
+
+.ws-section {
+  margin-bottom: 1.8rem;
+}
+.ws-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.9rem;
+  gap: 1rem;
+}
+.ws-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.ws-section-title i { color: var(--gold); font-size: 0.85rem; }
+.ws-section-action {
+  font-family: var(--font-heading);
+  font-size: 0.76rem; font-weight: 600;
+  color: var(--gold-dark); text-decoration: none;
+  cursor: pointer; background: none; border: none;
+  transition: color var(--t-fast);
+}
+.ws-section-action:hover { color: var(--gold); }
+
+/* Card grid */
+.ws-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.9rem;
+}
+.ws-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.2rem;
+  transition: all var(--t-fast);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  position: relative; overflow: hidden;
+}
+.ws-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(202,138,4,0.25);
+}
+.ws-card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 0.7rem;
+}
+.ws-card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.9rem; flex-shrink: 0;
+}
+.ws-card-tag {
+  font-family: var(--font-heading);
+  font-size: 0.62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3); color: var(--text-secondary);
+}
+.ws-card-tag.gold { background: var(--gold-soft); color: var(--gold-dark); }
+.ws-card-tag.success { background: #d1fae5; color: #065f46; }
+.ws-card-tag.warning { background: #fef3c7; color: #92400e; }
+.ws-card-tag.danger { background: #fee2e2; color: #991b1b; }
+.ws-card-tag.info { background: #dbeafe; color: #1e40af; }
+
+.ws-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem; font-weight: 600;
+  color: var(--ink); line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.ws-card-meta {
+  font-size: 0.76rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.ws-card-meta i { font-size: 0.7rem; }
+.ws-card-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.03em;
+  line-height: 1;
+}
+.ws-card-foot {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-heading);
+  font-size: 0.72rem; color: var(--text-muted);
+}
+.ws-card-foot .ws-card-cta {
+  color: var(--gold-dark); font-weight: 700;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+}
+
+/* Recent activity feed */
+.ws-feed {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.ws-feed-item {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--border-light);
+  transition: background var(--t-fast);
+}
+.ws-feed-item:last-child { border-bottom: none; }
+.ws-feed-item:hover { background: var(--surface-2); }
+.ws-feed-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.8rem; flex-shrink: 0;
+}
+.ws-feed-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
+.ws-feed-icon.info { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+.ws-feed-icon.gold { background: var(--gold-gradient); }
+.ws-feed-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+.ws-feed-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
+.ws-feed-body { flex: 1; min-width: 0; }
+.ws-feed-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--ink); margin-bottom: 0.1rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ws-feed-desc {
+  font-size: 0.76rem; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ws-feed-time {
+  font-size: 0.7rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  flex-shrink: 0;
+}
+.ws-feed-empty {
+  padding: 2.5rem 1.5rem; text-align: center;
+  color: var(--text-muted); font-size: 0.82rem;
+  font-family: var(--font-heading);
+}
+.ws-feed-empty i {
+  font-size: 1.6rem; color: var(--gold);
+  opacity: 0.4; display: block; margin-bottom: 0.5rem;
+}
+
+/* App tiles in workspace */
+.ws-app-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+.ws-app-tile {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 1rem 0.9rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 0.7rem;
+  transition: all var(--t-fast);
+  position: relative;
+}
+.ws-app-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(202,138,4,0.25);
+}
+.ws-app-tile .ws-card-icon { width: 40px; height: 40px; font-size: 1rem; border-radius: var(--radius-md); }
+.ws-app-tile-name {
+  font-family: var(--font-heading);
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--ink); line-height: 1.2;
+}
+.ws-app-tile-desc {
+  font-size: 0.72rem; color: var(--text-muted);
+  line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+/* Loading skeleton */
+.ws-skeleton {
+  height: 90px; border-radius: var(--radius-md);
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
 
 /* ============================================================
    LAUNCHER PANEL
    ============================================================ */
 .launcher-panel {
   position: fixed;
-  top: calc(var(--header-height) + 8px);
-  right: 2rem;
-  width: 400px; max-width: calc(100vw - 2rem);
+  top: calc(var(--header-h) + 8px);
+  right: 1rem;
+  width: 420px; max-width: calc(100vw - 2rem);
   background: white; border-radius: var(--radius-lg);
-  box-shadow: 0 30px 80px rgba(15,15,30,0.2), 0 6px 20px rgba(15,15,30,0.08);
+  box-shadow: var(--shadow-pop);
   border: 1px solid var(--border-light);
   overflow: hidden; z-index: 1100; display: none;
+  max-height: calc(100vh - var(--header-h) - 24px);
+  flex-direction: column;
 }
-.launcher-panel.active { display: block; animation: launcherIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.launcher-panel.active { display: flex; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .lp-header {
   padding: 1rem 1.2rem 0.8rem;
   border-bottom: 1px solid var(--border-light);
   display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
 }
 .lp-title {
-  font-family: var(--font-heading); font-size: 0.78rem; font-weight: 700;
+  font-family: var(--font-heading); font-size: 0.76rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
 }
 .lp-header-right { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading); font-weight: 500; }
-.lp-live-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--success); animation: pulseDot 2s infinite;
-}
-.lp-body { padding: 1rem 1rem 1.2rem; }
+.lp-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulseDot 2s infinite; }
+.lp-body { padding: 1rem; overflow-y: auto; flex: 1; }
 .lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 .lp-app {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.65rem;
-  padding: 0.9rem 0.9rem 0.85rem; border-radius: var(--radius-md);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem;
+  padding: 0.85rem 0.85rem 0.8rem; border-radius: var(--radius-md);
   background: transparent; border: 1px solid transparent;
   text-decoration: none; color: inherit;
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all var(--t-fast);
   cursor: pointer; position: relative; text-align: left;
   font-family: var(--font-body); width: 100%;
 }
-.lp-app:hover { background: #faf9f7; border-color: var(--border-light); transform: translateY(-1px); }
+.lp-app:hover { background: var(--surface-2); border-color: var(--border-light); transform: translateY(-1px); }
 .lp-app-icon {
-  width: 40px; height: 40px; border-radius: 10px;
+  width: 38px; height: 38px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.05rem; color: white; flex-shrink: 0;
-  transition: transform var(--transition-base);
+  font-size: 1rem; color: white; flex-shrink: 0;
+  transition: transform var(--t-base);
 }
 .lp-app:hover .lp-app-icon { transform: scale(1.08) rotate(3deg); }
 .lp-app-name {
   font-family: var(--font-heading); font-weight: 700;
-  font-size: 0.88rem; color: var(--ink);
+  font-size: 0.85rem; color: var(--ink);
   letter-spacing: -0.01em; line-height: 1.2;
 }
-.lp-app-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; margin-top: 0.1rem; }
+.lp-app-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.4; }
 .lp-app-badge {
-  position: absolute; top: 0.7rem; right: 0.7rem;
-  font-size: 0.58rem; font-weight: 700; font-family: var(--font-heading);
+  position: absolute; top: 0.65rem; right: 0.65rem;
+  font-size: 0.56rem; font-weight: 700; font-family: var(--font-heading);
   text-transform: uppercase; letter-spacing: 0.5px;
-  padding: 0.18rem 0.5rem; border-radius: var(--radius-pill);
+  padding: 0.16rem 0.45rem; border-radius: var(--radius-pill);
   background: var(--gold-soft); color: var(--gold-dark);
 }
 .lp-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-heading); }
 .lp-empty i { display: block; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.6rem; }
-.lp-skeleton {
-  height: 96px; border-radius: var(--radius-md);
-  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-}
 .lp-footer {
   padding: 0.85rem 1.2rem; border-top: 1px solid var(--border-light);
-  background: #faf9f7; display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface-2); display: flex; align-items: center; justify-content: space-between;
   font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading);
+  flex-shrink: 0;
 }
-.lp-footer a { color: var(--gold-dark); text-decoration: none; font-weight: 600; transition: color var(--transition-fast); cursor: pointer; }
+.lp-footer a { color: var(--gold-dark); text-decoration: none; font-weight: 600; cursor: pointer; }
 .lp-footer a:hover { color: var(--gold); }
 
 /* ============================================================
@@ -308,23 +1024,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
    ============================================================ */
 .notif-panel {
   position: fixed;
-  top: calc(var(--header-height) + 8px);
-  right: 2rem;
+  top: calc(var(--header-h) + 8px);
+  right: 1rem;
   width: 400px; max-width: calc(100vw - 2rem);
   background: white; border-radius: var(--radius-lg);
-  box-shadow: 0 30px 80px rgba(15,15,30,0.2), 0 6px 20px rgba(15,15,30,0.08);
+  box-shadow: var(--shadow-pop);
   border: 1px solid var(--border-light);
   overflow: hidden; z-index: 1100; display: none;
-  max-height: 520px;
+  max-height: calc(100vh - var(--header-h) - 24px);
+  flex-direction: column;
 }
-.notif-panel.active { display: block; animation: launcherIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.notif-panel.active { display: flex; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .notif-header {
   padding: 1rem 1.2rem 0.8rem;
   border-bottom: 1px solid var(--border-light);
   display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
 }
 .notif-title {
-  font-family: var(--font-heading); font-size: 0.78rem; font-weight: 700;
+  font-family: var(--font-heading); font-size: 0.76rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
 }
 .notif-clear {
@@ -332,24 +1050,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   font-size: 0.72rem; font-weight: 600; color: var(--gold-dark);
   font-family: var(--font-heading);
 }
-.notif-clear:hover { color: var(--gold); }
+.notif-clear:hover:not(:disabled) { color: var(--gold); }
 .notif-clear:disabled { opacity: 0.4; cursor: not-allowed; }
-.notif-body { max-height: 420px; overflow-y: auto; padding: 0.5rem; }
+.notif-body { overflow-y: auto; padding: 0.4rem; flex: 1; }
 .notif-item {
-  display: flex; align-items: flex-start; gap: 0.8rem;
-  padding: 0.85rem 0.9rem;
-  border-radius: var(--radius-md); transition: background var(--transition-fast);
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: var(--radius-md);
+  transition: background var(--t-fast);
   cursor: pointer; text-decoration: none; color: inherit;
   width: 100%; border: none; background: none; text-align: left;
   font-family: var(--font-body);
 }
-.notif-item:hover { background: #faf9f7; }
+.notif-item:hover { background: var(--surface-2); }
 .notif-item.unread { background: rgba(202,138,4,0.06); }
 .notif-item.unread:hover { background: rgba(202,138,4,0.1); }
 .notif-icon {
-  width: 36px; height: 36px; border-radius: 10px;
+  width: 34px; height: 34px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; color: white; flex-shrink: 0;
+  font-size: 0.82rem; color: white; flex-shrink: 0;
 }
 .notif-icon.info { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
 .notif-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
@@ -359,18 +1078,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 .notif-body-text { flex: 1; min-width: 0; }
 .notif-title-text {
   font-family: var(--font-heading); font-weight: 600;
-  font-size: 0.85rem; color: var(--ink);
-  margin-bottom: 0.15rem; line-height: 1.3;
+  font-size: 0.83rem; color: var(--ink);
+  margin-bottom: 0.1rem; line-height: 1.3;
 }
 .notif-desc-text {
-  font-size: 0.75rem; color: var(--text-muted);
+  font-size: 0.74rem; color: var(--text-muted);
   line-height: 1.4; overflow: hidden; text-overflow: ellipsis;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 .notif-time {
-  font-size: 0.68rem; color: var(--text-muted);
+  font-size: 0.66rem; color: var(--text-muted);
   font-family: var(--font-heading); flex-shrink: 0;
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
 }
 .notif-empty {
   padding: 3rem 1.5rem; text-align: center;
@@ -383,365 +1102,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 
 /* ============================================================
-   HERO
+   MODALS
    ============================================================ */
-.landing-hero {
-  position: relative;
-  padding: 6rem 2rem 5rem;
-  overflow: hidden;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.landing-hero-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-.landing-hero-bg .orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.35;
-  will-change: transform;
-}
-.landing-hero-bg .orb-1 {
-  width: 500px; height: 500px;
-  background: #fde68a;
-  top: -150px; left: -120px;
-  animation: orb 24s ease-in-out infinite;
-}
-.landing-hero-bg .orb-2 {
-  width: 400px; height: 400px;
-  background: #fbbf24;
-  bottom: -150px; right: -120px;
-  opacity: 0.25;
-  animation: orb 28s ease-in-out infinite;
-  animation-delay: -8s;
-}
-.landing-hero-bg .orb-3 {
-  width: 350px; height: 350px;
-  background: #fef3c7;
-  top: 40%; left: 45%;
-  opacity: 0.4;
-  animation: orb 32s ease-in-out infinite;
-  animation-delay: -16s;
-}
-.landing-hero-inner {
-  max-width: 720px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-.landing-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.95rem;
-  background: white;
-  border: 1px solid rgba(202,138,4,0.22);
-  border-radius: var(--radius-pill);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--gold-dark);
-  margin-bottom: 1.8rem;
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(202,138,4,0.08);
-}
-.landing-eyebrow .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--success);
-  animation: pulseDot 2s infinite;
-}
-.landing-hero h1 {
-  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
-  font-weight: 700;
-  line-height: 1.05;
-  margin-bottom: 1.4rem;
-  letter-spacing: -0.045em;
-  font-family: var(--font-display);
-  color: var(--ink);
-}
-.landing-hero h1 .accent {
-  background: var(--gold-gradient);
-  background-size: 200% 200%;
-  animation: gradientShift 6s ease infinite;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
-  font-weight: 500;
-}
-.landing-hero-lede {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  max-width: 560px;
-  margin: 0 auto 2.4rem;
-  line-height: 1.65;
-}
-.landing-hero-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  flex-wrap: wrap;
-  margin-bottom: 3.5rem;
-}
-.landing-hero-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.4rem;
-  flex-wrap: wrap;
-  padding-top: 2.4rem;
-  border-top: 1px solid rgba(15,15,30,0.06);
-}
-.landing-strip-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  font-family: var(--font-heading);
-  font-weight: 500;
-}
-.landing-strip-item i { color: var(--gold); font-size: 0.85rem; }
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-.btn {
-  padding: 0.75rem 1.6rem; border: none; border-radius: var(--radius-pill);
-  font-weight: 600; font-size: 0.88rem; cursor: pointer;
-  transition: all var(--transition-base);
-  text-decoration: none; display: inline-flex; align-items: center;
-  gap: 0.55rem; font-family: var(--font-heading);
-  white-space: nowrap; position: relative; overflow: hidden;
-}
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn-primary {
-  background: var(--ink); color: white;
-  box-shadow: 0 4px 14px rgba(15,15,30,0.18);
-}
-.btn-primary::before {
-  content: ''; position: absolute; inset: 0;
-  background: var(--gold-gradient);
-  opacity: 0; transition: opacity var(--transition-base);
-}
-.btn-primary > * { position: relative; z-index: 1; }
-.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.3); }
-.btn-primary:hover:not(:disabled)::before { opacity: 1; }
-.btn-ghost {
-  background: transparent; color: var(--ink);
-  border: 1.5px solid var(--border-medium);
-}
-.btn-ghost:hover:not(:disabled) { border-color: var(--ink); background: var(--ink); color: white; }
-.btn-lg { padding: 0.95rem 2rem; font-size: 0.95rem; }
-
-/* ============================================================
-   PUBLIC STATS
-   ============================================================ */
-.public-stats-section {
-  padding: 5rem 2rem 4rem;
-  background: #faf9f7;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
-}
-.public-stats-inner { max-width: 1360px; margin: 0 auto; }
-.section-header-center { text-align: center; margin-bottom: 3rem; }
-.section-label {
-  display: inline-block;
-  padding: 0.35rem 0.9rem;
-  background: var(--gold-soft);
-  color: var(--gold-dark);
-  border-radius: var(--radius-pill);
-  font-size: 0.68rem;
-  font-weight: 700;
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-bottom: 0.9rem;
-}
-.section-header-center h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-.section-header-center p {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  max-width: 500px;
-  margin: 0 auto;
-}
-.ps-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1rem; margin-bottom: 1.5rem;
-}
-.ps-tile {
-  background: white; border: 1px solid var(--border-light);
-  border-radius: 18px; padding: 1.6rem 1.5rem 1.4rem;
-  position: relative; overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.ps-tile::before {
-  content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
-  background: var(--gold-gradient);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform var(--transition-slow);
-}
-.ps-tile:hover::before { transform: scaleX(1); }
-.ps-tile:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,15,30,0.08); border-color: rgba(202,138,4,0.25); }
-.ps-icon {
-  width: 42px; height: 42px; border-radius: var(--radius-md);
-  background: var(--gold-soft); color: var(--gold-dark);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; margin-bottom: 1.2rem;
-}
-.ps-tile.clock-tile .ps-icon { background: var(--ink); color: white; }
-.ps-value {
-  font-family: var(--font-display); font-size: 2.2rem;
-  font-weight: 700; color: var(--ink);
-  letter-spacing: -0.035em; line-height: 1;
-  margin-bottom: 0.4rem; display: flex; align-items: baseline; gap: 0.2rem;
-}
-.ps-value.loading {
-  width: 60%; height: 2.2rem; border-radius: 6px;
-  color: transparent;
-  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-}
-.ps-ampm {
-  font-size: 0.85rem; color: var(--gold);
-  font-weight: 700; letter-spacing: 0.05em; margin-left: 2px;
-}
-.ps-label {
-  font-family: var(--font-heading); font-size: 0.72rem;
-  font-weight: 500; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.6px;
-}
-
-/* ============================================================
-   ACTIVITY TICKER
-   ============================================================ */
-.activity-ticker-section { max-width: 1360px; margin: 0 auto; padding: 0 2rem 2rem; }
-.ps-ticker {
-  background: white; border: 1px solid var(--border-light);
-  border-radius: var(--radius-pill); padding: 0.85rem 0;
-  overflow: hidden; position: relative;
-  box-shadow: var(--shadow-sm);
-}
-.ps-ticker::before, .ps-ticker::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 100px;
-  z-index: 2; pointer-events: none;
-}
-.ps-ticker::before { left: 0; background: linear-gradient(90deg, white, transparent); }
-.ps-ticker::after { right: 0; background: linear-gradient(-90deg, white, transparent); }
-.ps-ticker-track {
-  display: flex; gap: 3rem;
-  animation: tickerScroll 50s linear infinite;
-  white-space: nowrap; padding: 0 2rem; width: max-content;
-}
-.ps-ticker:hover .ps-ticker-track { animation-play-state: paused; }
-.ps-ticker-item {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-heading); font-size: 0.82rem;
-  color: var(--text-secondary); flex-shrink: 0;
-}
-.ps-ticker-item i { font-size: 0.7rem; color: var(--gold); }
-.ps-ticker-item strong { color: var(--ink); font-weight: 700; }
-
-/* ============================================================
-   USER AVATAR + DROPDOWN
-   ============================================================ */
-.m365-avatar-btn {
-  display: flex; align-items: center; gap: 0.55rem;
-  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
-  border-radius: var(--radius-pill); background: transparent;
-  border: 1px solid transparent; cursor: pointer;
-  transition: all var(--transition-fast); font-family: var(--font-body);
-}
-.m365-avatar-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
-.m365-avatar {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--gold-gradient); color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
-}
-.m365-avatar-name {
-  font-size: 0.82rem; font-weight: 600; color: var(--ink);
-  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  font-family: var(--font-heading);
-}
-.m365-avatar-btn .fa-chevron-down {
-  font-size: 0.55rem; color: var(--text-muted);
-  transition: transform var(--transition-base);
-}
-.m365-avatar-btn.active .fa-chevron-down { transform: rotate(180deg); }
-
-.user-dropdown-wrap { position: relative; }
-.user-dropdown {
-  position: absolute; top: calc(100% + 8px); right: 0;
-  width: 320px; background: white; border-radius: var(--radius-md);
-  box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
-  border: 1px solid var(--border-light);
-  overflow: hidden; display: none; z-index: 1001;
-  animation: fadeUp 0.2s ease;
-}
-.user-dropdown.active { display: block; }
-.ud-header {
-  padding: 1.1rem 1.2rem 1rem;
-  border-bottom: 1px solid var(--border-light);
-  display: flex; align-items: center; gap: 0.85rem;
-}
-.ud-header .m365-avatar { width: 42px; height: 42px; font-size: 1rem; }
-.ud-header-info { min-width: 0; flex: 1; }
-.ud-header-name {
-  font-weight: 700; font-size: 0.92rem; color: var(--ink);
-  font-family: var(--font-heading);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.ud-header-email {
-  font-size: 0.75rem; color: var(--text-muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.ud-body { padding: 0.5rem; }
-.ud-item {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
-  cursor: pointer; transition: background var(--transition-fast);
-  border: none; background: none; width: 100%;
-  text-align: left; font-size: 0.85rem;
-  color: var(--text-secondary); text-decoration: none;
-  font-family: var(--font-body); font-weight: 500;
-}
-.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color var(--transition-fast); }
-.ud-item:hover { background: #faf9f7; color: var(--ink); }
-.ud-item:hover i { color: var(--gold); }
-.ud-item.danger { color: var(--danger); }
-.ud-item.danger i { color: var(--danger); }
-.ud-item.danger:hover { background: #fef2f2; }
-.ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
-.ud-section-label {
-  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.8px; color: var(--text-muted);
-  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
-}
-
-/* ============================================================
-   MODALS (shared)
-   ============================================================ */
-.notif-modal {
+.ws-modal {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: white; border-radius: var(--radius-xl);
@@ -750,87 +1113,79 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
   display: none; max-height: 90vh; overflow-y: auto;
 }
-.notif-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.notif-modal-close {
+.ws-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ws-modal-close {
   position: absolute; top: 1rem; right: 1.2rem;
   background: none; border: none; font-size: 1rem;
   cursor: pointer; color: var(--text-muted);
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  transition: all var(--transition-fast);
+  transition: all var(--t-fast);
 }
-.notif-modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
-.notif-modal-icon {
+.ws-modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
+.ws-modal-icon {
   width: 60px; height: 60px; border-radius: 18px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.5rem; color: white;
   margin: 0 auto 1.2rem;
 }
-.notif-modal-icon.info { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
-.notif-modal-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
-.notif-modal-icon.gold { background: var(--gold-gradient); box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
-.notif-modal-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
-.notif-modal-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
-.notif-modal-header { text-align: center; margin-bottom: 1.4rem; }
-.notif-modal-header h3 {
+.ws-modal-icon.info { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+.ws-modal-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
+.ws-modal-icon.gold { background: var(--gold-gradient); box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
+.ws-modal-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+.ws-modal-icon.danger { background: linear-gradient(135deg, #ef4444, #f87171); }
+.ws-modal-header { text-align: center; margin-bottom: 1.4rem; }
+.ws-modal-header h3 {
   font-family: var(--font-display);
-  font-size: 1.4rem; font-weight: 700;
+  font-size: 1.35rem; font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink); margin-bottom: 0.35rem;
 }
-.notif-modal-header p {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+.ws-modal-header p {
+  font-size: 0.78rem; color: var(--text-muted);
   font-family: var(--font-heading);
 }
-.notif-modal-body {
-  background: #faf9f7;
+.ws-modal-body {
+  background: var(--surface-2);
   border-radius: 14px;
   padding: 1.2rem 1.3rem;
   margin-bottom: 1.4rem;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-secondary);
   line-height: 1.6;
 }
-.notif-modal-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+.ws-modal-meta {
+  display: flex; justify-content: space-between;
+  font-size: 0.74rem; color: var(--text-muted);
   font-family: var(--font-heading);
   margin-bottom: 1.4rem;
   padding-top: 1rem;
   border-top: 1px dashed var(--border-light);
 }
-.notif-modal-actions { display: flex; gap: 0.6rem; }
-.notif-modal-btn {
-  flex: 1;
-  padding: 0.75rem 1.2rem;
+.ws-modal-actions { display: flex; gap: 0.6rem; }
+.ws-modal-btn {
+  flex: 1; padding: 0.75rem 1.2rem;
   border-radius: var(--radius-pill);
   border: none;
   font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-weight: 600; font-size: 0.85rem;
   cursor: pointer;
-  transition: all var(--transition-base);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-decoration: none;
+  transition: all var(--t-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; text-decoration: none;
 }
-.notif-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.notif-modal-btn.primary {
+.ws-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.ws-modal-btn.primary {
   background: var(--gold-gradient); color: white;
   box-shadow: 0 8px 20px rgba(202,138,4,0.28);
 }
-.notif-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
-.notif-modal-btn.secondary {
+.ws-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
+.ws-modal-btn.secondary {
   background: transparent;
   color: var(--text-secondary);
   border: 1.5px solid var(--border-light);
 }
-.notif-modal-btn.secondary:hover:not(:disabled) { background: #faf9f7; border-color: var(--border-medium); }
+.ws-modal-btn.secondary:hover:not(:disabled) { background: var(--surface-2); border-color: var(--border-medium); }
 
 .modal-overlay {
   position: fixed; inset: 0;
@@ -841,29 +1196,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 }
 .modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
 
-/* ============================================================
-   AUTH MODAL FORM
-   ============================================================ */
-.auth-field {
-  display: flex; flex-direction: column; gap: 0.5rem;
-}
+/* Auth form */
+.auth-field { display: flex; flex-direction: column; gap: 0.4rem; }
 .auth-field label {
-  font-size: 0.72rem; font-weight: 600; color: var(--text-secondary);
-  font-family: var(--font-heading); text-transform: uppercase;
-  letter-spacing: 0.6px;
+  font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);
+  font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.6px;
 }
 .auth-input {
-  width: 100%; padding: 0.85rem 1.1rem;
+  width: 100%; padding: 0.8rem 1.05rem;
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   font-size: 0.9rem; font-family: var(--font-body);
-  background: #faf9f7; color: var(--ink);
-  transition: border-color var(--transition-fast), background var(--transition-fast);
+  background: var(--surface-2); color: var(--ink);
+  transition: border-color var(--t-fast), background var(--t-fast);
 }
 .auth-input:focus {
-  outline: none;
-  border-color: var(--gold);
-  background: white;
+  outline: none; border-color: var(--gold); background: white;
   box-shadow: 0 0 0 3px rgba(202,138,4,0.12);
 }
 .auth-input::placeholder { color: var(--text-muted); }
@@ -883,16 +1231,69 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 .auth-note i { color: var(--gold); }
 
 /* ============================================================
+   USER DROPDOWN
+   ============================================================ */
+.ws-account-wrap { position: relative; }
+.user-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 320px; background: white; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+  animation: popIn 0.2s ease;
+}
+.user-dropdown.active { display: block; }
+.ud-header {
+  padding: 1.1rem 1.2rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.ud-header .ws-avatar { width: 42px; height: 42px; font-size: 1rem; }
+.ud-header-info { min-width: 0; flex: 1; }
+.ud-header-name {
+  font-weight: 700; font-size: 0.92rem; color: var(--ink);
+  font-family: var(--font-heading);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ud-header-email {
+  font-size: 0.75rem; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ud-body { padding: 0.5rem; }
+.ud-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--t-fast);
+  border: none; background: none; width: 100%;
+  text-align: left; font-size: 0.85rem;
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-body); font-weight: 500;
+}
+.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color var(--t-fast); }
+.ud-item:hover { background: var(--surface-2); color: var(--ink); }
+.ud-item:hover i { color: var(--gold); }
+.ud-item.danger { color: var(--danger); }
+.ud-item.danger i { color: var(--danger); }
+.ud-item.danger:hover { background: #fef2f2; }
+.ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+.ud-section-label {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+}
+
+/* ============================================================
    TOASTS
    ============================================================ */
 .toast-container {
-  position: fixed; top: 80px; right: 24px; z-index: 4000;
+  position: fixed; top: calc(var(--header-h) + 16px); right: 16px;
+  z-index: 4000;
   display: flex; flex-direction: column; gap: 0.5rem;
-  pointer-events: none; max-width: calc(100vw - 48px);
+  pointer-events: none; max-width: calc(100vw - 32px);
 }
 .toast {
   background: var(--ink); color: white;
-  border-radius: var(--radius-md); padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md); padding: 0.8rem 1.1rem;
   box-shadow: 0 20px 40px rgba(15,15,30,0.22);
   display: flex; align-items: center; gap: 0.65rem;
   font-family: var(--font-heading); font-size: 0.85rem;
@@ -907,213 +1308,192 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 .toast.leaving { opacity: 0; transform: translateX(24px); }
 
 /* ============================================================
-   FOOTER
-   ============================================================ */
-.site-footer {
-  background: #faf9f7;
-  border-top: 1px solid rgba(15,15,30,0.06);
-  padding: 2rem 2rem 1.5rem;
-  margin-top: auto;
-}
-.footer-inner {
-  max-width: 1600px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1.5rem; flex-wrap: wrap;
-}
-.footer-brand {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-weight: 700; font-size: 0.82rem; color: var(--ink);
-  font-family: var(--font-heading);
-}
-.footer-brand i { color: var(--gold); }
-.footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-.footer-links a, .footer-links button {
-  color: var(--text-muted); text-decoration: none;
-  font-size: 0.76rem; font-family: var(--font-heading);
-  font-weight: 500; transition: color var(--transition-fast);
-  cursor: pointer; background: none; border: none; padding: 0;
-}
-.footer-links a:hover, .footer-links button:hover { color: var(--gold-dark); }
-.footer-copy { color: var(--text-muted); font-size: 0.74rem; font-family: var(--font-heading); }
-
-/* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1000px) {
-  .ps-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1100px) {
+  body.mode-workspace .ws-shell { grid-template-columns: var(--rail-w-collapsed) 1fr; }
+  body.mode-workspace .rail-item .rail-item-name,
+  body.mode-workspace .rail-item .rail-count { display: none; }
+  body.mode-workspace .rail-item { justify-content: center; padding: 0.7rem 0; }
+  body.mode-workspace .rail-item i { font-size: 1rem; }
+  body.mode-workspace .rail-sub { display: none; }
+  body.mode-workspace .rail-label { opacity: 0; height: 0; padding: 0; }
 }
+
 @media (max-width: 900px) {
-  .m365-nav { padding: 0 1rem; }
-  .m365-nav-links { display: none; }
-  .m365-avatar-name { display: none; }
-  .launcher-panel, .notif-panel { right: 1rem; width: calc(100vw - 2rem); }
-  .landing-hero { padding: 4rem 1.25rem 3rem; }
-  .landing-hero h1 { font-size: 2.4rem; }
-  .landing-hero-lede { font-size: 1rem; }
-  .landing-hero-strip { gap: 1.4rem; }
-  .landing-strip-item { font-size: 0.75rem; }
-  .public-stats-section { padding: 3.5rem 1.25rem 3rem; }
-  .activity-ticker-section { padding: 0 1.25rem 1.5rem; }
-  .footer-inner { flex-direction: column; gap: 0.6rem; text-align: center; }
-  .toast-container { right: 16px; left: 16px; align-items: stretch; }
+  .ps-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 3.5rem 1.25rem 3rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero-lede { font-size: 1rem; }
+  .hero-strip { gap: 1.4rem; }
+  .hero-strip-item { font-size: 0.75rem; }
+  .app-preview-section, .why-strip, .stats-section { padding: 3rem 1.25rem; }
+  .landing-footer { padding: 2rem 1.25rem 1.5rem; }
+  .landing-footer-inner { flex-direction: column; gap: 0.6rem; text-align: center; }
+  .toast-container { right: 12px; left: 12px; align-items: stretch; }
   .toast { max-width: none; }
+
+  /* Workspace mobile: rail becomes slide-in overlay */
+  body.mode-workspace .ws-shell { grid-template-columns: 1fr; }
+  body.mode-workspace .ws-rail {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0;
+    width: 260px; max-width: 82vw;
+    transform: translateX(-100%);
+    transition: transform var(--t-base);
+    z-index: 900;
+    box-shadow: 0 20px 60px rgba(15,15,30,0.18);
+  }
+  body.mode-workspace.rail-open .ws-rail { transform: translateX(0); }
+  body.mode-workspace.rail-collapsed .ws-rail {
+    display: flex;
+  }
+  body.mode-workspace .rail-item .rail-item-name,
+  body.mode-workspace .rail-item .rail-count { display: block; }
+  body.mode-workspace .rail-item { justify-content: flex-start; padding: 0.6rem 0.85rem; }
+  body.mode-workspace .rail-sub { display: flex; }
+  body.mode-workspace .rail-label { opacity: 1; height: auto; padding: 0.55rem 0.85rem 0.35rem; }
+
+  .ws-content { padding: 1.5rem 1.25rem; }
+  body.mode-workspace .ws-content { padding: 1.5rem 1.25rem; }
+  .ws-search { max-width: none; }
+  .ws-nav-links { display: none; }
+  .ws-account-name { display: none; }
+  .launcher-panel, .notif-panel { right: 0.5rem; width: calc(100vw - 1rem); }
 }
-@media (max-width: 500px) {
+
+@media (max-width: 560px) {
   .ps-grid { grid-template-columns: 1fr; }
-  .notif-modal { padding: 1.6rem 1.4rem 1.4rem; }
-  .landing-hero h1 { font-size: 2rem; }
+  .hero h1 { font-size: 1.9rem; }
+  .ws-modal { padding: 1.6rem 1.4rem 1.4rem; }
+  .ws-cards { grid-template-columns: 1fr; }
+  .lp-grid { grid-template-columns: 1fr; }
+}
+
+/* Rail backdrop for mobile */
+.rail-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(15,15,30,0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 899; display: none;
+}
+body.rail-open .rail-backdrop { display: block; }
+@media (min-width: 901px) {
+  .rail-backdrop { display: none !important; }
 }
 </style>
 </head>
-<body>
+<body class="mode-landing">
 
-<!-- ============================================================
-     SKIP LINK
-     ============================================================ -->
+<!-- Skip link -->
 <a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
 
-<!-- ============================================================
-     TOASTS
-     ============================================================ -->
+<!-- Toast container -->
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="false"></div>
 
 <!-- ============================================================
-     HEADER
+     HEADER (shared across modes)
      ============================================================ -->
-<header class="m365-nav">
-  <div class="m365-nav-inner">
-    <div class="m365-left">
-      <a href="index.html" class="m365-logo" aria-label="KazInni Suite home">
-        <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="" aria-hidden="true">
-        <span class="m365-logo-text">Kaz<span class="accent">Inni</span> Suite</span>
-      </a>
-      <nav class="m365-nav-links" aria-label="Primary navigation">
-        <a href="#home" class="m365-nav-link active">Home</a>
-        <button type="button" class="m365-nav-link" onclick="openLauncher(event)" aria-haspopup="true" aria-expanded="false" aria-controls="launcherPanel">Apps</button>
-        <a href="#activity" class="m365-nav-link">Activity</a>
-      </nav>
+<header class="ws-header">
+  <div class="ws-header-inner">
+    <button type="button" class="ws-rail-toggle" id="railToggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleRail()">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <a href="index.html" class="ws-logo" aria-label="KazInni Workspace home">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="ws-logo-text">Kaz<span class="accent">Inni</span></span>
+    </a>
+
+    <nav class="ws-nav-links" aria-label="Primary navigation">
+      <a href="#features" class="ws-nav-link">Features</a>
+      <a href="#apps" class="ws-nav-link">Apps</a>
+      <a href="#activity" class="ws-nav-link">Activity</a>
+      <a href="#pricing" class="ws-nav-link" onclick="showToast('Pricing page coming soon', 'info'); return false;">Pricing</a>
+    </nav>
+
+    <div class="ws-search" role="search">
+      <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" id="wsSearch" placeholder="Search KazInni…" aria-label="Search KazInni" autocomplete="off">
     </div>
-    <div class="m365-right">
-      <button type="button" class="m365-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" aria-controls="notifPanel" onclick="toggleNotifications(event)">
+
+    <div class="ws-header-right">
+      <button type="button" class="ws-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" onclick="toggleNotifications(event)">
         <i class="far fa-bell" aria-hidden="true"></i>
         <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
       </button>
-      <button type="button" class="m365-waffle" id="waffleBtn" title="App launcher" aria-label="App launcher" aria-haspopup="true" aria-expanded="false" aria-controls="launcherPanel" onclick="openLauncher(event)">
+
+      <button type="button" class="ws-waffle" id="waffleBtn" title="App launcher" aria-label="App launcher" aria-haspopup="true" aria-expanded="false" onclick="openLauncher(event)">
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </button>
-      <div id="headerAuthContainer">
-        <button type="button" class="btn btn-primary" onclick="openAuthModal()" id="signInBtn">
-          <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
-        </button>
+
+      <div id="headerAccount">
+        <!-- Filled by JS -->
       </div>
     </div>
   </div>
 </header>
 
+<!-- Rail backdrop (mobile) -->
+<div class="rail-backdrop" id="railBackdrop" onclick="closeRail()" aria-hidden="true"></div>
+
 <!-- ============================================================
-     MAIN
+     SHELL — rail + main
      ============================================================ -->
-<div class="main-wrap" id="main">
+<div class="ws-shell">
 
-  <!-- HERO -->
-  <section class="landing-hero" id="home" aria-labelledby="heroTitle">
-    <div class="landing-hero-bg" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
+  <!-- Side rail (only visible in workspace mode) -->
+  <aside class="ws-rail" id="wsRail" aria-label="Workspace navigation">
+    <div class="rail-group">
+      <button type="button" class="rail-item active" onclick="navigateTo('home')" data-nav="home">
+        <i class="fas fa-house" aria-hidden="true"></i>
+        <span class="rail-item-name">Home</span>
+      </button>
+      <button type="button" class="rail-item" onclick="navigateTo('recent')" data-nav="recent">
+        <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
+        <span class="rail-item-name">Recent</span>
+      </button>
+      <button type="button" class="rail-item" onclick="navigateTo('activity')" data-nav="activity">
+        <i class="fas fa-wave-square" aria-hidden="true"></i>
+        <span class="rail-item-name">Activity</span>
+        <span class="rail-count" id="railActivityCount">0</span>
+      </button>
     </div>
-    <div class="landing-hero-inner">
-      <div class="landing-eyebrow">
-        <span class="dot" aria-hidden="true"></span>
-        <span>One account · Every workspace</span>
-      </div>
-      <h1 id="heroTitle">
-        Welcome to <span class="accent">KazInni Suite</span>
-      </h1>
-      <p class="landing-hero-lede" id="heroLede">
-        One login. Every workspace. Run your day from a single account across
-        FlexiKazi, Kasikazi, and the entire KazInni ecosystem.
-      </p>
-      <div class="landing-hero-cta" id="heroCta">
-        <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal()">
-          <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
-        </button>
-        <button type="button" class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
-          <i class="fas fa-grip" aria-hidden="true"></i> <span>Explore apps</span>
-        </button>
-      </div>
-      <div class="landing-hero-strip">
-        <div class="landing-strip-item"><i class="fas fa-shield-halved" aria-hidden="true"></i> Verified accounts only</div>
-        <div class="landing-strip-item"><i class="fas fa-bolt" aria-hidden="true"></i> Single sign-on everywhere</div>
-        <div class="landing-strip-item"><i class="fas fa-wallet" aria-hidden="true"></i> Instant M-Pesa payouts</div>
-        <div class="landing-strip-item"><i class="fas fa-globe" aria-hidden="true"></i> Kenya-built</div>
+
+    <div class="rail-group">
+      <div class="rail-label">Apps</div>
+      <div class="rail-sub" id="railApps">
+        <!-- Filled by JS based on permissions -->
       </div>
     </div>
-  </section>
 
-  <!-- PUBLIC STATS -->
-  <section class="public-stats-section" id="activity" aria-labelledby="activityTitle">
-    <div class="public-stats-inner">
-      <div class="section-header-center">
-        <span class="section-label">Live</span>
-        <h2 id="activityTitle">Platform Activity</h2>
-        <p>Real numbers from across the KazInni network — updated every minute.</p>
-      </div>
+    <div class="rail-spacer"></div>
 
-      <div class="ps-grid">
-        <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-          <div class="ps-value loading" id="psTaskers" aria-label="Active taskers">—</div>
-          <div class="ps-label">Active Taskers</div>
-        </div>
-        <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
-          <div class="ps-value loading" id="psCompleted" aria-label="Tasks completed">—</div>
-          <div class="ps-label">Tasks Completed</div>
-        </div>
-        <div class="ps-tile">
-          <div class="ps-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
-          <div class="ps-value loading" id="psWorkspaces" aria-label="Live workspaces">—</div>
-          <div class="ps-label">Live Workspaces</div>
-        </div>
-        <div class="ps-tile clock-tile">
-          <div class="ps-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
-          <div class="ps-value" id="psClock" aria-live="off">
-            <span id="psClockTime">--:--</span><span class="ps-ampm" id="psClockAmPm">--</span>
-          </div>
-          <div class="ps-label" id="psClockDate">Loading…</div>
-        </div>
-      </div>
-
-      <div class="activity-ticker-section" style="padding: 0;">
-        <div class="ps-ticker" aria-label="Recent platform activity">
-          <div class="ps-ticker-track" id="psTicker">
-            <span class="ps-ticker-item"><i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Loading activity…</span>
-          </div>
-        </div>
-      </div>
+    <div class="rail-group">
+      <button type="button" class="rail-item" onclick="navigateTo('wallet')" data-nav="wallet">
+        <i class="fas fa-wallet" aria-hidden="true"></i>
+        <span class="rail-item-name">Wallet</span>
+      </button>
+      <button type="button" class="rail-item" onclick="navigateTo('account')" data-nav="account">
+        <i class="fas fa-user" aria-hidden="true"></i>
+        <span class="rail-item-name">Account</span>
+      </button>
+      <button type="button" class="rail-item" onclick="showToast('Help center coming soon', 'info')">
+        <i class="fas fa-circle-question" aria-hidden="true"></i>
+        <span class="rail-item-name">Help</span>
+      </button>
     </div>
-  </section>
+  </aside>
 
+  <!-- Main content — swapped between landing and workspace -->
+  <main class="ws-main" id="main">
+    <div class="ws-content" id="wsContent">
+      <!-- Filled by JS: renderLanding() or renderWorkspace() -->
+    </div>
+  </main>
 </div>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Suite</div>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
-      <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
-      <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
-      <a href="mailto:operations@kazinni.com">Contact</a>
-    </nav>
-    <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · KazInni</div>
-  </div>
-</footer>
 
 <!-- ============================================================
      LAUNCHER PANEL
@@ -1155,20 +1535,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
      NOTIFICATION DETAIL MODAL
      ============================================================ -->
 <div class="modal-overlay" id="notifModalOverlay" onclick="closeNotifModal()"></div>
-<div class="notif-modal" id="notifModal" role="dialog" aria-modal="true" aria-labelledby="notifModalTitle" aria-hidden="true">
-  <button type="button" class="notif-modal-close" onclick="closeNotifModal()" aria-label="Close notification"><i class="fas fa-times" aria-hidden="true"></i></button>
-  <div class="notif-modal-icon" id="notifModalIcon"><i class="fas fa-bell" aria-hidden="true"></i></div>
-  <div class="notif-modal-header">
+<div class="ws-modal" id="notifModal" role="dialog" aria-modal="true" aria-labelledby="notifModalTitle" aria-hidden="true">
+  <button type="button" class="ws-modal-close" onclick="closeNotifModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="ws-modal-icon" id="notifModalIcon"><i class="fas fa-bell" aria-hidden="true"></i></div>
+  <div class="ws-modal-header">
     <h3 id="notifModalTitle">Notification</h3>
     <p id="notifModalSubtitle">—</p>
   </div>
-  <div class="notif-modal-body" id="notifModalBody">—</div>
-  <div class="notif-modal-meta">
+  <div class="ws-modal-body" id="notifModalBody">—</div>
+  <div class="ws-modal-meta">
     <span id="notifModalTime">—</span>
     <span id="notifModalType">—</span>
   </div>
-  <div class="notif-modal-actions" id="notifModalActions">
-    <button type="button" class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>
+  <div class="ws-modal-actions" id="notifModalActions">
+    <button type="button" class="ws-modal-btn secondary" onclick="closeNotifModal()">Close</button>
   </div>
 </div>
 
@@ -1176,12 +1556,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
      AUTH MODAL
      ============================================================ -->
 <div class="modal-overlay" id="authModalOverlay" onclick="closeAuthModal()"></div>
-<div class="notif-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="max-width: 420px;">
-  <button type="button" class="notif-modal-close" onclick="closeAuthModal()" aria-label="Close sign in"><i class="fas fa-times" aria-hidden="true"></i></button>
-  <div class="notif-modal-icon gold"><i class="fas fa-cube" aria-hidden="true"></i></div>
-  <div class="notif-modal-header">
+<div class="ws-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="max-width: 420px;">
+  <button type="button" class="ws-modal-close" onclick="closeAuthModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="ws-modal-icon gold"><i class="fas fa-cube" aria-hidden="true"></i></div>
+  <div class="ws-modal-header">
     <h3 id="authModalTitle">Sign in to KazInni</h3>
-    <p>Use your KazInni account to access your apps</p>
+    <p>Use your KazInni account to access your workspace</p>
   </div>
   <div class="auth-error" id="authError" role="alert"></div>
   <form onsubmit="handleLogin(event)" novalidate>
@@ -1193,7 +1573,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
       <label for="loginPassword">Password</label>
       <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required autocomplete="current-password" minlength="6">
     </div>
-    <button type="submit" class="notif-modal-btn primary" id="loginBtn" style="width:100%; padding:0.85rem;">
+    <button type="submit" class="ws-modal-btn primary" id="loginBtn" style="width:100%; padding:0.85rem;">
       <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
     </button>
   </form>
@@ -1243,15 +1623,27 @@ const APPS = {
     permission: 'kasikazi',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
+  },
+  'wallet': {
+    name: 'Wallet',
+    desc: 'Balances, payouts, and M-Pesa transaction history.',
+    icon: 'fa-wallet',
+    color: '#7c3aed',
+    link: 'wallet.html',
+    badge: '',
+    permission: null,
+    alwaysVisible: false,
+    signedInOnly: true
   }
 };
 
 const CONFIG = {
-  notifListenersLimit: 50,
+  notifLimit: 50,
   tickerRefreshMs: 60000,
   clockRefreshMs: 1000,
   notifStorageKey: 'kazinni_notif_lastseen',
-  maxNotifications: 20
+  maxNotifications: 20,
+  recentActivityMax: 6
 };
 
 // ============================================================
@@ -1261,8 +1653,12 @@ let currentUser = null;
 let currentTasker = null;
 let currentPerms = {};
 let notifications = [];
+let recentActivity = [];
 let notifRefs = [];
 let appInitialized = false;
+let lastFocusedBeforeModal = null;
+let currentUserData = null;
+let currentStats = { taskers: 0, completed: 0, workspaces: 0 };
 
 // ============================================================
 // UTILS
@@ -1314,6 +1710,14 @@ function getFullTime(ts) {
   } catch (e) { return '—'; }
 }
 
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  if (h < 21) return 'Good evening';
+  return 'Good night';
+}
+
 function lighten(hex, percent) {
   const num = parseInt(hex.replace('#',''), 16);
   const amt = Math.round(2.55 * percent);
@@ -1326,7 +1730,6 @@ function lighten(hex, percent) {
 function getLastSeen() {
   return Number(localStorage.getItem(CONFIG.notifStorageKey) || 0);
 }
-
 function setLastSeen(ts) {
   try { localStorage.setItem(CONFIG.notifStorageKey, String(ts)); } catch (e) {}
 }
@@ -1339,31 +1742,29 @@ function getInitials(name) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
+
 // ============================================================
-// INIT
+// BOOT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Footer year
   const yearEl = document.getElementById('footerYear');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Set up global interaction handlers
   setupGlobalHandlers();
   setupKeyboardHandlers();
-
-  // Boot Firebase
   bootFirebase();
 });
 
 function setupGlobalHandlers() {
   document.addEventListener('click', (e) => {
-    const wrap = document.getElementById('userMenuWrap');
+    const account = document.getElementById('headerAccount');
     const launcher = document.getElementById('launcherPanel');
     const waffle = document.getElementById('waffleBtn');
     const notif = document.getElementById('notifPanel');
     const notifBtn = document.getElementById('notifBtn');
 
-    if (wrap && !wrap.contains(e.target)) closeUserDropdown();
+    if (account && !account.contains(e.target)) closeUserDropdown();
     if (launcher && waffle && !launcher.contains(e.target) && !waffle.contains(e.target)) closeLauncher();
     if (notif && notifBtn && !notif.contains(e.target) && !notifBtn.contains(e.target)) closeNotifications();
   });
@@ -1377,24 +1778,14 @@ function setupKeyboardHandlers() {
       closeNotifications();
       closeNotifModal();
       closeAuthModal();
+      closeRail();
     }
-    if (e.key === 'Tab') {
-      trapFocusInModals(e);
-    }
-  });
-
-  // Launcher footer link — keyboard support for role=button
-  document.addEventListener('keydown', (e) => {
-    const link = document.getElementById('launcherFooterLink');
-    if (link && document.activeElement === link && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      link.click();
-    }
+    if (e.key === 'Tab') trapFocusInModals(e);
   });
 }
 
 function trapFocusInModals(e) {
-  const openModal = document.querySelector('.notif-modal.active');
+  const openModal = document.querySelector('.ws-modal.active');
   if (!openModal) return;
   const focusables = openModal.querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -1416,15 +1807,12 @@ function bootFirebase() {
   if (typeof firebase === 'undefined') {
     console.warn('Firebase SDK failed to load');
     showToast('Could not load authentication service', 'error');
-    renderSignedOut();
-    loadPublicStatsFallback();
+    renderLanding();
     return;
   }
   try {
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  } catch (e) {
-    console.warn('Firebase init error:', e);
-  }
+  } catch (e) { console.warn('Firebase init error:', e); }
 
   const auth = firebase.auth();
   const database = firebase.database();
@@ -1432,17 +1820,16 @@ function bootFirebase() {
   window._db = database;
 
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
-
   auth.onAuthStateChanged(handleAuthStateChanged);
 
-  appInitialized = true;
-}
+  // Initial landing render (before auth resolves)
+  renderLanding();
+  loadPublicStats();
+  updatePublicClock();
+  setInterval(updatePublicClock, CONFIG.clockRefreshMs);
+  setInterval(() => { if (appInitialized) loadPublicStats(); }, CONFIG.tickerRefreshMs);
 
-function loadPublicStatsFallback() {
-  setStat('psTaskers', '—');
-  setStat('psCompleted', '—');
-  setStat('psWorkspaces', '—');
-  buildPublicTicker();
+  appInitialized = true;
 }
 
 // ============================================================
@@ -1457,9 +1844,11 @@ async function handleAuthStateChanged(user) {
     currentTasker = null;
     currentPerms = {};
     notifications = [];
+    recentActivity = [];
     detachNotifListeners();
-    renderSignedOut();
-    if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
+    switchMode('landing');
+    renderLanding();
+    renderRailApps();
     renderNotifications();
     loadPublicStats();
     return;
@@ -1490,69 +1879,73 @@ async function handleAuthStateChanged(user) {
   try {
     const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
     currentPerms = permSnap.exists() ? (permSnap.val() || {}) : {};
-  } catch (e) {
-    currentPerms = {};
-  }
+  } catch (e) { currentPerms = {}; }
 
   currentUser = user;
-  renderSignedIn(user, currentTasker);
+  switchMode('workspace');
+  renderWorkspace();
+  renderRailApps();
   attachNotifListeners();
-
-  if (document.getElementById('launcherPanel').classList.contains('active')) renderLauncher();
-  loadPublicStats();
+  loadWorkspaceData();
 }
 
 // ============================================================
-// SIGNED OUT
+// MODE SWITCH
 // ============================================================
-function renderSignedOut() {
-  const container = document.getElementById('headerAuthContainer');
-  if (!container) return;
-  container.innerHTML = `
-    <button type="button" class="btn btn-primary" onclick="openAuthModal()">
-      <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
-    </button>
-  `;
+function switchMode(mode) {
+  document.body.classList.remove('mode-landing', 'mode-workspace');
+  document.body.classList.add(mode === 'workspace' ? 'mode-workspace' : 'mode-landing');
+  if (mode !== 'workspace') {
+    document.body.classList.remove('rail-open', 'rail-collapsed');
+  }
+  renderAccountButton();
+}
 
-  const heroCta = document.getElementById('heroCta');
-  if (heroCta) {
-    heroCta.innerHTML = `
-      <button type="button" class="btn btn-primary btn-lg" onclick="openAuthModal()">
-        <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
-      </button>
-      <button type="button" class="btn btn-ghost btn-lg" onclick="openLauncher(event)">
-        <i class="fas fa-grip" aria-hidden="true"></i> <span>Explore apps</span>
+function toggleRail() {
+  if (window.innerWidth <= 900) {
+    document.body.classList.toggle('rail-open');
+  } else {
+    document.body.classList.toggle('rail-collapsed');
+  }
+  const expanded = document.body.classList.contains('rail-open') || !document.body.classList.contains('rail-collapsed');
+  const btn = document.getElementById('railToggle');
+  if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+}
+
+function closeRail() {
+  document.body.classList.remove('rail-open');
+}
+
+// ============================================================
+// ACCOUNT BUTTON (shared)
+// ============================================================
+function renderAccountButton() {
+  const container = document.getElementById('headerAccount');
+  if (!container) return;
+
+  if (!currentUser) {
+    container.innerHTML = `
+      <button type="button" class="ws-btn ws-btn-primary" onclick="openAuthModal()">
+        <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in</span>
       </button>
     `;
+    return;
   }
-  const lede = document.getElementById('heroLede');
-  if (lede) {
-    lede.textContent = "One login. Every workspace. Run your day from a single account across FlexiKazi, Kasikazi, and the entire KazInni ecosystem.";
-  }
-  const badge = document.getElementById('notifBadge');
-  if (badge) badge.classList.remove('visible');
-}
 
-// ============================================================
-// SIGNED IN
-// ============================================================
-function renderSignedIn(user, tasker) {
-  const container = document.getElementById('headerAuthContainer');
-  if (!container) return;
-  const displayName = (tasker && tasker.name) || (user.email ? user.email.split('@')[0] : 'User');
+  const displayName = (currentTasker && currentTasker.name) || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
   const initials = getInitials(displayName);
-  const email = user.email || '';
+  const email = currentUser.email || '';
 
   container.innerHTML = `
-    <div class="user-dropdown-wrap" id="userMenuWrap">
-      <button type="button" class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-haspopup="true" aria-expanded="false" aria-controls="userDropdown" aria-label="Account menu">
-        <div class="m365-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
-        <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
+    <div class="ws-account-wrap" id="wsAccountWrap">
+      <button type="button" class="ws-account-btn" id="wsAccountBtn" onclick="toggleUserDropdown(event)" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
+        <div class="ws-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+        <span class="ws-account-name">${escapeHtml(displayName)}</span>
         <i class="fas fa-chevron-down" aria-hidden="true"></i>
       </button>
-      <div class="user-dropdown" id="userDropdown" role="menu">
+      <div class="user-dropdown" id="wsUserDropdown" role="menu">
         <div class="ud-header">
-          <div class="m365-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+          <div class="ws-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
           <div class="ud-header-info">
             <div class="ud-header-name">${escapeHtml(displayName)}</div>
             <div class="ud-header-email">${escapeHtml(email)}</div>
@@ -1561,7 +1954,7 @@ function renderSignedIn(user, tasker) {
         <div class="ud-body">
           <div class="ud-section-label">Account</div>
           <a href="account.html" class="ud-item" role="menuitem"><i class="fas fa-user" aria-hidden="true"></i> My account</a>
-          <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Account settings</a>
+          <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Settings</a>
           <a href="wallet.html" class="ud-item" role="menuitem"><i class="fas fa-wallet" aria-hidden="true"></i> Wallet</a>
           <div class="ud-divider"></div>
           <div class="ud-section-label">Apps</div>
@@ -1575,26 +1968,583 @@ function renderSignedIn(user, tasker) {
       </div>
     </div>
   `;
+}
 
-  const firstName = displayName.split(/[\s._-]/)[0] || 'there';
+function toggleUserDropdown(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('wsUserDropdown');
+  const btn = document.getElementById('wsAccountBtn');
+  if (!menu || !btn) return;
+  closeLauncher();
+  closeNotifications();
+  const isActive = menu.classList.toggle('active');
+  btn.classList.toggle('active', isActive);
+  btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+}
+
+function closeUserDropdown() {
+  const menu = document.getElementById('wsUserDropdown');
+  const btn = document.getElementById('wsAccountBtn');
+  if (menu) menu.classList.remove('active');
+  if (btn) {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+async function handleSignOut() {
+  try {
+    detachNotifListeners();
+    if (window._auth) await window._auth.signOut();
+    showToast('Signed out successfully', 'info');
+  } catch (err) { showToast('Error signing out', 'error'); }
+}
+
+// ============================================================
+// RENDER — LANDING MODE
+// ============================================================
+function renderLanding() {
+  const content = document.getElementById('wsContent');
+  if (!content) return;
+
+  content.innerHTML = `
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+      <div class="hero-inner">
+        <div class="hero-eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          <span>One account · Every workspace</span>
+        </div>
+        <h1 id="heroTitle">Welcome to <span class="accent">KazInni</span></h1>
+        <p class="hero-lede">
+          One login. Every workspace. Run your day from a single account across
+          FlexiKazi, Kasikazi, and the entire KazInni ecosystem.
+        </p>
+        <div class="hero-cta">
+          <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
+            <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
+          </button>
+          <button type="button" class="ws-btn ws-btn-ghost ws-btn-lg" onclick="openLauncher(event)">
+            <i class="fas fa-grip" aria-hidden="true"></i> <span>Preview apps</span>
+          </button>
+        </div>
+        <div class="hero-strip">
+          <div class="hero-strip-item"><i class="fas fa-shield-halved" aria-hidden="true"></i> Verified accounts only</div>
+          <div class="hero-strip-item"><i class="fas fa-bolt" aria-hidden="true"></i> Single sign-on everywhere</div>
+          <div class="hero-strip-item"><i class="fas fa-wallet" aria-hidden="true"></i> Instant M-Pesa payouts</div>
+          <div class="hero-strip-item"><i class="fas fa-globe" aria-hidden="true"></i> Kenya-built</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-preview-section" id="apps" aria-labelledby="appsTitle">
+      <div class="app-preview-inner">
+        <div class="section-header-center">
+          <span class="section-label">Explore</span>
+          <h2 id="appsTitle">Preview the apps</h2>
+          <p>Sign in once and every KazInni app opens without another password.</p>
+        </div>
+        <div class="preview-grid" id="previewGrid"></div>
+      </div>
+    </section>
+
+    <section class="why-strip" id="features" aria-labelledby="whyTitle">
+      <div class="why-inner">
+        <div class="section-header-center">
+          <span class="section-label">Why KazInni</span>
+          <h2 id="whyTitle">Built for how you actually work</h2>
+          <p>Every detail optimised for Kenyan taskers, clients, and teams.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-fingerprint" aria-hidden="true"></i></div>
+            <h3>Single sign-on</h3>
+            <p>One KazInni login unlocks every workspace — no separate passwords.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+            <h3>Verified accounts</h3>
+            <p>Admins approve every tasker before they can access apps or claim work.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-mobile-screen" aria-hidden="true"></i></div>
+            <h3>Instant M-Pesa</h3>
+            <p>Request payouts from your wallet and receive them straight to M-Pesa.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+            <h3>Live activity</h3>
+            <p>Watch tasks move through the network in real time, from claim to payout.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section" id="activity" aria-labelledby="statsTitle">
+      <div class="stats-inner">
+        <div class="section-header-center">
+          <span class="section-label">Live</span>
+          <h2 id="statsTitle">Platform activity</h2>
+          <p>Real numbers from across the KazInni network — updated every minute.</p>
+        </div>
+        <div class="ps-grid">
+          <div class="ps-tile">
+            <div class="ps-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+            <div class="ps-value loading" id="psTaskers" aria-label="Active taskers">—</div>
+            <div class="ps-label">Active Taskers</div>
+          </div>
+          <div class="ps-tile">
+            <div class="ps-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+            <div class="ps-value loading" id="psCompleted" aria-label="Tasks completed">—</div>
+            <div class="ps-label">Tasks Completed</div>
+          </div>
+          <div class="ps-tile">
+            <div class="ps-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
+            <div class="ps-value loading" id="psWorkspaces" aria-label="Live workspaces">—</div>
+            <div class="ps-label">Live Workspaces</div>
+          </div>
+          <div class="ps-tile clock-tile">
+            <div class="ps-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+            <div class="ps-value" id="psClock" aria-live="off">
+              <span id="psClockTime">--:--</span><span class="ps-ampm" id="psClockAmPm">--</span>
+            </div>
+            <div class="ps-label" id="psClockDate">Loading…</div>
+          </div>
+        </div>
+
+        <div class="ps-ticker" aria-label="Recent platform activity">
+          <div class="ps-ticker-track" id="psTicker">
+            <span class="ps-ticker-item"><i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Loading activity…</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <div class="landing-footer-inner">
+        <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Workspace</div>
+        <nav class="landing-footer-links" aria-label="Footer navigation">
+          <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
+          <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
+          <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
+          <a href="mailto:operations@kazinni.com">Contact</a>
+        </nav>
+        <div class="landing-footer-copy">© <span id="footerYear">${new Date().getFullYear()}</span> Teleio Savour · KazInni</div>
+      </div>
+    </footer>
+  `;
+
+  renderPreviewGrid();
+  loadPublicStats();
+  buildTicker();
+}
+
+function renderPreviewGrid() {
+  const grid = document.getElementById('previewGrid');
+  if (!grid) return;
+  const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
+
+  grid.innerHTML = apps.map(app => {
+    const target = app.signedInOnly ? 'openAuthModal()' : `openLauncher(event)`;
+    const cta = app.signedInOnly ? 'Sign in to open' : 'Preview';
+    return `
+      <div class="preview-card" role="button" tabindex="0"
+           onclick="${target}"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${target}}"
+           aria-label="${escapeHtml(app.name)} — ${cta}">
+        ${app.badge ? `<span class="preview-badge">${escapeHtml(app.badge)}</span>` : ''}
+        <div class="preview-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+        </div>
+        <div class="preview-name">${escapeHtml(app.name)}</div>
+        <div class="preview-desc">${escapeHtml(app.desc)}</div>
+        <div class="preview-cta">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          ${escapeHtml(cta)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
+// RENDER — WORKSPACE MODE
+// ============================================================
+function renderWorkspace() {
+  const content = document.getElementById('wsContent');
+  if (!content || !currentUser) return;
+
+  const displayName = (currentTasker && currentTasker.name) || currentUser.email.split('@')[0] || 'there';
+  const firstName = displayName.split(/[\s._-]/)[0];
   const capitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
-  const lede = document.getElementById('heroLede');
-  if (lede) {
-    lede.innerHTML = `Welcome back, <strong></strong>. Open the app launcher or jump into a workspace.`;
-    lede.querySelector('strong').textContent = capitalized;
+  content.innerHTML = `
+    <section class="ws-welcome">
+      <h1 id="wsGreeting">${getGreeting()}, ${escapeHtml(capitalized)}</h1>
+      <p>Here's what's happening across your KazInni workspace today.</p>
+    </section>
+
+    <section class="ws-section" aria-labelledby="yourWorkTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="yourWorkTitle">
+          <i class="fas fa-briefcase" aria-hidden="true"></i> Your work
+        </h2>
+        <a href="apps/flexikazi/" class="ws-section-action">View all →</a>
+      </div>
+      <div class="ws-cards" id="wsWorkCards">
+        <div class="ws-skeleton"></div>
+        <div class="ws-skeleton"></div>
+        <div class="ws-skeleton"></div>
+      </div>
+    </section>
+
+    <section class="ws-section" aria-labelledby="yourAppsTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="yourAppsTitle">
+          <i class="fas fa-grip" aria-hidden="true"></i> Your apps
+        </h2>
+        <button type="button" class="ws-section-action" onclick="openLauncher(event)">Open launcher →</button>
+      </div>
+      <div class="ws-app-tiles" id="wsAppTiles"></div>
+    </section>
+
+    <section class="ws-section" aria-labelledby="recentTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="recentTitle">
+          <i class="fas fa-wave-square" aria-hidden="true"></i> Recent activity
+        </h2>
+        <button type="button" class="ws-section-action" onclick="loadWorkspaceData()">Refresh →</button>
+      </div>
+      <div class="ws-feed" id="wsFeed">
+        <div class="ws-feed-empty">
+          <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i>
+          Loading activity…
+        </div>
+      </div>
+    </section>
+  `;
+
+  renderWorkspaceApps();
+  loadWorkspaceData();
+}
+
+function renderWorkspaceApps() {
+  const tiles = document.getElementById('wsAppTiles');
+  if (!tiles) return;
+  const apps = Object.keys(APPS)
+    .map(k => ({ key: k, ...APPS[k] }))
+    .filter(app => {
+      if (app.alwaysVisible) return true;
+      if (app.permission && currentPerms[app.permission] === true) return true;
+      if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      return false;
+    });
+
+  if (apps.length === 0) {
+    tiles.innerHTML = `
+      <div class="ws-feed-empty" style="grid-column:1/-1;">
+        <i class="fas fa-lock" aria-hidden="true"></i>
+        No apps granted yet — contact your admin.
+      </div>
+    `;
+    return;
   }
 
-  const heroCta = document.getElementById('heroCta');
-  if (heroCta) {
-    heroCta.innerHTML = `
-      <button type="button" class="btn btn-primary btn-lg" onclick="openLauncher(event)">
-        <i class="fas fa-grip" aria-hidden="true"></i> <span>Open app launcher</span>
-      </button>
-      <a href="account.html" class="btn btn-ghost btn-lg">
-        <i class="fas fa-user" aria-hidden="true"></i> <span>My Account</span>
-      </a>
+  tiles.innerHTML = apps.map(app => `
+    <a href="${escapeHtml(app.link)}" class="ws-app-tile">
+      <div class="ws-card-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+        <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+      </div>
+      <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
+      <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
+    </a>
+  `).join('');
+}
+
+function renderRailApps() {
+  const railApps = document.getElementById('railApps');
+  if (!railApps) return;
+  railApps.innerHTML = '';
+  if (!currentUser) return;
+
+  const apps = Object.keys(APPS)
+    .map(k => ({ key: k, ...APPS[k] }))
+    .filter(app => {
+      if (app.alwaysVisible) return true;
+      if (app.permission && currentPerms[app.permission] === true) return true;
+      if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      return false;
+    });
+
+  apps.forEach(app => {
+    const el = document.createElement('a');
+    el.href = app.link;
+    el.className = 'rail-sub-item';
+    el.innerHTML = `
+      <span class="rail-sub-dot" style="background:${escapeHtml(app.color)};" aria-hidden="true"></span>
+      <span>${escapeHtml(app.name)}</span>
     `;
+    railApps.appendChild(el);
+  });
+}
+
+// ============================================================
+// WORKSPACE DATA
+// ============================================================
+async function loadWorkspaceData() {
+  if (!currentUser) return;
+  const db = window._db;
+  if (!db) return;
+
+  const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
+
+  const cards = [];
+  const activities = [];
+
+  // Active FlexiKazi tasks
+  try {
+    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
+    const tasks = snap.val() || {};
+    const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
+
+    const active = list.filter(t => {
+      const s = (t.status || '').toLowerCase();
+      return ['assigned', 'new', 'review', 'submitted', 'revision'].includes(s);
+    });
+
+    const approved = list.filter(t => {
+      const s = (t.status || '').toLowerCase();
+      return s === 'approved' || s === 'completed';
+    });
+
+    if (active.length > 0) {
+      cards.push({
+        icon: 'fa-list-check',
+        color: APPS.flexikazi.color,
+        tag: 'Active task',
+        tagClass: 'info',
+        title: active[0].title || 'Untitled task',
+        meta: `${escapeHtml(active[0].category || 'General')} · due ${escapeHtml(active[0].dueDate || 'soon')}`,
+        value: active.length > 1 ? `+${active.length - 1} more` : `KES ${Number(active[0].payRate || 0).toLocaleString()}`,
+        foot: 'FlexiKazi',
+        cta: 'Open',
+        link: 'apps/flexikazi/'
+      });
+    }
+
+    if (approved.length > 0) {
+      const totalApproved = approved.reduce((s, t) => s + Number(t.payRate || 0), 0);
+      cards.push({
+        icon: 'fa-circle-check',
+        color: '#10b981',
+        tag: 'Completed',
+        tagClass: 'success',
+        title: `${pluralize(approved.length, 'approved task')}`,
+        meta: 'Total earned on FlexiKazi',
+        value: `KES ${totalApproved.toLocaleString()}`,
+        foot: 'FlexiKazi',
+        cta: 'View',
+        link: 'apps/flexikazi/'
+      });
+
+      approved.slice(0, 3).forEach(t => {
+        const ts = t.approvedAt || t.reviewedAt || 0;
+        if (!ts) return;
+        activities.push({
+          icon: 'fa-circle-check',
+          type: 'success',
+          title: 'Task approved',
+          desc: t.title || 'Untitled task',
+          ts
+        });
+      });
+    }
+
+    list.forEach(t => {
+      const s = (t.status || '').toLowerCase();
+      const ts = t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
+      if (!ts) return;
+      if (s === 'revision') {
+        activities.push({ icon: 'fa-redo', type: 'warning', title: 'Revision requested', desc: t.title || 'Task', ts });
+      } else if (s === 'review' || s === 'submitted') {
+        activities.push({ icon: 'fa-clock', type: 'info', title: 'Submission under review', desc: t.title || 'Task', ts });
+      } else if (s === 'assigned' || s === 'new') {
+        activities.push({ icon: 'fa-list-check', type: 'gold', title: 'New task assigned', desc: t.title || 'Task', ts });
+      }
+    });
+  } catch (e) { console.warn('Work cards (FlexiKazi):', e); }
+
+  // Kasikazi claims
+  try {
+    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit).once('value');
+    const tasks = snap.val() || {};
+    Object.entries(tasks).forEach(([id, t]) => {
+      const c = t.claimedBy && t.claimedBy[uid];
+      if (!c) return;
+      const s = (c.status || 'claimed').toLowerCase();
+      const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
+      if (!ts) return;
+
+      if (s === 'claimed') {
+        activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
+      } else if (s === 'approved') {
+        activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Kasikazi task approved', desc: t.title || 'Task', ts });
+      } else if (s === 'revision') {
+        activities.push({ icon: 'fa-redo', type: 'warning', title: 'Kasikazi revision', desc: t.title || 'Task', ts });
+      } else if (s === 'submitted') {
+        activities.push({ icon: 'fa-clock', type: 'info', title: 'Kasikazi under review', desc: t.title || 'Task', ts });
+      }
+    });
+  } catch (e) { console.warn('Work cards (Kasikazi):', e); }
+
+  // Payouts
+  try {
+    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
+    const payouts = snap.val() || {};
+    const list = Object.entries(payouts).map(([id, p]) => ({ id, ...p }));
+
+    const pending = list.filter(p => ['pending', 'approved'].includes((p.status || 'pending').toLowerCase()));
+    const paid = list.filter(p => (p.status || '').toLowerCase() === 'paid');
+
+    const pendingTotal = pending.reduce((s, p) => s + Number(p.amount || 0), 0);
+    if (pendingTotal > 0) {
+      cards.push({
+        icon: 'fa-hourglass-half',
+        color: '#f59e0b',
+        tag: 'Pending payout',
+        tagClass: 'warning',
+        title: `${pluralize(pending.length, 'payout')} in progress`,
+        meta: 'Awaiting approval or dispatch',
+        value: `KES ${pendingTotal.toLocaleString()}`,
+        foot: 'Wallet',
+        cta: 'View',
+        link: 'wallet.html'
+      });
+    }
+
+    const paidTotal = paid.reduce((s, p) => s + Number(p.amount || 0), 0);
+    if (paidTotal > 0) {
+      cards.push({
+        icon: 'fa-check-double',
+        color: '#10b981',
+        tag: 'Received',
+        tagClass: 'success',
+        title: `${pluralize(paid.length, 'payout')} sent`,
+        meta: 'Lifetime M-Pesa payouts',
+        value: `KES ${paidTotal.toLocaleString()}`,
+        foot: 'Wallet',
+        cta: 'History',
+        link: 'wallet.html'
+      });
+    }
+
+    paid.slice(0, 3).forEach(p => {
+      const ts = p.paidAt || p.timestamp || 0;
+      if (!ts) return;
+      activities.push({
+        icon: 'fa-check-double',
+        type: 'success',
+        title: 'Payout sent',
+        desc: `KES ${Number(p.amount || 0).toLocaleString()} · ${p.phone || 'M-Pesa'}`,
+        ts
+      });
+    });
+  } catch (e) { console.warn('Work cards (Wallet):', e); }
+
+  // Sort + cap recent
+  activities.sort((a, b) => b.ts - a.ts);
+  recentActivity = activities.slice(0, CONFIG.recentActivityMax);
+
+  renderWorkCards(cards);
+  renderFeed(recentActivity);
+}
+
+function renderWorkCards(cards) {
+  const container = document.getElementById('wsWorkCards');
+  if (!container) return;
+
+  if (cards.length === 0) {
+    container.innerHTML = `
+      <div class="ws-feed-empty" style="grid-column:1/-1;">
+        <i class="fas fa-inbox" aria-hidden="true"></i>
+        <div>No active work yet</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi task or wait for a FlexiKazi assignment.</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = cards.map(c => `
+    <a href="${escapeHtml(c.link)}" class="ws-card">
+      <div class="ws-card-top">
+        <div class="ws-card-icon" style="background:linear-gradient(135deg, ${escapeHtml(c.color)}, ${escapeHtml(lighten(c.color, 18))});">
+          <i class="fas ${escapeHtml(c.icon)}" aria-hidden="true"></i>
+        </div>
+        <span class="ws-card-tag ${escapeHtml(c.tagClass)}">${escapeHtml(c.tag)}</span>
+      </div>
+      <div class="ws-card-value">${escapeHtml(c.value)}</div>
+      <div class="ws-card-title">${escapeHtml(c.title)}</div>
+      <div class="ws-card-meta">${c.meta}</div>
+      <div class="ws-card-foot">
+        <span>${escapeHtml(c.foot)}</span>
+        <span class="ws-card-cta">${escapeHtml(c.cta)} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+      </div>
+    </a>
+  `).join('');
+}
+
+function renderFeed(items) {
+  const feed = document.getElementById('wsFeed');
+  const railCount = document.getElementById('railActivityCount');
+  if (railCount) railCount.textContent = String(recentActivity.length);
+  if (!feed) return;
+
+  if (!items || items.length === 0) {
+    feed.innerHTML = `
+      <div class="ws-feed-empty">
+        <i class="fas fa-satellite-dish" aria-hidden="true"></i>
+        <div>No recent activity</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Task updates and payouts will appear here.</div>
+      </div>
+    `;
+    return;
+  }
+
+  feed.innerHTML = items.map(a => `
+    <div class="ws-feed-item">
+      <div class="ws-feed-icon ${escapeHtml(a.type)}" aria-hidden="true">
+        <i class="fas ${escapeHtml(a.icon)}"></i>
+      </div>
+      <div class="ws-feed-body">
+        <div class="ws-feed-title">${escapeHtml(a.title)}</div>
+        <div class="ws-feed-desc">${escapeHtml(a.desc)}</div>
+      </div>
+      <div class="ws-feed-time">${escapeHtml(getTimeAgo(a.ts))}</div>
+    </div>
+  `).join('');
+}
+
+function navigateTo(section) {
+  closeRail();
+  // Update rail active state
+  document.querySelectorAll('.rail-item').forEach(el => el.classList.remove('active'));
+  const target = document.querySelector(`.rail-item[data-nav="${section}"]`);
+  if (target) target.classList.add('active');
+
+  if (section === 'home') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (section === 'recent' || section === 'activity') {
+    const el = document.getElementById('recentTitle');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (section === 'wallet') {
+    window.location.href = 'wallet.html';
+  } else if (section === 'account') {
+    window.location.href = 'account.html';
   }
 }
 
@@ -1641,22 +2591,21 @@ function renderLauncher() {
   if (!grid) return;
 
   const signedIn = !!currentUser;
-  const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
+  const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   const visible = apps.filter(app => {
     if (!signedIn) return app.alwaysVisible === true;
     if (app.alwaysVisible) return true;
-    if (currentPerms[app.permission] === true) return true;
+    if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
     return false;
   });
 
   if (visible.length === 0) {
     grid.innerHTML = `
-      <div class="lp-empty" style="grid-column: 1 / -1;">
+      <div class="lp-empty" style="grid-column:1/-1;">
         <i class="fas fa-lock" aria-hidden="true"></i>
-        No apps have been granted to your account yet.<br>
-        Contact your KazInni administrator.
+        No apps granted yet.
       </div>
     `;
   } else {
@@ -1677,7 +2626,7 @@ function renderLauncher() {
   if (!statusEl || !footerTextEl || !footerLinkEl) return;
 
   if (signedIn) {
-    statusEl.textContent = `${visible.length} app${visible.length !== 1 ? 's' : ''}`;
+    statusEl.textContent = pluralize(visible.length, 'app');
     footerTextEl.textContent = 'All apps at a glance';
     footerLinkEl.textContent = 'Account settings';
     footerLinkEl.onclick = () => { window.location.href = 'account-settings.html'; };
@@ -1726,41 +2675,26 @@ function attachNotifListeners() {
   const uid = currentUser.uid;
   const email = (currentUser.email || '').toLowerCase();
 
-  // FlexiKazi — query only this tasker's tasks (server-side filter via orderBy+equalTo)
   try {
-    const ref1 = db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifListenersLimit);
+    const ref1 = db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit);
     const cb1 = (snap) => updateFlexikaziNotifications(snap.val() || {}, email);
     ref1.on('value', cb1, (err) => console.warn('FlexiKazi listener:', err));
     notifRefs.push({ ref: ref1, cb: cb1 });
-  } catch (e) {
-    console.warn('FlexiKazi listener setup failed:', e);
-  }
+  } catch (e) { console.warn(e); }
 
-  // Kasikazi — query by claimedBy uid
   try {
-    const ref2 = db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifListenersLimit);
-    const cb2 = (snap) => {
-      updateKasikaziNotifications(snap.val() || {}, uid);
-      buildTicker();
-    };
+    const ref2 = db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit);
+    const cb2 = (snap) => updateKasikaziNotifications(snap.val() || {}, uid);
     ref2.on('value', cb2, (err) => console.warn('Kasikazi listener:', err));
     notifRefs.push({ ref: ref2, cb: cb2 });
-  } catch (e) {
-    console.warn('Kasikazi listener setup failed:', e);
-  }
+  } catch (e) { console.warn(e); }
 
-  // Payouts — query by taskerId
   try {
-    const ref3 = db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifListenersLimit);
-    const cb3 = (snap) => {
-      updatePayoutNotifications(snap.val() || {}, uid);
-      buildTicker();
-    };
+    const ref3 = db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit);
+    const cb3 = (snap) => updatePayoutNotifications(snap.val() || {}, uid);
     ref3.on('value', cb3, (err) => console.warn('Payout listener:', err));
     notifRefs.push({ ref: ref3, cb: cb3 });
-  } catch (e) {
-    console.warn('Payout listener setup failed:', e);
-  }
+  } catch (e) { console.warn(e); }
 }
 
 function detachNotifListeners() {
@@ -1771,40 +2705,37 @@ function detachNotifListeners() {
 }
 
 function updateFlexikaziNotifications(tasks, email) {
-  const mine = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
-
-  const recent = mine.map(t => {
-    const status = (t.status || '').toLowerCase();
-    let type = 'info', icon = 'fa-info-circle', title = '', desc = '';
+  const recent = Object.entries(tasks).map(([id, t]) => {
+    const s = (t.status || '').toLowerCase();
+    let type = 'info', icon = 'fa-info-circle', title = '', desc = '', details = '';
     let ts = 0;
-    let details = '';
 
-    if (status === 'approved' || status === 'completed') {
+    if (s === 'approved' || s === 'completed') {
       ts = t.approvedAt || t.reviewedAt || 0;
       type = 'success'; icon = 'fa-circle-check';
       title = 'Task approved';
       desc = `${t.title || 'Your task'} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-      details = `Great work! Your task "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\nCategory: ${t.category || '—'}\n\nPayment will be processed within 48 hours.`;
-    } else if (status === 'revision') {
+      details = `Your task "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be processed within 48 hours.`;
+    } else if (s === 'revision') {
       ts = t.reviewedAt || 0;
       type = 'warning'; icon = 'fa-redo';
       title = 'Revision requested';
       desc = `${t.title || 'Task'}: ${t.reviewNote || 'Please review and resubmit.'}`;
-      details = `Your submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.reviewNote || 'Please review the brief and resubmit.'}\n\nOpen the task in FlexiKazi to see the full brief and submit a corrected version.`;
-    } else if (status === 'review' || status === 'submitted') {
+      details = `Your submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.reviewNote || 'Please check the brief and resubmit.'}`;
+    } else if (s === 'review' || s === 'submitted') {
       ts = t.lastSubmittedAt || 0;
       type = 'info'; icon = 'fa-clock';
       title = 'Submission under review';
       desc = t.title || 'Your work was submitted.';
-      details = `Your submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification as soon as a decision is made.`;
-    } else if (status === 'assigned' || status === 'new') {
+      details = `Your submission for "${t.title || 'Untitled'}" is now being reviewed.`;
+    } else if (s === 'assigned' || s === 'new') {
       ts = t.assignedAt || 0;
       type = 'gold'; icon = 'fa-list-check';
       title = 'New task assigned';
       desc = `${t.title || 'A new task'} — due ${t.dueDate || 'soon'}`;
-      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nClient: ${t.clientName || 'KazInni'}\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\n\nOpen FlexiKazi to start working on it.`;
+      details = `A new task has been assigned to you.\n\nTitle: ${t.title || 'Untitled'}\nCategory: ${t.category || '—'}\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}`;
     }
-    return { id: 'f_' + t.id, type, icon, title, desc, ts, details, source: 'flexikazi' };
+    return { id: 'f_' + id, type, icon, title, desc, ts, details, source: 'flexikazi' };
   })
   .filter(n => n.title && n.ts)
   .sort((a, b) => b.ts - a.ts);
@@ -1813,80 +2744,75 @@ function updateFlexikaziNotifications(tasks, email) {
 }
 
 function updateKasikaziNotifications(tasks, uid) {
-  const mine = Object.entries(tasks)
+  const recent = Object.entries(tasks)
     .filter(([_, t]) => t.claimedBy && t.claimedBy[uid])
-    .map(([id, t]) => ({ id, ...t, claim: t.claimedBy[uid] }));
+    .map(([id, t]) => {
+      const c = t.claimedBy[uid];
+      const s = (c.status || 'claimed').toLowerCase();
+      let type = 'info', icon = 'fa-bullhorn', title = '', desc = '', details = '';
+      let ts = 0;
 
-  const recent = mine.map(t => {
-    const status = (t.claim.status || 'claimed').toLowerCase();
-    let type = 'info', icon = 'fa-bullhorn', title = '', desc = '';
-    let ts = 0;
-    let details = '';
-
-    if (status === 'approved') {
-      ts = t.claim.reviewedAt || 0;
-      type = 'success'; icon = 'fa-circle-check';
-      title = 'Kasikazi task approved';
-      desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
-      details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}\nClient: ${t.clientName || 'KazInni'}\n\nPayment will be processed within 48 hours.`;
-    } else if (status === 'revision') {
-      ts = t.claim.reviewedAt || 0;
-      type = 'warning'; icon = 'fa-redo';
-      title = 'Kasikazi revision requested';
-      desc = `${t.title}: ${t.claim.reviewNote || 'Check the brief.'}`;
-      details = `Your Kasikazi submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${t.claim.reviewNote || 'Please check the brief and resubmit.'}\n\nOpen the task in Kasikazi to see the full brief and submit a corrected version.`;
-    } else if (status === 'submitted') {
-      ts = t.claim.submittedAt || 0;
-      type = 'info'; icon = 'fa-clock';
-      title = 'Kasikazi submission in review';
-      desc = t.title;
-      details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.\n\nYou'll get another notification when a decision is made.`;
-    } else {
-      ts = t.claim.claimedAt || 0;
-      type = 'gold'; icon = 'fa-hand-sparkles';
-      title = 'Task claimed';
-      desc = t.title;
-      details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}\nClient: ${t.clientName || 'KazInni'}\n\nOpen the task to start working on it.`;
-    }
-    return { id: 'k_' + t.id, type, icon, title, desc, ts, details, source: 'kasikazi' };
-  })
-  .filter(n => n.title && n.ts)
-  .sort((a, b) => b.ts - a.ts);
+      if (s === 'approved') {
+        ts = c.reviewedAt || 0;
+        type = 'success'; icon = 'fa-circle-check';
+        title = 'Kasikazi task approved';
+        desc = `${t.title} — KES ${Number(t.payRate || 0).toLocaleString()}`;
+        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" has been approved.\n\nEarnings: KES ${Number(t.payRate || 0).toLocaleString()}`;
+      } else if (s === 'revision') {
+        ts = c.reviewedAt || 0;
+        type = 'warning'; icon = 'fa-redo';
+        title = 'Kasikazi revision requested';
+        desc = `${t.title}: ${c.reviewNote || 'Check the brief.'}`;
+        details = `Your Kasikazi submission on "${t.title || 'Untitled'}" needs revision.\n\nReviewer notes: ${c.reviewNote || 'Please check the brief and resubmit.'}`;
+      } else if (s === 'submitted') {
+        ts = c.submittedAt || 0;
+        type = 'info'; icon = 'fa-clock';
+        title = 'Kasikazi submission in review';
+        desc = t.title;
+        details = `Your Kasikazi submission for "${t.title || 'Untitled'}" is now being reviewed.`;
+      } else {
+        ts = c.claimedAt || 0;
+        type = 'gold'; icon = 'fa-hand-sparkles';
+        title = 'Task claimed';
+        desc = t.title;
+        details = `You've successfully claimed "${t.title || 'Untitled'}" on Kasikazi.\n\nPay: KES ${Number(t.payRate || 0).toLocaleString()}\nDue: ${t.dueDate || 'Not set'}`;
+      }
+      return { id: 'k_' + id, type, icon, title, desc, ts, details, source: 'kasikazi' };
+    })
+    .filter(n => n.title && n.ts)
+    .sort((a, b) => b.ts - a.ts);
 
   mergeNotifications(recent, 8);
 }
 
 function updatePayoutNotifications(payouts, uid) {
-  const mine = Object.entries(payouts).map(([id, p]) => ({ id, ...p }));
+  const recent = Object.entries(payouts).map(([id, p]) => {
+    const s = (p.status || 'pending').toLowerCase();
+    let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '', details = '';
+    const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
 
-  const recent = mine.map(p => {
-    const status = (p.status || 'pending').toLowerCase();
-    let type = 'info', icon = 'fa-money-bill-transfer', title = '', desc = '';
-    let ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-    let details = '';
-
-    if (status === 'paid') {
+    if (s === 'paid') {
       type = 'success'; icon = 'fa-check-double';
       title = 'Payout sent';
       desc = `KES ${Number(p.amount || 0).toLocaleString()} sent to ${p.phone || 'M-Pesa'}`;
-      details = `Your payout has been successfully sent.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nSent to: ${p.phone || '—'}\nMethod: ${p.paymentMethod || 'M-Pesa'}\n${p.mpesaReference ? `Reference: ${p.mpesaReference}\n` : ''}\nPlease allow a few minutes for the funds to reflect.`;
-    } else if (status === 'approved') {
+      details = `Your payout has been successfully sent.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nSent to: ${p.phone || '—'}\nMethod: ${p.paymentMethod || 'M-Pesa'}`;
+    } else if (s === 'approved') {
       type = 'gold'; icon = 'fa-money-bill-wave';
       title = 'Payout approved';
       desc = `KES ${Number(p.amount || 0).toLocaleString()} — processing`;
-      details = `Your payout request has been approved.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nDestination: ${p.phone || '—'}\n\nFunds will be sent shortly.`;
-    } else if (status === 'rejected') {
+      details = `Your payout has been approved and will be dispatched shortly.`;
+    } else if (s === 'rejected') {
       type = 'danger'; icon = 'fa-times-circle';
       title = 'Payout rejected';
       desc = p.rejectionReason || 'Contact admin for details.';
-      details = `Your payout request was rejected.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nReason: ${p.rejectionReason || 'Not specified'}\n\nPlease contact your administrator for more information.`;
+      details = `Your payout was rejected.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nReason: ${p.rejectionReason || 'Not specified'}`;
     } else {
       type = 'info'; icon = 'fa-hourglass-half';
       title = 'Payout request pending';
       desc = `KES ${Number(p.amount || 0).toLocaleString()} — awaiting approval`;
-      details = `Your payout request has been received.\n\nAmount: KES ${Number(p.amount || 0).toLocaleString()}\nRequested to: ${p.phone || '—'}\n\nPlease allow up to 48 hours for processing.`;
+      details = `Your payout request has been received and is awaiting approval.`;
     }
-    return { id: 'p_' + p.id, type, icon, title, desc, ts, details, source: 'wallet' };
+    return { id: 'p_' + id, type, icon, title, desc, ts, details, source: 'wallet' };
   })
   .filter(n => n.title && n.ts)
   .sort((a, b) => b.ts - a.ts);
@@ -1927,7 +2853,7 @@ function renderNotifications() {
       <div class="notif-empty">
         <i class="far fa-bell-slash" aria-hidden="true"></i>
         <div>No notifications yet</div>
-        <div style="font-size: 0.72rem; margin-top: 0.4rem; opacity: 0.7;">Task updates and payouts will show here</div>
+        <div style="font-size:0.72rem;margin-top:0.4rem;opacity:0.7;">Task updates and payouts will show here</div>
       </div>
     `;
     badge.classList.remove('visible');
@@ -1966,15 +2892,9 @@ function clearNotifications() {
   renderNotifications();
 }
 
-// ============================================================
-// NOTIFICATION DETAIL MODAL
-// ============================================================
-let lastFocusedBeforeModal = null;
-
-function openNotifModal(notifId) {
-  const n = notifications.find(x => x.id === notifId);
+function openNotifModal(id) {
+  const n = notifications.find(x => x.id === id);
   if (!n) return;
-
   const modal = document.getElementById('notifModal');
   const overlay = document.getElementById('notifModalOverlay');
   if (!modal) return;
@@ -1983,7 +2903,7 @@ function openNotifModal(notifId) {
 
   const iconEl = document.getElementById('notifModalIcon');
   if (iconEl) {
-    iconEl.className = `notif-modal-icon ${n.type}`;
+    iconEl.className = `ws-modal-icon ${n.type}`;
     iconEl.innerHTML = `<i class="fas ${escapeHtml(n.icon)}" aria-hidden="true"></i>`;
   }
   document.getElementById('notifModalTitle').textContent = n.title;
@@ -1991,38 +2911,31 @@ function openNotifModal(notifId) {
 
   const bodyEl = document.getElementById('notifModalBody');
   bodyEl.innerHTML = '';
-  String(n.details || n.desc).split('\n').forEach((line, idx) => {
-    if (idx > 0) bodyEl.appendChild(document.createElement('br'));
+  String(n.details || n.desc).split('\n').forEach((line, i) => {
+    if (i > 0) bodyEl.appendChild(document.createElement('br'));
     bodyEl.appendChild(document.createTextNode(line));
   });
 
   document.getElementById('notifModalTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${escapeHtml(getFullTime(n.ts))}`;
   document.getElementById('notifModalType').innerHTML = `<i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(n.type)}`;
 
-  // Contextual actions — FIX: route Kasikazi to Kasikazi
   const actions = document.getElementById('notifModalActions');
   const buttons = [];
-  if (n.source === 'flexikazi') {
-    buttons.push(`<a href="apps/flexikazi/" class="notif-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open FlexiKazi</a>`);
-  } else if (n.source === 'kasikazi') {
-    buttons.push(`<a href="apps/kasikazi/" class="notif-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open Kasikazi</a>`);
-  } else if (n.source === 'wallet') {
-    buttons.push(`<a href="wallet.html" class="notif-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> View Wallet</a>`);
-  }
-  buttons.push(`<button type="button" class="notif-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
+  if (n.source === 'flexikazi') buttons.push(`<a href="apps/flexikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open FlexiKazi</a>`);
+  else if (n.source === 'kasikazi') buttons.push(`<a href="apps/kasikazi/" class="ws-modal-btn primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Open Kasikazi</a>`);
+  else if (n.source === 'wallet') buttons.push(`<a href="wallet.html" class="ws-modal-btn primary"><i class="fas fa-wallet" aria-hidden="true"></i> View Wallet</a>`);
+  buttons.push(`<button type="button" class="ws-modal-btn secondary" onclick="closeNotifModal()">Close</button>`);
   actions.innerHTML = buttons.join('');
 
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   if (overlay) overlay.classList.add('active');
 
-  // Focus first button
   setTimeout(() => {
     const first = modal.querySelector('button, [href]');
     if (first) first.focus();
   }, 50);
 
-  // Auto-mark read
   const lastSeen = getLastSeen();
   if (n.ts > lastSeen) {
     setLastSeen(n.ts);
@@ -2042,42 +2955,6 @@ function closeNotifModal() {
     try { lastFocusedBeforeModal.focus(); } catch (e) {}
   }
   lastFocusedBeforeModal = null;
-}
-
-// ============================================================
-// USER MENU
-// ============================================================
-function toggleUserDropdown(e) {
-  if (e) e.stopPropagation();
-  const menu = document.getElementById('userDropdown');
-  const btn = document.getElementById('userMenuBtn');
-  if (!menu || !btn) return;
-  closeLauncher();
-  closeNotifications();
-  const isActive = menu.classList.toggle('active');
-  btn.classList.toggle('active', isActive);
-  btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-}
-
-function closeUserDropdown() {
-  const menu = document.getElementById('userDropdown');
-  const btn = document.getElementById('userMenuBtn');
-  if (menu) menu.classList.remove('active');
-  if (btn) {
-    btn.classList.remove('active');
-    btn.setAttribute('aria-expanded', 'false');
-  }
-}
-
-async function handleSignOut() {
-  const auth = window._auth;
-  try {
-    detachNotifListeners();
-    if (auth) await auth.signOut();
-    showToast('Signed out successfully', 'info');
-  } catch (err) {
-    showToast('Error signing out', 'error');
-  }
 }
 
 // ============================================================
@@ -2131,25 +3008,19 @@ async function handleLogin(e) {
   const errEl = document.getElementById('authError');
   const emailEl = document.getElementById('loginEmail');
   const passEl = document.getElementById('loginPassword');
-
   if (!emailEl || !passEl) return;
 
   const email = emailEl.value.trim();
   const password = passEl.value;
 
   const showError = (msg) => {
-    if (errEl) {
-      errEl.textContent = msg;
-      errEl.classList.add('visible');
-    }
+    if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
   };
 
   if (errEl) { errEl.classList.remove('visible'); errEl.textContent = ''; }
-
   if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
   if (!password || password.length < 6) { showError('Password must be at least 6 characters.'); return; }
-
-  if (!auth) { showError('Authentication service not available. Please refresh.'); return; }
+  if (!auth) { showError('Authentication service not available.'); return; }
 
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> <span>Signing in…</span>';
@@ -2173,23 +3044,25 @@ async function handleLogin(e) {
 }
 
 // ============================================================
-// PUBLIC STATS
+// PUBLIC STATS (landing)
 // ============================================================
 async function loadPublicStats() {
   const db = window._db;
-  if (!db) { loadPublicStatsFallback(); return; }
+  if (!db || document.body.classList.contains('mode-workspace')) {
+    // Workspace mode — skip landing stats
+    if (!db) {
+      setStat('psTaskers', '—'); setStat('psCompleted', '—'); setStat('psWorkspaces', '—');
+    }
+    return;
+  }
 
-  // Taskers
   try {
     const snap = await db.ref('taskers').once('value');
     const taskers = snap.val() || {};
-    const verified = Object.values(taskers).filter(t =>
-      t && (t.verified === true || t.status === 'verified')
-    ).length;
+    const verified = Object.values(taskers).filter(t => t && (t.verified === true || t.status === 'verified')).length;
     setStat('psTaskers', verified);
   } catch (e) { setStat('psTaskers', '—'); }
 
-  // Completed
   let completed = 0;
   try {
     const snap = await db.ref('ekazi_assigned_tasks').once('value');
@@ -2211,9 +3084,7 @@ async function loadPublicStats() {
   } catch (e) {}
   setStat('psCompleted', completed);
 
-  // Workspaces — count known sub-apps + root apps
   setStat('psWorkspaces', Object.keys(APPS).length + 12);
-
   buildTicker();
 }
 
@@ -2221,15 +3092,11 @@ function setStat(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
   el.classList.remove('loading');
-  if (typeof value === 'number') {
-    animateCount(el, value);
-  } else {
-    el.textContent = value;
-  }
+  if (typeof value === 'number') animateCount(el, value);
+  else el.textContent = value;
 }
 
 function animateCount(el, target) {
-  // Start from current numeric value (if any) rather than 0 — avoids re-count from zero
   const currentText = (el.textContent || '').replace(/,/g, '').trim();
   const currentVal = /^\d+$/.test(currentText) ? parseInt(currentText, 10) : 0;
   if (currentVal === target) { el.textContent = target.toLocaleString(); return; }
@@ -2249,7 +3116,7 @@ function animateCount(el, target) {
 }
 
 // ============================================================
-// ACTIVITY TICKER
+// TICKER
 // ============================================================
 function buildPublicTicker() {
   const track = document.getElementById('psTicker');
@@ -2274,9 +3141,7 @@ function buildPublicTicker() {
 async function buildTicker() {
   const track = document.getElementById('psTicker');
   if (!track) return;
-
   if (!currentUser) { buildPublicTicker(); return; }
-
   const db = window._db;
   if (!db) { buildPublicTicker(); return; }
 
@@ -2285,26 +3150,21 @@ async function buildTicker() {
   const items = [];
 
   try {
-    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
     const assigned = snap.val() || {};
     Object.entries(assigned).forEach(([id, t]) => {
       const s = (t.status || '').toLowerCase();
       const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
       if (!ts) return;
-      if (s === 'approved' || s === 'completed') {
-        items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      } else if (s === 'revision') {
-        items.push({ icon: 'fa-redo', html: `Revision on <strong>${escapeHtml(t.title || 'task')}</strong>`, ts });
-      } else if (s === 'review' || s === 'submitted') {
-        items.push({ icon: 'fa-clock', html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`, ts });
-      } else if (s === 'assigned' || s === 'new') {
-        items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      }
+      if (s === 'approved' || s === 'completed') items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      else if (s === 'revision') items.push({ icon: 'fa-redo', html: `Revision on <strong>${escapeHtml(t.title || 'task')}</strong>`, ts });
+      else if (s === 'review' || s === 'submitted') items.push({ icon: 'fa-clock', html: `<strong>${escapeHtml(t.title || 'Task')}</strong> is under review`, ts });
+      else if (s === 'assigned' || s === 'new') items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
     });
-  } catch (e) { console.warn('Ticker FlexiKazi:', e); }
+  } catch (e) {}
 
   try {
-    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const snap = await db.ref('kasikazi_tasks').orderByChild(`claimedBy/${uid}/claimedAt`).limitToLast(CONFIG.notifLimit).once('value');
     const kas = snap.val() || {};
     Object.entries(kas).forEach(([id, t]) => {
       const c = t.claimedBy && t.claimedBy[uid];
@@ -2312,32 +3172,22 @@ async function buildTicker() {
       const s = (c.status || 'claimed').toLowerCase();
       const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
       if (!ts) return;
-      if (s === 'approved') {
-        items.push({ icon: 'fa-circle-check', html: `Kasikazi approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      } else if (s === 'revision') {
-        items.push({ icon: 'fa-redo', html: `Kasikazi revision: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      } else if (s === 'submitted') {
-        items.push({ icon: 'fa-clock', html: `Kasikazi in review: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      } else {
-        items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      }
+      if (s === 'approved') items.push({ icon: 'fa-circle-check', html: `Kasikazi approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
+      else if (s === 'claimed') items.push({ icon: 'fa-hand-sparkles', html: `You claimed <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
     });
-  } catch (e) { console.warn('Ticker Kasikazi:', e); }
+  } catch (e) {}
 
   try {
-    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifListenersLimit).once('value');
+    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
     const payouts = snap.val() || {};
     Object.entries(payouts).forEach(([id, p]) => {
       const s = (p.status || 'pending').toLowerCase();
       const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
       if (!ts) return;
-      if (s === 'paid') {
-        items.push({ icon: 'fa-check-double', html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
-      } else if (s === 'approved') {
-        items.push({ icon: 'fa-money-bill-wave', html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
-      }
+      if (s === 'paid') items.push({ icon: 'fa-check-double', html: `Payout sent: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
+      else if (s === 'approved') items.push({ icon: 'fa-money-bill-wave', html: `Payout approved: <strong>KES ${Number(p.amount || 0).toLocaleString()}</strong>`, ts });
     });
-  } catch (e) { console.warn('Ticker payouts:', e); }
+  } catch (e) {}
 
   items.sort((a, b) => b.ts - a.ts);
 
@@ -2385,16 +3235,22 @@ function updatePublicClock() {
 }
 
 // ============================================================
-// BOOT TIMERS + INIT
+// SEARCH (basic — extend later)
 // ============================================================
-window.addEventListener('load', () => {
-  updatePublicClock();
-  setInterval(updatePublicClock, CONFIG.clockRefreshMs);
-  setInterval(() => {
-    if (appInitialized) loadPublicStats();
-  }, CONFIG.tickerRefreshMs);
+document.addEventListener('DOMContentLoaded', () => {
+  const search = document.getElementById('wsSearch');
+  if (search) {
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && search.value.trim()) {
+        showToast(`Search for "${search.value.trim()}" — coming soon`, 'info');
+      }
+    });
+  }
 });
 
+// ============================================================
+// CLEANUP
+// ============================================================
 window.addEventListener('beforeunload', () => {
   detachNotifListeners();
 });
