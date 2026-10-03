@@ -284,12 +284,17 @@ async function onAuthChanged(user) {
   currentUser = user;
   renderAccountChip(user);
 
-  // Fire-and-forget course cache load — used to show categories on certificates
+ // Fire-and-forget course cache load — used to show categories on certificates
   window._db.ref('learning_courses').once('value')
     .then(snap => { coursesCache = snap.val() || {}; })
     .catch(() => { coursesCache = {}; });
 
   await loadCertificates();
+
+  // Backfill any missing verification-index entries (async, silent)
+  backfillMissingIndexEntries(certificatesCache).catch(e =>
+    console.warn('[certificate] backfill failed:', e)
+  );
 }
 
 function renderAccountChip(user) {
@@ -303,6 +308,45 @@ function renderAccountChip(user) {
     </a>`;
 }
 
+// ══════════════════════════════════════════════════════════════
+// BACKFILL VERIFICATION INDEX
+// For certificates created before the index existed, create the
+// public lookup entry on first visit. Rules allow users to create
+// their own index entries, but only if the entry doesn't exist.
+// ══════════════════════════════════════════════════════════════
+async function backfillMissingIndexEntries(certs) {
+  if (!certs || certs.length === 0) return;
+
+  const recipientName = getRecipientName();
+
+  for (const cert of certs) {
+    const certId = cert.certificateId;
+    if (!certId) continue;
+
+    try {
+      const snap = await window._db
+        .ref(`learning_certificate_index/${certId}`)
+        .once('value');
+
+      if (snap.exists()) continue; // already indexed
+
+      // Missing — create it
+      await window._db.ref(`learning_certificate_index/${certId}`).set({
+        uid: currentUser.uid,
+        recipientName: recipientName,
+        courseId: cert.courseId || cert.id,
+        courseTitle: cert.courseTitle || 'Course',
+        issuedAt: cert.issuedAt || Date.now(),
+        status: cert.status || 'auto_issued'
+      });
+
+      console.log('[certificate] Backfilled index entry:', certId);
+    } catch (e) {
+      // Silently skip — likely a rules denial (index already exists, or user not owner)
+      console.warn('[certificate] Could not backfill', certId, e.message);
+    }
+  }
+}
 // ══════════════════════════════════════════════════════════════
 // LOAD & RENDER CERTIFICATES
 // ══════════════════════════════════════════════════════════════
