@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ca8a04">
+<title>Learning Admin — KazInni</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;--gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);--ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;--text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;--surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;--header-h:60px;--f-display:'Clash Display','Cabinet Grotesk',sans-serif;--f-head:'Satoshi','Cabinet Grotesk',sans-serif;--f-body:'Satoshi','Cabinet Grotesk',sans-serif;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;--t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1);--shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
+.ws-header-inner{width:100%;max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+.ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+.ws-logo img{height:30px}
+.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:1.05rem;color:var(--ink)}
+.ws-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+.ws-btn{padding:.6rem 1.2rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.84rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-head);white-space:nowrap}
+.ws-btn-primary{background:var(--ink);color:#fff}
+.ws-btn-primary:hover{background:var(--gold)}
+.ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
+.ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.ws-btn-danger{background:transparent;color:var(--danger);border:1.5px solid var(--danger)}
+.ws-btn-danger:hover{background:var(--danger);color:#fff}
+.ws-btn:disabled{opacity:.5;cursor:not-allowed}
+.ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
+.ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem}
+
+.admin-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;gap:.3rem;overflow-x:auto}
+.admin-tab{padding:1rem 1.2rem;font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;transition:color var(--t-fast),border-color var(--t-fast);display:flex;align-items:center;gap:.5rem}
+.admin-tab:hover{color:var(--ink)}
+.admin-tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
+.admin-tab i{font-size:.85rem}
+
+.admin-main{flex:1;padding:2rem 2.5rem;max-width:1600px;margin:0 auto;width:100%}
+.admin-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.admin-toolbar-left{display:flex;align-items:center;gap:.8rem;flex:1;min-width:0}
+.admin-toolbar-right{display:flex;gap:.5rem}
+.search-box{position:relative;flex:1;max-width:360px}
+.search-box input{width:100%;padding:.6rem 1rem .6rem 2.4rem;border:1.5px solid var(--border);border-radius:var(--r-pill);background:#fff;font-family:var(--f-body);font-size:.85rem;color:var(--ink)}
+.search-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.12)}
+.search-box i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;pointer-events:none}
+
+.admin-table{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.admin-row{display:grid;grid-template-columns:48px 2fr 1fr 1fr 100px 100px 90px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+.admin-row:last-child{border-bottom:none}
+.admin-row.header{background:var(--surface-2);font-family:var(--f-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:.7rem 1.2rem}
+.admin-row:not(.header):hover{background:var(--surface-2)}
+.admin-row-thumb{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem}
+.admin-row-title{font-family:var(--f-head);font-size:.88rem;font-weight:600;color:var(--ink);line-height:1.2}
+.admin-row-sub{font-size:.72rem;color:var(--muted);margin-top:.15rem}
+.admin-badge{display:inline-block;font-family:var(--f-head);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.2rem .55rem;border-radius:var(--r-pill);white-space:nowrap}
+.admin-badge.free{background:#d1fae5;color:#065f46}
+.admin-badge.premium{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff}
+.admin-badge.published{background:#dbeafe;color:#1e40af}
+.admin-badge.draft{background:#fef3c7;color:#92400e}
+.admin-badge.learner{background:#fef3c7;color:#92400e}
+.admin-badge.pro{background:#ede9fe;color:#6d28d9}
+.admin-badge.none{background:var(--surface-3);color:var(--muted)}
+.admin-row-actions{display:flex;gap:.4rem;justify-content:flex-end}
+.admin-icon-btn{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--t-fast);font-size:.78rem}
+.admin-icon-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.admin-icon-btn.danger:hover{background:var(--danger);border-color:var(--danger)}
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
+.empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
+.empty-state h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.skeleton{height:220px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* Editor modal */
+.ws-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:var(--r-xl);padding:0;max-width:900px;width:calc(100% - 2rem);max-height:90vh;overflow-y:auto;z-index:2001;box-shadow:0 40px 80px rgba(15,15,30,.3);display:none}
+.ws-modal.active{display:block;animation:fadeUp .3s cubic-bezier(.2,.8,.2,1)}
+.ws-modal.small{max-width:460px;padding:2rem 2rem 1.8rem}
+@keyframes fadeUp{from{opacity:0;transform:translate(-50%,-46%)}to{opacity:1;transform:translate(-50%,-50%)}}
+.modal-header{padding:1.5rem 1.5rem 0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-family:var(--f-display);font-size:1.2rem;font-weight:700;color:var(--ink)}
+.ws-modal-close{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ws-modal-close:hover{color:var(--ink);background:rgba(15,15,30,.05)}
+.modal-body{padding:1.5rem}
+.editor-grid{display:grid;grid-template-columns:1fr 340px;gap:1.5rem}
+@media(max-width:900px){.editor-grid{grid-template-columns:1fr}}
+.editor-field{margin-bottom:1rem}
+.editor-field:last-child{margin-bottom:0}
+.editor-field label{display:block;font-family:var(--f-head);font-size:.72rem;font-weight:600;color:var(--text-2);margin-bottom:.4rem}
+.editor-field label .req{color:var(--danger)}
+.editor-input,.editor-textarea,.editor-select{width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--f-body);font-size:.88rem;background:var(--surface-2);color:var(--ink);transition:border-color var(--t-fast),background var(--t-fast)}
+.editor-input:focus,.editor-textarea:focus,.editor-select:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(202,138,4,.12)}
+.editor-textarea{min-height:80px;resize:vertical;line-height:1.6}
+.editor-textarea.tall{min-height:140px}
+.editor-two-col{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.editor-hint{font-size:.7rem;color:var(--muted);margin-top:.35rem;font-family:var(--f-head)}
+.icon-picker,.color-picker{display:flex;flex-wrap:wrap;gap:.4rem}
+.icon-choice,.color-choice{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:all var(--t-fast);color:var(--text-2)}
+.icon-choice:hover,.color-choice:hover{border-color:var(--border-2)}
+.icon-choice.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.color-choice{position:relative;overflow:hidden}
+.color-choice.active::after{content:'';position:absolute;inset:3px;border-radius:7px;border:2.5px solid #fff}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none;padding-bottom:0}
+.toggle-label{display:flex;flex-direction:column;gap:.15rem}
+.toggle-label strong{font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--ink)}
+.toggle-label span{font-size:.72rem;color:var(--muted)}
+.toggle-switch{position:relative;width:42px;height:24px;background:var(--border-2);border-radius:12px;cursor:pointer;transition:background var(--t-fast);flex-shrink:0;border:none}
+.toggle-switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform var(--t-fast);box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.toggle-switch.on{background:var(--success)}
+.toggle-switch.on::after{transform:translateX(18px)}
+.modal-actions{display:flex;gap:.6rem;padding:1rem 1.5rem 1.5rem;justify-content:flex-end;border-top:1px solid var(--border)}
+.modal-actions .ws-btn{min-width:120px;justify-content:center}
+
+.lesson-list{display:flex;flex-direction:column;gap:.5rem}
+.lesson-row{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:.85rem 1rem;display:grid;grid-template-columns:28px 1fr auto;gap:.8rem;align-items:center}
+.lesson-row-title{font-family:var(--f-head);font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.3}
+.lesson-row-meta{font-size:.7rem;color:var(--muted);margin-top:.15rem;font-family:var(--f-head)}
+.lesson-row-actions{display:flex;gap:.3rem}
+.grip{color:var(--muted);font-size:.75rem;cursor:grab}
+
+.entitlement-row{display:grid;grid-template-columns:1fr 100px 100px 100px 80px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+.entitlement-row:last-child{border-bottom:none}
+.entitlement-row:hover{background:var(--surface-2)}
+.entitlement-row .toggle-mini{width:36px;height:20px;border-radius:10px;border:none;cursor:pointer;position:relative;transition:background var(--t-fast)}
+.entitlement-row .toggle-mini::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform var(--t-fast)}
+.entitlement-row .toggle-mini.on{background:var(--success)}
+.entitlement-row .toggle-mini.on::after{transform:translateX(16px)}
+.entitlement-row .toggle-mini.off{background:var(--border-2)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(15,15,30,.55);backdrop-filter:blur(8px);z-index:2000;display:none}
+.modal-overlay.active{display:block}
+
+.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
+.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
+.toast.leaving{opacity:0;transform:translateX(24px)}
+
+@media(max-width:900px){
+  .admin-tabs{padding:0 1rem}
+  .admin-main{padding:1.5rem 1.25rem}
+  .admin-row{grid-template-columns:40px 1fr 80px;gap:.8rem;padding:.8rem}
+  .admin-row.header{display:none}
+  .admin-row>*:not(.admin-row-thumb):not(.admin-row-title-cell):not(.admin-row-actions){display:none}
+  .entitlement-row{grid-template-columns:1fr 60px 60px 60px 60px;padding:.7rem .9rem;font-size:.78rem}
+  .toast-container{right:12px;left:12px;align-items:stretch}
+  .toast{max-width:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="sr-only">Skip to main content</a>
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+<header class="ws-header">
+  <div class="ws-header-inner">
+    <a href="../index.html" class="ws-logo">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="ws-logo-text">Kaz<span class="accent">Inni</span> <span style="font-weight:600;opacity:.5;font-size:.85rem;">Learning Admin</span></span>
+    </a>
+    <div class="ws-header-right">
+      <a href="../learning/index.html" class="ws-btn ws-btn-ghost">
+        <i class="fas fa-eye"></i> <span>View public library</span>
+      </a>
+      <a href="../index.html" class="ws-btn ws-btn-ghost">
+        <i class="fas fa-arrow-left"></i> <span>Workspace</span>
+      </a>
+      <div id="headerAccount"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="admin-tabs" role="tablist">
+  <button type="button" class="admin-tab active" data-tab="courses" onclick="switchTab('courses')">
+    <i class="fas fa-graduation-cap"></i> Courses
+  </button>
+  <button type="button" class="admin-tab" data-tab="entitlements" onclick="switchTab('entitlements')">
+    <i class="fas fa-crown"></i> Entitlements
+  </button>
+</nav>
+
+<main id="main" class="admin-main">
+  <div id="tab-courses"></div>
+  <div id="tab-entitlements" style="display:none;"></div>
+</main>
+
+<!-- Course editor modal -->
+<div class="modal-overlay" id="courseModalOverlay" onclick="closeCourseEditor()"></div>
+<div class="ws-modal" id="courseModal" role="dialog" aria-modal="true">
+  <div class="modal-header">
+    <h3 id="courseModalTitle">Edit course</h3>
+    <button type="button" class="ws-modal-close" onclick="closeCourseEditor()" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="editor-grid">
+      <div>
+        <div class="editor-field">
+          <label for="fTitle">Title <span class="req">*</span></label>
+          <input type="text" id="fTitle" class="editor-input" placeholder="Client Communication 101">
+        </div>
+        <div class="editor-field">
+          <label for="fSlug">URL slug <span class="req">*</span></label>
+          <input type="text" id="fSlug" class="editor-input" placeholder="client-communication-101">
+          <div class="editor-hint">Auto-generated. Used as the course ID in the database.</div>
+        </div>
+        <div class="editor-field">
+          <label for="fDesc">Short description <span class="req">*</span></label>
+          <textarea id="fDesc" class="editor-textarea" placeholder="Write clearly, set expectations..." maxlength="240"></textarea>
+          <div class="editor-hint">Max 240 characters. Shown on cards.</div>
+        </div>
+        <div class="editor-field">
+          <label for="fLongDesc">Long description</label>
+          <textarea id="fLongDesc" class="editor-textarea tall" placeholder="Full course description..."></textarea>
+        </div>
+        <div class="editor-two-col">
+          <div class="editor-field">
+            <label for="fCategory">Category <span class="req">*</span></label>
+            <select id="fCategory" class="editor-select"></select>
+          </div>
+          <div class="editor-field">
+            <label for="fLevel">Level <span class="req">*</span></label>
+            <select id="fLevel" class="editor-select"></select>
+          </div>
+        </div>
+        <div class="editor-two-col">
+          <div class="editor-field">
+            <label for="fOrder">Display order</label>
+            <input type="number" id="fOrder" class="editor-input" min="0" placeholder="1">
+          </div>
+          <div class="editor-field">
+            <label for="fDuration">Total duration (min)</label>
+            <input type="number" id="fDuration" class="editor-input" min="0" placeholder="45">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="editor-field">
+          <label>Icon</label>
+          <div class="icon-picker" id="iconPicker"></div>
+        </div>
+        <div class="editor-field">
+          <label>Color</label>
+          <div class="color-picker" id="colorPicker"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);margin-top:1rem;padding-top:1rem;">
+          <div class="toggle-row">
+            <div class="toggle-label">
+              <strong>Free course</strong>
+              <span>Available to all users</span>
+            </div>
+            <button type="button" class="toggle-switch" id="toggleFree" onclick="toggleField('free')"></button>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-label">
+              <strong>Published</strong>
+              <span>Visible in library</span>
+            </div>
+            <button type="button" class="toggle-switch" id="togglePublished" onclick="toggleField('published')"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <h4 style="font-family:var(--f-head);font-size:.95rem;font-weight:700;color:var(--ink);">
+          <i class="fas fa-list" style="color:var(--gold);margin-right:.4rem;"></i> Lessons
+        </h4>
+        <button type="button" class="ws-btn ws-btn-ghost" onclick="openLessonEditor(null)" style="padding:.4rem .9rem;font-size:.78rem;">
+          <i class="fas fa-plus"></i> Add lesson
+        </button>
+      </div>
+      <div class="lesson-list" id="lessonList"></div>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button type="button" class="ws-btn ws-btn-ghost" onclick="closeCourseEditor()">Cancel</button>
+    <button type="button" class="ws-btn ws-btn-primary" id="saveCourseBtn" onclick="saveCourse()">
+      <i class="fas fa-save"></i> Save course
+    </button>
+  </div>
+</div>
+
+<!-- Lesson editor modal -->
+<div class="modal-overlay" id="lessonModalOverlay" onclick="closeLessonEditor()"></div>
+<div class="ws-modal" id="lessonModal" role="dialog" aria-modal="true" style="max-width:720px;">
+  <div class="modal-header">
+    <h3 id="lessonModalTitle">Edit lesson</h3>
+    <button type="button" class="ws-modal-close" onclick="closeLessonEditor()" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="editor-field">
+      <label for="lTitle">Lesson title <span class="req">*</span></label>
+      <input type="text" id="lTitle" class="editor-input" placeholder="Why clear communication wins clients">
+    </div>
+    <div class="editor-two-col">
+      <div class="editor-field">
+        <label for="lType">Type</label>
+        <select id="lType" class="editor-select">
+          <option value="video">Video</option>
+          <option value="text">Text</option>
+          <option value="quiz">Quiz</option>
+        </select>
+      </div>
+      <div class="editor-field">
+        <label for="lDuration">Duration (min)</label>
+        <input type="number" id="lDuration" class="editor-input" min="0" placeholder="8">
+      </div>
+    </div>
+    <div class="editor-field">
+      <label for="lVideoUrl">Video URL</label>
+      <input type="url" id="lVideoUrl" class="editor-input" placeholder="https://youtube.com/watch?v=... or https://...mp4">
+      <div class="editor-hint">YouTube, Vimeo, or direct .mp4 / .webm</div>
+    </div>
+    <div class="editor-field">
+      <label for="lContent">Content (HTML or text)</label>
+      <textarea id="lContent" class="editor-textarea tall" placeholder="<p>Lesson content...</p>"></textarea>
+    </div>
+    <div class="toggle-row" style="border-top:1px solid var(--border);margin-top:.8rem;padding-top:.8rem;">
+      <div class="toggle-label">
+        <strong>Free preview</strong>
+        <span>Available even without premium</span>
+      </div>
+      <button type="button" class="toggle-switch" id="toggleLessonFree" onclick="toggleLessonFree()"></button>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button type="button" class="ws-btn ws-btn-ghost" onclick="closeLessonEditor()">Cancel</button>
+    <button type="button" class="ws-btn ws-btn-primary" onclick="saveLesson()">
+      <i class="fas fa-check"></i> Save lesson
+    </button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="../js/learning-core.js"></script>
+<script>
+'use strict';
+
+// ============================================================
+// STATE
+// ============================================================
+let allCourses = [];
+let editingCourseId = null;
+let courseDraft = null;
+let activeLessonId = null;
+let activeLessonFree = false;
+
+// ============================================================
+// BOOT
+// ============================================================
+document.addEventListener('learning:ready', async () => {
+  if (!isAdmin) {
+    // Enforce admin-only at the UI level; rules enforce it server-side
+    document.getElementById('main').innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-lock"></i>
+        <h3>Admin access required</h3>
+        <p>You do not have permission to manage courses.</p>
+        <a href="../index.html" class="ws-btn ws-btn-primary" style="margin-top:1rem;">Back to workspace</a>
+      </div>`;
+    return;
+  }
+
+  allCourses = await loadAllCourses();
+  renderCoursesTab();
+});
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.getElementById('tab-courses').style.display = tab === 'courses' ? '' : 'none';
+  document.getElementById('tab-entitlements').style.display = tab === 'entitlements' ? '' : 'none';
+  if (tab === 'entitlements') renderEntitlementsTab();
+}
+
+// ============================================================
+// COURSES TAB
+// ============================================================
+function renderCoursesTab() {
+  const el = document.getElementById('tab-courses');
+  el.innerHTML = `
+    <div class="admin-toolbar">
+      <div class="admin-toolbar-left">
+        <div class="search-box">
+          <i class="fas fa-magnifying-glass"></i>
+          <input type="search" id="courseSearch" placeholder="Search courses..." aria-label="Search courses">
+        </div>
+      </div>
+      <div class="admin-toolbar-right">
+        <button type="button" class="ws-btn ws-btn-primary" onclick="openCourseEditor(null)">
+          <i class="fas fa-plus"></i> New course
+        </button>
+      </div>
+    </div>
+    <div class="admin-table" id="courseTable"></div>
+  `;
+  document.getElementById('courseSearch').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    const filtered = q
+      ? allCourses.filter(c =>
+          (c.title || '').toLowerCase().includes(q) ||
+          (c.category || '').toLowerCase().includes(q) ||
+          (c.slug || '').toLowerCase().includes(q))
+      : allCourses;
+    renderCourseTable(filtered);
+  });
+  renderCourseTable(allCourses);
+}
+
+function renderCourseTable(list) {
+  const container = document.getElementById('courseTable');
+  if (!container) return;
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="padding:3rem 1rem;">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>No courses yet</h3>
+        <p>Create your first course to get started.</p>
+        <button type="button" class="ws-btn ws-btn-primary" style="margin-top:1rem;" onclick="openCourseEditor(null)">
+          <i class="fas fa-plus"></i> New course
+        </button>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="admin-row header">
+      <div></div>
+      <div>Course</div>
+      <div>Category</div>
+      <div>Level</div>
+      <div>Access</div>
+      <div>Status</div>
+      <div></div>
+    </div>
+    ${list.map(c => {
+      const color = c.color || '#ca8a04';
+      const icon = c.icon || 'fa-graduation-cap';
+      const lessonCount = c.lessons ? Object.keys(c.lessons).length : 0;
+      const badgeClass = c.free ? 'free' : 'premium';
+      const badgeText = c.free ? 'Free' : 'Premium';
+      const statusClass = c.published ? 'published' : 'draft';
+      const statusText = c.published ? 'Published' : 'Draft';
+      return `
+        <div class="admin-row">
+          <div class="admin-row-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+            <i class="fas ${escapeHtml(icon)}"></i>
+          </div>
+          <div class="admin-row-title-cell">
+            <div class="admin-row-title">${escapeHtml(c.title || 'Untitled')}</div>
+            <div class="admin-row-sub">${lessonCount} lesson${lessonCount === 1 ? '' : 's'} · ${escapeHtml(c.slug || c.id)}</div>
+          </div>
+          <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.category || '—')}</div>
+          <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.level || '—')}</div>
+          <div><span class="admin-badge ${badgeClass}">${badgeText}</span></div>
+          <div><span class="admin-badge ${statusClass}">${statusText}</span></div>
+          <div class="admin-row-actions">
+            <button type="button" class="admin-icon-btn" onclick="openCourseEditor('${escapeHtml(c.id)}')" title="Edit">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button type="button" class="admin-icon-btn danger" onclick="confirmDelete('${escapeHtml(c.id)}', '${escapeHtml(c.title || 'this course')}')" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>`;
+    }).join('')}
+  `;
+}
+
+function confirmDelete(courseId, title) {
+  if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+  window._db.ref(`learning_courses/${courseId}`).remove()
+    .then(() => {
+      allCourses = allCourses.filter(c => c.id !== courseId);
+      renderCourseTable(allCourses);
+      showToast('Course deleted', 'success');
+    })
+    .catch((e) => {
+      console.error(e);
+      showToast('Could not delete course', 'error');
+    });
+}
+
+// ============================================================
+// COURSE EDITOR
+// ============================================================
+function openCourseEditor(courseId) {
+  editingCourseId = courseId;
+
+  if (courseId) {
+    const existing = allCourses.find(c => c.id === courseId);
+    courseDraft = JSON.parse(JSON.stringify(existing || {}));
+    document.getElementById('courseModalTitle').textContent = 'Edit course';
+  } else {
+    courseDraft = {
+      title: '', slug: '', desc: '', longDesc: '',
+      category: 'communication', level: 'Beginner',
+      order: allCourses.length + 1, duration: 0,
+      icon: 'fa-graduation-cap', color: '#ca8a04',
+      free: false, published: false, lessons: {}
+    };
+    document.getElementById('courseModalTitle').textContent = 'New course';
+  }
+
+  buildCategorySelect();
+  buildLevelSelect();
+  buildIconPicker();
+  buildColorPicker();
+  syncCourseForm();
+  renderLessonList();
+
+  document.getElementById('courseModal').classList.add('active');
+  document.getElementById('courseModalOverlay').classList.add('active');
+}
+
+function closeCourseEditor() {
+  document.getElementById('courseModal').classList.remove('active');
+  document.getElementById('courseModalOverlay').classList.remove('active');
+  editingCourseId = null;
+  courseDraft = null;
+}
+
+function buildCategorySelect() {
+  const el = document.getElementById('fCategory');
+  el.innerHTML = LEARNING_CATEGORIES.filter(c => c.id !== 'all')
+    .map(c => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.label)}</option>`).join('');
+}
+function buildLevelSelect() {
+  const el = document.getElementById('fLevel');
+  el.innerHTML = LEARNING_LEVELS.map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join('');
+}
+function buildIconPicker() {
+  const el = document.getElementById('iconPicker');
+  el.innerHTML = LEARNING_ICONS.map(ic => `
+    <button type="button" class="icon-choice ${ic === courseDraft.icon ? 'active' : ''}"
+            onclick="pickIcon('${escapeHtml(ic)}')" aria-label="${escapeHtml(ic)}">
+      <i class="fas ${escapeHtml(ic)}"></i>
+    </button>`).join('');
+}
+function buildColorPicker() {
+  const el = document.getElementById('colorPicker');
+  el.innerHTML = LEARNING_COLORS.map(c => `
+    <button type="button" class="color-choice ${c === courseDraft.color ? 'active' : ''}"
+            style="background:${escapeHtml(c)}" onclick="pickColor('${escapeHtml(c)}')" aria-label="${escapeHtml(c)}"></button>`).join('');
+}
+function pickIcon(ic) { courseDraft.icon = ic; buildIconPicker(); }
+function pickColor(c) { courseDraft.color = c; buildColorPicker(); }
+
+function syncCourseForm() {
+  document.getElementById('fTitle').value = courseDraft.title || '';
+  document.getElementById('fSlug').value = courseDraft.slug || '';
+  document.getElementById('fDesc').value = courseDraft.desc || '';
+  document.getElementById('fLongDesc').value = courseDraft.longDesc || '';
+  document.getElementById('fCategory').value = courseDraft.category || 'communication';
+  document.getElementById('fLevel').value = courseDraft.level || 'Beginner';
+  document.getElementById('fOrder').value = courseDraft.order || 1;
+  document.getElementById('fDuration').value = courseDraft.duration || '';
+  document.getElementById('toggleFree').classList.toggle('on', courseDraft.free === true);
+  document.getElementById('togglePublished').classList.toggle('on', courseDraft.published === true);
+
+  const titleEl = document.getElementById('fTitle');
+  const slugEl = document.getElementById('fSlug');
+  titleEl.oninput = () => {
+    courseDraft.title = titleEl.value;
+    if (!editingCourseId) {
+      courseDraft.slug = slugify(titleEl.value);
+      slugEl.value = courseDraft.slug;
+    }
+  };
+  slugEl.oninput = () => { courseDraft.slug = slugify(slugEl.value); };
+  document.getElementById('fDesc').oninput = (e) => { courseDraft.desc = e.target.value; };
+  document.getElementById('fLongDesc').oninput = (e) => { courseDraft.longDesc = e.target.value; };
+  document.getElementById('fCategory').onchange = (e) => { courseDraft.category = e.target.value; };
+  document.getElementById('fLevel').onchange = (e) => { courseDraft.level = e.target.value; };
+  document.getElementById('fOrder').oninput = (e) => { courseDraft.order = Number(e.target.value) || 0; };
+  document.getElementById('fDuration').oninput = (e) => { courseDraft.duration = Number(e.target.value) || 0; };
+}
+
+function toggleField(field) {
+  courseDraft[field] = !courseDraft[field];
+  document.getElementById(`toggle${field.charAt(0).toUpperCase() + field.slice(1)}`)
+    .classList.toggle('on', courseDraft[field]);
+}
+
+// ============================================================
+// LESSONS
+// ============================================================
+function renderLessonList() {
+  const el = document.getElementById('lessonList');
+  const lessons = Object.entries(courseDraft.lessons || {})
+    .map(([id, l]) => ({ id, ...l }))
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (lessons.length === 0) {
+    el.innerHTML = `
+      <div class="empty-state" style="padding:1.5rem 1rem;">
+        <i class="fas fa-book-open"></i>
+        <p>No lessons yet. Add your first lesson above.</p>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = lessons.map((l, i) => `
+    <div class="lesson-row">
+      <span class="grip"><i class="fas fa-grip-vertical"></i></span>
+      <div>
+        <div class="lesson-row-title">${escapeHtml(l.title || 'Untitled lesson')}</div>
+        <div class="lesson-row-meta">
+          Lesson ${i + 1} · ${escapeHtml(l.type || 'video')} · ${l.duration || 0} min
+          ${l.free ? ' · <span style="color:#10b981;">Free preview</span>' : ''}
+        </div>
+      </div>
+      <div class="lesson-row-actions">
+        <button type="button" class="admin-icon-btn" onclick="openLessonEditor('${escapeHtml(l.id)}')" title="Edit">
+          <i class="fas fa-pen"></i>
+        </button>
+        <button type="button" class="admin-icon-btn danger" onclick="deleteLesson('${escapeHtml(l.id)}')" title="Delete">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+function openLessonEditor(lessonId) {
+  activeLessonId = lessonId;
+  const existing = lessonId ? courseDraft.lessons[lessonId] : null;
+  document.getElementById('lessonModalTitle').textContent = existing ? 'Edit lesson' : 'New lesson';
+  document.getElementById('lTitle').value = existing ? (existing.title || '') : '';
+  document.getElementById('lType').value = existing ? (existing.type || 'video') : 'video';
+  document.getElementById('lDuration').value = existing ? (existing.duration || '') : '';
+  document.getElementById('lVideoUrl').value = existing ? (existing.videoUrl || '') : '';
+  document.getElementById('lContent').value = existing ? (existing.content || '') : '';
+  activeLessonFree = existing ? (existing.free === true) : false;
+  document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
+
+  document.getElementById('lessonModal').classList.add('active');
+  document.getElementById('lessonModalOverlay').classList.add('active');
+  setTimeout(() => document.getElementById('lTitle').focus(), 50);
+}
+
+function closeLessonEditor() {
+  document.getElementById('lessonModal').classList.remove('active');
+  document.getElementById('lessonModalOverlay').classList.remove('active');
+  activeLessonId = null;
+}
+
+function toggleLessonFree() {
+  activeLessonFree = !activeLessonFree;
+  document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
+}
+
+function saveLesson() {
+  const title = document.getElementById('lTitle').value.trim();
+  if (!title) { showToast('Lesson needs a title', 'error'); return; }
+
+  const lessons = { ...courseDraft.lessons };
+  const id = activeLessonId || `l_${Date.now().toString(36)}`;
+  const existing = activeLessonId ? lessons[activeLessonId] : null;
+  const order = existing ? existing.order : Object.keys(lessons).length + 1;
+
+  lessons[id] = {
+    order,
+    title,
+    type: document.getElementById('lType').value,
+    duration: Number(document.getElementById('lDuration').value) || 0,
+    videoUrl: document.getElementById('lVideoUrl').value.trim(),
+    content: document.getElementById('lContent').value,
+    free: activeLessonFree,
+    updatedAt: Date.now()
+  };
+  courseDraft.lessons = lessons;
+
+  // Auto-sum duration if not manually set
+  if (!courseDraft.duration) {
+    courseDraft.duration = Object.values(lessons).reduce((s, l) => s + (l.duration || 0), 0);
+    document.getElementById('fDuration').value = courseDraft.duration;
+  }
+
+  closeLessonEditor();
+  renderLessonList();
+  showToast('Lesson saved', 'success');
+}
+
+function deleteLesson(lessonId) {
+  if (!confirm('Delete this lesson?')) return;
+  const lessons = { ...courseDraft.lessons };
+  delete lessons[lessonId];
+  courseDraft.lessons = lessons;
+  renderLessonList();
+  showToast('Lesson removed', 'info');
+}
+
+// ============================================================
+// SAVE COURSE
+// ============================================================
+async function saveCourse() {
+  const btn = document.getElementById('saveCourseBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Saving…';
+
+  try {
+    if (!courseDraft.title.trim()) throw new Error('Title is required');
+    if (!courseDraft.slug.trim()) throw new Error('Slug is required');
+    if (!courseDraft.desc.trim()) throw new Error('Short description is required');
+    if (!courseDraft.category) throw new Error('Category is required');
+    if (!courseDraft.level) throw new Error('Level is required');
+
+    const courseId = editingCourseId || courseDraft.slug;
+    const now = Date.now();
+    const existing = editingCourseId ? allCourses.find(c => c.id === editingCourseId) : null;
+
+    const payload = {
+      ...courseDraft,
+      slug: courseDraft.slug,
+      authorId: existing ? existing.authorId : (currentUser ? currentUser.uid : ''),
+      authorName: existing ? existing.authorName : (currentUser ? (currentUser.displayName || currentUser.email) : ''),
+      createdAt: existing ? existing.createdAt : now,
+      updatedAt: now,
+      version: (existing && existing.version ? existing.version : 0) + 1
+    };
+
+    // First-time publish sets publishedAt
+    if (payload.published && !existing?.publishedAt) {
+      payload.publishedAt = now;
+    }
+
+    await window._db.ref(`learning_courses/${courseId}`).set(payload);
+
+    // Update local cache
+    const idx = allCourses.findIndex(c => c.id === courseId);
+    const merged = { id: courseId, ...payload };
+    if (idx >= 0) allCourses[idx] = merged;
+    else allCourses.push(merged);
+
+    showToast('Course saved', 'success');
+    closeCourseEditor();
+    renderCourseTable(allCourses);
+  } catch (e) {
+    console.error(e);
+    showToast(e.message || 'Could not save course', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save"></i> Save course';
+  }
+}
+
+// ============================================================
+// ENTITLEMENTS TAB
+// ============================================================
+async function renderEntitlementsTab() {
+  const el = document.getElementById('tab-entitlements');
+  el.innerHTML = `
+    <div class="admin-toolbar">
+      <div class="admin-toolbar-left">
+        <div class="search-box">
+          <i class="fas fa-magnifying-glass"></i>
+          <input type="search" id="entSearch" placeholder="Search by email or UID..." aria-label="Search users">
+        </div>
+      </div>
+    </div>
+    <div class="admin-table" id="entTable">
+      <div class="empty-state" style="padding:3rem 1rem;">
+        <i class="fas fa-circle-notch fa-spin" style="opacity:1;color:var(--gold);"></i>
+        <p>Loading users…</p>
+      </div>
+    </div>
+  `;
+
+  // Load all users (rules allow admins to read `users`)
+  let users = [];
+  try {
+    const snap = await window._db.ref('users').once('value');
+    const val = snap.val() || {};
+    users = Object.entries(val).map(([uid, u]) => ({ uid, ...u }));
+  } catch (e) {
+    console.error(e);
+    document.getElementById('entTable').innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Could not load users</h3>
+      </div>`;
+    return;
+  }
+
+  // Load entitlements
+  let entitlements = {};
+  try {
+    const snap = await window._db.ref('learning_entitlements').once('value');
+    entitlements = snap.val() || {};
+  } catch (e) {
+    entitlements = {};
+  }
+
+  const render = (list) => {
+    const container = document.getElementById('entTable');
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state" style="padding:3rem 1rem;">
+          <i class="fas fa-users"></i>
+          <h3>No users found</h3>
+        </div>`;
+      return;
+    }
+    container.innerHTML = `
+      <div class="entitlement-row" style="background:var(--surface-2);font-family:var(--f-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);">
+        <div>User</div>
+        <div style="text-align:center;">Learning</div>
+        <div style="text-align:center;">Advanced</div>
+        <div style="text-align:center;">Mentor</div>
+        <div style="text-align:center;">Plan</div>
+      </div>
+      ${list.map(u => {
+        const e = entitlements[u.uid] || {};
+        return `
+          <div class="entitlement-row">
+            <div>
+              <div style="font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--ink);">
+                ${escapeHtml(u.name || u.displayName || u.email || 'User')}
+              </div>
+              <div style="font-size:.72rem;color:var(--muted);">${escapeHtml(u.email || u.uid)}</div>
+            </div>
+            <div style="text-align:center;">
+              <button type="button" class="toggle-mini ${e.learning ? 'on' : 'off'}"
+                      onclick="toggleEntitlement('${escapeHtml(u.uid)}', 'learning', ${!!e.learning})"></button>
+            </div>
+            <div style="text-align:center;">
+              <button type="button" class="toggle-mini ${e.advancedCourses ? 'on' : 'off'}"
+                      onclick="toggleEntitlement('${escapeHtml(u.uid)}', 'advancedCourses', ${!!e.advancedCourses})"></button>
+            </div>
+            <div style="text-align:center;">
+              <button type="button" class="toggle-mini ${e.mentorship ? 'on' : 'off'}"
+                      onclick="toggleEntitlement('${escapeHtml(u.uid)}', 'mentorship', ${!!e.mentorship})"></button>
+            </div>
+            <div style="text-align:center;">
+              <span class="admin-badge ${planClass(e)}">${planLabel(e)}</span>
+            </div>
+          </div>`;
+      }).join('')}
+    `;
+  };
+
+  render(users);
+
+  document.getElementById('entSearch').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    const filtered = !q ? users : users.filter(u =>
+      (u.email || '').toLowerCase().includes(q) ||
+      (u.name || '').toLowerCase().includes(q) ||
+      u.uid.toLowerCase().includes(q));
+    render(filtered);
+  });
+}
+
+function planClass(e) {
+  if (e.mentorship || e.advancedCourses) return 'pro';
+  if (e.learning) return 'learner';
+  return 'none';
+}
+function planLabel(e) {
+  if (e.mentorship || e.advancedCourses) return 'Pro';
+  if (e.learning) return 'Learner';
+  return 'Free';
+}
+
+async function toggleEntitlement(uid, key, current) {
+  try {
+    const ref = window._db.ref(`learning_entitlements/${uid}`);
+    const now = Date.now();
+    const updates = {
+      updatedAt: now,
+      grantedBy: currentUser ? (currentUser.displayName || currentUser.email) : 'admin',
+      grantedAt: now
+    };
+    updates[key] = !current;
+
+    // Auto-set planId based on highest tier granted
+    if (key === 'mentorship' && !current) updates.planId = 'pro';
+    else if (key === 'advancedCourses' && !current) updates.planId = 'pro';
+    else if (key === 'learning' && !current) updates.planId = 'learner';
+    else updates.planId = 'free';
+
+    await ref.update(updates);
+    showToast('Entitlement updated', 'success');
+
+    // Re-render
+    renderEntitlementsTab();
+  } catch (e) {
+    console.error(e);
+    showToast('Could not update entitlement', 'error');
+  }
+}
+
+// Utility to lighten a hex (matches client code)
+function lighten(hex, percent) {
+  const num = parseInt(hex.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.min(255, (num >> 16) + amt);
+  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+  const B = Math.min(255, (num & 0x0000FF) + amt);
+  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+}
+
+// Escape to close modals
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeCourseEditor();
+    closeLessonEditor();
+  }
+});
+</script>
+</body>
+</html>
