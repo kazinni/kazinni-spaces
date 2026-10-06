@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<!-- JANTA -->
 <meta name="description" content="Janta — one account, every workspace.">
 <title>Janta</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
@@ -45,7 +44,7 @@
   --surface: #ffffff;
   --surface-2: #faf9f7;
   --surface-3: #f4f3f1;
-  --header-h: 60px;
+  --header-h: 64px;
   --rail-w: 232px;
   --rail-w-collapsed: 68px;
   --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
@@ -136,18 +135,22 @@ body {
   text-decoration: none; flex-shrink: 0;
 }
 .ws-logo img { height: 30px; }
+
+/* JANTA WORDMARK — matches hero typography, only color differs */
 .ws-logo-text {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: var(--ink);
-  letter-spacing: -0.4px;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1.8vw, 1.65rem);
+  letter-spacing: -0.045em;
+  line-height: 1;
   white-space: nowrap;
-}
-.ws-logo-text .accent {
   background: var(--gold-gradient);
-  -webkit-background-clip: text; background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .ws-rail-toggle {
@@ -184,17 +187,105 @@ body.mode-workspace .ws-search { display: block; }
   pointer-events: none;
 }
 
-.ws-nav-links { display: flex; align-items: center; gap: 1.2rem; margin-left: 0.5rem; }
+/* ---------- NAV ---------- */
+.ws-nav-links {
+  display: flex; align-items: center; gap: 0.2rem;
+  margin-left: 0.5rem;
+}
 body.mode-workspace .ws-nav-links { display: none; }
+
+.ws-nav-item { position: relative; }
+
 .ws-nav-link {
   color: var(--text-secondary); text-decoration: none;
   font-size: 0.85rem; font-weight: 500;
   font-family: var(--font-heading);
-  transition: color var(--t-fast);
-  cursor: pointer; background: none; border: none; padding: 0.4rem 0;
+  transition: color var(--t-fast), background var(--t-fast);
+  cursor: pointer;
+  background: none; border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.35rem;
 }
-.ws-nav-link:hover { color: var(--ink); }
+.ws-nav-link:hover { color: var(--ink); background: rgba(15,15,30,0.04); }
+.ws-nav-link .caret {
+  font-size: 0.5rem; color: var(--text-muted);
+  transition: transform var(--t-fast);
+}
+.ws-nav-item.open .ws-nav-link { color: var(--ink); background: rgba(15,15,30,0.05); }
+.ws-nav-item.open .ws-nav-link .caret { transform: rotate(180deg); }
+
+/* Dropdown */
+.ws-nav-dropdown {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  min-width: 300px; max-width: 420px;
+  background: white; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--border-light);
+  padding: 0.5rem;
+  display: none;
+  z-index: 1100;
+  animation: popIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.ws-nav-item.open .ws-nav-dropdown { display: block; }
+.ws-nav-item[data-nav="learning"] .ws-nav-dropdown { min-width: 340px; max-width: 460px; }
+
+.ws-nav-dd-item {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none; color: var(--text-secondary);
+  cursor: pointer; transition: background var(--t-fast);
+  background: none; border: none; width: 100%;
+  text-align: left; font-family: var(--font-body);
+}
+.ws-nav-dd-item:hover { background: var(--surface-2); color: var(--ink); }
+.ws-nav-dd-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; color: white; flex-shrink: 0;
+}
+.ws-nav-dd-body { min-width: 0; flex: 1; }
+.ws-nav-dd-title {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 0.85rem; color: var(--ink);
+  margin-bottom: 0.1rem; line-height: 1.3;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.ws-nav-dd-title .badge-mini {
+  font-size: 0.6rem; padding: 1px 6px;
+  background: var(--gold-soft); color: var(--gold-dark);
+  border-radius: 6px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.ws-nav-dd-desc {
+  font-size: 0.75rem; color: var(--text-muted);
+  line-height: 1.4;
+}
+.ws-nav-dd-footer {
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.4rem; padding: 0.6rem 0.85rem 0.4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.ws-nav-dd-footer a {
+  color: var(--gold-dark); text-decoration: none;
+  font-weight: 600; cursor: pointer;
+}
+.ws-nav-dd-footer a:hover { color: var(--gold); }
+
+/* Learning category group header */
+.ws-nav-dd-group {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.6rem 0.85rem 0.25rem;
+  font-family: var(--font-heading);
+}
+.ws-nav-dd-group:first-child { padding-top: 0.3rem; }
 
 .ws-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
@@ -391,7 +482,7 @@ body.rail-collapsed .rail-sub { display: none; }
 .rail-spacer { flex: 1; min-height: 0.5rem; }
 
 /* ============================================================
-   CONTENT
+   CONTENT  — landing mode spans full viewport
    ============================================================ */
 .ws-content {
   padding: 2rem 2.5rem;
@@ -401,6 +492,12 @@ body.rail-collapsed .rail-sub { display: none; }
 }
 body.mode-workspace .ws-content { padding: 1.75rem 2rem; }
 body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
+
+body.mode-landing .ws-content {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
 
 /* ============================================================
    HERO (landing)
@@ -481,9 +578,14 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 /* ============================================================
    SECTIONS (landing)
    ============================================================ */
-.section { padding: 4rem 2rem; border-bottom: 1px solid rgba(15,15,30,0.05); background: white; }
+.section {
+  padding: 4rem 2rem;
+  border-bottom: 1px solid rgba(15,15,30,0.05);
+  background: white;
+  width: 100%;
+}
 .section.alt { background: var(--surface-2); }
-.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
 
 .section-header-center { text-align: center; margin-bottom: 2.6rem; }
 .section-label {
@@ -507,13 +609,18 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   max-width: 520px; margin: 0 auto;
 }
 
-/* Preview grid */
+/* Preview grid — flexbox, centered last row */
 .preview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  justify-content: center;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 .preview-card {
+  flex: 1 1 240px;
+  max-width: 280px;
   background: var(--surface-2);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
@@ -788,7 +895,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
 }
 .ws-section-action:hover { color: var(--gold); }
 
-/* Completed task tiles */
 .completed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -864,7 +970,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: inline-flex; align-items: center; gap: 0.3rem;
 }
 
-/* App tiles */
 .ws-app-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -902,7 +1007,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 
-/* Learning dashboard card */
 .learning-dash {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
   border: 1px solid rgba(202,138,4,0.2);
@@ -942,15 +1046,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   font-size: 0.8rem; color: var(--text-secondary);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.learning-dash-progress {
-  margin-top: 0.55rem;
-  height: 5px; background: rgba(15,15,30,0.06);
-  border-radius: 3px; overflow: hidden;
-}
-.learning-dash-progress > span {
-  display: block; height: 100%;
-  background: var(--gold-gradient);
-}
 .learning-dash-cta {
   font-family: var(--font-heading);
   font-size: 0.78rem; font-weight: 700;
@@ -968,7 +1063,6 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   border-color: transparent;
 }
 
-/* Recent activity feed */
 .ws-feed {
   background: white;
   border: 1px solid var(--border-light);
@@ -1446,20 +1540,111 @@ body.rail-open .rail-backdrop { display: block; }
       <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
 
-    <!-- JANTA -->
     <a href="index.html" class="ws-logo" aria-label="Janta home">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
-      <span class="ws-logo-text">Jan<span class="accent">ta</span></span>
+      <span class="ws-logo-text">Janta</span>
     </a>
 
-    <nav class="ws-nav-links" aria-label="Primary navigation">
-      <a href="#features" class="ws-nav-link">Features</a>
-      <a href="#apps" class="ws-nav-link">Apps</a>
-      <a href="#learning" class="ws-nav-link">Learning</a>
-      <a href="#activity" class="ws-nav-link">Activity</a>
+    <!-- NAV with dropdowns -->
+    <nav class="ws-nav-links" id="wsNavLinks" aria-label="Primary navigation">
+      <div class="ws-nav-item" data-nav="features" id="navFeatures">
+        <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'features')" aria-haspopup="true" aria-expanded="false">
+          Features <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+        </button>
+        <div class="ws-nav-dropdown" id="ddFeatures">
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#4f46e5,#6366f1);">
+              <i class="fas fa-fingerprint" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Single Sign-On</div>
+              <div class="ws-nav-dd-desc">One Janta login unlocks every workspace — no separate passwords.</div>
+            </div>
+          </button>
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
+              <i class="fas fa-shield-halved" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Verified Accounts</div>
+              <div class="ws-nav-dd-desc">Admins approve every tasker before they can access apps or claim work.</div>
+            </div>
+          </button>
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('learning')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+              <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Learning Built-In</div>
+              <div class="ws-nav-dd-desc">Upskill on client communication, M-Pesa security, portfolio craft and more.</div>
+            </div>
+          </button>
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#e11d48,#fb7185);">
+              <i class="fas fa-mobile-screen" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Instant M-Pesa Payouts</div>
+              <div class="ws-nav-dd-desc">Request payouts from your wallet and receive them straight to M-Pesa.</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="ws-nav-item" data-nav="apps" id="navApps">
+        <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'apps')" aria-haspopup="true" aria-expanded="false">
+          Apps <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+        </button>
+        <div class="ws-nav-dropdown" id="ddApps">
+          <!-- Populated dynamically by renderNavApps() -->
+        </div>
+      </div>
+
+      <div class="ws-nav-item" data-nav="learning" id="navLearning">
+        <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'learning')" aria-haspopup="true" aria-expanded="false">
+          Learning <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+        </button>
+        <div class="ws-nav-dropdown" id="ddLearning">
+          <!-- Populated dynamically by renderNavLearning() -->
+        </div>
+      </div>
+
+      <div class="ws-nav-item" data-nav="activity" id="navActivity">
+        <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'activity')" aria-haspopup="true" aria-expanded="false">
+          Activity <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+        </button>
+        <div class="ws-nav-dropdown" id="ddActivity">
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);">
+              <i class="fas fa-chart-line" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Platform Stats</div>
+              <div class="ws-nav-dd-desc">Live numbers — taskers, completed tasks, workspaces.</div>
+            </div>
+          </button>
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#ca8a04,#fbbf24);">
+              <i class="fas fa-wave-square" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Recent Activity</div>
+              <div class="ws-nav-dd-desc">A live ticker of what's happening across Janta.</div>
+            </div>
+          </button>
+          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('apps')">
+            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">
+              <i class="fas fa-layer-group" aria-hidden="true"></i>
+            </div>
+            <div class="ws-nav-dd-body">
+              <div class="ws-nav-dd-title">Task Boards</div>
+              <div class="ws-nav-dd-desc">Browse FlexiKazi, Kasikazi, CraftiKazi and Zindua Hub.</div>
+            </div>
+          </button>
+        </div>
+      </div>
     </nav>
 
-    <!-- JANTA -->
     <div class="ws-search" role="search">
       <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
       <input type="search" id="wsSearch" placeholder="Search Janta…" aria-label="Search Janta" autocomplete="off">
@@ -1538,7 +1723,6 @@ body.rail-open .rail-backdrop { display: block; }
 <!-- LAUNCHER PANEL -->
 <div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="Janta apps">
   <div class="lp-header">
-    <!-- JANTA -->
     <div class="lp-title">Janta apps</div>
     <div class="lp-header-right">
       <span class="lp-live-dot" aria-hidden="true"></span>
@@ -1593,7 +1777,6 @@ body.rail-open .rail-backdrop { display: block; }
   <button type="button" class="ws-modal-close" onclick="closeAuthModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
   <div class="ws-modal-icon gold"><i class="fas fa-cube" aria-hidden="true"></i></div>
   <div class="ws-modal-header">
-    <!-- JANTA -->
     <h3 id="authModalTitle">Sign in to Janta</h3>
     <p>Use your Janta account to access your workspace</p>
   </div>
@@ -1624,7 +1807,7 @@ body.rail-open .rail-backdrop { display: block; }
 'use strict';
 
 // ============================================================
-// CONFIG  — FIREBASE UNTOUCHED
+// CONFIG
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -1633,7 +1816,6 @@ const firebaseConfig = {
   projectId: "mugera-e51cc"
 };
 
-// App registry — only apps with a real link live here.
 const APPS = {
   'flexikazi': {
     name: 'FlexiKazi',
@@ -1654,7 +1836,6 @@ const APPS = {
     fallbackPermission: 'ekazi',
     alwaysVisible: false
   },
-  // JANTA — NEW
   'craftikazi': {
     name: 'CraftiKazi',
     desc: 'Craft-work marketplace — metal, wood, upholstery, and bespoke builds.',
@@ -1662,6 +1843,16 @@ const APPS = {
     color: '#b45309',
     link: 'apps/craftikazi/',
     permission: 'craftikazi',
+    fallbackPermission: 'ekazi',
+    alwaysVisible: false
+  },
+  'zindua': {
+    name: 'Zindua Hub',
+    desc: 'Tech-task marketplace — code, design, data, devops and security work.',
+    icon: 'fa-rocket',
+    color: '#4f46e5',
+    link: 'apps/zindua-hub/',
+    permission: 'zindua',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
   },
@@ -1687,14 +1878,41 @@ const APPS = {
   }
 };
 
+/* Fallback course list shown before Firebase loads, or if no courses exist yet */
+const FALLBACK_COURSES = [
+  { id: 'client-communication-101', title: 'Client Communication 101', category: 'communication', duration: 45, level: 'Beginner', icon: 'fa-comments', color: '#f59e0b' },
+  { id: 'mpesa-safety',             title: 'M-Pesa Safety for Taskers', category: 'finance',       duration: 45, level: 'Beginner', icon: 'fa-shield-halved', color: '#0891b2' },
+  { id: 'google-sheets-basics',     title: 'Google Sheets: Zero to Hero', category: 'productivity', duration: 55, level: 'Beginner', icon: 'fa-table-cells', color: '#0f9d58' },
+  { id: 'google-docs-formatting',   title: 'Google Docs: Format Like a Pro', category: 'productivity', duration: 50, level: 'Beginner', icon: 'fa-file-word', color: '#4285f4' },
+  { id: 'data-entry-professional',  title: 'Data Entry: Beginner to Paid Pro', category: 'career', duration: 90, level: 'Beginner', icon: 'fa-keyboard', color: '#7c3aed' },
+  { id: 'ecitizen-platform-guide',  title: 'eCitizen: Government Services', category: 'civic', duration: 75, level: 'Beginner', icon: 'fa-landmark', color: '#1e40af' }
+];
+
+const COURSE_CATEGORY_LABELS = {
+  communication: 'Communication',
+  finance:       'Finance & Safety',
+  productivity:  'Productivity',
+  career:        'Career Skills',
+  civic:         'Civic & Government',
+  tech:          'Tech',
+  design:        'Design',
+  business:      'Business',
+  other:         'Other'
+};
+
+const COURSE_CATEGORY_ORDER = [
+  'communication', 'productivity', 'career', 'finance', 'civic', 'tech', 'design', 'business', 'other'
+];
+
 const CONFIG = {
   notifLimit: 50,
   tickerRefreshMs: 60000,
   clockRefreshMs: 1000,
-  notifStorageKey: 'kazinni_notif_lastseen',   // kept — preserves existing read state
+  notifStorageKey: 'kazinni_notif_lastseen',
   maxNotifications: 20,
   recentActivityMax: 6,
-  completedTilesMax: 6
+  completedTilesMax: 6,
+  maxCoursesInDropdown: 8
 };
 
 // ============================================================
@@ -1708,6 +1926,8 @@ let notifications = [];
 let recentActivity = [];
 let completedTiles = [];
 let notifRefs = [];
+let courseListeners = [];
+let navCourses = [];
 let appInitialized = false;
 let lastFocusedBeforeModal = null;
 
@@ -1812,16 +2032,21 @@ function setupGlobalHandlers() {
     const waffle = document.getElementById('waffleBtn');
     const notif = document.getElementById('notifPanel');
     const notifBtn = document.getElementById('notifBtn');
+    const navLinks = document.getElementById('wsNavLinks');
 
     if (account && !account.contains(e.target)) closeUserDropdown();
     if (launcher && waffle && !launcher.contains(e.target) && !waffle.contains(e.target)) closeLauncher();
     if (notif && notifBtn && !notif.contains(e.target) && !notifBtn.contains(e.target)) closeNotifications();
+
+    // Close nav dropdowns when clicking outside
+    if (navLinks && !navLinks.contains(e.target)) closeAllNavDropdowns();
   });
 }
 
 function setupKeyboardHandlers() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      closeAllNavDropdowns();
       closeLauncher(); closeUserDropdown(); closeNotifications();
       closeNotifModal(); closeAuthModal(); closeRail();
     }
@@ -1860,13 +2085,247 @@ function setupSearch() {
 }
 
 // ============================================================
+// NAV DROPDOWNS
+// ============================================================
+function toggleNav(e, key) {
+  if (e) e.stopPropagation();
+  const item = document.getElementById('nav' + capitalize(key));
+  if (!item) return;
+  const isOpen = item.classList.contains('open');
+  closeAllNavDropdowns();
+  if (!isOpen) {
+    item.classList.add('open');
+    const btn = item.querySelector('.ws-nav-link');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function closeAllNavDropdowns() {
+  document.querySelectorAll('.ws-nav-item.open').forEach(item => {
+    item.classList.remove('open');
+    const btn = item.querySelector('.ws-nav-link');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  });
+}
+
+function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+function scrollToSection(id) {
+  closeAllNavDropdowns();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ---------- Render Apps dropdown ---------- */
+function renderNavApps() {
+  const container = document.getElementById('ddApps');
+  if (!container) return;
+
+  const signedIn = !!currentUser;
+  const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
+
+  // For signed-out users, show all apps (with "Sign in" hint).
+  // For signed-in users, filter by permissions.
+  const visible = apps.filter(app => {
+    if (!signedIn) return true;
+    if (app.alwaysVisible) return true;
+    if (app.permission && currentPerms[app.permission] === true) return true;
+    if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+    // Wallet and Learning are signed-in-only but visible regardless of permission
+    if (app.signedInOnly) return true;
+    return false;
+  });
+
+  container.innerHTML = visible.map(app => {
+    const target = signedIn
+      ? `location.href='${escapeHtml(app.link)}'`
+      : `openAuthModal()`;
+    return `
+      <button type="button" class="ws-nav-dd-item" onclick="${target}">
+        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+        </div>
+        <div class="ws-nav-dd-body">
+          <div class="ws-nav-dd-title">
+            ${escapeHtml(app.name)}
+            ${!signedIn ? '<span class="badge-mini">Sign in</span>' : ''}
+          </div>
+          <div class="ws-nav-dd-desc">${escapeHtml(app.desc)}</div>
+        </div>
+      </button>
+    `;
+  }).join('');
+
+  const footerCount = signedIn
+    ? pluralize(visible.length, 'app')
+    : `${visible.length} apps — sign in to open`;
+
+  const footer = document.createElement('div');
+  footer.className = 'ws-nav-dd-footer';
+  footer.innerHTML = `
+    <span>${escapeHtml(footerCount)}</span>
+    <a role="button" tabindex="0" onclick="openLauncher(event)">Open launcher →</a>
+  `;
+  container.appendChild(footer);
+}
+
+/* ---------- Render Learning dropdown with live courses ---------- */
+function renderNavLearning() {
+  const container = document.getElementById('ddLearning');
+  if (!container) return;
+
+  const signedIn = !!currentUser;
+  const courses = navCourses.length ? navCourses : FALLBACK_COURSES;
+
+  // Group by category
+  const byCategory = {};
+  courses.forEach(c => {
+    const cat = c.category || 'other';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(c);
+  });
+
+  // Sort categories by our defined order
+  const sortedCats = Object.keys(byCategory).sort((a, b) => {
+    const ai = COURSE_CATEGORY_ORDER.indexOf(a);
+    const bi = COURSE_CATEGORY_ORDER.indexOf(b);
+    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+  });
+
+  // Flatten in category order, take first N
+  const ordered = [];
+  sortedCats.forEach(cat => {
+    byCategory[cat].forEach(c => ordered.push(c));
+  });
+  const shown = ordered.slice(0, CONFIG.maxCoursesInDropdown);
+  const totalCourses = courses.length;
+  const hasMore = totalCourses > shown.length;
+
+  // If there are no courses at all, show empty state
+  if (shown.length === 0) {
+    container.innerHTML = `
+      <div class="ws-nav-dd-item" style="cursor:default;">
+        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+        </div>
+        <div class="ws-nav-dd-body">
+          <div class="ws-nav-dd-title">Courses coming soon</div>
+          <div class="ws-nav-dd-desc">New learning modules are being prepared.</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // Render with category headers
+  let html = '';
+  let currentCat = null;
+  let rendered = 0;
+
+  ordered.forEach(course => {
+    if (rendered >= CONFIG.maxCoursesInDropdown) return;
+    const cat = course.category || 'other';
+    if (cat !== currentCat) {
+      const label = COURSE_CATEGORY_LABELS[cat] || capitalize(cat);
+      html += `<div class="ws-nav-dd-group">${escapeHtml(label)}</div>`;
+      currentCat = cat;
+    }
+    const target = signedIn
+      ? `location.href='learning/course.html?id=${encodeURIComponent(course.id)}'`
+      : `openAuthModal()`;
+    const icon = course.icon || 'fa-graduation-cap';
+    const color = course.color || '#f59e0b';
+    const meta = [
+      course.level || 'Beginner',
+      course.duration ? `${course.duration} min` : null
+    ].filter(Boolean).join(' · ');
+    html += `
+      <button type="button" class="ws-nav-dd-item" onclick="${target}">
+        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+          <i class="fas ${escapeHtml(icon)}" aria-hidden="true"></i>
+        </div>
+        <div class="ws-nav-dd-body">
+          <div class="ws-nav-dd-title">
+            ${escapeHtml(course.title || 'Untitled course')}
+            ${!signedIn ? '<span class="badge-mini">Sign in</span>' : ''}
+          </div>
+          <div class="ws-nav-dd-desc">${escapeHtml(meta)}</div>
+        </div>
+      </button>
+    `;
+    rendered++;
+  });
+
+  container.innerHTML = html;
+
+  // Footer
+  const footerLabel = hasMore
+    ? `${totalCourses} courses available`
+    : pluralize(totalCourses, 'course');
+  const footer = document.createElement('div');
+  footer.className = 'ws-nav-dd-footer';
+  footer.innerHTML = `
+    <span>${escapeHtml(footerLabel)}</span>
+    <a role="button" tabindex="0" onclick="${signedIn ? "location.href='learning/index.html'" : 'openAuthModal()'}">
+      ${signedIn ? 'Browse library →' : 'Sign in to browse →'}
+    </a>
+  `;
+  container.appendChild(footer);
+}
+
+/* ---------- Load courses from Firebase ---------- */
+function loadNavCourses() {
+  const db = window._db;
+  if (!db) {
+    navCourses = FALLBACK_COURSES;
+    renderNavLearning();
+    return;
+  }
+
+  // Detach any prior listener
+  courseListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
+  courseListeners = [];
+
+  try {
+    const ref = db.ref('learning_courses');
+    const cb = (snap) => {
+      const val = snap.val() || {};
+      const list = Object.entries(val)
+        .map(([id, c]) => ({ id, ...c }))
+        .filter(c => c.published === true || c.publishedAt)
+        .sort((a, b) => (a.order || 999) - (b.order || 999));
+
+      if (list.length > 0) {
+        navCourses = list;
+      } else {
+        navCourses = FALLBACK_COURSES;
+      }
+      renderNavLearning();
+    };
+    ref.on('value', cb, (err) => {
+      console.warn('learning_courses listener failed:', err);
+      navCourses = FALLBACK_COURSES;
+      renderNavLearning();
+    });
+    courseListeners.push({ ref, cb });
+  } catch (e) {
+    console.warn('Course listener failed:', e);
+    navCourses = FALLBACK_COURSES;
+    renderNavLearning();
+  }
+}
+
+// ============================================================
 // FIREBASE BOOT
 // ============================================================
 function bootFirebase() {
   if (typeof firebase === 'undefined') {
     console.warn('Firebase SDK failed to load');
     showToast('Could not load authentication service', 'error');
+    navCourses = FALLBACK_COURSES;
     renderLanding();
+    renderNavApps();
+    renderNavLearning();
     return;
   }
   try {
@@ -1882,6 +2341,8 @@ function bootFirebase() {
   auth.onAuthStateChanged(handleAuthStateChanged);
 
   renderLanding();
+  renderNavApps();
+  loadNavCourses();
   loadPublicStats();
   updatePublicClock();
   setInterval(updatePublicClock, CONFIG.clockRefreshMs);
@@ -1905,6 +2366,8 @@ async function handleAuthStateChanged(user) {
     switchMode('landing');
     renderLanding();
     renderRailApps();
+    renderNavApps();
+    renderNavLearning();
     renderNotifications();
     loadPublicStats();
     return;
@@ -1937,6 +2400,8 @@ async function handleAuthStateChanged(user) {
   switchMode('workspace');
   renderWorkspace();
   renderRailApps();
+  renderNavApps();
+  renderNavLearning();
   attachNotifListeners();
   loadWorkspaceData();
 }
@@ -1965,7 +2430,7 @@ function toggleRail() {
 function closeRail() { document.body.classList.remove('rail-open'); }
 
 // ============================================================
-// ACCOUNT BUTTON  — JANTA: permission-aware dropdown
+// ACCOUNT BUTTON
 // ============================================================
 function renderAccountButton() {
   const container = document.getElementById('headerAccount');
@@ -2019,7 +2484,6 @@ function renderAccountButton() {
   `;
 }
 
-// JANTA — new helper: permission-aware dropdown links
 function renderDropdownApps() {
   if (!currentUser) return '';
   const apps = Object.keys(APPS)
@@ -2028,6 +2492,7 @@ function renderDropdownApps() {
       if (app.alwaysVisible) return true;
       if (app.permission && currentPerms[app.permission] === true) return true;
       if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      if (app.signedInOnly) return true;
       return false;
     });
 
@@ -2045,7 +2510,7 @@ function toggleUserDropdown(e) {
   const menu = document.getElementById('wsUserDropdown');
   const btn = document.getElementById('wsAccountBtn');
   if (!menu || !btn) return;
-  closeLauncher(); closeNotifications();
+  closeLauncher(); closeNotifications(); closeAllNavDropdowns();
   const isActive = menu.classList.toggle('active');
   btn.classList.toggle('active', isActive);
   btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
@@ -2067,7 +2532,7 @@ async function handleSignOut() {
 }
 
 // ============================================================
-// LANDING RENDER  — JANTA
+// LANDING RENDER
 // ============================================================
 function renderLanding() {
   const content = document.getElementById('wsContent');
@@ -2384,6 +2849,7 @@ function renderWorkspaceApps() {
       if (app.alwaysVisible) return true;
       if (app.permission && currentPerms[app.permission] === true) return true;
       if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      if (app.signedInOnly) return true;
       return false;
     });
 
@@ -2415,6 +2881,7 @@ function renderRailApps() {
       if (app.alwaysVisible) return true;
       if (app.permission && currentPerms[app.permission] === true) return true;
       if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      if (app.signedInOnly) return true;
       return false;
     });
 
@@ -2462,7 +2929,6 @@ async function loadWorkspaceData() {
   const activities = [];
   const completed = [];
 
-  // FlexiKazi
   if (currentPerms.ekazi === true) {
     try {
       const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
@@ -2511,7 +2977,6 @@ async function loadWorkspaceData() {
     } catch (e) { console.warn('FlexiKazi data:', e); }
   }
 
-  // Kasikazi
   if (currentPerms.kasikazi === true || currentPerms.ekazi === true) {
     try {
       const snap = await db.ref('kasikazi_tasks').once('value');
@@ -2560,7 +3025,6 @@ async function loadWorkspaceData() {
     } catch (e) { console.warn('Kasikazi data:', e); }
   }
 
-  // JANTA — CraftiKazi activity merged into the feed
   if (currentPerms.craftikazi === true || currentPerms.ekazi === true) {
     try {
       const snap = await db.ref('craftikazi_tasks').once('value');
@@ -2609,7 +3073,55 @@ async function loadWorkspaceData() {
     } catch (e) { console.warn('CraftiKazi data:', e); }
   }
 
-  // Payouts
+  // ZINDUA Hub
+  if (currentPerms.zindua === true || currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref('zindua_tasks').once('value');
+      const tasks = snap.val() || {};
+      Object.entries(tasks).forEach(([id, t]) => {
+        const c = t.claimedBy && t.claimedBy[uid];
+        if (!c) return;
+        const s = (c.status || 'claimed').toLowerCase();
+        const ts = c.reviewedAt || c.submittedAt || c.startedAt || c.claimedAt || 0;
+        if (!ts) return;
+
+        if (s === 'approved') {
+          completed.push({
+            id: 'z_' + id,
+            title: t.title || 'Tech task',
+            category: t.tech || t.category || 'Tech',
+            client: t.clientName || 'Janta',
+            status: 'completed',
+            statusLabel: 'Completed',
+            ts,
+            source: 'Zindua Hub',
+            sourceColor: APPS.zindua.color,
+            link: 'apps/zindua-hub/'
+          });
+          activities.push({ icon: 'fa-rocket', type: 'success', title: 'Zindua task approved', desc: t.title || 'Tech task', ts });
+        } else if (s === 'revision') {
+          completed.push({
+            id: 'z_' + id,
+            title: t.title || 'Tech task',
+            category: t.tech || t.category || 'Tech',
+            client: t.clientName || 'Janta',
+            status: 'revision',
+            statusLabel: 'Revision',
+            ts,
+            source: 'Zindua Hub',
+            sourceColor: APPS.zindua.color,
+            link: 'apps/zindua-hub/'
+          });
+          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Zindua revision', desc: t.title || 'Tech task', ts });
+        } else if (s === 'submitted') {
+          activities.push({ icon: 'fa-clock', type: 'info', title: 'Zindua under review', desc: t.title || 'Tech task', ts });
+        } else {
+          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a tech task', desc: t.title || 'Tech task', ts });
+        }
+      });
+    } catch (e) { console.warn('Zindua data:', e); }
+  }
+
   try {
     const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
     const payouts = snap.val() || {};
@@ -2623,7 +3135,6 @@ async function loadWorkspaceData() {
     });
   } catch (e) { console.warn('Payout data:', e); }
 
-  // Learning progress
   try {
     const snap = await db.ref(`learning_progress/${uid}`).once('value');
     const progress = snap.val() || {};
@@ -2654,7 +3165,7 @@ function renderCompletedTiles(tiles) {
       <div class="ws-feed-empty" style="grid-column:1/-1;">
         <i class="fas fa-inbox" aria-hidden="true"></i>
         <div>No completed tasks yet</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi or CraftiKazi task, or wait for a FlexiKazi assignment to get started.</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a task on any board to get started.</div>
       </div>
     `;
     return;
@@ -2751,6 +3262,7 @@ function navigateTo(section) {
 // ============================================================
 function openLauncher(e) {
   if (e) e.stopPropagation();
+  closeAllNavDropdowns();
   const panel = document.getElementById('launcherPanel');
   const btn = document.getElementById('waffleBtn');
   if (!panel) return;
@@ -2788,6 +3300,7 @@ function renderLauncher() {
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+    if (app.signedInOnly) return true;
     return false;
   });
 
@@ -2823,10 +3336,11 @@ function renderLauncher() {
 }
 
 // ============================================================
-// NOTIFICATIONS  — FIREBASE NODE UNTOUCHED (kazinni_notifications)
+// NOTIFICATIONS
 // ============================================================
 function toggleNotifications(e) {
   if (e) e.stopPropagation();
+  closeAllNavDropdowns();
   const panel = document.getElementById('notifPanel');
   const btn = document.getElementById('notifBtn');
   if (!panel) return;
@@ -3000,9 +3514,10 @@ function closeNotifModal() {
 }
 
 // ============================================================
-// AUTH MODAL  — JANTA
+// AUTH MODAL
 // ============================================================
 function openAuthModal() {
+  closeAllNavDropdowns();
   closeLauncher(); closeUserDropdown(); closeNotifications();
   const modal = document.getElementById('authModal');
   const overlay = document.getElementById('authModalOverlay');
@@ -3055,7 +3570,6 @@ async function handleLogin(e) {
 
   try {
     await auth.signInWithEmailAndPassword(email, password);
-    // JANTA
     showToast('Welcome to Janta', 'success');
     closeAuthModal();
   } catch (err) {
@@ -3105,11 +3619,20 @@ async function loadPublicStats() {
       });
     });
   } catch (e) {}
-  // JANTA — include CraftiKazi completions
   try {
     const snap = await db.ref('craftikazi_tasks').once('value');
     const craft = snap.val() || {};
     Object.values(craft).forEach(t => {
+      if (!t.claimedBy) return;
+      Object.values(t.claimedBy).forEach(c => {
+        if ((c.status || '').toLowerCase() === 'approved') completed++;
+      });
+    });
+  } catch (e) {}
+  try {
+    const snap = await db.ref('zindua_tasks').once('value');
+    const zd = snap.val() || {};
+    Object.values(zd).forEach(t => {
       if (!t.claimedBy) return;
       Object.values(t.claimedBy).forEach(c => {
         if ((c.status || '').toLowerCase() === 'approved') completed++;
@@ -3156,6 +3679,7 @@ function buildPublicTicker() {
     { icon: 'fa-circle-check', text: 'A task was approved' },
     { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
     { icon: 'fa-hammer', text: 'A craft job went live on CraftiKazi' },
+    { icon: 'fa-rocket', text: 'A tech task went live on Zindua Hub' },
     { icon: 'fa-user-check', text: 'A tasker joined the network' },
     { icon: 'fa-certificate', text: 'A learning module was completed' },
     { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
@@ -3242,7 +3766,10 @@ function updatePublicClock() {
 // ============================================================
 // CLEANUP
 // ============================================================
-window.addEventListener('beforeunload', () => { detachNotifListeners(); });
+window.addEventListener('beforeunload', () => {
+  detachNotifListeners();
+  courseListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
+});
 </script>
 </body>
 </html>
