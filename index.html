@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<meta name="description" content="KazInni Suite — one account, every workspace.">
-<title>KazInni Suite</title>
+<!-- JANTA -->
+<meta name="description" content="Janta — one account, every workspace.">
+<title>Janta</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -901,7 +902,7 @@ body.rail-collapsed .ws-content { padding: 1.75rem 2.5rem; }
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 
-/* Learning dashboard card (no premium wording, no lock) */
+/* Learning dashboard card */
 .learning-dash {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
   border: 1px solid rgba(202,138,4,0.2);
@@ -1445,9 +1446,10 @@ body.rail-open .rail-backdrop { display: block; }
       <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
 
-    <a href="index.html" class="ws-logo" aria-label="KazInni Suite home">
+    <!-- JANTA -->
+    <a href="index.html" class="ws-logo" aria-label="Janta home">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
-      <span class="ws-logo-text">Kaz<span class="accent">Inni</span></span>
+      <span class="ws-logo-text">Jan<span class="accent">ta</span></span>
     </a>
 
     <nav class="ws-nav-links" aria-label="Primary navigation">
@@ -1457,9 +1459,10 @@ body.rail-open .rail-backdrop { display: block; }
       <a href="#activity" class="ws-nav-link">Activity</a>
     </nav>
 
+    <!-- JANTA -->
     <div class="ws-search" role="search">
       <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-      <input type="search" id="wsSearch" placeholder="Search KazInni…" aria-label="Search KazInni" autocomplete="off">
+      <input type="search" id="wsSearch" placeholder="Search Janta…" aria-label="Search Janta" autocomplete="off">
     </div>
 
     <div class="ws-header-right">
@@ -1533,9 +1536,10 @@ body.rail-open .rail-backdrop { display: block; }
 </div>
 
 <!-- LAUNCHER PANEL -->
-<div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="KazInni apps">
+<div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="Janta apps">
   <div class="lp-header">
-    <div class="lp-title">KazInni apps</div>
+    <!-- JANTA -->
+    <div class="lp-title">Janta apps</div>
     <div class="lp-header-right">
       <span class="lp-live-dot" aria-hidden="true"></span>
       <span id="launcherStatus">Preview</span>
@@ -1589,8 +1593,9 @@ body.rail-open .rail-backdrop { display: block; }
   <button type="button" class="ws-modal-close" onclick="closeAuthModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
   <div class="ws-modal-icon gold"><i class="fas fa-cube" aria-hidden="true"></i></div>
   <div class="ws-modal-header">
-    <h3 id="authModalTitle">Sign in to KazInni</h3>
-    <p>Use your KazInni account to access your workspace</p>
+    <!-- JANTA -->
+    <h3 id="authModalTitle">Sign in to Janta</h3>
+    <p>Use your Janta account to access your workspace</p>
   </div>
   <div class="auth-error" id="authError" role="alert"></div>
   <form onsubmit="handleLogin(event)" novalidate>
@@ -1608,7 +1613,7 @@ body.rail-open .rail-backdrop { display: block; }
   </form>
   <p class="auth-note">
     <i class="fas fa-shield-alt" aria-hidden="true"></i>
-    Access is invitation-only. Accounts issued by KazInni admins.
+    Access is invitation-only. Accounts issued by Janta admins.
   </p>
 </div>
 
@@ -1619,7 +1624,7 @@ body.rail-open .rail-backdrop { display: block; }
 'use strict';
 
 // ============================================================
-// CONFIG
+// CONFIG  — FIREBASE UNTOUCHED
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -1629,7 +1634,6 @@ const firebaseConfig = {
 };
 
 // App registry — only apps with a real link live here.
-// Learning has no lock icon and no premium badge.
 const APPS = {
   'flexikazi': {
     name: 'FlexiKazi',
@@ -1647,6 +1651,17 @@ const APPS = {
     color: '#0891b2',
     link: 'apps/kasikazi/',
     permission: 'kasikazi',
+    fallbackPermission: 'ekazi',
+    alwaysVisible: false
+  },
+  // JANTA — NEW
+  'craftikazi': {
+    name: 'CraftiKazi',
+    desc: 'Craft-work marketplace — metal, wood, upholstery, and bespoke builds.',
+    icon: 'fa-hammer',
+    color: '#b45309',
+    link: 'apps/craftikazi/',
+    permission: 'craftikazi',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
   },
@@ -1676,7 +1691,7 @@ const CONFIG = {
   notifLimit: 50,
   tickerRefreshMs: 60000,
   clockRefreshMs: 1000,
-  notifStorageKey: 'kazinni_notif_lastseen',
+  notifStorageKey: 'kazinni_notif_lastseen',   // kept — preserves existing read state
   maxNotifications: 20,
   recentActivityMax: 6,
   completedTilesMax: 6
@@ -1776,8 +1791,6 @@ function getInitials(name) {
 
 function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 
-// Learning is treated like any other workspace permission.
-// No premium semantics here — the Learning app itself decides what a user sees.
 function hasLearningAccess() {
   return currentPerms && currentPerms.learning === true;
 }
@@ -1897,24 +1910,20 @@ async function handleAuthStateChanged(user) {
     return;
   }
 
-  // Verify the account exists in `users/{uid}` (works for every signed-in user)
   try {
     await db.ref(`users/${user.uid}`).once('value');
   } catch (e) { console.warn('users read failed:', e); }
 
-  // Load permissions — the single source of truth for what this user can access
   try {
     const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
     currentPerms = permSnap.exists() ? (permSnap.val() || {}) : {};
   } catch (e) { currentPerms = {}; }
 
-  // Load learning entitlements (parallel to workspacePermissions)
   try {
     const entSnap = await db.ref(`learning_entitlements/${user.uid}`).once('value');
     currentEntitlements = entSnap.exists() ? (entSnap.val() || {}) : {};
   } catch (e) { currentEntitlements = {}; }
 
-  // Optionally load tasker profile — but ONLY if the user actually has eKazi access
   if (currentPerms.ekazi === true) {
     try {
       const snap = await db.ref(`taskers/${user.uid}`).once('value');
@@ -1956,7 +1965,7 @@ function toggleRail() {
 function closeRail() { document.body.classList.remove('rail-open'); }
 
 // ============================================================
-// ACCOUNT BUTTON
+// ACCOUNT BUTTON  — JANTA: permission-aware dropdown
 // ============================================================
 function renderAccountButton() {
   const container = document.getElementById('headerAccount');
@@ -1999,11 +2008,7 @@ function renderAccountButton() {
           <a href="wallet.html" class="ud-item" role="menuitem"><i class="fas fa-wallet" aria-hidden="true"></i> Wallet</a>
           <div class="ud-divider"></div>
           <div class="ud-section-label">Workspace</div>
-          <a href="apps/flexikazi/" class="ud-item" role="menuitem"><i class="fas fa-list-check" aria-hidden="true"></i> FlexiKazi</a>
-          <a href="apps/kasikazi/" class="ud-item" role="menuitem"><i class="fas fa-bullhorn" aria-hidden="true"></i> Kasikazi</a>
-          <a href="learning/index.html" class="ud-item" role="menuitem">
-            <i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning
-          </a>
+          ${renderDropdownApps()}
           <div class="ud-divider"></div>
           <button type="button" class="ud-item danger" onclick="handleSignOut()" role="menuitem">
             <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
@@ -2012,6 +2017,27 @@ function renderAccountButton() {
       </div>
     </div>
   `;
+}
+
+// JANTA — new helper: permission-aware dropdown links
+function renderDropdownApps() {
+  if (!currentUser) return '';
+  const apps = Object.keys(APPS)
+    .map(k => ({ key: k, ...APPS[k] }))
+    .filter(app => {
+      if (app.alwaysVisible) return true;
+      if (app.permission && currentPerms[app.permission] === true) return true;
+      if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+      return false;
+    });
+
+  if (apps.length === 0) return '';
+
+  return apps.map(app => `
+    <a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
+      <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
+    </a>
+  `).join('');
 }
 
 function toggleUserDropdown(e) {
@@ -2041,7 +2067,7 @@ async function handleSignOut() {
 }
 
 // ============================================================
-// LANDING RENDER
+// LANDING RENDER  — JANTA
 // ============================================================
 function renderLanding() {
   const content = document.getElementById('wsContent');
@@ -2059,14 +2085,14 @@ function renderLanding() {
           <span class="dot" aria-hidden="true"></span>
           <span>One account · Every workspace</span>
         </div>
-        <h1 id="heroTitle">Welcome to <span class="accent">KazInni</span></h1>
+        <h1 id="heroTitle">Welcome to <span class="accent">Janta</span></h1>
         <p class="hero-lede">
           One login. Every workspace. Run your day from a single account across
-          every KazInni workspace.
+          every Janta workspace.
         </p>
         <div class="hero-cta">
           <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
-            <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to KazInni</span>
+            <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to Janta</span>
           </button>
           <button type="button" class="ws-btn ws-btn-ghost ws-btn-lg" onclick="openLauncher(event)">
             <i class="fas fa-grip" aria-hidden="true"></i> <span>Preview apps</span>
@@ -2086,7 +2112,7 @@ function renderLanding() {
         <div class="section-header-center">
           <span class="section-label">Explore</span>
           <h2 id="appsTitle">Preview the apps</h2>
-          <p>Sign in once and every KazInni app opens without another password.</p>
+          <p>Sign in once and every Janta app opens without another password.</p>
         </div>
         <div class="preview-grid" id="previewGrid"></div>
       </div>
@@ -2095,7 +2121,7 @@ function renderLanding() {
     <section class="section alt" id="features" aria-labelledby="whyTitle">
       <div class="section-inner">
         <div class="section-header-center">
-          <span class="section-label">Why KazInni</span>
+          <span class="section-label">Why Janta</span>
           <h2 id="whyTitle">Built for how you actually work</h2>
           <p>Every detail optimised for Kenyan taskers, clients, and teams.</p>
         </div>
@@ -2103,7 +2129,7 @@ function renderLanding() {
           <div class="why-item">
             <div class="why-icon"><i class="fas fa-fingerprint" aria-hidden="true"></i></div>
             <h3>Single sign-on</h3>
-            <p>One KazInni login unlocks every workspace — no separate passwords.</p>
+            <p>One Janta login unlocks every workspace — no separate passwords.</p>
           </div>
           <div class="why-item">
             <div class="why-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
@@ -2188,7 +2214,7 @@ function renderLanding() {
         <div class="section-header-center">
           <span class="section-label">Live</span>
           <h2 id="statsTitle">Platform activity</h2>
-          <p>Real numbers from across the KazInni network — updated every minute.</p>
+          <p>Real numbers from across the Janta network — updated every minute.</p>
         </div>
         <div class="ps-grid">
           <div class="ps-tile">
@@ -2224,14 +2250,14 @@ function renderLanding() {
 
     <footer class="landing-footer">
       <div class="landing-footer-inner">
-        <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Suite</div>
+        <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> Janta</div>
         <nav class="landing-footer-links" aria-label="Footer navigation">
           <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
           <a href="mailto:operations@kazinni.com">Contact</a>
         </nav>
-        <div class="landing-footer-copy">© ${new Date().getFullYear()} Teleio Savour · KazInni</div>
+        <div class="landing-footer-copy">© ${new Date().getFullYear()} Teleio Savour · Janta</div>
       </div>
     </footer>
   `;
@@ -2291,7 +2317,7 @@ function renderWorkspace() {
   content.innerHTML = `
     <section class="ws-welcome">
       <h1>${getGreeting()}, ${escapeHtml(capitalized)}</h1>
-      <p>Here's what's happening across your KazInni workspace today.</p>
+      <p>Here's what's happening across your Janta workspace today.</p>
     </section>
 
     <section class="ws-section" aria-labelledby="recentWorkTitle">
@@ -2408,12 +2434,11 @@ function renderLearningDash() {
   const container = document.getElementById('learningDash');
   if (!container) return;
 
-  // No premium wording, no lock. Everyone sees the same tile.
   container.innerHTML = `
     <a href="learning/index.html" class="learning-dash">
       <div class="learning-dash-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
       <div class="learning-dash-body">
-        <div class="learning-dash-title">Explore the KazInni Learning library</div>
+        <div class="learning-dash-title">Explore the Janta Learning library</div>
         <div class="learning-dash-desc">Courses, certificates and mentorship — pick a track and start.</div>
       </div>
       <span class="learning-dash-cta">
@@ -2454,7 +2479,7 @@ async function loadWorkspaceData() {
             id: 'f_' + t.id,
             title: t.title || 'Untitled task',
             category: t.category || 'General',
-            client: t.clientName || 'KazInni',
+            client: t.clientName || 'Janta',
             status: 'completed',
             statusLabel: 'Completed',
             ts,
@@ -2468,7 +2493,7 @@ async function loadWorkspaceData() {
             id: 'f_' + t.id,
             title: t.title || 'Untitled task',
             category: t.category || 'General',
-            client: t.clientName || 'KazInni',
+            client: t.clientName || 'Janta',
             status: 'revision',
             statusLabel: 'Revision',
             ts,
@@ -2503,7 +2528,7 @@ async function loadWorkspaceData() {
             id: 'k_' + id,
             title: t.title || 'Untitled task',
             category: t.category || 'General',
-            client: t.clientName || 'KazInni',
+            client: t.clientName || 'Janta',
             status: 'completed',
             statusLabel: 'Completed',
             ts,
@@ -2517,7 +2542,7 @@ async function loadWorkspaceData() {
             id: 'k_' + id,
             title: t.title || 'Untitled task',
             category: t.category || 'General',
-            client: t.clientName || 'KazInni',
+            client: t.clientName || 'Janta',
             status: 'revision',
             statusLabel: 'Revision',
             ts,
@@ -2535,7 +2560,56 @@ async function loadWorkspaceData() {
     } catch (e) { console.warn('Kasikazi data:', e); }
   }
 
-  // Payouts — status only, no amounts
+  // JANTA — CraftiKazi activity merged into the feed
+  if (currentPerms.craftikazi === true || currentPerms.ekazi === true) {
+    try {
+      const snap = await db.ref('craftikazi_tasks').once('value');
+      const tasks = snap.val() || {};
+      Object.entries(tasks).forEach(([id, t]) => {
+        const c = t.claimedBy && t.claimedBy[uid];
+        if (!c) return;
+        const s = (c.status || 'claimed').toLowerCase();
+        const ts = c.reviewedAt || c.submittedAt || c.startedAt || c.claimedAt || 0;
+        if (!ts) return;
+
+        if (s === 'approved') {
+          completed.push({
+            id: 'c_' + id,
+            title: t.title || 'Craft task',
+            category: t.craft || t.category || 'Craft',
+            client: t.clientName || 'Janta',
+            status: 'completed',
+            statusLabel: 'Completed',
+            ts,
+            source: 'CraftiKazi',
+            sourceColor: APPS.craftikazi.color,
+            link: 'apps/craftikazi/'
+          });
+          activities.push({ icon: 'fa-hammer', type: 'success', title: 'CraftiKazi task approved', desc: t.title || 'Craft task', ts });
+        } else if (s === 'revision') {
+          completed.push({
+            id: 'c_' + id,
+            title: t.title || 'Craft task',
+            category: t.craft || t.category || 'Craft',
+            client: t.clientName || 'Janta',
+            status: 'revision',
+            statusLabel: 'Revision',
+            ts,
+            source: 'CraftiKazi',
+            sourceColor: APPS.craftikazi.color,
+            link: 'apps/craftikazi/'
+          });
+          activities.push({ icon: 'fa-redo', type: 'warning', title: 'CraftiKazi revision', desc: t.title || 'Craft task', ts });
+        } else if (s === 'submitted') {
+          activities.push({ icon: 'fa-clock', type: 'info', title: 'CraftiKazi under review', desc: t.title || 'Craft task', ts });
+        } else {
+          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a craft task', desc: t.title || 'Craft task', ts });
+        }
+      });
+    } catch (e) { console.warn('CraftiKazi data:', e); }
+  }
+
+  // Payouts
   try {
     const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
     const payouts = snap.val() || {};
@@ -2549,7 +2623,7 @@ async function loadWorkspaceData() {
     });
   } catch (e) { console.warn('Payout data:', e); }
 
-  // Learning activity (progress)
+  // Learning progress
   try {
     const snap = await db.ref(`learning_progress/${uid}`).once('value');
     const progress = snap.val() || {};
@@ -2580,7 +2654,7 @@ function renderCompletedTiles(tiles) {
       <div class="ws-feed-empty" style="grid-column:1/-1;">
         <i class="fas fa-inbox" aria-hidden="true"></i>
         <div>No completed tasks yet</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi task or wait for a FlexiKazi assignment to get started.</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a Kasikazi or CraftiKazi task, or wait for a FlexiKazi assignment to get started.</div>
       </div>
     `;
     return;
@@ -2749,7 +2823,7 @@ function renderLauncher() {
 }
 
 // ============================================================
-// NOTIFICATIONS — read from kazinni_notifications
+// NOTIFICATIONS  — FIREBASE NODE UNTOUCHED (kazinni_notifications)
 // ============================================================
 function toggleNotifications(e) {
   if (e) e.stopPropagation();
@@ -2780,7 +2854,6 @@ function attachNotifListeners() {
 
   const uid = currentUser.uid;
 
-  // Primary source — your existing kazinni_notifications node
   try {
     const ref = db.ref(`kazinni_notifications/${uid}`).orderByChild('timestamp').limitToLast(CONFIG.notifLimit);
     const cb = (snap) => {
@@ -2927,7 +3000,7 @@ function closeNotifModal() {
 }
 
 // ============================================================
-// AUTH MODAL
+// AUTH MODAL  — JANTA
 // ============================================================
 function openAuthModal() {
   closeLauncher(); closeUserDropdown(); closeNotifications();
@@ -2982,7 +3055,8 @@ async function handleLogin(e) {
 
   try {
     await auth.signInWithEmailAndPassword(email, password);
-    showToast('Welcome to KazInni', 'success');
+    // JANTA
+    showToast('Welcome to Janta', 'success');
     closeAuthModal();
   } catch (err) {
     let msg = (err.message || '').replace('Firebase: ', '').replace(/\(auth\/.*\)\.?/, '').trim();
@@ -3031,6 +3105,17 @@ async function loadPublicStats() {
       });
     });
   } catch (e) {}
+  // JANTA — include CraftiKazi completions
+  try {
+    const snap = await db.ref('craftikazi_tasks').once('value');
+    const craft = snap.val() || {};
+    Object.values(craft).forEach(t => {
+      if (!t.claimedBy) return;
+      Object.values(t.claimedBy).forEach(c => {
+        if ((c.status || '').toLowerCase() === 'approved') completed++;
+      });
+    });
+  } catch (e) {}
   setStat('psCompleted', completed);
   setStat('psWorkspaces', Object.keys(APPS).length + 12);
   buildTicker();
@@ -3070,9 +3155,9 @@ function buildPublicTicker() {
   const items = [
     { icon: 'fa-circle-check', text: 'A task was approved' },
     { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
+    { icon: 'fa-hammer', text: 'A craft job went live on CraftiKazi' },
     { icon: 'fa-user-check', text: 'A tasker joined the network' },
     { icon: 'fa-certificate', text: 'A learning module was completed' },
-    { icon: 'fa-bullhorn', text: 'A new suite went live' },
     { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
   ];
   const html = items.map(it => `
