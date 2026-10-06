@@ -44,20 +44,29 @@
   --surface: #ffffff;
   --surface-2: #faf9f7;
   --surface-3: #f4f3f1;
-  --header-h: 64px;
+
+  /* M365-style neutrals */
+  --m365-hover: #f3f2f1;
+  --m365-pressed: #edebe9;
+  --m365-border: #edebe9;
+  --m365-text: #323130;
+  --m365-text-muted: #605e5c;
+  --m365-shadow: 0 6.4px 14.4px 0 rgba(0,0,0,0.132), 0 1.2px 3.6px 0 rgba(0,0,0,0.108);
+
+  --header-h: 60px;
   --rail-w: 232px;
   --rail-w-collapsed: 68px;
   --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
   --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
   --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-xl: 20px;
   --radius-pill: 100px;
-  --t-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --t-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --t-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-base: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-slow: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
@@ -109,7 +118,7 @@ body {
 @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-@keyframes popIn { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(-4px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes orb { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(40px, -40px) scale(1.05); } 66% { transform: translate(-30px, 30px) scale(0.95); } }
 
 /* ============================================================
@@ -118,10 +127,10 @@ body {
 .ws-header {
   position: sticky; top: 0; z-index: 1000;
   height: var(--header-h);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(15,15,30,0.06);
+  border-bottom: 1px solid var(--m365-border);
   padding: 0 1rem;
   display: flex; align-items: center;
   gap: 1rem;
@@ -154,13 +163,13 @@ body {
 }
 
 .ws-rail-toggle {
-  width: 36px; height: 36px; border-radius: 8px;
+  width: 36px; height: 36px; border-radius: 6px;
   background: transparent; border: none; cursor: pointer;
   display: none; align-items: center; justify-content: center;
-  color: var(--text-secondary); font-size: 0.95rem;
+  color: var(--m365-text); font-size: 0.95rem;
   transition: background var(--t-fast);
 }
-.ws-rail-toggle:hover { background: rgba(15,15,30,0.05); }
+.ws-rail-toggle:hover { background: var(--m365-hover); }
 body.mode-workspace .ws-rail-toggle { display: flex; }
 
 .ws-search { flex: 1; max-width: 520px; display: none; position: relative; }
@@ -168,7 +177,7 @@ body.mode-workspace .ws-search { display: block; }
 .ws-search input {
   width: 100%;
   padding: 0.5rem 0.9rem 0.5rem 2.3rem;
-  border-radius: var(--radius-pill);
+  border-radius: 4px;
   border: 1px solid var(--border-light);
   background: var(--surface-3);
   font-family: var(--font-body); font-size: 0.85rem;
@@ -189,7 +198,7 @@ body.mode-workspace .ws-search { display: block; }
 
 /* ---------- NAV ---------- */
 .ws-nav-links {
-  display: flex; align-items: center; gap: 0.2rem;
+  display: flex; align-items: center; gap: 0.1rem;
   margin-left: 0.5rem;
 }
 body.mode-workspace .ws-nav-links { display: none; }
@@ -197,107 +206,149 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-nav-item { position: relative; }
 
 .ws-nav-link {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
+  color: var(--m365-text); text-decoration: none;
+  font-size: 0.85rem; font-weight: 400;
   font-family: var(--font-heading);
   transition: color var(--t-fast), background var(--t-fast);
   cursor: pointer;
   background: none; border: none;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
   white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 0.35rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  line-height: 1;
 }
-.ws-nav-link:hover { color: var(--ink); background: rgba(15,15,30,0.04); }
+.ws-nav-link:hover { color: var(--ink); background: var(--m365-hover); }
 .ws-nav-link .caret {
-  font-size: 0.5rem; color: var(--text-muted);
+  font-size: 0.5rem; color: var(--m365-text-muted);
   transition: transform var(--t-fast);
+  margin-left: 0.15rem;
 }
-.ws-nav-item.open .ws-nav-link { color: var(--ink); background: rgba(15,15,30,0.05); }
-.ws-nav-item.open .ws-nav-link .caret { transform: rotate(180deg); }
+.ws-nav-item.open .ws-nav-link {
+  color: var(--ink);
+  background: var(--m365-pressed);
+  font-weight: 600;
+}
+.ws-nav-item.open .ws-nav-link .caret { transform: rotate(180deg); color: var(--ink); }
 
-/* Dropdown */
+/* ============================================================
+   MICROSOFT 365-STYLE DROPDOWN
+   ============================================================ */
 .ws-nav-dropdown {
-  position: absolute; top: calc(100% + 8px); left: 0;
-  min-width: 300px; max-width: 420px;
-  background: white; border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
-  border: 1px solid var(--border-light);
-  padding: 0.5rem;
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 380px; max-width: 480px;
+  background: #ffffff;
+  border: 1px solid var(--m365-border);
+  border-radius: 8px;
+  box-shadow: var(--m365-shadow);
+  padding: 0.75rem 0 0 0;
   display: none;
   z-index: 1100;
   animation: popIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
   max-height: 80vh;
-  overflow-y: auto;
+  overflow: hidden;
+  flex-direction: column;
+  font-family: 'Segoe UI', var(--font-heading);
 }
-.ws-nav-item.open .ws-nav-dropdown { display: block; }
-.ws-nav-item[data-nav="learning"] .ws-nav-dropdown { min-width: 340px; max-width: 460px; }
+.ws-nav-item.open .ws-nav-dropdown { display: flex; }
+.ws-nav-item[data-nav="learning"] .ws-nav-dropdown { min-width: 420px; max-width: 520px; }
 
-.ws-nav-dd-item {
-  display: flex; align-items: flex-start; gap: 0.75rem;
-  padding: 0.7rem 0.85rem;
-  border-radius: var(--radius-sm);
-  text-decoration: none; color: var(--text-secondary);
-  cursor: pointer; transition: background var(--t-fast);
-  background: none; border: none; width: 100%;
-  text-align: left; font-family: var(--font-body);
+/* Inner scroll region (so footer stays pinned) */
+.ws-nav-dd-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding-bottom: 0.4rem;
 }
-.ws-nav-dd-item:hover { background: var(--surface-2); color: var(--ink); }
+
+/* Section group header — M365 style */
+.ws-nav-dd-group {
+  font-size: 0.6875rem;             /* 11px */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--m365-text-muted);
+  padding: 1rem 0.9rem 0.4rem;
+  font-family: 'Segoe UI', var(--font-heading);
+}
+.ws-nav-dd-group:first-child { padding-top: 0.25rem; }
+
+/* Individual M365-style menu item */
+.ws-nav-dd-item {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  margin: 0 0.4rem;
+  border-radius: 4px;
+  text-decoration: none; color: var(--m365-text);
+  cursor: pointer; transition: background var(--t-fast);
+  background: none; border: none; width: calc(100% - 0.8rem);
+  text-align: left;
+  font-family: 'Segoe UI', var(--font-heading);
+}
+.ws-nav-dd-item:hover { background: var(--m365-hover); }
+.ws-nav-dd-item:active { background: var(--m365-pressed); }
+
 .ws-nav-dd-icon {
-  width: 36px; height: 36px; border-radius: 10px;
+  width: 32px; height: 32px; border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; color: white; flex-shrink: 0;
+  font-size: 0.8rem; color: white; flex-shrink: 0;
+  margin-top: 1px;
 }
 .ws-nav-dd-body { min-width: 0; flex: 1; }
 .ws-nav-dd-title {
-  font-family: var(--font-heading); font-weight: 600;
-  font-size: 0.85rem; color: var(--ink);
-  margin-bottom: 0.1rem; line-height: 1.3;
+  font-family: 'Segoe UI', var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8125rem;              /* 13px */
+  color: var(--m365-text);
+  margin-bottom: 0.15rem; line-height: 1.3;
   display: flex; align-items: center; gap: 0.4rem;
+  flex-wrap: wrap;
 }
 .ws-nav-dd-title .badge-mini {
-  font-size: 0.6rem; padding: 1px 6px;
+  font-size: 0.5625rem;
+  padding: 1px 6px;
   background: var(--gold-soft); color: var(--gold-dark);
-  border-radius: 6px; font-weight: 700;
+  border-radius: 3px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.4px;
+  font-family: var(--font-heading);
 }
 .ws-nav-dd-desc {
-  font-size: 0.75rem; color: var(--text-muted);
-  line-height: 1.4;
+  font-size: 0.75rem;                /* 12px */
+  color: var(--m365-text-muted);
+  line-height: 1.35;
+  font-family: 'Segoe UI', var(--font-body);
 }
+
+/* Footer bar */
 .ws-nav-dd-footer {
-  border-top: 1px solid var(--border-light);
-  margin-top: 0.4rem; padding: 0.6rem 0.85rem 0.4rem;
+  border-top: 1px solid var(--m365-border);
+  padding: 0.7rem 1.1rem;
+  background: #faf9f8;
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.72rem; color: var(--text-muted);
-  font-family: var(--font-heading);
+  font-size: 0.75rem; color: var(--m365-text-muted);
+  font-family: 'Segoe UI', var(--font-heading);
+  flex-shrink: 0;
 }
 .ws-nav-dd-footer a {
   color: var(--gold-dark); text-decoration: none;
   font-weight: 600; cursor: pointer;
-}
-.ws-nav-dd-footer a:hover { color: var(--gold); }
-
-/* Learning category group header */
-.ws-nav-dd-group {
-  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.8px; color: var(--text-muted);
-  padding: 0.6rem 0.85rem 0.25rem;
   font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 2px 6px; border-radius: 3px;
+  transition: background var(--t-fast);
 }
-.ws-nav-dd-group:first-child { padding-top: 0.3rem; }
+.ws-nav-dd-footer a:hover { background: rgba(202,138,4,0.1); color: var(--gold); }
 
 .ws-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
 .ws-icon-btn {
-  width: 38px; height: 38px; border-radius: 50%;
+  width: 38px; height: 38px; border-radius: 4px;
   background: transparent; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text-secondary); font-size: 0.95rem;
+  color: var(--m365-text); font-size: 0.95rem;
   transition: background var(--t-fast);
   position: relative;
 }
-.ws-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+.ws-icon-btn:hover { background: var(--m365-hover); color: var(--ink); }
 .ws-icon-btn .dot-badge {
   position: absolute; top: 5px; right: 5px;
   min-width: 16px; height: 16px; padding: 0 4px;
@@ -310,18 +361,18 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-icon-btn .dot-badge.visible { display: flex; }
 
 .ws-waffle {
-  width: 38px; height: 38px; border-radius: var(--radius-sm);
+  width: 38px; height: 38px; border-radius: 4px;
   background: transparent; border: none; cursor: pointer;
   display: grid; grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 3px; padding: 9px;
   transition: background var(--t-fast);
 }
-.ws-waffle:hover { background: rgba(15,15,30,0.05); }
-.ws-waffle.active { background: rgba(202,138,4,0.12); }
+.ws-waffle:hover { background: var(--m365-hover); }
+.ws-waffle.active { background: var(--m365-pressed); }
 .ws-waffle span {
   width: 4px; height: 4px; border-radius: 1px;
-  background: var(--text-secondary);
+  background: var(--m365-text);
   justify-self: center; align-self: center;
   transition: background var(--t-fast);
 }
@@ -330,12 +381,12 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-account-btn {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.25rem 0.7rem 0.25rem 0.25rem;
-  border-radius: var(--radius-pill); background: transparent;
+  border-radius: 4px; background: transparent;
   border: 1px solid transparent; cursor: pointer;
   transition: background var(--t-fast), border-color var(--t-fast);
   font-family: var(--font-body);
 }
-.ws-account-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.ws-account-btn:hover { background: var(--m365-hover); border-color: var(--m365-border); }
 .ws-avatar {
   width: 32px; height: 32px; border-radius: 50%;
   background: var(--gold-gradient); color: white;
@@ -343,12 +394,12 @@ body.mode-workspace .ws-nav-links { display: none; }
   font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
 }
 .ws-account-name {
-  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  font-size: 0.82rem; font-weight: 600; color: var(--m365-text);
   max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   font-family: var(--font-heading);
 }
 .ws-account-btn .fa-chevron-down {
-  font-size: 0.55rem; color: var(--text-muted);
+  font-size: 0.55rem; color: var(--m365-text-muted);
   transition: transform var(--t-base);
 }
 .ws-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
@@ -404,7 +455,7 @@ body.mode-workspace .ws-rail { display: flex; flex-direction: column; }
    ============================================================ */
 .ws-rail {
   background: var(--surface);
-  border-right: 1px solid rgba(15,15,30,0.06);
+  border-right: 1px solid var(--m365-border);
   padding: 0.85rem 0.6rem;
   gap: 0.15rem;
   overflow-y: auto;
@@ -413,7 +464,7 @@ body.mode-workspace .ws-rail { display: flex; flex-direction: column; }
   height: calc(100dvh - var(--header-h));
 }
 .rail-group { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.35rem 0; }
-.rail-group + .rail-group { border-top: 1px solid var(--border-light); margin-top: 0.3rem; padding-top: 0.65rem; }
+.rail-group + .rail-group { border-top: 1px solid var(--m365-border); margin-top: 0.3rem; padding-top: 0.65rem; }
 .rail-label {
   font-family: var(--font-heading);
   font-size: 0.62rem; font-weight: 700;
@@ -427,7 +478,7 @@ body.rail-collapsed .rail-label { opacity: 0; height: 0; padding: 0; }
 .rail-item {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 0.6rem 0.85rem;
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   color: var(--text-secondary); text-decoration: none;
   font-family: var(--font-heading); font-size: 0.85rem; font-weight: 500;
   transition: background var(--t-fast), color var(--t-fast);
@@ -435,7 +486,7 @@ body.rail-collapsed .rail-label { opacity: 0; height: 0; padding: 0; }
   width: 100%; text-align: left; white-space: nowrap;
   position: relative;
 }
-.rail-item:hover { background: var(--surface-3); color: var(--ink); }
+.rail-item:hover { background: var(--m365-hover); color: var(--ink); }
 .rail-item.active { background: rgba(202,138,4,0.1); color: var(--gold-dark); font-weight: 600; }
 .rail-item.active::before {
   content: ''; position: absolute;
@@ -465,16 +516,16 @@ body.rail-collapsed .rail-item i { font-size: 1rem; }
 .rail-sub-item {
   display: flex; align-items: center; gap: 0.7rem;
   padding: 0.5rem 0.85rem 0.5rem 2.4rem;
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   color: var(--text-secondary); text-decoration: none;
   font-size: 0.82rem; font-family: var(--font-body);
   transition: background var(--t-fast), color var(--t-fast);
   white-space: nowrap;
 }
-.rail-sub-item:hover { background: var(--surface-3); color: var(--ink); }
+.rail-sub-item:hover { background: var(--m365-hover); color: var(--ink); }
 .rail-sub-item i { font-size: 0.75rem; color: var(--text-muted); }
 .rail-sub-dot {
-  width: 8px; height: 8px; border-radius: 3px;
+  width: 8px; height: 8px; border-radius: 2px;
   flex-shrink: 0;
 }
 body.rail-collapsed .rail-sub { display: none; }
@@ -482,7 +533,7 @@ body.rail-collapsed .rail-sub { display: none; }
 .rail-spacer { flex: 1; min-height: 0.5rem; }
 
 /* ============================================================
-   CONTENT  — landing mode spans full viewport
+   CONTENT
    ============================================================ */
 .ws-content {
   padding: 2rem 2.5rem;
@@ -500,14 +551,14 @@ body.mode-landing .ws-content {
 }
 
 /* ============================================================
-   HERO (landing)
+   HERO
    ============================================================ */
 .hero {
   position: relative;
   padding: 5rem 2rem 4rem;
   text-align: center;
   overflow: hidden;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
+  border-bottom: 1px solid var(--m365-border);
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -545,13 +596,23 @@ body.mode-landing .ws-content {
   margin-bottom: 1.2rem; letter-spacing: -0.045em;
   font-family: var(--font-display); color: var(--ink);
 }
+
+/* HERO ACCENT — matches the header wordmark exactly (font, weight, gradient),
+   but stays italic to distinguish "Janta" from "Welcome to" */
 .hero h1 .accent {
-  color:var(--gold-dark);
-  font-size: clamp(2.4rem, 5.2vw, 4rem);
-  font-weight: 700; line-height: 1.06;
-  margin-bottom: 1.2rem; letter-spacing: -0.045em;
   font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.045em;
+  background: var(--gold-gradient);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
+
 .hero-lede {
   font-size: 1.1rem; color: var(--text-secondary);
   max-width: 560px; margin: 0 auto 2.2rem;
@@ -565,7 +626,7 @@ body.mode-landing .ws-content {
   display: flex; align-items: center; justify-content: center;
   gap: 2.2rem; flex-wrap: wrap;
   padding-top: 2.2rem;
-  border-top: 1px solid rgba(15,15,30,0.06);
+  border-top: 1px solid var(--m365-border);
 }
 .hero-strip-item {
   display: flex; align-items: center; gap: 0.5rem;
@@ -575,11 +636,11 @@ body.mode-landing .ws-content {
 .hero-strip-item i { color: var(--gold); font-size: 0.85rem; }
 
 /* ============================================================
-   SECTIONS (landing)
+   SECTIONS
    ============================================================ */
 .section {
   padding: 4rem 2rem;
-  border-bottom: 1px solid rgba(15,15,30,0.05);
+  border-bottom: 1px solid var(--m365-border);
   background: white;
   width: 100%;
 }
@@ -608,7 +669,7 @@ body.mode-landing .ws-content {
   max-width: 520px; margin: 0 auto;
 }
 
-/* Preview grid — flexbox, centered last row */
+/* Preview grid */
 .preview-grid {
   display: flex;
   flex-wrap: wrap;
@@ -621,7 +682,7 @@ body.mode-landing .ws-content {
   flex: 1 1 240px;
   max-width: 280px;
   background: var(--surface-2);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--m365-border);
   border-radius: var(--radius-lg);
   padding: 1.4rem 1.3rem 1.3rem;
   text-decoration: none; color: inherit;
@@ -641,12 +702,12 @@ body.mode-landing .ws-content {
 .preview-card:hover::before { transform: scaleX(1); }
 .preview-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 48px rgba(15,15,30,0.08);
+  box-shadow: var(--m365-shadow);
   border-color: rgba(202,138,4,0.25);
   background: white;
 }
 .preview-icon {
-  width: 44px; height: 44px; border-radius: var(--radius-md);
+  width: 44px; height: 44px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1.1rem;
   transition: transform var(--t-base);
@@ -672,9 +733,9 @@ body.mode-landing .ws-content {
 }
 .why-item { text-align: center; padding: 1.5rem 1rem; }
 .why-icon {
-  width: 52px; height: 52px; border-radius: 16px;
+  width: 52px; height: 52px; border-radius: 10px;
   background: white;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--m365-border);
   color: var(--gold);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.2rem; margin: 0 auto 1rem;
@@ -687,7 +748,7 @@ body.mode-landing .ws-content {
 }
 .why-item p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 
-/* Learning section on landing */
+/* Learning section */
 .learning-hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -735,13 +796,13 @@ body.mode-landing .ws-content {
 }
 .learning-card-demo {
   background: white;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   padding: 1rem 0.9rem;
   display: flex; flex-direction: column; gap: 0.5rem;
-  box-shadow: 0 10px 24px rgba(15,15,30,0.08);
+  box-shadow: var(--m365-shadow);
 }
 .learning-card-demo .lc-icon {
-  width: 32px; height: 32px; border-radius: 9px;
+  width: 32px; height: 32px; border-radius: 6px;
   background: var(--gold-gradient); color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.85rem;
@@ -766,10 +827,10 @@ body.mode-landing .ws-content {
 /* Stats */
 .ps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
 .ps-tile {
-  background: white; border: 1px solid var(--border-light);
-  border-radius: 18px; padding: 1.5rem 1.4rem 1.3rem;
+  background: white; border: 1px solid var(--m365-border);
+  border-radius: 8px; padding: 1.5rem 1.4rem 1.3rem;
   position: relative; overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all var(--t-base);
 }
 .ps-tile::before {
   content: ''; position: absolute;
@@ -779,9 +840,9 @@ body.mode-landing .ws-content {
   transition: transform var(--t-slow);
 }
 .ps-tile:hover::before { transform: scaleX(1); }
-.ps-tile:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,15,30,0.08); border-color: rgba(202,138,4,0.25); }
+.ps-tile:hover { transform: translateY(-4px); box-shadow: var(--m365-shadow); border-color: rgba(202,138,4,0.25); }
 .ps-icon {
-  width: 40px; height: 40px; border-radius: var(--radius-md);
+  width: 40px; height: 40px; border-radius: 6px;
   background: var(--gold-soft); color: var(--gold-dark);
   display: flex; align-items: center; justify-content: center;
   font-size: 0.95rem; margin-bottom: 1.1rem;
@@ -809,7 +870,7 @@ body.mode-landing .ws-content {
 }
 
 .ps-ticker {
-  background: white; border: 1px solid var(--border-light);
+  background: white; border: 1px solid var(--m365-border);
   border-radius: var(--radius-pill); padding: 0.8rem 0;
   overflow: hidden; position: relative;
   box-shadow: var(--shadow-sm);
@@ -837,7 +898,7 @@ body.mode-landing .ws-content {
 /* Footer */
 .landing-footer {
   background: var(--surface-2);
-  border-top: 1px solid rgba(15,15,30,0.06);
+  border-top: 1px solid var(--m365-border);
   padding: 2.4rem 2rem 1.8rem;
 }
 .landing-footer-inner {
@@ -901,8 +962,8 @@ body.mode-landing .ws-content {
 }
 .completed-tile {
   background: white;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--m365-border);
+  border-radius: 6px;
   padding: 1.05rem 1.1rem 1rem;
   text-decoration: none; color: inherit;
   transition: all var(--t-fast);
@@ -911,7 +972,7 @@ body.mode-landing .ws-content {
 }
 .completed-tile:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--m365-shadow);
   border-color: rgba(202,138,4,0.25);
 }
 .completed-tile-top {
@@ -919,7 +980,7 @@ body.mode-landing .ws-content {
   gap: 0.6rem;
 }
 .completed-tile-icon {
-  width: 34px; height: 34px; border-radius: 10px;
+  width: 34px; height: 34px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 0.85rem; flex-shrink: 0;
 }
@@ -952,7 +1013,7 @@ body.mode-landing .ws-content {
 .completed-tile-foot {
   margin-top: auto;
   padding-top: 0.6rem;
-  border-top: 1px dashed var(--border-light);
+  border-top: 1px solid var(--m365-border);
   display: flex; align-items: center; justify-content: space-between;
   font-family: var(--font-heading);
   font-size: 0.72rem; color: var(--text-muted);
@@ -962,7 +1023,7 @@ body.mode-landing .ws-content {
   font-weight: 600;
 }
 .completed-tile-source .src-dot {
-  width: 8px; height: 8px; border-radius: 3px;
+  width: 8px; height: 8px; border-radius: 2px;
 }
 .completed-tile-cta {
   color: var(--gold-dark); font-weight: 700;
@@ -976,8 +1037,8 @@ body.mode-landing .ws-content {
 }
 .ws-app-tile {
   background: white;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--m365-border);
+  border-radius: 6px;
   padding: 1rem 1rem 0.9rem;
   text-decoration: none; color: inherit;
   display: flex; flex-direction: column; gap: 0.7rem;
@@ -986,11 +1047,11 @@ body.mode-landing .ws-content {
 }
 .ws-app-tile:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--m365-shadow);
   border-color: rgba(202,138,4,0.25);
 }
 .ws-app-tile .tile-icon {
-  width: 40px; height: 40px; border-radius: var(--radius-md);
+  width: 40px; height: 40px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 1rem;
 }
@@ -1009,7 +1070,7 @@ body.mode-landing .ws-content {
 .learning-dash {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
   border: 1px solid rgba(202,138,4,0.2);
-  border-radius: var(--radius-md);
+  border-radius: 6px;
   padding: 1.3rem 1.4rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -1022,17 +1083,16 @@ body.mode-landing .ws-content {
 }
 .learning-dash:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 48px rgba(202,138,4,0.15);
+  box-shadow: var(--m365-shadow);
   border-color: rgba(202,138,4,0.35);
 }
 .learning-dash-icon {
-  width: 48px; height: 48px; border-radius: 14px;
+  width: 48px; height: 48px; border-radius: 8px;
   background: var(--gold-gradient);
   color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.15rem;
   flex-shrink: 0;
-  box-shadow: 0 10px 24px rgba(202,138,4,0.25);
 }
 .learning-dash-body { min-width: 0; }
 .learning-dash-title {
@@ -1064,20 +1124,20 @@ body.mode-landing .ws-content {
 
 .ws-feed {
   background: white;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--m365-border);
+  border-radius: 6px;
   overflow: hidden;
 }
 .ws-feed-item {
   display: flex; align-items: center; gap: 0.9rem;
   padding: 0.85rem 1.1rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--m365-border);
   transition: background var(--t-fast);
 }
 .ws-feed-item:last-child { border-bottom: none; }
-.ws-feed-item:hover { background: var(--surface-2); }
+.ws-feed-item:hover { background: var(--m365-hover); }
 .ws-feed-icon {
-  width: 34px; height: 34px; border-radius: 10px;
+  width: 34px; height: 34px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 0.8rem; flex-shrink: 0;
 }
@@ -1113,7 +1173,7 @@ body.mode-landing .ws-content {
 }
 
 .ws-skeleton {
-  height: 96px; border-radius: var(--radius-md);
+  height: 96px; border-radius: 6px;
   background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
@@ -1126,27 +1186,27 @@ body.mode-landing .ws-content {
   position: fixed;
   top: calc(var(--header-h) + 8px);
   right: 1rem;
-  background: white; border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
-  border: 1px solid var(--border-light);
+  background: white; border-radius: 8px;
+  box-shadow: var(--m365-shadow);
+  border: 1px solid var(--m365-border);
   overflow: hidden; z-index: 1100; display: none;
   max-height: calc(100vh - var(--header-h) - 24px);
   flex-direction: column;
 }
-.launcher-panel { width: 420px; max-width: calc(100vw - 2rem); }
+.launcher-panel { width: 440px; max-width: calc(100vw - 2rem); }
 .notif-panel { width: 400px; max-width: calc(100vw - 2rem); }
 .launcher-panel.active, .notif-panel.active {
   display: flex;
-  animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: popIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .lp-header, .notif-header {
   padding: 1rem 1.2rem 0.8rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--m365-border);
   display: flex; align-items: center; justify-content: space-between;
   flex-shrink: 0;
 }
 .lp-title, .notif-title {
-  font-family: var(--font-heading); font-size: 0.76rem; font-weight: 700;
+  font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted);
 }
 .lp-header-right {
@@ -1166,21 +1226,21 @@ body.mode-landing .ws-content {
 .notif-clear:hover:not(:disabled) { color: var(--gold); }
 .notif-clear:disabled { opacity: 0.4; cursor: not-allowed; }
 .lp-body, .notif-body { overflow-y: auto; flex: 1; }
-.lp-body { padding: 1rem; }
+.lp-body { padding: 0.75rem; }
 .notif-body { padding: 0.4rem; }
-.lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
 .lp-app {
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem;
-  padding: 0.85rem 0.85rem 0.8rem; border-radius: var(--radius-md);
+  padding: 0.85rem 0.85rem 0.8rem; border-radius: 4px;
   background: transparent; border: 1px solid transparent;
   text-decoration: none; color: inherit;
   transition: all var(--t-fast);
   cursor: pointer; position: relative; text-align: left;
   font-family: var(--font-body); width: 100%;
 }
-.lp-app:hover { background: var(--surface-2); border-color: var(--border-light); transform: translateY(-1px); }
+.lp-app:hover { background: var(--m365-hover); border-color: var(--m365-border); }
 .lp-app-icon {
-  width: 38px; height: 38px; border-radius: 10px;
+  width: 38px; height: 38px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1rem; color: white; flex-shrink: 0;
   transition: transform var(--t-base);
@@ -1195,8 +1255,8 @@ body.mode-landing .ws-content {
 .lp-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; font-family: var(--font-heading); }
 .lp-empty i { display: block; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.6rem; }
 .lp-footer {
-  padding: 0.85rem 1.2rem; border-top: 1px solid var(--border-light);
-  background: var(--surface-2);
+  padding: 0.85rem 1.2rem; border-top: 1px solid var(--m365-border);
+  background: #faf9f8;
   display: flex; align-items: center; justify-content: space-between;
   font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-heading);
   flex-shrink: 0;
@@ -1207,17 +1267,17 @@ body.mode-landing .ws-content {
 .notif-item {
   display: flex; align-items: flex-start; gap: 0.75rem;
   padding: 0.8rem 0.85rem;
-  border-radius: var(--radius-md);
+  border-radius: 4px;
   transition: background var(--t-fast);
   cursor: pointer; text-decoration: none; color: inherit;
   width: 100%; border: none; background: none; text-align: left;
   font-family: var(--font-body);
 }
-.notif-item:hover { background: var(--surface-2); }
+.notif-item:hover { background: var(--m365-hover); }
 .notif-item.unread { background: rgba(202,138,4,0.06); }
 .notif-item.unread:hover { background: rgba(202,138,4,0.1); }
 .notif-icon {
-  width: 34px; height: 34px; border-radius: 10px;
+  width: 34px; height: 34px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.82rem; color: white; flex-shrink: 0;
 }
@@ -1258,24 +1318,25 @@ body.mode-landing .ws-content {
 .ws-modal {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  background: white; border-radius: var(--radius-xl);
+  background: white; border-radius: 8px;
   padding: 2rem 2rem 1.8rem;
   max-width: 480px; width: calc(100% - 2rem);
   z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
   display: none; max-height: 90vh; overflow-y: auto;
+  border: 1px solid var(--m365-border);
 }
-.ws-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ws-modal.active { display: block; animation: fadeUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .ws-modal-close {
   position: absolute; top: 1rem; right: 1.2rem;
   background: none; border: none; font-size: 1rem;
   cursor: pointer; color: var(--text-muted);
-  width: 32px; height: 32px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
   transition: all var(--t-fast);
 }
-.ws-modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
+.ws-modal-close:hover { color: var(--ink); background: var(--m365-hover); }
 .ws-modal-icon {
-  width: 60px; height: 60px; border-radius: 18px;
+  width: 60px; height: 60px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.5rem; color: white;
   margin: 0 auto 1.2rem;
@@ -1295,7 +1356,7 @@ body.mode-landing .ws-content {
 .ws-modal-header p { font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-heading); }
 .ws-modal-body {
   background: var(--surface-2);
-  border-radius: 14px;
+  border-radius: 6px;
   padding: 1.2rem 1.3rem;
   margin-bottom: 1.4rem;
   font-size: 0.86rem;
@@ -1308,12 +1369,12 @@ body.mode-landing .ws-content {
   font-family: var(--font-heading);
   margin-bottom: 1.4rem;
   padding-top: 1rem;
-  border-top: 1px dashed var(--border-light);
+  border-top: 1px solid var(--m365-border);
 }
 .ws-modal-actions { display: flex; gap: 0.6rem; }
 .ws-modal-btn {
   flex: 1; padding: 0.75rem 1.2rem;
-  border-radius: var(--radius-pill);
+  border-radius: 4px;
   border: none;
   font-family: var(--font-heading);
   font-weight: 600; font-size: 0.85rem;
@@ -1324,25 +1385,25 @@ body.mode-landing .ws-content {
 }
 .ws-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .ws-modal-btn.primary {
-  background: var(--gold-gradient); color: white;
-  box-shadow: 0 8px 20px rgba(202,138,4,0.28);
+  background: var(--ink); color: white;
+  box-shadow: 0 4px 12px rgba(15,15,30,0.15);
 }
-.ws-modal-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(202,138,4,0.38); }
+.ws-modal-btn.primary:hover:not(:disabled) { background: var(--gold-gradient); color: white; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(202,138,4,0.3); }
 .ws-modal-btn.secondary {
   background: transparent;
   color: var(--text-secondary);
-  border: 1.5px solid var(--border-light);
+  border: 1px solid var(--border-light);
 }
-.ws-modal-btn.secondary:hover:not(:disabled) { background: var(--surface-2); border-color: var(--border-medium); }
+.ws-modal-btn.secondary:hover:not(:disabled) { background: var(--m365-hover); border-color: var(--border-medium); }
 
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15,15,30,0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 2000; display: none;
 }
-.modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+.modal-overlay.active { display: block; animation: fadeUp 0.2s ease; }
 
 .auth-field { display: flex; flex-direction: column; gap: 0.4rem; }
 .auth-field label {
@@ -1351,8 +1412,8 @@ body.mode-landing .ws-content {
 }
 .auth-input {
   width: 100%; padding: 0.8rem 1.05rem;
-  border: 1.5px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
   font-size: 0.9rem; font-family: var(--font-body);
   background: var(--surface-2); color: var(--ink);
   transition: border-color var(--t-fast), background var(--t-fast);
@@ -1365,7 +1426,7 @@ body.mode-landing .ws-content {
 .auth-error {
   background: #fef2f2; border: 1px solid #fecaca;
   color: #991b1b; padding: 0.7rem 0.9rem;
-  border-radius: var(--radius-md); font-size: 0.78rem;
+  border-radius: 4px; font-size: 0.78rem;
   font-family: var(--font-heading); display: none;
   margin-bottom: 0.4rem;
 }
@@ -1378,22 +1439,24 @@ body.mode-landing .ws-content {
 .auth-note i { color: var(--gold); }
 
 /* ============================================================
-   USER DROPDOWN
+   USER DROPDOWN (M365 style)
    ============================================================ */
 .ws-account-wrap { position: relative; }
 .user-dropdown {
-  position: absolute; top: calc(100% + 8px); right: 0;
-  width: 320px; background: white; border-radius: var(--radius-md);
-  box-shadow: var(--shadow-pop);
-  border: 1px solid var(--border-light);
+  position: absolute; top: calc(100% + 6px); right: 0;
+  width: 340px; background: white; border-radius: 8px;
+  box-shadow: var(--m365-shadow);
+  border: 1px solid var(--m365-border);
   overflow: hidden; display: none; z-index: 1001;
-  animation: popIn 0.2s ease;
+  animation: popIn 0.15s ease;
+  font-family: 'Segoe UI', var(--font-body);
 }
 .user-dropdown.active { display: block; }
 .ud-header {
   padding: 1.1rem 1.2rem 1rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--m365-border);
   display: flex; align-items: center; gap: 0.85rem;
+  background: #faf9f8;
 }
 .ud-header .ws-avatar { width: 42px; height: 42px; font-size: 1rem; }
 .ud-header-info { min-width: 0; flex: 1; }
@@ -1406,23 +1469,23 @@ body.mode-landing .ws-content {
   font-size: 0.75rem; color: var(--text-muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.ud-body { padding: 0.5rem; }
+.ud-body { padding: 0.4rem; }
 .ud-item {
   display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem; border-radius: 4px;
   cursor: pointer; transition: background var(--t-fast);
   border: none; background: none; width: 100%;
   text-align: left; font-size: 0.85rem;
-  color: var(--text-secondary); text-decoration: none;
-  font-family: var(--font-body); font-weight: 500;
+  color: var(--m365-text); text-decoration: none;
+  font-family: 'Segoe UI', var(--font-body); font-weight: 400;
 }
-.ud-item i { width: 18px; font-size: 0.85rem; color: var(--text-muted); transition: color var(--t-fast); }
-.ud-item:hover { background: var(--surface-2); color: var(--ink); }
+.ud-item i { width: 18px; font-size: 0.85rem; color: var(--m365-text-muted); transition: color var(--t-fast); }
+.ud-item:hover { background: var(--m365-hover); color: var(--ink); }
 .ud-item:hover i { color: var(--gold); }
 .ud-item.danger { color: var(--danger); }
 .ud-item.danger i { color: var(--danger); }
 .ud-item.danger:hover { background: #fef2f2; }
-.ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+.ud-divider { border-top: 1px solid var(--m365-border); margin: 0.4rem 0.6rem; }
 .ud-section-label {
   font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.8px; color: var(--text-muted);
@@ -1440,8 +1503,8 @@ body.mode-landing .ws-content {
 }
 .toast {
   background: var(--ink); color: white;
-  border-radius: var(--radius-md); padding: 0.8rem 1.1rem;
-  box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+  border-radius: 6px; padding: 0.8rem 1.1rem;
+  box-shadow: var(--m365-shadow);
   display: flex; align-items: center; gap: 0.65rem;
   font-family: var(--font-heading); font-size: 0.85rem;
   animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1488,7 +1551,7 @@ body.mode-landing .ws-content {
     transform: translateX(-100%);
     transition: transform var(--t-base);
     z-index: 900;
-    box-shadow: 0 20px 60px rgba(15,15,30,0.18);
+    box-shadow: var(--m365-shadow);
   }
   body.mode-workspace.rail-open .ws-rail { transform: translateX(0); }
   body.mode-workspace.rail-collapsed .ws-rail { display: flex; }
@@ -1544,49 +1607,55 @@ body.rail-open .rail-backdrop { display: block; }
       <span class="ws-logo-text">Janta</span>
     </a>
 
-    <!-- NAV with dropdowns -->
     <nav class="ws-nav-links" id="wsNavLinks" aria-label="Primary navigation">
       <div class="ws-nav-item" data-nav="features" id="navFeatures">
         <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'features')" aria-haspopup="true" aria-expanded="false">
           Features <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
         </button>
         <div class="ws-nav-dropdown" id="ddFeatures">
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#4f46e5,#6366f1);">
-              <i class="fas fa-fingerprint" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Single Sign-On</div>
-              <div class="ws-nav-dd-desc">One Janta login unlocks every workspace — no separate passwords.</div>
-            </div>
-          </button>
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
-              <i class="fas fa-shield-halved" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Verified Accounts</div>
-              <div class="ws-nav-dd-desc">Admins approve every tasker before they can access apps or claim work.</div>
-            </div>
-          </button>
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('learning')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
-              <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Learning Built-In</div>
-              <div class="ws-nav-dd-desc">Upskill on client communication, M-Pesa security, portfolio craft and more.</div>
-            </div>
-          </button>
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#e11d48,#fb7185);">
-              <i class="fas fa-mobile-screen" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Instant M-Pesa Payouts</div>
-              <div class="ws-nav-dd-desc">Request payouts from your wallet and receive them straight to M-Pesa.</div>
-            </div>
-          </button>
+          <div class="ws-nav-dd-scroll">
+            <div class="ws-nav-dd-group">Platform</div>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+              <div class="ws-nav-dd-icon" style="background:#0078d4;">
+                <i class="fas fa-fingerprint" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Single Sign-On</div>
+                <div class="ws-nav-dd-desc">One Janta login unlocks every workspace — no separate passwords.</div>
+              </div>
+            </button>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+              <div class="ws-nav-dd-icon" style="background:#107c10;">
+                <i class="fas fa-shield-halved" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Verified Accounts</div>
+                <div class="ws-nav-dd-desc">Admins approve every tasker before they can access apps or claim work.</div>
+              </div>
+            </button>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('learning')">
+              <div class="ws-nav-dd-icon" style="background:#ca8a04;">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Learning Built-In</div>
+                <div class="ws-nav-dd-desc">Upskill on client communication, M-Pesa security, portfolio craft and more.</div>
+              </div>
+            </button>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+              <div class="ws-nav-dd-icon" style="background:#d13438;">
+                <i class="fas fa-mobile-screen" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Instant M-Pesa Payouts</div>
+                <div class="ws-nav-dd-desc">Request payouts from your wallet and receive them straight to M-Pesa.</div>
+              </div>
+            </button>
+          </div>
+          <div class="ws-nav-dd-footer">
+            <span>4 core capabilities</span>
+            <a role="button" tabindex="0" onclick="scrollToSection('features')">See all features →</a>
+          </div>
         </div>
       </div>
 
@@ -1594,18 +1663,14 @@ body.rail-open .rail-backdrop { display: block; }
         <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'apps')" aria-haspopup="true" aria-expanded="false">
           Apps <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
         </button>
-        <div class="ws-nav-dropdown" id="ddApps">
-          <!-- Populated dynamically by renderNavApps() -->
-        </div>
+        <div class="ws-nav-dropdown" id="ddApps"></div>
       </div>
 
       <div class="ws-nav-item" data-nav="learning" id="navLearning">
         <button type="button" class="ws-nav-link" onclick="toggleNav(event, 'learning')" aria-haspopup="true" aria-expanded="false">
           Learning <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
         </button>
-        <div class="ws-nav-dropdown" id="ddLearning">
-          <!-- Populated dynamically by renderNavLearning() -->
-        </div>
+        <div class="ws-nav-dropdown" id="ddLearning"></div>
       </div>
 
       <div class="ws-nav-item" data-nav="activity" id="navActivity">
@@ -1613,33 +1678,41 @@ body.rail-open .rail-backdrop { display: block; }
           Activity <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
         </button>
         <div class="ws-nav-dropdown" id="ddActivity">
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);">
-              <i class="fas fa-chart-line" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Platform Stats</div>
-              <div class="ws-nav-dd-desc">Live numbers — taskers, completed tasks, workspaces.</div>
-            </div>
-          </button>
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#ca8a04,#fbbf24);">
-              <i class="fas fa-wave-square" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Recent Activity</div>
-              <div class="ws-nav-dd-desc">A live ticker of what's happening across Janta.</div>
-            </div>
-          </button>
-          <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('apps')">
-            <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">
-              <i class="fas fa-layer-group" aria-hidden="true"></i>
-            </div>
-            <div class="ws-nav-dd-body">
-              <div class="ws-nav-dd-title">Task Boards</div>
-              <div class="ws-nav-dd-desc">Browse FlexiKazi, Kasikazi, CraftiKazi and Zindua Hub.</div>
-            </div>
-          </button>
+          <div class="ws-nav-dd-scroll">
+            <div class="ws-nav-dd-group">Live Data</div>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
+              <div class="ws-nav-dd-icon" style="background:#0078d4;">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Platform Stats</div>
+                <div class="ws-nav-dd-desc">Live numbers — taskers, completed tasks, workspaces.</div>
+              </div>
+            </button>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
+              <div class="ws-nav-dd-icon" style="background:#ca8a04;">
+                <i class="fas fa-wave-square" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Recent Activity</div>
+                <div class="ws-nav-dd-desc">A live ticker of what's happening across Janta.</div>
+              </div>
+            </button>
+            <div class="ws-nav-dd-group">Boards</div>
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('apps')">
+              <div class="ws-nav-dd-icon" style="background:#0891b2;">
+                <i class="fas fa-layer-group" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Task Boards</div>
+                <div class="ws-nav-dd-desc">Browse FlexiKazi, Kasikazi, CraftiKazi and Zindua Hub.</div>
+              </div>
+            </button>
+          </div>
+          <div class="ws-nav-dd-footer">
+            <span>Updated every minute</span>
+            <a role="button" tabindex="0" onclick="scrollToSection('activity')">View all →</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -1719,7 +1792,6 @@ body.rail-open .rail-backdrop { display: block; }
   </main>
 </div>
 
-<!-- LAUNCHER PANEL -->
 <div class="launcher-panel" id="launcherPanel" role="dialog" aria-modal="false" aria-label="Janta apps">
   <div class="lp-header">
     <div class="lp-title">Janta apps</div>
@@ -1737,7 +1809,6 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- NOTIFICATIONS PANEL -->
 <div class="notif-panel" id="notifPanel" role="dialog" aria-modal="false" aria-label="Notifications">
   <div class="notif-header">
     <div class="notif-title">Notifications</div>
@@ -1751,7 +1822,6 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- NOTIFICATION DETAIL MODAL -->
 <div class="modal-overlay" id="notifModalOverlay" onclick="closeNotifModal()"></div>
 <div class="ws-modal" id="notifModal" role="dialog" aria-modal="true" aria-labelledby="notifModalTitle" aria-hidden="true">
   <button type="button" class="ws-modal-close" onclick="closeNotifModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
@@ -1770,7 +1840,6 @@ body.rail-open .rail-backdrop { display: block; }
   </div>
 </div>
 
-<!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModalOverlay" onclick="closeAuthModal()"></div>
 <div class="ws-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="max-width: 420px;">
   <button type="button" class="ws-modal-close" onclick="closeAuthModal()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
@@ -1805,9 +1874,9 @@ body.rail-open .rail-backdrop { display: block; }
 <script>
 'use strict';
 
-// ============================================================
-// CONFIG
-// ============================================================
+/* ============================================================
+   CONFIG
+   ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
   authDomain: "mugera-e51cc.firebaseapp.com",
@@ -1854,15 +1923,34 @@ const APPS = {
     permission: 'zindua',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
+  },
+  'wallet': {
+    name: 'Wallet',
+    desc: 'Balances, payouts, and M-Pesa transaction history.',
+    icon: 'fa-wallet',
+    color: '#7c3aed',
+    link: 'wallet.html',
+    permission: null,
+    alwaysVisible: false,
+    signedInOnly: true
+  },
+  'learning': {
+    name: 'Learning',
+    desc: 'Practical courses, certificates and mentorship for the Kenyan gig economy.',
+    icon: 'fa-graduation-cap',
+    color: '#f59e0b',
+    link: 'learning/index.html',
+    permission: 'learning',
+    alwaysVisible: false,
+    signedInOnly: true
   }
 };
 
-/* Fallback course list shown before Firebase loads, or if no courses exist yet */
 const FALLBACK_COURSES = [
-  { id: 'client-communication-101', title: 'Client Communication 101', category: 'communication', duration: 45, level: 'Beginner', icon: 'fa-comments', color: '#f59e0b' },
+  { id: 'client-communication-101', title: 'Client Communication 101', category: 'communication', duration: 45, level: 'Beginner', icon: 'fa-comments', color: '#ca8a04' },
   { id: 'mpesa-safety',             title: 'M-Pesa Safety for Taskers', category: 'finance',       duration: 45, level: 'Beginner', icon: 'fa-shield-halved', color: '#0891b2' },
-  { id: 'google-sheets-basics',     title: 'Google Sheets: Zero to Hero', category: 'productivity', duration: 55, level: 'Beginner', icon: 'fa-table-cells', color: '#0f9d58' },
-  { id: 'google-docs-formatting',   title: 'Google Docs: Format Like a Pro', category: 'productivity', duration: 50, level: 'Beginner', icon: 'fa-file-word', color: '#4285f4' },
+  { id: 'google-sheets-basics',     title: 'Google Sheets: Zero to Hero', category: 'productivity', duration: 55, level: 'Beginner', icon: 'fa-table-cells', color: '#107c10' },
+  { id: 'google-docs-formatting',   title: 'Google Docs: Format Like a Pro', category: 'productivity', duration: 50, level: 'Beginner', icon: 'fa-file-word', color: '#0078d4' },
   { id: 'data-entry-professional',  title: 'Data Entry: Beginner to Paid Pro', category: 'career', duration: 90, level: 'Beginner', icon: 'fa-keyboard', color: '#7c3aed' },
   { id: 'ecitizen-platform-guide',  title: 'eCitizen: Government Services', category: 'civic', duration: 75, level: 'Beginner', icon: 'fa-landmark', color: '#1e40af' }
 ];
@@ -1894,9 +1982,9 @@ const CONFIG = {
   maxCoursesInDropdown: 8
 };
 
-// ============================================================
-// STATE
-// ============================================================
+/* ============================================================
+   STATE
+   ============================================================ */
 let currentUser = null;
 let currentTasker = null;
 let currentPerms = {};
@@ -1910,9 +1998,9 @@ let navCourses = [];
 let appInitialized = false;
 let lastFocusedBeforeModal = null;
 
-// ============================================================
-// UTILS
-// ============================================================
+/* ============================================================
+   UTILS
+   ============================================================ */
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
   if (!container) return;
@@ -1994,9 +2082,9 @@ function hasLearningAccess() {
   return currentPerms && currentPerms.learning === true;
 }
 
-// ============================================================
-// BOOT
-// ============================================================
+/* ============================================================
+   BOOT
+   ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
   setupGlobalHandlers();
   setupKeyboardHandlers();
@@ -2017,7 +2105,6 @@ function setupGlobalHandlers() {
     if (launcher && waffle && !launcher.contains(e.target) && !waffle.contains(e.target)) closeLauncher();
     if (notif && notifBtn && !notif.contains(e.target) && !notifBtn.contains(e.target)) closeNotifications();
 
-    // Close nav dropdowns when clicking outside
     if (navLinks && !navLinks.contains(e.target)) closeAllNavDropdowns();
   });
 }
@@ -2030,12 +2117,6 @@ function setupKeyboardHandlers() {
       closeNotifModal(); closeAuthModal(); closeRail();
     }
     if (e.key === 'Tab') trapFocusInModals(e);
-  });
-  document.addEventListener('keydown', (e) => {
-    const link = document.getElementById('launcherFooterLink');
-    if (link && document.activeElement === link && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault(); link.click();
-    }
   });
 }
 
@@ -2063,9 +2144,9 @@ function setupSearch() {
   }
 }
 
-// ============================================================
-// NAV DROPDOWNS
-// ============================================================
+/* ============================================================
+   NAV DROPDOWNS
+   ============================================================ */
 function toggleNav(e, key) {
   if (e) e.stopPropagation();
   const item = document.getElementById('nav' + capitalize(key));
@@ -2095,7 +2176,7 @@ function scrollToSection(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ---------- Render Apps dropdown ---------- */
+/* ---------- Render Apps dropdown (M365 style) ---------- */
 function renderNavApps() {
   const container = document.getElementById('ddApps');
   if (!container) return;
@@ -2103,25 +2184,22 @@ function renderNavApps() {
   const signedIn = !!currentUser;
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
-  // For signed-out users, show all apps (with "Sign in" hint).
-  // For signed-in users, filter by permissions.
   const visible = apps.filter(app => {
     if (!signedIn) return true;
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
-    // Wallet and Learning are signed-in-only but visible regardless of permission
     if (app.signedInOnly) return true;
     return false;
   });
 
-  container.innerHTML = visible.map(app => {
+  const items = visible.map(app => {
     const target = signedIn
       ? `location.href='${escapeHtml(app.link)}'`
       : `openAuthModal()`;
     return `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
-        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+        <div class="ws-nav-dd-icon" style="background:${escapeHtml(app.color)};">
           <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
         <div class="ws-nav-dd-body">
@@ -2135,20 +2213,23 @@ function renderNavApps() {
     `;
   }).join('');
 
-  const footerCount = signedIn
+  const footerLabel = signedIn
     ? pluralize(visible.length, 'app')
     : `${visible.length} apps — sign in to open`;
 
-  const footer = document.createElement('div');
-  footer.className = 'ws-nav-dd-footer';
-  footer.innerHTML = `
-    <span>${escapeHtml(footerCount)}</span>
-    <a role="button" tabindex="0" onclick="openLauncher(event)">Open launcher →</a>
+  container.innerHTML = `
+    <div class="ws-nav-dd-scroll">
+      <div class="ws-nav-dd-group">Task Boards</div>
+      ${items}
+    </div>
+    <div class="ws-nav-dd-footer">
+      <span>${escapeHtml(footerLabel)}</span>
+      <a role="button" tabindex="0" onclick="openLauncher(event)">Open launcher →</a>
+    </div>
   `;
-  container.appendChild(footer);
 }
 
-/* ---------- Render Learning dropdown with live courses ---------- */
+/* ---------- Render Learning dropdown with live courses (M365 style) ---------- */
 function renderNavLearning() {
   const container = document.getElementById('ddLearning');
   if (!container) return;
@@ -2156,7 +2237,6 @@ function renderNavLearning() {
   const signedIn = !!currentUser;
   const courses = navCourses.length ? navCourses : FALLBACK_COURSES;
 
-  // Group by category
   const byCategory = {};
   courses.forEach(c => {
     const cat = c.category || 'other';
@@ -2164,14 +2244,12 @@ function renderNavLearning() {
     byCategory[cat].push(c);
   });
 
-  // Sort categories by our defined order
   const sortedCats = Object.keys(byCategory).sort((a, b) => {
     const ai = COURSE_CATEGORY_ORDER.indexOf(a);
     const bi = COURSE_CATEGORY_ORDER.indexOf(b);
     return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
   });
 
-  // Flatten in category order, take first N
   const ordered = [];
   sortedCats.forEach(cat => {
     byCategory[cat].forEach(c => ordered.push(c));
@@ -2180,24 +2258,24 @@ function renderNavLearning() {
   const totalCourses = courses.length;
   const hasMore = totalCourses > shown.length;
 
-  // If there are no courses at all, show empty state
   if (shown.length === 0) {
     container.innerHTML = `
-      <div class="ws-nav-dd-item" style="cursor:default;">
-        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
-          <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-        </div>
-        <div class="ws-nav-dd-body">
-          <div class="ws-nav-dd-title">Courses coming soon</div>
-          <div class="ws-nav-dd-desc">New learning modules are being prepared.</div>
+      <div class="ws-nav-dd-scroll">
+        <div class="ws-nav-dd-item" style="cursor:default;">
+          <div class="ws-nav-dd-icon" style="background:#ca8a04;">
+            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+          </div>
+          <div class="ws-nav-dd-body">
+            <div class="ws-nav-dd-title">Courses coming soon</div>
+            <div class="ws-nav-dd-desc">New learning modules are being prepared.</div>
+          </div>
         </div>
       </div>
     `;
     return;
   }
 
-  // Render with category headers
-  let html = '';
+  let html = '<div class="ws-nav-dd-scroll">';
   let currentCat = null;
   let rendered = 0;
 
@@ -2213,14 +2291,14 @@ function renderNavLearning() {
       ? `location.href='learning/course.html?id=${encodeURIComponent(course.id)}'`
       : `openAuthModal()`;
     const icon = course.icon || 'fa-graduation-cap';
-    const color = course.color || '#f59e0b';
+    const color = course.color || '#ca8a04';
     const meta = [
       course.level || 'Beginner',
       course.duration ? `${course.duration} min` : null
     ].filter(Boolean).join(' · ');
     html += `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
-        <div class="ws-nav-dd-icon" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+        <div class="ws-nav-dd-icon" style="background:${escapeHtml(color)};">
           <i class="fas ${escapeHtml(icon)}" aria-hidden="true"></i>
         </div>
         <div class="ws-nav-dd-body">
@@ -2234,22 +2312,21 @@ function renderNavLearning() {
     `;
     rendered++;
   });
+  html += '</div>';
 
-  container.innerHTML = html;
-
-  // Footer
   const footerLabel = hasMore
     ? `${totalCourses} courses available`
     : pluralize(totalCourses, 'course');
-  const footer = document.createElement('div');
-  footer.className = 'ws-nav-dd-footer';
-  footer.innerHTML = `
-    <span>${escapeHtml(footerLabel)}</span>
-    <a role="button" tabindex="0" onclick="${signedIn ? "location.href='learning/index.html'" : 'openAuthModal()'}">
-      ${signedIn ? 'Browse library →' : 'Sign in to browse →'}
-    </a>
+  const footerTarget = signedIn ? "location.href='learning/index.html'" : 'openAuthModal()';
+  const footerText = signedIn ? 'Browse library →' : 'Sign in to browse →';
+  html += `
+    <div class="ws-nav-dd-footer">
+      <span>${escapeHtml(footerLabel)}</span>
+      <a role="button" tabindex="0" onclick="${footerTarget}">${footerText}</a>
+    </div>
   `;
-  container.appendChild(footer);
+
+  container.innerHTML = html;
 }
 
 /* ---------- Load courses from Firebase ---------- */
@@ -2261,7 +2338,6 @@ function loadNavCourses() {
     return;
   }
 
-  // Detach any prior listener
   courseListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
   courseListeners = [];
 
@@ -2294,9 +2370,9 @@ function loadNavCourses() {
   }
 }
 
-// ============================================================
-// FIREBASE BOOT
-// ============================================================
+/* ============================================================
+   FIREBASE BOOT
+   ============================================================ */
 function bootFirebase() {
   if (typeof firebase === 'undefined') {
     console.warn('Firebase SDK failed to load');
@@ -2330,11 +2406,10 @@ function bootFirebase() {
   appInitialized = true;
 }
 
-// ============================================================
-// AUTH
-// ============================================================
+/* ============================================================
+   AUTH
+   ============================================================ */
 async function handleAuthStateChanged(user) {
-  const auth = window._auth;
   const db = window._db;
 
   if (!user) {
@@ -2352,9 +2427,7 @@ async function handleAuthStateChanged(user) {
     return;
   }
 
-  try {
-    await db.ref(`users/${user.uid}`).once('value');
-  } catch (e) { console.warn('users read failed:', e); }
+  try { await db.ref(`users/${user.uid}`).once('value'); } catch (e) {}
 
   try {
     const permSnap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
@@ -2385,9 +2458,6 @@ async function handleAuthStateChanged(user) {
   loadWorkspaceData();
 }
 
-// ============================================================
-// MODE SWITCH
-// ============================================================
 function switchMode(mode) {
   document.body.classList.remove('mode-landing', 'mode-workspace');
   document.body.classList.add(mode === 'workspace' ? 'mode-workspace' : 'mode-landing');
@@ -2396,11 +2466,8 @@ function switchMode(mode) {
 }
 
 function toggleRail() {
-  if (window.innerWidth <= 900) {
-    document.body.classList.toggle('rail-open');
-  } else {
-    document.body.classList.toggle('rail-collapsed');
-  }
+  if (window.innerWidth <= 900) document.body.classList.toggle('rail-open');
+  else document.body.classList.toggle('rail-collapsed');
   const expanded = document.body.classList.contains('rail-open') || !document.body.classList.contains('rail-collapsed');
   const btn = document.getElementById('railToggle');
   if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
@@ -2408,9 +2475,9 @@ function toggleRail() {
 
 function closeRail() { document.body.classList.remove('rail-open'); }
 
-// ============================================================
-// ACCOUNT BUTTON
-// ============================================================
+/* ============================================================
+   ACCOUNT BUTTON
+   ============================================================ */
 function renderAccountButton() {
   const container = document.getElementById('headerAccount');
   if (!container) return;
@@ -2510,9 +2577,9 @@ async function handleSignOut() {
   } catch (err) { showToast('Error signing out', 'error'); }
 }
 
-// ============================================================
-// LANDING RENDER
-// ============================================================
+/* ============================================================
+   LANDING
+   ============================================================ */
 function renderLanding() {
   const content = document.getElementById('wsContent');
   if (!content) return;
@@ -2744,9 +2811,9 @@ function renderPreviewGrid() {
   }).join('');
 }
 
-// ============================================================
-// WORKSPACE RENDER
-// ============================================================
+/* ============================================================
+   WORKSPACE
+   ============================================================ */
 function renderWorkspace() {
   const content = document.getElementById('wsContent');
   if (!content || !currentUser) return;
@@ -2894,9 +2961,9 @@ function renderLearningDash() {
   `;
 }
 
-// ============================================================
-// WORKSPACE DATA
-// ============================================================
+/* ============================================================
+   WORKSPACE DATA
+   ============================================================ */
 async function loadWorkspaceData() {
   if (!currentUser) return;
   const db = window._db;
@@ -3052,7 +3119,6 @@ async function loadWorkspaceData() {
     } catch (e) { console.warn('CraftiKazi data:', e); }
   }
 
-  // ZINDUA Hub
   if (currentPerms.zindua === true || currentPerms.ekazi === true) {
     try {
       const snap = await db.ref('zindua_tasks').once('value');
@@ -3153,11 +3219,11 @@ function renderCompletedTiles(tiles) {
   container.innerHTML = tiles.map(t => {
     const statusClass = t.status === 'revision' ? 'revision' : (t.status === 'completed' ? '' : 'review');
     const icon = t.status === 'completed' ? 'fa-circle-check' : (t.status === 'revision' ? 'fa-redo' : 'fa-clock');
-    const iconColor = t.status === 'completed' ? '#10b981' : (t.status === 'revision' ? '#f59e0b' : '#3b82f6');
+    const iconColor = t.status === 'completed' ? '#107c10' : (t.status === 'revision' ? '#f59e0b' : '#0078d4');
     return `
       <a href="${escapeHtml(t.link)}" class="completed-tile">
         <div class="completed-tile-top">
-          <div class="completed-tile-icon" style="background:linear-gradient(135deg, ${iconColor}, ${lighten(iconColor, 15)});">
+          <div class="completed-tile-icon" style="background:${iconColor};">
             <i class="fas ${icon}" aria-hidden="true"></i>
           </div>
           <span class="completed-tile-status ${statusClass}">${escapeHtml(t.statusLabel)}</span>
@@ -3213,32 +3279,28 @@ function renderFeed(items) {
   `).join('');
 }
 
-// ============================================================
-// NAVIGATION
-// ============================================================
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 function navigateTo(section) {
   closeRail();
   document.querySelectorAll('.rail-item').forEach(el => el.classList.remove('active'));
   const target = document.querySelector(`.rail-item[data-nav="${section}"]`);
   if (target) target.classList.add('active');
 
-  if (section === 'home') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else if (section === 'recent' || section === 'activity') {
+  if (section === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+  else if (section === 'recent' || section === 'activity') {
     const el = document.getElementById('recentTitle');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else if (section === 'learning') {
-    window.location.href = 'learning/index.html';
-  } else if (section === 'wallet') {
-    window.location.href = 'wallet.html';
-  } else if (section === 'account') {
-    window.location.href = 'account.html';
   }
+  else if (section === 'learning') window.location.href = 'learning/index.html';
+  else if (section === 'wallet') window.location.href = 'wallet.html';
+  else if (section === 'account') window.location.href = 'account.html';
 }
 
-// ============================================================
-// LAUNCHER
-// ============================================================
+/* ============================================================
+   LAUNCHER
+   ============================================================ */
 function openLauncher(e) {
   if (e) e.stopPropagation();
   closeAllNavDropdowns();
@@ -3246,9 +3308,7 @@ function openLauncher(e) {
   const btn = document.getElementById('waffleBtn');
   if (!panel) return;
   const isOpen = panel.classList.contains('active');
-
   closeUserDropdown(); closeNotifications();
-
   if (isOpen) closeLauncher();
   else {
     renderLauncher();
@@ -3288,7 +3348,7 @@ function renderLauncher() {
   } else {
     grid.innerHTML = visible.map(app => `
       <a href="${escapeHtml(app.link)}" class="lp-app">
-        <div class="lp-app-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+        <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
           <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
         <div>
@@ -3314,9 +3374,9 @@ function renderLauncher() {
   }
 }
 
-// ============================================================
-// NOTIFICATIONS
-// ============================================================
+/* ============================================================
+   NOTIFICATIONS
+   ============================================================ */
 function toggleNotifications(e) {
   if (e) e.stopPropagation();
   closeAllNavDropdowns();
@@ -3346,7 +3406,6 @@ function attachNotifListeners() {
   if (!db) return;
 
   const uid = currentUser.uid;
-
   try {
     const ref = db.ref(`kazinni_notifications/${uid}`).orderByChild('timestamp').limitToLast(CONFIG.notifLimit);
     const cb = (snap) => {
@@ -3492,9 +3551,9 @@ function closeNotifModal() {
   lastFocusedBeforeModal = null;
 }
 
-// ============================================================
-// AUTH MODAL
-// ============================================================
+/* ============================================================
+   AUTH MODAL
+   ============================================================ */
 function openAuthModal() {
   closeAllNavDropdowns();
   closeLauncher(); closeUserDropdown(); closeNotifications();
@@ -3565,9 +3624,9 @@ async function handleLogin(e) {
   }
 }
 
-// ============================================================
-// PUBLIC STATS
-// ============================================================
+/* ============================================================
+   PUBLIC STATS
+   ============================================================ */
 async function loadPublicStats() {
   const db = window._db;
   if (!db || document.body.classList.contains('mode-workspace')) return;
@@ -3648,9 +3707,9 @@ function animateCount(el, target) {
   requestAnimationFrame(step);
 }
 
-// ============================================================
-// TICKER
-// ============================================================
+/* ============================================================
+   TICKER
+   ============================================================ */
 function buildPublicTicker() {
   const track = document.getElementById('psTicker');
   if (!track) return;
@@ -3719,9 +3778,9 @@ async function buildTicker() {
   track.innerHTML = html + html;
 }
 
-// ============================================================
-// LIVE CLOCK
-// ============================================================
+/* ============================================================
+   LIVE CLOCK
+   ============================================================ */
 function updatePublicClock() {
   const now = new Date();
   let h = now.getHours();
@@ -3742,9 +3801,9 @@ function updatePublicClock() {
   }
 }
 
-// ============================================================
-// CLEANUP
-// ============================================================
+/* ============================================================
+   CLEANUP
+   ============================================================ */
 window.addEventListener('beforeunload', () => {
   detachNotifListeners();
   courseListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
