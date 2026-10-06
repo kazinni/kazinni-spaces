@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b45309">
+<meta name="color-scheme" content="light">
+<meta name="description" content="CraftiKazi — my craft tasks. Manage assignments, submit work, track earnings.">
+<title>My Tasks · CraftiKazi</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS  — CraftiKazi amber
+   ============================================================ */
+:root {
+  --craft: #b45309;
+  --craft-dark: #92400e;
+  --craft-light: #f59e0b;
+  --craft-soft: #fef3c7;
+  --craft-glow: rgba(180, 83, 9, 0.14);
+  --craft-gradient: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+
+  --gold: #ca8a04;
+  --gold-dark: #a16207;
+  --gold-light: #fbbf24;
+  --gold-soft: #fef3c7;
+  --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+
+  --ink: #0f0f1e;
+  --ink-2: #1a1a2e;
+  --ink-3: #2d2d4a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --purple: #8b5cf6;
+
+  --text-primary: #0f0f1e;
+  --text-secondary: #4a4a5e;
+  --text-muted: #6b7280;
+  --border-light: #e9ecef;
+  --border-medium: #d1d5db;
+  --surface: #ffffff;
+  --surface-2: #faf9f7;
+  --surface-3: #f4f3f1;
+
+  --header-h: 64px;
+
+  --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 100px;
+
+  --t-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-pop: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-body);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--craft); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+}
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes floatHammer {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.ck-header {
+  position: sticky; top: 0; z-index: 1000;
+  height: var(--header-h);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(15,15,30,0.06);
+  padding: 0 1.5rem;
+}
+.ck-header-inner {
+  max-width: 1400px; height: 100%; margin: 0 auto;
+  display: flex; align-items: center; gap: 1rem;
+}
+.ck-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; flex-shrink: 0; }
+.ck-logo img { height: 30px; }
+.ck-logo-text {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.05rem; color: var(--ink); letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+.ck-logo-text .accent {
+  background: var(--craft-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ck-crumb {
+  display: none; align-items: center; gap: 0.4rem;
+  font-family: var(--font-heading); font-size: 0.78rem;
+  color: var(--text-muted); font-weight: 500;
+  padding-left: 0.5rem; border-left: 1px solid var(--border-light);
+  margin-left: 0.3rem;
+}
+.ck-crumb a { color: var(--text-muted); text-decoration: none; }
+.ck-crumb a:hover { color: var(--craft); }
+.ck-crumb i { font-size: 0.6rem; opacity: 0.6; }
+@media (min-width: 700px) { .ck-crumb { display: flex; } }
+
+.ck-nav { display: none; align-items: center; gap: 0.3rem; margin-left: auto; }
+@media (min-width: 900px) { .ck-nav { display: flex; } }
+.ck-nav-link {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.83rem; font-weight: 600;
+  font-family: var(--font-heading);
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  transition: all var(--t-fast); white-space: nowrap;
+  background: none; border: none; cursor: pointer;
+}
+.ck-nav-link i { font-size: 0.75rem; color: var(--text-muted); transition: color var(--t-fast); }
+.ck-nav-link:hover { color: var(--ink); background: rgba(15,15,30,0.04); }
+.ck-nav-link:hover i { color: var(--craft); }
+.ck-nav-link.active {
+  background: white; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(15,15,30,0.06);
+}
+.ck-nav-link.active i { color: var(--craft); }
+
+.ck-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+@media (min-width: 900px) { .ck-header-right { margin-left: 0; } }
+
+.ck-icon-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 0.95rem;
+  transition: background var(--t-fast);
+  position: relative;
+}
+.ck-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+.ck-icon-btn .dot-badge {
+  position: absolute; top: 5px; right: 5px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: var(--danger); color: white;
+  border-radius: var(--radius-pill); border: 2px solid white;
+  font-size: 0.55rem; font-weight: 800;
+  display: none; align-items: center; justify-content: center;
+  font-family: var(--font-heading);
+}
+.ck-icon-btn .dot-badge.visible { display: flex; }
+
+.ck-account-wrap { position: relative; }
+.ck-account-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+  border-radius: var(--radius-pill); background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  font-family: var(--font-body);
+}
+.ck-account-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.ck-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--craft-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
+}
+.ck-account-name {
+  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-heading);
+}
+@media (max-width: 640px) { .ck-account-name { display: none; } }
+.ck-account-btn .fa-chevron-down { font-size: 0.55rem; color: var(--text-muted); transition: transform var(--t-base); }
+.ck-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+.ck-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 300px; background: white; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+}
+.ck-dropdown.active { display: block; animation: popIn 0.2s ease; }
+.ck-dd-header {
+  padding: 1rem 1.1rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.ck-dd-header .ck-avatar { width: 42px; height: 42px; font-size: 1rem; }
+.ck-dd-info { min-width: 0; flex: 1; }
+.ck-dd-name {
+  font-weight: 700; font-size: 0.9rem; color: var(--ink);
+  font-family: var(--font-heading);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ck-dd-email {
+  font-size: 0.74rem; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ck-dd-body { padding: 0.5rem; }
+.ck-dd-label {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+}
+.ck-dd-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--t-fast);
+  border: none; background: none; width: 100%;
+  text-align: left; font-size: 0.84rem;
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-body); font-weight: 500;
+}
+.ck-dd-item i { width: 18px; font-size: 0.82rem; color: var(--text-muted); transition: color var(--t-fast); }
+.ck-dd-item:hover { background: var(--surface-2); color: var(--ink); }
+.ck-dd-item:hover i { color: var(--craft); }
+.ck-dd-item.danger { color: var(--danger); }
+.ck-dd-item.danger i { color: var(--danger); }
+.ck-dd-item.danger:hover { background: #fef2f2; }
+.ck-dd-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+.ck-main {
+  max-width: 1400px; margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+@media (max-width: 640px) { .ck-main { padding: 1.25rem 1rem 3rem; } }
+
+/* HERO */
+.ck-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-xl);
+  padding: 2.2rem 2.4rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(15,15,30,0.15);
+}
+.ck-hero::before {
+  content: ''; position: absolute;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, var(--craft) 0%, transparent 65%);
+  opacity: 0.28;
+  top: -200px; right: -160px; pointer-events: none;
+}
+.ck-hero::after {
+  content: ''; position: absolute;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(251,191,36,0.22) 0%, transparent 65%);
+  bottom: -180px; left: -100px; pointer-events: none;
+}
+.ck-hero-inner {
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 2rem; flex-wrap: wrap;
+}
+.ck-hero-left { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+.ck-hero-icon {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: var(--craft-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+  box-shadow: 0 12px 32px rgba(180,83,9,0.4);
+}
+.ck-hero-icon i { animation: floatHammer 6s ease-in-out infinite; }
+.ck-hero-text h1 {
+  color: white; font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800; font-family: var(--font-display);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.ck-hero-text p {
+  color: rgba(255,255,255,0.68); font-size: 0.88rem;
+  font-family: var(--font-heading); max-width: 520px;
+}
+.ck-hero-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.ck-hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80; animation: pulseDot 2s infinite;
+}
+.ck-hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+.ck-btn {
+  padding: 0.7rem 1.4rem; border: none; border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 0.84rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: all var(--t-base); font-family: var(--font-heading);
+  text-decoration: none; white-space: nowrap;
+}
+.ck-btn-craft {
+  background: var(--craft-gradient); color: white;
+  box-shadow: 0 8px 22px rgba(180,83,9,0.4);
+}
+.ck-btn-craft:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(180,83,9,0.5); }
+.ck-btn-ghost {
+  background: rgba(255,255,255,0.1); color: white;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.ck-btn-ghost:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
+.ck-btn-dark { background: var(--ink); color: white; }
+.ck-btn-dark:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(15,15,30,0.25); }
+.ck-btn-outline {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.ck-btn-outline:hover { border-color: var(--craft); color: var(--craft); }
+.ck-btn-sm { padding: 0.42rem 1rem; font-size: 0.75rem; }
+.ck-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* STATS */
+.ck-stats {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 1100px) { .ck-stats { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .ck-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px)  { .ck-stats { grid-template-columns: 1fr; } }
+.ck-stat {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); padding: 1.1rem 1.2rem;
+  display: flex; align-items: center; gap: 0.85rem;
+  transition: all var(--t-fast);
+  position: relative; overflow: hidden;
+}
+.ck-stat::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--craft-gradient);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform var(--t-slow);
+  border-radius: 0 4px 4px 0;
+}
+.ck-stat:hover::before { transform: scaleY(1); }
+.ck-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: rgba(180,83,9,0.25); }
+.ck-stat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.ck-stat-icon.craft { background: var(--craft-soft); color: var(--craft-dark); }
+.ck-stat-icon.blue  { background: #eff6ff; color: #2563eb; }
+.ck-stat-icon.amber { background: #fef3c7; color: #92400e; }
+.ck-stat-icon.purple { background: #f5f3ff; color: #7c3aed; }
+.ck-stat-icon.green { background: #ecfdf5; color: #059669; }
+.ck-stat-value {
+  font-family: var(--font-display); font-size: 1.55rem;
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.ck-stat-label {
+  font-size: 0.7rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* FILTERS */
+.ck-filters {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.ck-filter-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.ck-filter-row + .ck-filter-row {
+  margin-top: 0.7rem; padding-top: 0.7rem;
+  border-top: 1px dashed var(--border-light);
+}
+.ck-filter-row-label {
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--text-muted); font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.7px;
+  margin-right: 0.3rem; white-space: nowrap;
+}
+.ck-chip {
+  padding: 0.42rem 0.9rem; border-radius: var(--radius-pill);
+  background: var(--surface-2); border: 1.5px solid transparent;
+  font-size: 0.74rem; font-weight: 600; font-family: var(--font-heading);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  white-space: nowrap;
+}
+.ck-chip:hover { background: var(--craft-soft); color: var(--craft-dark); }
+.ck-chip.active {
+  background: var(--craft-gradient); color: white;
+  box-shadow: 0 4px 12px rgba(180,83,9,0.28);
+}
+.ck-chip .count {
+  font-size: 0.62rem; padding: 1px 6px; border-radius: 10px;
+  background: rgba(0,0,0,0.06); font-weight: 700;
+}
+.ck-chip.active .count { background: rgba(255,255,255,0.25); }
+.ck-chip i { font-size: 0.7rem; }
+
+.ck-search-wrap {
+  position: relative; flex: 1;
+  min-width: 220px; margin-left: auto;
+}
+.ck-search-wrap i {
+  position: absolute; left: 0.85rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted); font-size: 0.8rem;
+  pointer-events: none;
+}
+.ck-search {
+  width: 100%; padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-light);
+  background: var(--surface-2);
+  font-family: var(--font-body); font-size: 0.84rem;
+  color: var(--ink); transition: all var(--t-fast);
+}
+.ck-search:focus {
+  outline: none; background: white;
+  border-color: var(--craft);
+  box-shadow: 0 0 0 3px var(--craft-glow);
+}
+
+/* TASK GRID */
+.ck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 480px) { .ck-grid { grid-template-columns: 1fr; } }
+
+.ck-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all var(--t-base);
+  position: relative;
+  cursor: pointer;
+}
+.ck-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(15,15,30,0.1);
+  border-color: rgba(180,83,9,0.3);
+}
+.ck-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--craft-soft), #fde68a);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.ck-card-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--t-slow);
+}
+.ck-card:hover .ck-card-media img { transform: scale(1.05); }
+.ck-card-media .placeholder-icon {
+  font-size: 2.4rem; color: var(--craft);
+  opacity: 0.4;
+  animation: floatHammer 5s ease-in-out infinite;
+}
+.ck-card-craft-badge {
+  position: absolute; top: 0.7rem; left: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(15,15,30,0.85);
+  backdrop-filter: blur(8px);
+  color: white; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.ck-card-craft-badge i { font-size: 0.65rem; color: var(--gold-light); }
+.ck-card-slot-badge {
+  position: absolute; top: 0.7rem; right: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--warning); color: white;
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+
+.ck-card-body {
+  padding: 1.1rem 1.15rem 1rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  flex: 1;
+}
+.ck-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.02rem; font-weight: 700;
+  color: var(--ink); line-height: 1.3;
+  letter-spacing: -0.015em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ck-card-desc {
+  font-size: 0.82rem; color: var(--text-secondary);
+  line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ck-card-meta {
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.ck-card-meta span {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.ck-card-meta i { color: var(--craft); font-size: 0.7rem; }
+.ck-card-foot {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.6rem;
+}
+.ck-card-pay {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--craft-dark);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.ck-card-pay .unit {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-left: 3px;
+}
+
+/* STATUS PILLS */
+.ck-pill {
+  padding: 0.3rem 0.7rem; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  white-space: nowrap;
+}
+.ck-pill.assigned { background: var(--craft-soft); color: var(--craft-dark); }
+.ck-pill.started  { background: #fef3c7; color: #92400e; }
+.ck-pill.review   { background: #e0e7ff; color: #4338ca; }
+.ck-pill.revision { background: #fee2e2; color: #991b1b; }
+.ck-pill.approved { background: #d1fae5; color: #065f46; }
+.ck-pill.ready    { background: #fef3c7; color: #92400e; }
+
+/* EMPTY */
+.ck-empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: white;
+  border: 1.5px dashed var(--border-medium);
+  border-radius: var(--radius-lg);
+}
+.ck-empty i {
+  font-size: 2.4rem; color: var(--craft);
+  opacity: 0.35; margin-bottom: 0.6rem; display: block;
+}
+.ck-empty h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.35rem;
+}
+.ck-empty p {
+  font-size: 0.85rem; color: var(--text-muted);
+  max-width: 440px; margin: 0 auto;
+}
+
+.ck-loading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+.ck-loading-card {
+  height: 340px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,15,30,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000; display: none;
+}
+.modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+
+.ck-modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white; border-radius: var(--radius-xl);
+  padding: 1.8rem 1.8rem 1.6rem;
+  max-width: 560px; width: calc(100% - 2rem);
+  z-index: 2001;
+  box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+  display: none; max-height: 92vh; overflow-y: auto;
+}
+.ck-modal.wide { max-width: 660px; }
+.ck-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ck-modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: none; border: none; font-size: 1rem;
+  cursor: pointer; color: var(--text-muted);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+  z-index: 5;
+}
+.ck-modal-close:hover { color: var(--danger); background: #fef2f2; }
+
+.ck-modal-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
+  margin: -0.6rem -0.6rem 1.2rem;
+  position: relative; overflow: hidden;
+}
+.ck-modal-hero::before {
+  content: ''; position: absolute;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, var(--craft) 0%, transparent 65%);
+  opacity: 0.3;
+  top: -140px; right: -110px; pointer-events: none;
+}
+.ck-modal-hero-inner { position: relative; z-index: 2; }
+.ck-modal-hero-title {
+  color: white; font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.25;
+  margin-bottom: 0.5rem;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+}
+.ck-modal-hero-title i {
+  color: var(--gold-light); margin-top: 5px; flex-shrink: 0;
+  font-size: 0.95rem;
+}
+.ck-modal-hero-meta {
+  display: flex; align-items: center; gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.ck-modal-hero-meta span {
+  color: rgba(255,255,255,0.72); font-size: 0.76rem;
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.ck-modal-hero-meta span i { color: var(--gold-light); font-size: 0.7rem; }
+
+.ck-detail-list {
+  display: flex; flex-direction: column; gap: 0;
+  margin-bottom: 1rem;
+}
+.ck-detail-item {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.85rem; gap: 1rem;
+}
+.ck-detail-item:last-child { border-bottom: none; }
+.ck-detail-label {
+  color: var(--text-muted); font-weight: 600;
+  font-family: var(--font-heading); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+.ck-detail-value {
+  color: var(--text-primary); font-weight: 500;
+  text-align: right; max-width: 65%;
+  word-break: break-word;
+}
+.ck-detail-value a {
+  color: var(--craft-dark); text-decoration: none;
+  font-weight: 600; word-break: break-all;
+}
+.ck-detail-value a:hover { text-decoration: underline; }
+.ck-detail-value .pay {
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--craft-dark); font-size: 1.05rem;
+}
+
+.ck-modal-section {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--border-light);
+}
+.ck-modal-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.72rem; font-weight: 800;
+  color: var(--craft-dark);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.ck-modal-section-title i { font-size: 0.7rem; }
+
+.ck-attachments {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.6rem;
+}
+.ck-attachments a {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.ck-attachments a:hover {
+  transform: scale(1.03);
+  border-color: var(--craft);
+}
+.ck-attachments img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.ck-banner {
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.05rem;
+  margin: 0.9rem 0;
+  font-size: 0.83rem;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  line-height: 1.5;
+}
+.ck-banner i { font-size: 1.05rem; margin-top: 2px; flex-shrink: 0; }
+.ck-banner.success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #065f46; }
+.ck-banner.warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #92400e; }
+.ck-banner.info    { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #1e40af; }
+.ck-banner.danger  { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #991b1b; }
+.ck-banner strong { font-weight: 700; }
+
+.ck-action-row {
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+.ck-action-row .ck-modal-btn { flex: 1; min-width: 140px; }
+
+.ck-modal-btn {
+  padding: 0.82rem 1.3rem;
+  border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600; font-size: 0.86rem;
+  cursor: pointer;
+  transition: all var(--t-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; text-decoration: none;
+}
+.ck-modal-btn.primary {
+  background: var(--craft-gradient); color: white;
+  box-shadow: 0 8px 20px rgba(180,83,9,0.28);
+}
+.ck-modal-btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(180,83,9,0.38);
+}
+.ck-modal-btn.dark { background: var(--ink); color: white; }
+.ck-modal-btn.dark:hover:not(:disabled) {
+  background: var(--ink);
+  box-shadow: 0 12px 30px rgba(15,15,30,0.28);
+}
+.ck-modal-btn.secondary {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.ck-modal-btn.secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+.ck-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* FORM */
+.ck-form-group { margin-bottom: 1rem; }
+.ck-form-group label {
+  display: block; font-size: 0.74rem; font-weight: 700;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  margin-bottom: 0.4rem;
+}
+.ck-input, .ck-textarea {
+  width: 100%; padding: 0.78rem 1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body); font-size: 0.88rem;
+  background: var(--surface-2); color: var(--ink);
+  transition: all var(--t-fast);
+}
+.ck-input:focus, .ck-textarea:focus {
+  outline: none; border-color: var(--craft);
+  background: white;
+  box-shadow: 0 0 0 3px var(--craft-glow);
+}
+.ck-textarea { resize: vertical; min-height: 80px; }
+.ck-input::placeholder, .ck-textarea::placeholder { color: var(--text-muted); }
+
+.ck-link-row {
+  display: flex; gap: 0.4rem; margin-bottom: 0.5rem; align-items: center;
+}
+.ck-link-row .ck-input { flex: 1; padding: 0.7rem 0.9rem; font-size: 0.84rem; }
+.ck-link-remove {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  border: none; background: #fef2f2; color: #dc2626;
+  cursor: pointer; font-size: 0.85rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.ck-link-remove:hover { background: #dc2626; color: white; }
+.ck-add-link {
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  border: 1.5px dashed var(--border-medium);
+  background: transparent; color: var(--craft-dark);
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all var(--t-fast);
+}
+.ck-add-link:hover { border-color: var(--craft); background: var(--craft-soft); }
+
+.ck-hint {
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-top: 0.4rem; display: flex; align-items: flex-start; gap: 0.4rem;
+  line-height: 1.5;
+}
+.ck-hint i { color: var(--craft); margin-top: 2px; }
+
+.ck-modal-plain h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 0.35rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.ck-modal-plain h3 i { color: var(--craft); }
+.ck-modal-plain > p {
+  font-size: 0.82rem; color: var(--text-muted);
+  margin-bottom: 1.1rem;
+}
+
+/* TIMELINE */
+.ck-timeline {
+  display: flex; align-items: center; gap: 0;
+  margin: 1rem 0 0.6rem;
+}
+.ck-tl-step {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; position: relative;
+}
+.ck-tl-step .dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--surface-2); color: var(--text-muted);
+  border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; z-index: 2;
+  transition: all var(--t-base);
+}
+.ck-tl-step .line {
+  position: absolute; top: 13px; left: 50%;
+  width: 100%; height: 2px;
+  background: var(--border-light); z-index: 1;
+}
+.ck-tl-step:last-child .line { display: none; }
+.ck-tl-step .label {
+  font-size: 0.62rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-top: 0.4rem; text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.ck-tl-step.done .dot {
+  background: var(--success); color: white; border-color: var(--success);
+}
+.ck-tl-step.done .line { background: var(--success); }
+.ck-tl-step.done .label { color: var(--success); }
+.ck-tl-step.current .dot {
+  background: var(--craft-gradient); color: white;
+  border-color: var(--craft);
+  box-shadow: 0 0 0 4px var(--craft-glow);
+}
+.ck-tl-step.current .line { background: var(--success); }
+.ck-tl-step.current .label { color: var(--craft-dark); }
+
+/* SUBMISSION DISPLAY */
+.ck-submission {
+  background: var(--surface-2);
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-md);
+  font-size: 0.83rem;
+  border: 1px solid var(--border-light);
+}
+.ck-submission .links {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.ck-submission .links a {
+  color: var(--craft-dark); font-weight: 600;
+  text-decoration: none; word-break: break-all;
+  font-size: 0.8rem;
+  display: flex; align-items: flex-start; gap: 0.4rem;
+}
+.ck-submission .links a i { margin-top: 4px; font-size: 0.7rem; flex-shrink: 0; }
+.ck-submission .links a:hover { text-decoration: underline; }
+.ck-submission .note {
+  color: var(--text-secondary); font-size: 0.78rem;
+  margin-top: 0.4rem; font-style: italic;
+  padding: 0.5rem 0.7rem; background: white;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--craft);
+}
+.ck-submission .meta {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-top: 0.5rem; padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-light);
+}
+
+/* TOASTS */
+.toast-container {
+  position: fixed; top: calc(var(--header-h) + 16px); right: 16px;
+  z-index: 4000;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none; max-width: calc(100vw - 32px);
+}
+.toast {
+  background: var(--ink); color: white;
+  border-radius: var(--radius-md); padding: 0.8rem 1.1rem;
+  box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+  display: flex; align-items: center; gap: 0.65rem;
+  font-family: var(--font-heading); font-size: 0.85rem;
+  animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 360px; font-weight: 500; pointer-events: auto;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.toast i { font-size: 0.95rem; }
+.toast.success i { color: #34d399; }
+.toast.error i { color: #f87171; }
+.toast.info i { color: #fbbf24; }
+.toast.leaving { opacity: 0; transform: translateX(24px); }
+
+/* FOOTER */
+.ck-footer {
+  border-top: 1px solid var(--border-light);
+  background: white;
+  padding: 1.4rem 1.5rem;
+  margin-top: 3rem;
+}
+.ck-footer-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.ck-footer-brand {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-weight: 700; color: var(--ink);
+}
+.ck-footer-brand i { color: var(--craft); }
+.ck-footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.ck-footer-links a {
+  color: var(--text-muted); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.ck-footer-links a:hover { color: var(--craft); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
+
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="ck-header">
+  <div class="ck-header-inner">
+    <a href="../../index.html" class="ck-logo" aria-label="Back to Janta">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="ck-logo-text">Jan<span class="accent">ta</span></span>
+    </a>
+
+    <nav class="ck-crumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Janta</a>
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <a href="index.html">CraftiKazi</a>
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <span style="color:var(--craft-dark);font-weight:600;">My Tasks</span>
+    </nav>
+
+    <nav class="ck-nav" aria-label="CraftiKazi navigation">
+      <a href="index.html" class="ck-nav-link">
+        <i class="fas fa-hammer" aria-hidden="true"></i> <span>Open Tasks</span>
+      </a>
+      <a href="my-tasks.html" class="ck-nav-link active">
+        <i class="fas fa-clipboard-check" aria-hidden="true"></i> <span>My Tasks</span>
+      </a>
+      <a href="../../index.html" class="ck-nav-link">
+        <i class="fas fa-cube" aria-hidden="true"></i> <span>Janta</span>
+      </a>
+    </nav>
+
+    <div class="ck-header-right">
+      <button type="button" class="ck-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotifications(event)">
+        <i class="far fa-bell" aria-hidden="true"></i>
+        <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
+      </button>
+
+      <div class="ck-account-wrap" id="accountWrap"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main class="ck-main" id="main">
+
+  <!-- HERO -->
+  <section class="ck-hero" aria-labelledby="heroTitle">
+    <div class="ck-hero-inner">
+      <div class="ck-hero-left">
+        <div class="ck-hero-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+        <div class="ck-hero-text">
+          <h1 id="heroTitle">My Craft Tasks</h1>
+          <p>Every craft task assigned to your workshop — track progress, submit work, and manage your queue in one place.</p>
+          <div class="ck-hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="heroStatus">Loading your tasks…</span>
+          </div>
+        </div>
+      </div>
+      <div class="ck-hero-actions">
+        <button type="button" class="ck-btn ck-btn-ghost" onclick="scrollToTasks()">
+          <i class="fas fa-arrow-down" aria-hidden="true"></i> Jump to tasks
+        </button>
+        <a href="index.html" class="ck-btn ck-btn-craft">
+          <i class="fas fa-hammer" aria-hidden="true"></i> Open Tasks
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="ck-stats" aria-label="Task statistics">
+    <div class="ck-stat">
+      <div class="ck-stat-icon craft"><i class="fas fa-inbox" aria-hidden="true"></i></div>
+      <div>
+        <div class="ck-stat-value" id="statNew">—</div>
+        <div class="ck-stat-label">New</div>
+      </div>
+    </div>
+    <div class="ck-stat">
+      <div class="ck-stat-icon amber"><i class="fas fa-hammer" aria-hidden="true"></i></div>
+      <div>
+        <div class="ck-stat-value" id="statInProgress">—</div>
+        <div class="ck-stat-label">In Progress</div>
+      </div>
+    </div>
+    <div class="ck-stat">
+      <div class="ck-stat-icon purple"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+      <div>
+        <div class="ck-stat-value" id="statInReview">—</div>
+        <div class="ck-stat-label">In Review</div>
+      </div>
+    </div>
+    <div class="ck-stat">
+      <div class="ck-stat-icon green"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+      <div>
+        <div class="ck-stat-value" id="statApproved">—</div>
+        <div class="ck-stat-label">Approved</div>
+      </div>
+    </div>
+    <div class="ck-stat">
+      <div class="ck-stat-icon blue"><i class="fas fa-coins" aria-hidden="true"></i></div>
+      <div>
+        <div class="ck-stat-value" id="statEarned">—</div>
+        <div class="ck-stat-label">Earned (KES)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="ck-filters" id="tasks" aria-label="Task filters">
+    <div class="ck-filter-row">
+      <span class="ck-filter-row-label">Status</span>
+      <button type="button" class="ck-chip active" data-status="all" onclick="setStatusFilter('all')">
+        All <span class="count" id="countAll">0</span>
+      </button>
+      <button type="button" class="ck-chip" data-status="assigned" onclick="setStatusFilter('assigned')">
+        <i class="fas fa-inbox" aria-hidden="true"></i> New <span class="count" id="countAssigned">0</span>
+      </button>
+      <button type="button" class="ck-chip" data-status="started" onclick="setStatusFilter('started')">
+        <i class="fas fa-hammer" aria-hidden="true"></i> In Progress <span class="count" id="countStarted">0</span>
+      </button>
+      <button type="button" class="ck-chip" data-status="review" onclick="setStatusFilter('review')">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> In Review <span class="count" id="countReview">0</span>
+      </button>
+      <button type="button" class="ck-chip" data-status="revision" onclick="setStatusFilter('revision')">
+        <i class="fas fa-redo" aria-hidden="true"></i> Revision <span class="count" id="countRevision">0</span>
+      </button>
+      <button type="button" class="ck-chip" data-status="approved" onclick="setStatusFilter('approved')">
+        <i class="fas fa-circle-check" aria-hidden="true"></i> Approved <span class="count" id="countApproved">0</span>
+      </button>
+    </div>
+
+    <div class="ck-filter-row">
+      <span class="ck-filter-row-label">Search</span>
+      <div class="ck-search-wrap">
+        <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" id="searchInput" class="ck-search" placeholder="Search tasks, clients, categories…" aria-label="Search tasks" oninput="onSearchInput()">
+      </div>
+    </div>
+  </section>
+
+  <!-- TASK GRID -->
+  <section id="taskGrid" aria-live="polite" aria-busy="true">
+    <div class="ck-loading-grid">
+      <div class="ck-loading-card"></div>
+      <div class="ck-loading-card"></div>
+      <div class="ck-loading-card"></div>
+      <div class="ck-loading-card"></div>
+      <div class="ck-loading-card"></div>
+      <div class="ck-loading-card"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ck-footer">
+  <div class="ck-footer-inner">
+    <div class="ck-footer-brand">
+      <i class="fas fa-hammer" aria-hidden="true"></i> CraftiKazi · by Janta
+    </div>
+    <nav class="ck-footer-links" aria-label="Footer">
+      <a href="index.html">Open Tasks</a>
+      <a href="../../index.html">Janta</a>
+      <a href="mailto:operations@kazinni.com">Contact</a>
+    </nav>
+    <div>© <span id="footerYear"></span> Teleio Savour</div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     TASK DETAIL MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="ck-modal wide" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+  <button type="button" class="ck-modal-close" onclick="closeDetail()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div id="detailBody"></div>
+</div>
+
+<!-- ============================================================
+     SUBMIT WORK MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="submitOverlay" onclick="closeSubmit()"></div>
+<div class="ck-modal wide" id="submitModal" role="dialog" aria-modal="true" aria-labelledby="submitTitle" aria-hidden="true">
+  <button type="button" class="ck-modal-close" onclick="closeSubmit()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="ck-modal-plain">
+    <h3 id="submitTitle"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit your craft work</h3>
+    <p id="submitSubtitle">—</p>
+
+    <form id="submitForm" onsubmit="submitWork(event)">
+      <input type="hidden" id="submitTaskId">
+
+      <div class="ck-form-group">
+        <label>Submission Links</label>
+        <div id="submitLinks"></div>
+        <button type="button" class="ck-add-link" onclick="addLinkField('')">
+          <i class="fas fa-plus" aria-hidden="true"></i> Add another link
+        </button>
+        <div class="ck-hint">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          <span>Paste photo / video links (Imgur, Drive, Dropbox) so the reviewer can see the finished piece.</span>
+        </div>
+      </div>
+
+      <div class="ck-form-group">
+        <label>Notes for Reviewer (optional)</label>
+        <textarea class="ck-textarea" id="submitNotes" rows="3" placeholder="Materials used, dimensions, finishing notes, anything the reviewer should know…"></textarea>
+      </div>
+
+      <div class="ck-action-row">
+        <button type="submit" class="ck-modal-btn primary" id="submitBtn">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review
+        </button>
+        <button type="button" class="ck-modal-btn secondary" style="flex:0 0 auto;" onclick="closeSubmit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+
+/* ============================================================
+   FIREBASE  (untouched config)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+let auth, database;
+
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  database = firebase.database();
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+} catch (e) {
+  console.error('Firebase init failed:', e);
+}
+
+/* ============================================================
+   CRAFT CATEGORIES
+   ============================================================ */
+const CRAFT_CATEGORIES = {
+  metalwork:  { name: 'Metalwork',  icon: 'fa-industry',         color: '#475569' },
+  woodwork:   { name: 'Woodwork',   icon: 'fa-tree',             color: '#92400e' },
+  upholstery: { name: 'Upholstery', icon: 'fa-couch',            color: '#7c3aed' },
+  carving:    { name: 'Carving',    icon: 'fa-gem',              color: '#0891b2' },
+  glass:      { name: 'Glasswork',  icon: 'fa-wine-glass',       color: '#0ea5e9' },
+  welding:    { name: 'Welding',    icon: 'fa-fire',             color: '#dc2626' },
+  masonry:    { name: 'Masonry',    icon: 'fa-trowel-bricks',    color: '#78716c' },
+  other:      { name: 'Other',      icon: 'fa-hammer',           color: '#b45309' }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentUser = null;
+let currentTasker = null;
+let currentPerms = {};
+let allTasks = [];
+let allSubmissions = {};
+let filteredTasks = [];
+let statusFilter = 'all';
+let searchTerm = '';
+let currentDetailTask = null;
+let taskListeners = [];
+let submissionListeners = [];
+let notifListener = null;
+let notifications = [];
+let lastSeenNotif = 0;
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'Just now';
+}
+
+function formatDate(str) {
+  if (!str) return '';
+  try {
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return str;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch (e) { return str; }
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function craftInfo(key) {
+  return CRAFT_CATEGORIES[key] || CRAFT_CATEGORIES.other;
+}
+
+function showToast(msg, type = 'info') {
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('leaving');
+    setTimeout(() => t.remove(), 400);
+  }, 4000);
+}
+
+function statusBadge(status) {
+  const s = (status || 'assigned').toLowerCase();
+  const map = {
+    'assigned': 'assigned', 'new': 'assigned',
+    'started': 'started', 'in-progress': 'started', 'in_progress': 'started',
+    'review': 'review', 'pending': 'review',
+    'revision': 'revision',
+    'approved': 'approved', 'completed': 'approved',
+    'ready_to_submit': 'ready'
+  };
+  const labels = {
+    'assigned': 'New', 'new': 'New',
+    'started': 'In Progress', 'in-progress': 'In Progress', 'in_progress': 'In Progress',
+    'review': 'In Review', 'pending': 'In Review',
+    'revision': 'Revision',
+    'approved': 'Approved', 'completed': 'Approved',
+    'ready_to_submit': 'Ready to Submit'
+  };
+  const cls = map[s] || 'assigned';
+  const label = labels[s] || s;
+  return `<span class="ck-pill ${cls}">${escapeHtml(label)}</span>`;
+}
+
+/* ============================================================
+   AUTH GATE
+   ============================================================ */
+if (auth) {
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = '../../index.html';
+      return;
+    }
+    currentUser = user;
+
+    // Load permissions
+    try {
+      const snap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+      currentPerms = snap.exists() ? (snap.val() || {}) : {};
+    } catch (e) { currentPerms = {}; }
+
+    // Gate: requires craftikazi permission (falls back to ekazi)
+    const hasAccess = currentPerms.craftikazi === true || currentPerms.ekazi === true;
+    if (!hasAccess) {
+      document.getElementById('main').innerHTML = `
+        <div class="ck-empty" style="margin-top:2rem;">
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <h3>No access to CraftiKazi</h3>
+          <p>Your account has not been granted access to the craft-work portal. Contact your Janta coordinator to request access.</p>
+          <div style="margin-top:1.2rem;">
+            <a href="../../index.html" class="ck-btn ck-btn-craft">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Janta
+            </a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // Load tasker profile (used for display name)
+    try {
+      const snap = await database.ref(`taskers/${user.uid}`).once('value');
+      currentTasker = snap.exists() ? snap.val() : null;
+    } catch (e) { currentTasker = null; }
+
+    renderAccount();
+    attachTaskListener();
+    attachSubmissionListener();
+    attachNotifListener();
+    setFooterYear();
+  });
+}
+
+function setFooterYear() {
+  const el = document.getElementById('footerYear');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ============================================================
+   ACCOUNT
+   ============================================================ */
+function renderAccount() {
+  const wrap = document.getElementById('accountWrap');
+  if (!wrap || !currentUser) return;
+
+  const name = (currentTasker && currentTasker.name)
+    || currentUser.displayName
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'Workshop');
+  const initials = getInitials(name);
+  const email = currentUser.email || '';
+
+  wrap.innerHTML = `
+    <button type="button" class="ck-account-btn" id="accountBtn" onclick="toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+      <div class="ck-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+      <span class="ck-account-name">${escapeHtml(name)}</span>
+      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <div class="ck-dropdown" id="accountDropdown" role="menu">
+      <div class="ck-dd-header">
+        <div class="ck-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+        <div class="ck-dd-info">
+          <div class="ck-dd-name">${escapeHtml(name)}</div>
+          <div class="ck-dd-email">${escapeHtml(email)}</div>
+        </div>
+      </div>
+      <div class="ck-dd-body">
+        <div class="ck-dd-label">CraftiKazi</div>
+        <a href="my-tasks.html" class="ck-dd-item" role="menuitem">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i> My craft tasks
+        </a>
+        <a href="index.html" class="ck-dd-item" role="menuitem">
+          <i class="fas fa-hammer" aria-hidden="true"></i> Open task board
+        </a>
+        <div class="ck-dd-divider"></div>
+        <div class="ck-dd-label">Janta workspace</div>
+        ${renderDropdownApps()}
+        <div class="ck-dd-divider"></div>
+        <button type="button" class="ck-dd-item danger" onclick="handleSignOut()" role="menuitem">
+          <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderDropdownApps() {
+  const apps = [
+    { name: 'FlexiKazi',  icon: 'fa-list-check',     link: '../flexikazi/my-tasks.html',  perm: 'ekazi',      fallback: null },
+    { name: 'Kasikazi',   icon: 'fa-bullhorn',       link: '../kasikazi/',                perm: 'kasikazi',   fallback: 'ekazi' },
+    { name: 'Zindua Hub', icon: 'fa-rocket',         link: '../zindua-hub/',              perm: 'zindua',     fallback: 'ekazi' },
+    { name: 'Learning',   icon: 'fa-graduation-cap', link: '../../learning/index.html',   perm: 'learning',   fallback: null },
+    { name: 'Janta Home', icon: 'fa-cube',           link: '../../index.html',            perm: null,         fallback: null }
+  ];
+
+  return apps
+    .filter(a => {
+      if (a.perm === null) return true;
+      if (currentPerms[a.perm] === true) return true;
+      if (a.fallback && currentPerms[a.fallback] === true) return true;
+      return false;
+    })
+    .map(a => `
+      <a href="${escapeHtml(a.link)}" class="ck-dd-item" role="menuitem">
+        <i class="fas ${escapeHtml(a.icon)}" aria-hidden="true"></i> ${escapeHtml(a.name)}
+      </a>
+    `).join('');
+}
+
+window.toggleDropdown = function(e) {
+  if (e) e.stopPropagation();
+  const btn = document.getElementById('accountBtn');
+  const dd = document.getElementById('accountDropdown');
+  if (!btn || !dd) return;
+  const open = dd.classList.toggle('active');
+  btn.classList.toggle('active', open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+};
+
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('accountWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = document.getElementById('accountDropdown');
+    const btn = document.getElementById('accountBtn');
+    if (dd) dd.classList.remove('active');
+    if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+  }
+});
+
+window.handleSignOut = async function() {
+  if (!confirm('Sign out of CraftiKazi?')) return;
+  detachListeners();
+  await auth.signOut();
+  window.location.href = '../../index.html';
+};
+
+/* ============================================================
+   TASK LISTENER — indexed by taskerEmail
+   ============================================================ */
+function attachTaskListener() {
+  detachTaskListener();
+  const myEmail = (currentUser.email || '').toLowerCase();
+
+  let attached = false;
+  try {
+    const ref = database.ref('craftikazi_assigned_tasks')
+      .orderByChild('taskerEmail')
+      .equalTo(myEmail);
+
+    ref.once('value').then(snap => {
+      processTasks(snap.val() || {}, myEmail);
+    }).catch(err => {
+      console.error('Initial task load failed:', err);
+      renderEmpty('Could not load tasks', 'Check your connection and refresh.');
+    });
+
+    const cb = () => {
+      ref.once('value').then(snap => {
+        processTasks(snap.val() || {}, myEmail);
+      }).catch(e => console.warn('Live refresh failed:', e));
+    };
+    ref.on('child_added', cb);
+    ref.on('child_changed', cb);
+    ref.on('child_removed', cb);
+    taskListeners = [
+      { ref, event: 'child_added', cb },
+      { ref, event: 'child_changed', cb },
+      { ref, event: 'child_removed', cb }
+    ];
+    attached = true;
+  } catch (e) {
+    console.warn('Indexed task listener failed, falling back:', e);
+  }
+
+  // Fallback: full-table listen
+  if (!attached) {
+    try {
+      const ref = database.ref('craftikazi_assigned_tasks');
+      ref.once('value').then(snap => {
+        processTasks(snap.val() || {}, myEmail);
+      }).catch(err => {
+        console.error('Fallback task load failed:', err);
+        renderEmpty('Could not load tasks', 'Check your connection and refresh.');
+      });
+
+      const cb = () => {
+        ref.once('value').then(snap => {
+          processTasks(snap.val() || {}, myEmail);
+        }).catch(e => console.warn('Live refresh failed:', e));
+      };
+      ref.on('child_added', cb);
+      ref.on('child_changed', cb);
+      ref.on('child_removed', cb);
+      taskListeners = [
+        { ref, event: 'child_added', cb },
+        { ref, event: 'child_changed', cb },
+        { ref, event: 'child_removed', cb }
+      ];
+    } catch (fallbackErr) {
+      console.error('Fallback listener failed:', fallbackErr);
+    }
+  }
+}
+
+function detachTaskListener() {
+  taskListeners.forEach(l => { try { l.ref.off(l.event, l.cb); } catch (e) {} });
+  taskListeners = [];
+}
+
+/* ============================================================
+   SUBMISSION LISTENER
+   ============================================================ */
+function attachSubmissionListener() {
+  detachSubmissionListener();
+  const myEmail = (currentUser.email || '').toLowerCase();
+
+  let attached = false;
+  try {
+    const ref = database.ref('craftikazi_task_submissions')
+      .orderByChild('taskerEmail')
+      .equalTo(myEmail);
+
+    ref.once('value').then(snap => {
+      processSubmissions(snap.val() || {}, myEmail);
+    }).catch(err => {
+      console.warn('Initial submission load failed:', err);
+      allSubmissions = {};
+      renderTasks();
+    });
+
+    const cb = () => {
+      ref.once('value').then(snap => {
+        processSubmissions(snap.val() || {}, myEmail);
+      }).catch(e => console.warn('Live submission refresh failed:', e));
+    };
+    ref.on('child_added', cb);
+    ref.on('child_changed', cb);
+    ref.on('child_removed', cb);
+    submissionListeners = [
+      { ref, event: 'child_added', cb },
+      { ref, event: 'child_changed', cb },
+      { ref, event: 'child_removed', cb }
+    ];
+    attached = true;
+  } catch (e) {
+    console.warn('Indexed submission listener failed, falling back:', e);
+  }
+
+  if (!attached) {
+    try {
+      const ref = database.ref('craftikazi_task_submissions');
+      ref.once('value').then(snap => {
+        processSubmissions(snap.val() || {}, myEmail);
+      }).catch(err => {
+        console.warn('Fallback submission load failed:', err);
+        allSubmissions = {};
+        renderTasks();
+      });
+
+      const cb = () => {
+        ref.once('value').then(snap => {
+          processSubmissions(snap.val() || {}, myEmail);
+        }).catch(e => console.warn('Live submission refresh failed:', e));
+      };
+      ref.on('child_added', cb);
+      ref.on('child_changed', cb);
+      ref.on('child_removed', cb);
+      submissionListeners = [
+        { ref, event: 'child_added', cb },
+        { ref, event: 'child_changed', cb },
+        { ref, event: 'child_removed', cb }
+      ];
+    } catch (fallbackErr) {
+      console.error('Fallback submission listener failed:', fallbackErr);
+    }
+  }
+}
+
+function detachSubmissionListener() {
+  submissionListeners.forEach(l => { try { l.ref.off(l.event, l.cb); } catch (e) {} });
+  submissionListeners = [];
+}
+
+/* ============================================================
+   NOTIFICATIONS
+   ============================================================ */
+function attachNotifListener() {
+  detachNotifListener();
+  if (!currentUser) return;
+
+  lastSeenNotif = Number(localStorage.getItem('craftikazi_notif_lastseen') || 0);
+
+  const ref = database.ref(`kazinni_notifications/${currentUser.uid}`).limitToLast(30);
+  const cb = (snap) => {
+    const val = snap.val() || {};
+    notifications = Object.entries(val)
+      .map(([id, n]) => ({ id, ...n }))
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    updateNotifBadge();
+  };
+  ref.on('value', cb, () => {});
+  notifListener = { ref, cb };
+}
+
+function detachNotifListener() {
+  if (notifListener) {
+    try { notifListener.ref.off('value', notifListener.cb); } catch (e) {}
+    notifListener = null;
+  }
+}
+
+function updateNotifBadge() {
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  const unread = notifications.filter(n => (n.timestamp || 0) > lastSeenNotif && n.read !== true).length;
+  if (unread > 0) {
+    badge.textContent = unread > 9 ? '9+' : String(unread);
+    badge.classList.add('visible');
+  } else {
+    badge.classList.remove('visible');
+  }
+}
+
+window.toggleNotifications = function(e) {
+  if (e) e.stopPropagation();
+  if (notifications.length === 0) {
+    showToast('No notifications yet', 'info');
+    return;
+  }
+  localStorage.setItem('craftikazi_notif_lastseen', String(Date.now()));
+  lastSeenNotif = Date.now();
+  updateNotifBadge();
+  const latest = notifications[0];
+  showToast(`${latest.title || 'Notification'} — ${latest.body || ''}`, 'info');
+};
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+function processTasks(allTasksData, myEmail) {
+  allTasks = Object.entries(allTasksData)
+    .map(([id, t]) => ({ id, ...t }))
+    .filter(t => (t.taskerEmail || '').toLowerCase() === myEmail)
+    .sort((a, b) => (b.assignedAt || 0) - (a.assignedAt || 0));
+
+  updateCounts();
+  updateStats();
+  applyFilters();
+}
+
+function processSubmissions(allSubs, myEmail) {
+  const mine = {};
+  Object.entries(allSubs).forEach(([id, s]) => {
+    if ((s.taskerEmail || '').toLowerCase() === myEmail) {
+      mine[id] = s;
+    }
+  });
+  allSubmissions = mine;
+  renderTasks();
+}
+
+/* ============================================================
+   COUNTS / STATS
+   ============================================================ */
+function updateCounts() {
+  const counts = { all: allTasks.length, assigned: 0, started: 0, review: 0, revision: 0, approved: 0 };
+  allTasks.forEach(t => {
+    const s = (t.status || 'assigned').toLowerCase();
+    if (s === 'approved' || s === 'completed') counts.approved++;
+    else if (s === 'revision') counts.revision++;
+    else if (s === 'review' || s === 'pending') counts.review++;
+    else if (s === 'started' || s === 'in-progress' || s === 'in_progress') counts.started++;
+    else counts.assigned++;
+  });
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('countAll', counts.all);
+  set('countAssigned', counts.assigned);
+  set('countStarted', counts.started);
+  set('countReview', counts.review);
+  set('countRevision', counts.revision);
+  set('countApproved', counts.approved);
+}
+
+function updateStats() {
+  let open = 0, inProgress = 0, review = 0, approved = 0, earned = 0;
+
+  allTasks.forEach(t => {
+    const s = (t.status || 'assigned').toLowerCase();
+    const amount = Number(t.payRate) || 0;
+    if (s === 'approved' || s === 'completed') { approved++; earned += amount; }
+    else if (s === 'review' || s === 'pending' || s === 'revision' || s === 'started' || s === 'in-progress' || s === 'in_progress') inProgress++;
+    else open++;
+  });
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('statNew', open);
+  set('statInProgress', inProgress);
+  set('statInReview', review);
+  set('statApproved', approved);
+  set('statEarned', earned.toLocaleString());
+
+  const heroStatus = document.getElementById('heroStatus');
+  if (heroStatus) {
+    heroStatus.textContent = allTasks.length === 0
+      ? 'No craft tasks assigned yet'
+      : `${allTasks.length} task${allTasks.length === 1 ? '' : 's'} total · ${open + inProgress} active`;
+  }
+}
+
+/* ============================================================
+   FILTERS
+   ============================================================ */
+window.setStatusFilter = function(status) {
+  statusFilter = status;
+  document.querySelectorAll('.ck-chip[data-status]').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.status === status);
+  });
+  applyFilters();
+};
+
+window.onSearchInput = function() {
+  const el = document.getElementById('searchInput');
+  searchTerm = (el ? el.value : '').toLowerCase().trim();
+  applyFilters();
+};
+
+function applyFilters() {
+  filteredTasks = allTasks.filter(t => {
+    const s = (t.status || 'assigned').toLowerCase();
+
+    if (statusFilter !== 'all') {
+      if (statusFilter === 'approved') { if (s !== 'approved' && s !== 'completed') return false; }
+      else if (statusFilter === 'review') { if (s !== 'review' && s !== 'pending') return false; }
+      else if (statusFilter === 'revision') { if (s !== 'revision') return false; }
+      else if (statusFilter === 'started') { if (s !== 'started' && s !== 'in-progress' && s !== 'in_progress') return false; }
+      else if (statusFilter === 'assigned') { if (s !== 'assigned' && s !== 'new') return false; }
+    }
+
+    if (searchTerm) {
+      const hay = [
+        t.title || '',
+        t.description || '',
+        t.clientName || '',
+        t.category || ''
+      ].join(' ').toLowerCase();
+      if (!hay.includes(searchTerm)) return false;
+    }
+
+    return true;
+  });
+
+  renderTasks();
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function renderTasks() {
+  const container = document.getElementById('taskGrid');
+  if (!container) return;
+
+  if (filteredTasks.length === 0) {
+    if (allTasks.length === 0) {
+      renderEmpty(
+        'No craft tasks assigned yet',
+        'When Janta assigns you a craft task, it will appear here and you\'ll receive an email notification with the full brief.'
+      );
+    } else {
+      renderEmpty('No matches', 'Try changing the filter or clearing the search.');
+    }
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="ck-grid">
+      ${filteredTasks.map(taskCard).join('')}
+    </div>
+  `;
+  container.setAttribute('aria-busy', 'false');
+}
+
+function renderEmpty(title, message) {
+  const container = document.getElementById('taskGrid');
+  container.innerHTML = `
+    <div class="ck-empty">
+      <i class="fas fa-hammer" aria-hidden="true"></i>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(message)}</p>
+    </div>
+  `;
+}
+
+function taskCard(t) {
+  const craft = craftInfo(t.craft);
+  const s = (t.status || 'assigned').toLowerCase();
+
+  const pay = t.payRate ? `KES ${Number(t.payRate).toLocaleString()}` : '—';
+  const due = t.dueDate ? formatDate(t.dueDate) : '—';
+  const submittedAt = t.lastSubmittedAt ? getTimeAgo(t.lastSubmittedAt) : '';
+
+  // Slot badge overlay (shows status)
+  const statusOverlay = statusBadge(t.status);
+
+  // Cover
+  const attachments = Array.isArray(t.attachments) ? t.attachments : [];
+  const cover = attachments.length
+    ? `<img src="${escapeHtml(attachments[0])}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+       <div class="placeholder-icon" style="display:none;"><i class="fas ${escapeHtml(craft.icon)}"></i></div>`
+    : `<div class="placeholder-icon"><i class="fas ${escapeHtml(craft.icon)}"></i></div>`;
+
+  return `
+    <article class="ck-card" role="button" tabindex="0"
+      onclick="viewTask('${escapeHtml(t.id)}')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();viewTask('${escapeHtml(t.id)}');}"
+      aria-label="${escapeHtml(t.title || 'Craft task')}">
+      <div class="ck-card-media">
+        ${cover}
+        <span class="ck-card-craft-badge">
+          <i class="fas ${escapeHtml(craft.icon)}" aria-hidden="true"></i>
+          ${escapeHtml(craft.name)}
+        </span>
+        <span class="ck-card-slot-badge">${escapeHtml(labelForStatus(t.status))}</span>
+      </div>
+      <div class="ck-card-body">
+        <h3 class="ck-card-title">${escapeHtml(t.title || 'Untitled craft task')}</h3>
+        <p class="ck-card-desc">${escapeHtml(t.description || 'No description provided.')}</p>
+        <div class="ck-card-meta">
+          ${t.clientName ? `<span><i class="fas fa-user" aria-hidden="true"></i> ${escapeHtml(t.clientName)}</span>` : ''}
+          <span><i class="fas fa-calendar" aria-hidden="true"></i> Due ${escapeHtml(due)}</span>
+          ${submittedAt ? `<span><i class="fas fa-clock" aria-hidden="true"></i> ${escapeHtml(submittedAt)}</span>` : ''}
+        </div>
+        <div class="ck-card-foot">
+          <div class="ck-card-pay">
+            ${escapeHtml(pay.replace('KES ', ''))}
+            <span class="unit">KES</span>
+          </div>
+          ${statusOverlay}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function labelForStatus(status) {
+  const s = (status || 'assigned').toLowerCase();
+  const map = {
+    'assigned': 'New', 'new': 'New',
+    'started': 'In Progress', 'in-progress': 'In Progress', 'in_progress': 'In Progress',
+    'review': 'In Review', 'pending': 'In Review',
+    'revision': 'Revision',
+    'approved': 'Approved', 'completed': 'Approved',
+    'ready_to_submit': 'Ready'
+  };
+  return map[s] || 'New';
+}
+
+/* ============================================================
+   DETAIL MODAL
+   ============================================================ */
+window.viewTask = function(id) {
+  const t = allTasks.find(x => x.id === id);
+  if (!t) { showToast('Task not found', 'error'); return; }
+
+  currentDetailTask = t;
+  const craft = craftInfo(t.craft);
+  const s = (t.status || 'assigned').toLowerCase();
+  const due = t.dueDate ? formatDate(t.dueDate) : '—';
+  const attachments = Array.isArray(t.attachments) ? t.attachments : [];
+
+  const taskSubs = Object.entries(allSubmissions)
+    .filter(([_, sub]) => sub.taskId === id)
+    .sort((a, b) => (b[1].submittedAt || 0) - (a[1].submittedAt || 0));
+  const latestSub = taskSubs[0] ? taskSubs[0][1] : null;
+
+  const timeline = buildTimeline(s);
+  const actions = buildActions(t, s);
+  const submissionBlock = latestSub ? buildSubmissionBlock(latestSub) : '';
+
+  const reviewerNoteBlock = (s === 'revision' && t.reviewNote) ? `
+    <div class="ck-banner danger" style="margin-top:0.8rem;">
+      <i class="fas fa-comment-dots" aria-hidden="true"></i>
+      <div><strong>Reviewer feedback:</strong><br>${escapeHtml(t.reviewNote)}</div>
+    </div>
+  ` : '';
+
+  document.getElementById('detailBody').innerHTML = `
+    <div class="ck-modal-hero">
+      <div class="ck-modal-hero-inner">
+        <h2 class="ck-modal-hero-title">
+          <i class="fas ${escapeHtml(craft.icon)}" aria-hidden="true"></i>
+          <span>${escapeHtml(t.title || 'Untitled craft task')}</span>
+        </h2>
+        <div class="ck-modal-hero-meta">
+          ${statusBadge(t.status)}
+          <span><i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(craft.name)}</span>
+          <span><i class="fas fa-hashtag" aria-hidden="true"></i> ${escapeHtml(t.id.slice(-8))}</span>
+        </div>
+      </div>
+    </div>
+
+    ${timeline}
+
+    <div class="ck-detail-list" style="margin-top:1rem;">
+      <div class="ck-detail-item">
+        <span class="ck-detail-label">Pay Rate</span>
+        <span class="ck-detail-value"><span class="pay">KES ${Number(t.payRate || 0).toLocaleString()}</span></span>
+      </div>
+      <div class="ck-detail-item">
+        <span class="ck-detail-label">Client</span>
+        <span class="ck-detail-value">
+          ${escapeHtml(t.clientName || '—')}
+          ${t.clientEmail ? `<br><span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(t.clientEmail)}</span>` : ''}
+          ${t.clientPhone ? `<br><span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(t.clientPhone)}</span>` : ''}
+        </span>
+      </div>
+      <div class="ck-detail-item">
+        <span class="ck-detail-label">Due Date</span>
+        <span class="ck-detail-value">${escapeHtml(due)}</span>
+      </div>
+      <div class="ck-detail-item">
+        <span class="ck-detail-label">Assigned</span>
+        <span class="ck-detail-value">${t.assignedAt ? getTimeAgo(t.assignedAt) : '—'}</span>
+      </div>
+      ${t.jobLink ? `
+        <div class="ck-detail-item">
+          <span class="ck-detail-label">Brief / Job Link</span>
+          <span class="ck-detail-value">
+            <a href="${escapeHtml(t.jobLink)}" target="_blank" rel="noopener">
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i> Open Brief
+            </a>
+          </span>
+        </div>
+      ` : ''}
+    </div>
+
+    ${t.description ? `
+      <div class="ck-modal-section">
+        <div class="ck-modal-section-title"><i class="fas fa-align-left" aria-hidden="true"></i> Description</div>
+        <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;">${escapeHtml(t.description)}</div>
+      </div>
+    ` : ''}
+
+    ${t.notes ? `
+      <div class="ck-modal-section">
+        <div class="ck-modal-section-title"><i class="fas fa-sticky-note" aria-hidden="true"></i> Craft Notes</div>
+        <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;padding:0.8rem 0.9rem;background:var(--surface-2);border-left:3px solid var(--craft);border-radius:8px;white-space:pre-wrap;">${escapeHtml(t.notes)}</div>
+      </div>
+    ` : ''}
+
+    ${attachments.length ? `
+      <div class="ck-modal-section">
+        <div class="ck-modal-section-title"><i class="fas fa-image" aria-hidden="true"></i> Reference Attachments (${attachments.length})</div>
+        <div class="ck-attachments">
+          ${attachments.map(url => `
+            <a href="${escapeHtml(url)}" target="_blank" rel="noopener" title="Open attachment">
+              <img src="${escapeHtml(url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-file\\' style=\\'color:var(--text-muted);\\'></i>';">
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    ${reviewerNoteBlock}
+    ${submissionBlock}
+    ${actions}
+  `;
+
+  document.getElementById('detailModal').classList.add('active');
+  document.getElementById('detailOverlay').classList.add('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeDetail = function() {
+  document.getElementById('detailModal').classList.remove('active');
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'true');
+  currentDetailTask = null;
+};
+
+function buildTimeline(status) {
+  const steps = [
+    { key: 'assigned', label: 'Assigned', icon: 'fa-inbox' },
+    { key: 'started', label: 'In Progress', icon: 'fa-hammer' },
+    { key: 'submitted', label: 'In Review', icon: 'fa-paper-plane' },
+    { key: 'approved', label: 'Approved', icon: 'fa-circle-check' }
+  ];
+
+  let currentIndex = 0;
+  if (status === 'assigned' || status === 'new') currentIndex = 0;
+  else if (status === 'started' || status === 'in-progress' || status === 'in_progress') currentIndex = 1;
+  else if (status === 'review' || status === 'pending' || status === 'revision') currentIndex = 2;
+  else if (status === 'approved' || status === 'completed') currentIndex = 3;
+
+  let html = '<div class="ck-timeline">';
+  steps.forEach((step, i) => {
+    let cls = '';
+    if (i < currentIndex) cls = 'done';
+    else if (i === currentIndex) cls = 'current';
+    if (status === 'revision' && i === 2) cls = 'current';
+    if (status === 'revision' && i === 3) cls = '';
+
+    html += `
+      <div class="ck-tl-step ${cls}">
+        <div class="line"></div>
+        <div class="dot"><i class="fas ${cls === 'done' ? 'fa-check' : step.icon}" aria-hidden="true"></i></div>
+        <div class="label">${step.label}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  return html;
+}
+
+function buildSubmissionBlock(sub) {
+  const links = Array.isArray(sub.submissionLinks)
+    ? sub.submissionLinks
+    : (sub.submissionLinks ? [sub.submissionLinks] : []);
+  const status = (sub.currentStatus || 'pending').toLowerCase();
+
+  return `
+    <div class="ck-modal-section">
+      <div class="ck-modal-section-title">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Your Submission
+        ${statusBadge(status)}
+      </div>
+      <div class="ck-submission">
+        ${links.length ? `
+          <div class="links">
+            ${links.map(l => `
+              <a href="${escapeHtml(l)}" target="_blank" rel="noopener">
+                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                <span>${escapeHtml(l)}</span>
+              </a>
+            `).join('')}
+          </div>
+        ` : '<p style="color:var(--text-muted);font-size:0.8rem;">No links submitted</p>'}
+        ${sub.notes ? `<div class="note">"${escapeHtml(sub.notes)}"</div>` : ''}
+        <div class="meta">
+          <span><i class="fas fa-clock" aria-hidden="true"></i> Submitted ${sub.submittedAt ? getTimeAgo(sub.submittedAt) : '—'}</span>
+          <span><i class="fas fa-redo" aria-hidden="true"></i> Review #${sub.reviewCount || 1}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildActions(t, status) {
+  if (status === 'approved' || status === 'completed') {
+    return `
+      <div class="ck-action-row">
+        <div class="ck-banner success" style="flex:1;margin:0;">
+          <i class="fas fa-check-circle" aria-hidden="true"></i>
+          <div>
+            <strong>Task Approved 🎉</strong><br>
+            Payment of KES ${Number(t.payRate || 0).toLocaleString()} will be processed within 48 hours.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (status === 'review' || status === 'pending') {
+    return `
+      <div class="ck-action-row">
+        <div class="ck-banner warning" style="flex:1;margin:0;">
+          <i class="fas fa-clock" aria-hidden="true"></i>
+          <div>
+            <strong>Awaiting review</strong><br>
+            Your submission is being reviewed. You'll receive an email once there's a decision.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (status === 'revision') {
+    return `
+      <div class="ck-action-row">
+        <button type="button" class="ck-modal-btn primary" onclick="openSubmitFromDetail()">
+          <i class="fas fa-redo" aria-hidden="true"></i> Fix & Resubmit
+        </button>
+        <button type="button" class="ck-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+
+  if (status === 'started' || status === 'in-progress' || status === 'in_progress') {
+    return `
+      <div class="ck-action-row">
+        <button type="button" class="ck-modal-btn primary" id="submitFromDetailBtn" onclick="openSubmitFromDetail()">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Craft Work
+        </button>
+        <button type="button" class="ck-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+
+  if (status === 'assigned' || status === 'new') {
+    return `
+      <div class="ck-banner info" style="margin-top:0.8rem;">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <div>
+          <strong>Read the brief above.</strong> When you're ready to begin working on this craft task, tap <strong>Start Task</strong>.
+        </div>
+      </div>
+      <div class="ck-action-row">
+        <button type="button" class="ck-modal-btn dark" id="startTaskBtn" onclick="startTask()">
+          <i class="fas fa-hammer" aria-hidden="true"></i> Start Task
+        </button>
+        <button type="button" class="ck-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">
+          Not Now
+        </button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="ck-action-row">
+      <button type="button" class="ck-modal-btn secondary" onclick="closeDetail()">Close</button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   START TASK
+   ============================================================ */
+window.startTask = async function() {
+  const t = currentDetailTask;
+  if (!t) return;
+
+  if (!confirm(`Start working on "${t.title || 'this task'}"? Your coordinator will be notified.`)) return;
+
+  const btn = document.getElementById('startTaskBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting…'; }
+
+  try {
+    await database.ref(`craftikazi_assigned_tasks/${t.id}`).update({
+      status: 'started',
+      startedAt: Date.now(),
+      startedBy: currentUser.email,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    try {
+      const logId = database.ref('admin_logs').push().key;
+      await database.ref(`admin_logs/${logId}`).set({
+        action: 'craftikazi_task_started',
+        taskId: t.id,
+        actor: currentUser.email,
+        actorUid: currentUser.uid,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      });
+    } catch (logErr) { console.warn('Log write failed:', logErr); }
+
+    showToast('Task marked as started. Good luck!', 'success');
+    closeDetail();
+  } catch (err) {
+    console.error('Start task error:', err);
+    showToast('Could not start task: ' + err.message, 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-hammer"></i> Start Task'; }
+  }
+};
+
+/* ============================================================
+   SUBMIT WORK
+   ============================================================ */
+window.openSubmitFromDetail = function() {
+  const t = currentDetailTask;
+  if (!t) { showToast('No task selected', 'error'); return; }
+
+  document.getElementById('submitTaskId').value = t.id;
+  document.getElementById('submitSubtitle').innerHTML =
+    `For: <strong>${escapeHtml(t.title || 'Craft task')}</strong>`;
+  document.getElementById('submitNotes').value = '';
+
+  const container = document.getElementById('submitLinks');
+  container.innerHTML = '';
+
+  // Prefill with latest submission links if resubmitting
+  const taskSubs = Object.entries(allSubmissions)
+    .filter(([_, s]) => s.taskId === t.id)
+    .sort((a, b) => (b[1].submittedAt || 0) - (a[1].submittedAt || 0));
+  const latest = taskSubs[0] ? taskSubs[0][1] : null;
+
+  if (latest && Array.isArray(latest.submissionLinks) && latest.submissionLinks.length) {
+    latest.submissionLinks.forEach(l => addLinkField(l));
+    document.getElementById('submitNotes').value = latest.notes || '';
+  } else {
+    addLinkField('');
+  }
+
+  closeDetail();
+  document.getElementById('submitModal').classList.add('active');
+  document.getElementById('submitOverlay').classList.add('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeSubmit = function() {
+  document.getElementById('submitModal').classList.remove('active');
+  document.getElementById('submitOverlay').classList.remove('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'true');
+  const btn = document.getElementById('submitBtn');
+  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review'; }
+};
+
+window.addLinkField = function(value) {
+  const container = document.getElementById('submitLinks');
+  const id = 'link_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const div = document.createElement('div');
+  div.className = 'ck-link-row';
+  div.innerHTML = `
+    <input type="url" class="ck-input" id="${id}" placeholder="https://i.postimg.cc/... or https://drive.google.com/..." value="${escapeHtml(value || '')}">
+    <button type="button" class="ck-link-remove" onclick="this.parentElement.remove()" aria-label="Remove link">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  `;
+  container.appendChild(div);
+};
+
+window.submitWork = async function(e) {
+  e.preventDefault();
+  if (!currentUser) return;
+
+  const btn = document.getElementById('submitBtn');
+  const taskId = document.getElementById('submitTaskId').value;
+  const notes = document.getElementById('submitNotes').value.trim();
+
+  const linkInputs = document.querySelectorAll('#submitLinks input[type="url"]');
+  const links = Array.from(linkInputs).map(inp => inp.value.trim()).filter(Boolean);
+
+  if (links.length === 0) { showToast('Please add at least one submission link', 'error'); return; }
+  const invalid = links.filter(l => !/^https?:\/\//i.test(l));
+  if (invalid.length > 0) { showToast('Links must start with http:// or https://', 'error'); return; }
+
+  const t = allTasks.find(x => x.id === taskId);
+  if (!t) { showToast('Task not found', 'error'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Submitting…';
+
+  try {
+    const now = Date.now();
+    const subId = database.ref('craftikazi_task_submissions').push().key;
+    const previousReviewCount = Number(t.reviewCount || t.currentReviewCount || 0);
+
+    const submission = {
+      taskId: taskId,
+      taskerEmail: currentUser.email,
+      taskerName: (currentTasker && currentTasker.name) || currentUser.displayName || currentUser.email,
+      submissionLinks: links,
+      notes: notes || '',
+      submittedAt: now,
+      currentStatus: 'review',
+      reviewCount: previousReviewCount + 1,
+      reviewHistory: []
+    };
+
+    await database.ref(`craftikazi_task_submissions/${subId}`).set(submission);
+
+    await database.ref(`craftikazi_assigned_tasks/${taskId}`).update({
+      status: 'review',
+      lastSubmittedAt: now,
+      currentSubmissionId: subId,
+      currentReviewCount: previousReviewCount + 1,
+      reviewCount: previousReviewCount + 1,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    // Admin log
+    try {
+      const logId = database.ref('admin_logs').push().key;
+      await database.ref(`admin_logs/${logId}`).set({
+        action: 'craftikazi_submission',
+        taskId: taskId,
+        taskerUid: currentUser.uid,
+        taskerEmail: currentUser.email,
+        workspace: 'craftikazi',
+        timestamp: now
+      });
+    } catch (logErr) { console.warn('Log write failed:', logErr); }
+
+    showToast('Craft work submitted! Your coordinator will review it shortly.', 'success');
+    closeSubmit();
+  } catch (err) {
+    console.error('Submit error:', err);
+    showToast('Could not submit. Please try again.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review';
+  }
+};
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+window.scrollToTasks = function() {
+  const el = document.getElementById('tasks');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+function detachListeners() {
+  detachTaskListener();
+  detachSubmissionListener();
+  detachNotifListener();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDetail(); closeSubmit(); }
+});
+
+window.addEventListener('beforeunload', detachListeners);
+</script>
+</body>
+</html>
