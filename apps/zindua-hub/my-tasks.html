@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4f46e5">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Zindua Hub — my claimed tech tasks.">
+<title>My Tasks · Zindua Hub</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --zindua: #4f46e5;
+  --zindua-dark: #3730a3;
+  --zindua-light: #818cf8;
+  --zindua-soft: #eef2ff;
+  --zindua-glow: rgba(79, 70, 229, 0.14);
+  --zindua-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #818cf8 100%);
+
+  --gold: #ca8a04;
+  --gold-dark: #a16207;
+  --gold-light: #fbbf24;
+  --gold-soft: #fef3c7;
+  --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+
+  --ink: #0f0f1e;
+  --ink-2: #1a1a2e;
+  --ink-3: #2d2d4a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  --text-primary: #0f0f1e;
+  --text-secondary: #4a4a5e;
+  --text-muted: #6b7280;
+  --border-light: #e9ecef;
+  --border-medium: #d1d5db;
+  --surface: #ffffff;
+  --surface-2: #faf9f7;
+  --surface-3: #f4f3f1;
+
+  --header-h: 64px;
+
+  --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 100px;
+
+  --t-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-pop: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-body);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--zindua); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+}
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes floatCode {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-6px) rotate(4deg); }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* HEADER */
+.zh-header {
+  position: sticky; top: 0; z-index: 1000;
+  height: var(--header-h);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(15,15,30,0.06);
+  padding: 0 1.5rem;
+}
+.zh-header-inner {
+  max-width: 1400px; height: 100%; margin: 0 auto;
+  display: flex; align-items: center; gap: 1rem;
+}
+.zh-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; flex-shrink: 0; }
+.zh-logo img { height: 30px; }
+.zh-logo-text {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.05rem; color: var(--ink); letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+.zh-logo-text .accent {
+  background: var(--zindua-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.zh-crumb {
+  display: none; align-items: center; gap: 0.4rem;
+  font-family: var(--font-heading); font-size: 0.78rem;
+  color: var(--text-muted); font-weight: 500;
+  padding-left: 0.5rem; border-left: 1px solid var(--border-light);
+  margin-left: 0.3rem;
+}
+.zh-crumb a { color: var(--text-muted); text-decoration: none; }
+.zh-crumb a:hover { color: var(--zindua); }
+.zh-crumb i { font-size: 0.6rem; opacity: 0.6; }
+@media (min-width: 700px) { .zh-crumb { display: flex; } }
+
+.zh-nav { display: none; align-items: center; gap: 0.3rem; margin-left: auto; }
+@media (min-width: 900px) { .zh-nav { display: flex; } }
+.zh-nav-link {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.83rem; font-weight: 600;
+  font-family: var(--font-heading);
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  transition: all var(--t-fast); white-space: nowrap;
+  background: none; border: none; cursor: pointer;
+}
+.zh-nav-link i { font-size: 0.75rem; color: var(--text-muted); transition: color var(--t-fast); }
+.zh-nav-link:hover { color: var(--ink); background: rgba(15,15,30,0.04); }
+.zh-nav-link:hover i { color: var(--zindua); }
+.zh-nav-link.active {
+  background: white; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(15,15,30,0.06);
+}
+.zh-nav-link.active i { color: var(--zindua); }
+
+.zh-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+@media (min-width: 900px) { .zh-header-right { margin-left: 0; } }
+
+.zh-icon-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 0.95rem;
+  transition: background var(--t-fast);
+  position: relative;
+}
+.zh-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+.zh-icon-btn .dot-badge {
+  position: absolute; top: 5px; right: 5px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: var(--danger); color: white;
+  border-radius: var(--radius-pill); border: 2px solid white;
+  font-size: 0.55rem; font-weight: 800;
+  display: none; align-items: center; justify-content: center;
+  font-family: var(--font-heading);
+}
+.zh-icon-btn .dot-badge.visible { display: flex; }
+
+.zh-account-wrap { position: relative; }
+.zh-account-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+  border-radius: var(--radius-pill); background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  font-family: var(--font-body);
+}
+.zh-account-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.zh-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--zindua-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
+}
+.zh-account-name {
+  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-heading);
+}
+@media (max-width: 640px) { .zh-account-name { display: none; } }
+.zh-account-btn .fa-chevron-down { font-size: 0.55rem; color: var(--text-muted); transition: transform var(--t-base); }
+.zh-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+.zh-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 300px; background: white; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+}
+.zh-dropdown.active { display: block; animation: popIn 0.2s ease; }
+.zh-dd-header {
+  padding: 1rem 1.1rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.zh-dd-header .zh-avatar { width: 42px; height: 42px; font-size: 1rem; }
+.zh-dd-info { min-width: 0; flex: 1; }
+.zh-dd-name {
+  font-weight: 700; font-size: 0.9rem; color: var(--ink);
+  font-family: var(--font-heading);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.zh-dd-email {
+  font-size: 0.74rem; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.zh-dd-body { padding: 0.5rem; }
+.zh-dd-label {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+}
+.zh-dd-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--t-fast);
+  border: none; background: none; width: 100%;
+  text-align: left; font-size: 0.84rem;
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-body); font-weight: 500;
+}
+.zh-dd-item i { width: 18px; font-size: 0.82rem; color: var(--text-muted); transition: color var(--t-fast); }
+.zh-dd-item:hover { background: var(--surface-2); color: var(--ink); }
+.zh-dd-item:hover i { color: var(--zindua); }
+.zh-dd-item.danger { color: var(--danger); }
+.zh-dd-item.danger i { color: var(--danger); }
+.zh-dd-item.danger:hover { background: #fef2f2; }
+.zh-dd-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+
+/* MAIN */
+.zh-main {
+  max-width: 1400px; margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+@media (max-width: 640px) { .zh-main { padding: 1.25rem 1rem 3rem; } }
+
+/* HERO */
+.zh-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-xl);
+  padding: 2.2rem 2.4rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(15,15,30,0.15);
+}
+.zh-hero::before {
+  content: ''; position: absolute;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, var(--zindua) 0%, transparent 65%);
+  opacity: 0.3;
+  top: -200px; right: -160px; pointer-events: none;
+}
+.zh-hero::after {
+  content: ''; position: absolute;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(129,140,248,0.22) 0%, transparent 65%);
+  bottom: -180px; left: -100px; pointer-events: none;
+}
+.zh-hero-inner {
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 2rem; flex-wrap: wrap;
+}
+.zh-hero-left { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+.zh-hero-icon {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: var(--zindua-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.9rem; flex-shrink: 0;
+  box-shadow: 0 12px 32px rgba(79,70,229,0.4);
+}
+.zh-hero-icon i { animation: floatCode 6s ease-in-out infinite; }
+.zh-hero-text h1 {
+  color: white; font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800; font-family: var(--font-display);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.zh-hero-text p {
+  color: rgba(255,255,255,0.68); font-size: 0.88rem;
+  font-family: var(--font-heading); max-width: 520px;
+}
+.zh-hero-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.zh-hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80; animation: pulseDot 2s infinite;
+}
+.zh-hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+.zh-btn {
+  padding: 0.7rem 1.4rem; border: none; border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 0.84rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: all var(--t-base); font-family: var(--font-heading);
+  text-decoration: none; white-space: nowrap;
+}
+.zh-btn-zd {
+  background: var(--zindua-gradient); color: white;
+  box-shadow: 0 8px 22px rgba(79,70,229,0.4);
+}
+.zh-btn-zd:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(79,70,229,0.5); }
+.zh-btn-ghost {
+  background: rgba(255,255,255,0.1); color: white;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.zh-btn-ghost:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
+.zh-btn-dark { background: var(--ink); color: white; }
+.zh-btn-dark:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(15,15,30,0.25); }
+.zh-btn-outline {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.zh-btn-outline:hover { border-color: var(--zindua); color: var(--zindua); }
+.zh-btn-sm { padding: 0.42rem 1rem; font-size: 0.75rem; }
+.zh-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* STATS */
+.zh-stats {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 1100px) { .zh-stats { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .zh-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px)  { .zh-stats { grid-template-columns: 1fr; } }
+.zh-stat {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); padding: 1.1rem 1.2rem;
+  display: flex; align-items: center; gap: 0.85rem;
+  transition: all var(--t-fast);
+  position: relative; overflow: hidden;
+}
+.zh-stat::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--zindua-gradient);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform var(--t-slow);
+  border-radius: 0 4px 4px 0;
+}
+.zh-stat:hover::before { transform: scaleY(1); }
+.zh-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: rgba(79,70,229,0.25); }
+.zh-stat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.zh-stat-icon.zd     { background: var(--zindua-soft); color: var(--zindua-dark); }
+.zh-stat-icon.amber  { background: #fef3c7; color: #92400e; }
+.zh-stat-icon.purple { background: #f5f3ff; color: #7c3aed; }
+.zh-stat-icon.green  { background: #ecfdf5; color: #059669; }
+.zh-stat-icon.pink   { background: #fdf2f8; color: #db2777; }
+.zh-stat-value {
+  font-family: var(--font-display); font-size: 1.55rem;
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.zh-stat-label {
+  font-size: 0.7rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* FILTERS */
+.zh-filters {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.zh-filter-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.zh-filter-row + .zh-filter-row {
+  margin-top: 0.7rem; padding-top: 0.7rem;
+  border-top: 1px dashed var(--border-light);
+}
+.zh-filter-row-label {
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--text-muted); font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.7px;
+  margin-right: 0.3rem; white-space: nowrap;
+}
+.zh-chip {
+  padding: 0.42rem 0.9rem; border-radius: var(--radius-pill);
+  background: var(--surface-2); border: 1.5px solid transparent;
+  font-size: 0.74rem; font-weight: 600; font-family: var(--font-heading);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  white-space: nowrap;
+}
+.zh-chip:hover { background: var(--zindua-soft); color: var(--zindua-dark); }
+.zh-chip.active {
+  background: var(--zindua-gradient); color: white;
+  box-shadow: 0 4px 12px rgba(79,70,229,0.28);
+}
+.zh-chip .count {
+  font-size: 0.62rem; padding: 1px 6px; border-radius: 10px;
+  background: rgba(0,0,0,0.06); font-weight: 700;
+}
+.zh-chip.active .count { background: rgba(255,255,255,0.25); }
+.zh-chip i { font-size: 0.7rem; }
+
+.zh-search-wrap {
+  position: relative; flex: 1;
+  min-width: 220px; margin-left: auto;
+}
+.zh-search-wrap i {
+  position: absolute; left: 0.85rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted); font-size: 0.8rem;
+  pointer-events: none;
+}
+.zh-search {
+  width: 100%; padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-light);
+  background: var(--surface-2);
+  font-family: var(--font-body); font-size: 0.84rem;
+  color: var(--ink); transition: all var(--t-fast);
+}
+.zh-search:focus {
+  outline: none; background: white;
+  border-color: var(--zindua);
+  box-shadow: 0 0 0 3px var(--zindua-glow);
+}
+
+/* TASK GRID */
+.zh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 480px) { .zh-grid { grid-template-columns: 1fr; } }
+
+.zh-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all var(--t-base);
+  position: relative;
+  cursor: pointer;
+}
+.zh-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(15,15,30,0.1);
+  border-color: rgba(79,70,229,0.3);
+}
+.zh-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--zindua-soft), #c7d2fe);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.zh-card-media .placeholder-icon {
+  font-size: 2.4rem; color: var(--zindua);
+  opacity: 0.4;
+  animation: floatCode 5s ease-in-out infinite;
+}
+.zh-card-media .code-lines {
+  position: absolute;
+  inset: 0;
+  padding: 1.2rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.zh-card-media .code-line {
+  height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--zindua) 0%, transparent 100%);
+}
+.zh-card-media .code-line:nth-child(1) { width: 40%; }
+.zh-card-media .code-line:nth-child(2) { width: 70%; margin-left: 1rem; }
+.zh-card-media .code-line:nth-child(3) { width: 55%; margin-left: 2rem; }
+.zh-card-media .code-line:nth-child(4) { width: 80%; margin-left: 1rem; }
+.zh-card-media .code-line:nth-child(5) { width: 30%; margin-left: 2.5rem; }
+
+.zh-card-tech-badge {
+  position: absolute; top: 0.7rem; left: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(15,15,30,0.85);
+  backdrop-filter: blur(8px);
+  color: white; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zh-card-tech-badge i { font-size: 0.65rem; color: #a5b4fc; }
+.zh-card-diff-badge {
+  position: absolute; bottom: 0.7rem; left: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.62rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  backdrop-filter: blur(8px);
+}
+.zh-card-diff-badge.junior { background: rgba(16,185,129,0.9); color: white; }
+.zh-card-diff-badge.mid    { background: rgba(59,130,246,0.9); color: white; }
+.zh-card-diff-badge.senior { background: rgba(139,92,246,0.9); color: white; }
+
+.zh-card-status-badge {
+  position: absolute; top: 0.7rem; right: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.zh-card-status-badge.claimed  { background: var(--zindua-gradient); color: white; box-shadow: 0 4px 12px rgba(79,70,229,0.4); }
+.zh-card-status-badge.working  { background: #f59e0b; color: white; }
+.zh-card-status-badge.submitted { background: #8b5cf6; color: white; }
+.zh-card-status-badge.approved { background: #10b981; color: white; }
+.zh-card-status-badge.revision { background: #ef4444; color: white; }
+
+.zh-card-body {
+  padding: 1.1rem 1.15rem 1rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  flex: 1;
+}
+.zh-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.02rem; font-weight: 700;
+  color: var(--ink); line-height: 1.3;
+  letter-spacing: -0.015em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.zh-card-desc {
+  font-size: 0.82rem; color: var(--text-secondary);
+  line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.zh-card-tags {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+}
+.zh-tag {
+  padding: 0.2rem 0.55rem;
+  background: var(--surface-3);
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.25rem;
+}
+.zh-tag i { font-size: 0.6rem; color: var(--zindua); }
+.zh-card-meta {
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.zh-card-meta span {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zh-card-meta i { color: var(--zindua); font-size: 0.7rem; }
+.zh-card-foot {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.6rem;
+}
+.zh-card-pay {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--zindua-dark);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.zh-card-pay .unit {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-left: 3px;
+}
+
+.zh-pill {
+  padding: 0.3rem 0.7rem; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  white-space: nowrap;
+}
+.zh-pill.claimed   { background: var(--zindua-soft); color: var(--zindua-dark); }
+.zh-pill.working   { background: #fef3c7; color: #92400e; }
+.zh-pill.submitted { background: #e0e7ff; color: #4338ca; }
+.zh-pill.revision  { background: #fee2e2; color: #991b1b; }
+.zh-pill.approved  { background: #d1fae5; color: #065f46; }
+
+/* EMPTY */
+.zh-empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: white;
+  border: 1.5px dashed var(--border-medium);
+  border-radius: var(--radius-lg);
+}
+.zh-empty i {
+  font-size: 2.4rem; color: var(--zindua);
+  opacity: 0.35; margin-bottom: 0.6rem; display: block;
+}
+.zh-empty h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.35rem;
+}
+.zh-empty p {
+  font-size: 0.85rem; color: var(--text-muted);
+  max-width: 460px; margin: 0 auto;
+}
+.zh-empty .hint {
+  margin-top: 1rem;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--zindua-soft);
+  border: 1px solid rgba(79,70,229,0.15);
+  border-radius: 100px;
+  font-size: 0.78rem; color: var(--zindua-dark);
+  font-family: var(--font-heading); font-weight: 500;
+}
+
+.zh-loading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+.zh-loading-card {
+  height: 340px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* MODALS */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,15,30,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000; display: none;
+}
+.modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+
+.zh-modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white; border-radius: var(--radius-xl);
+  padding: 1.8rem 1.8rem 1.6rem;
+  max-width: 560px; width: calc(100% - 2rem);
+  z-index: 2001;
+  box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+  display: none; max-height: 92vh; overflow-y: auto;
+}
+.zh-modal.wide { max-width: 660px; }
+.zh-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.zh-modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: none; border: none; font-size: 1rem;
+  cursor: pointer; color: var(--text-muted);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+  z-index: 5;
+}
+.zh-modal-close:hover { color: var(--danger); background: #fef2f2; }
+
+.zh-modal-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
+  margin: -0.6rem -0.6rem 1.2rem;
+  position: relative; overflow: hidden;
+}
+.zh-modal-hero::before {
+  content: ''; position: absolute;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, var(--zindua) 0%, transparent 65%);
+  opacity: 0.3;
+  top: -140px; right: -110px; pointer-events: none;
+}
+.zh-modal-hero-inner { position: relative; z-index: 2; }
+.zh-modal-hero-title {
+  color: white; font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.25;
+  margin-bottom: 0.5rem;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+}
+.zh-modal-hero-title i {
+  color: #a5b4fc; margin-top: 5px; flex-shrink: 0;
+  font-size: 0.95rem;
+}
+.zh-modal-hero-meta {
+  display: flex; align-items: center; gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.zh-modal-hero-meta span {
+  color: rgba(255,255,255,0.72); font-size: 0.76rem;
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zh-modal-hero-meta span i { color: #a5b4fc; font-size: 0.7rem; }
+
+.zh-detail-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 1rem; }
+.zh-detail-item {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.85rem; gap: 1rem;
+}
+.zh-detail-item:last-child { border-bottom: none; }
+.zh-detail-label {
+  color: var(--text-muted); font-weight: 600;
+  font-family: var(--font-heading); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+.zh-detail-value {
+  color: var(--text-primary); font-weight: 500;
+  text-align: right; max-width: 65%;
+  word-break: break-word;
+}
+.zh-detail-value a {
+  color: var(--zindua-dark); text-decoration: none;
+  font-weight: 600; word-break: break-all;
+}
+.zh-detail-value a:hover { text-decoration: underline; }
+.zh-detail-value .pay {
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--zindua-dark); font-size: 1.05rem;
+}
+
+.zh-modal-section {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--border-light);
+}
+.zh-modal-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.72rem; font-weight: 800;
+  color: var(--zindua-dark);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.zh-modal-section-title i { font-size: 0.7rem; }
+
+.zh-stack-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.zh-stack-chip {
+  padding: 0.35rem 0.75rem;
+  background: var(--zindua-soft); color: var(--zindua-dark);
+  border: 1px solid rgba(79,70,229,0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem; font-weight: 600;
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zh-stack-chip i { font-size: 0.65rem; }
+
+.zh-banner {
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.05rem;
+  margin: 0.9rem 0;
+  font-size: 0.83rem;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  line-height: 1.5;
+}
+.zh-banner i { font-size: 1.05rem; margin-top: 2px; flex-shrink: 0; }
+.zh-banner.success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #065f46; }
+.zh-banner.warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #92400e; }
+.zh-banner.info    { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #1e40af; }
+.zh-banner.danger  { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #991b1b; }
+.zh-banner strong { font-weight: 700; }
+
+.zh-action-row {
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+.zh-action-row .zh-modal-btn { flex: 1; min-width: 140px; }
+
+.zh-modal-btn {
+  padding: 0.82rem 1.3rem;
+  border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600; font-size: 0.86rem;
+  cursor: pointer;
+  transition: all var(--t-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; text-decoration: none;
+}
+.zh-modal-btn.primary {
+  background: var(--zindua-gradient); color: white;
+  box-shadow: 0 8px 20px rgba(79,70,229,0.28);
+}
+.zh-modal-btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(79,70,229,0.38);
+}
+.zh-modal-btn.dark { background: var(--ink); color: white; }
+.zh-modal-btn.dark:hover:not(:disabled) {
+  background: var(--ink);
+  box-shadow: 0 12px 30px rgba(15,15,30,0.28);
+}
+.zh-modal-btn.secondary {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.zh-modal-btn.secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+.zh-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.zh-form-group { margin-bottom: 1rem; }
+.zh-form-group label {
+  display: block; font-size: 0.74rem; font-weight: 700;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  margin-bottom: 0.4rem;
+}
+.zh-input, .zh-textarea {
+  width: 100%; padding: 0.78rem 1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body); font-size: 0.88rem;
+  background: var(--surface-2); color: var(--ink);
+  transition: all var(--t-fast);
+}
+.zh-input:focus, .zh-textarea:focus {
+  outline: none; border-color: var(--zindua);
+  background: white;
+  box-shadow: 0 0 0 3px var(--zindua-glow);
+}
+.zh-textarea { resize: vertical; min-height: 80px; }
+.zh-input::placeholder, .zh-textarea::placeholder { color: var(--text-muted); }
+
+.zh-link-row {
+  display: flex; gap: 0.4rem; margin-bottom: 0.5rem; align-items: center;
+}
+.zh-link-row .zh-input { flex: 1; padding: 0.7rem 0.9rem; font-size: 0.84rem; }
+.zh-link-remove {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  border: none; background: #fef2f2; color: #dc2626;
+  cursor: pointer; font-size: 0.85rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.zh-link-remove:hover { background: #dc2626; color: white; }
+.zh-add-link {
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  border: 1.5px dashed var(--border-medium);
+  background: transparent; color: var(--zindua-dark);
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all var(--t-fast);
+}
+.zh-add-link:hover { border-color: var(--zindua); background: var(--zindua-soft); }
+
+.zh-hint {
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-top: 0.4rem; display: flex; align-items: flex-start; gap: 0.4rem;
+  line-height: 1.5;
+}
+.zh-hint i { color: var(--zindua); margin-top: 2px; }
+
+.zh-modal-plain h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 0.35rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.zh-modal-plain h3 i { color: var(--zindua); }
+.zh-modal-plain > p {
+  font-size: 0.82rem; color: var(--text-muted);
+  margin-bottom: 1.1rem;
+}
+
+.zh-timeline {
+  display: flex; align-items: center; gap: 0;
+  margin: 1rem 0 0.6rem;
+}
+.zh-tl-step {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; position: relative;
+}
+.zh-tl-step .dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--surface-2); color: var(--text-muted);
+  border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; z-index: 2;
+  transition: all var(--t-base);
+}
+.zh-tl-step .line {
+  position: absolute; top: 13px; left: 50%;
+  width: 100%; height: 2px;
+  background: var(--border-light); z-index: 1;
+}
+.zh-tl-step:last-child .line { display: none; }
+.zh-tl-step .label {
+  font-size: 0.62rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-top: 0.4rem; text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.zh-tl-step.done .dot { background: var(--success); color: white; border-color: var(--success); }
+.zh-tl-step.done .line { background: var(--success); }
+.zh-tl-step.done .label { color: var(--success); }
+.zh-tl-step.current .dot {
+  background: var(--zindua-gradient); color: white;
+  border-color: var(--zindua);
+  box-shadow: 0 0 0 4px var(--zindua-glow);
+}
+.zh-tl-step.current .line { background: var(--success); }
+.zh-tl-step.current .label { color: var(--zindua-dark); }
+
+.zh-submission {
+  background: var(--surface-2);
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-md);
+  font-size: 0.83rem;
+  border: 1px solid var(--border-light);
+}
+.zh-submission .links {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.zh-submission .links a {
+  color: var(--zindua-dark); font-weight: 600;
+  text-decoration: none; word-break: break-all;
+  font-size: 0.8rem;
+  display: flex; align-items: flex-start; gap: 0.4rem;
+}
+.zh-submission .links a i { margin-top: 4px; font-size: 0.7rem; flex-shrink: 0; }
+.zh-submission .links a:hover { text-decoration: underline; }
+.zh-submission .note {
+  color: var(--text-secondary); font-size: 0.78rem;
+  margin-top: 0.4rem; font-style: italic;
+  padding: 0.5rem 0.7rem; background: white;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--zindua);
+}
+.zh-submission .meta {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-top: 0.5rem; padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-light);
+}
+
+/* TOASTS */
+.toast-container {
+  position: fixed; top: calc(var(--header-h) + 16px); right: 16px;
+  z-index: 4000;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none; max-width: calc(100vw - 32px);
+}
+.toast {
+  background: var(--ink); color: white;
+  border-radius: var(--radius-md); padding: 0.8rem 1.1rem;
+  box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+  display: flex; align-items: center; gap: 0.65rem;
+  font-family: var(--font-heading); font-size: 0.85rem;
+  animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 360px; font-weight: 500; pointer-events: auto;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.toast i { font-size: 0.95rem; }
+.toast.success i { color: #34d399; }
+.toast.error i { color: #f87171; }
+.toast.info i { color: #a5b4fc; }
+.toast.leaving { opacity: 0; transform: translateX(24px); }
+
+/* FOOTER */
+.zh-footer {
+  border-top: 1px solid var(--border-light);
+  background: white;
+  padding: 1.4rem 1.5rem;
+  margin-top: 3rem;
+}
+.zh-footer-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.zh-footer-brand {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-weight: 700; color: var(--ink);
+}
+.zh-footer-brand i { color: var(--zindua); }
+.zh-footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.zh-footer-links a {
+  color: var(--text-muted); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.zh-footer-links a:hover { color: var(--zindua); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
+
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+<header class="zh-header">
+  <div class="zh-header-inner">
+    <a href="../../index.html" class="zh-logo" aria-label="Back to Janta">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="zh-logo-text">Jan<span class="accent">ta</span></span>
+    </a>
+
+    <nav class="zh-crumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Janta</a>
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <a href="index.html">Zindua Hub</a>
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <span style="color:var(--zindua-dark);font-weight:600;">My Tasks</span>
+    </nav>
+
+    <nav class="zh-nav" aria-label="Zindua navigation">
+      <a href="index.html" class="zh-nav-link">
+        <i class="fas fa-code" aria-hidden="true"></i> <span>Open Tasks</span>
+      </a>
+      <a href="my-tasks.html" class="zh-nav-link active">
+        <i class="fas fa-clipboard-check" aria-hidden="true"></i> <span>My Tasks</span>
+      </a>
+      <a href="../../index.html" class="zh-nav-link">
+        <i class="fas fa-cube" aria-hidden="true"></i> <span>Janta</span>
+      </a>
+    </nav>
+
+    <div class="zh-header-right">
+      <button type="button" class="zh-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotifications(event)">
+        <i class="far fa-bell" aria-hidden="true"></i>
+        <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
+      </button>
+
+      <div class="zh-account-wrap" id="accountWrap"></div>
+    </div>
+  </div>
+</header>
+
+<main class="zh-main" id="main">
+
+  <section class="zh-hero" aria-labelledby="heroTitle">
+    <div class="zh-hero-inner">
+      <div class="zh-hero-left">
+        <div class="zh-hero-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+        <div class="zh-hero-text">
+          <h1 id="heroTitle">My Tech Tasks</h1>
+          <p>Every Zindua task you've claimed — track progress, submit work, and get paid.</p>
+          <div class="zh-hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="heroStatus">Loading your tasks…</span>
+          </div>
+        </div>
+      </div>
+      <div class="zh-hero-actions">
+        <button type="button" class="zh-btn zh-btn-ghost" onclick="scrollToTasks()">
+          <i class="fas fa-arrow-down" aria-hidden="true"></i> Jump to tasks
+        </button>
+        <a href="index.html" class="zh-btn zh-btn-zd">
+          <i class="fas fa-code" aria-hidden="true"></i> Open Tasks
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="zh-stats" aria-label="Task statistics">
+    <div class="zh-stat">
+      <div class="zh-stat-icon zd"><i class="fas fa-hand-sparkles" aria-hidden="true"></i></div>
+      <div>
+        <div class="zh-stat-value" id="statClaimed">—</div>
+        <div class="zh-stat-label">Claimed</div>
+      </div>
+    </div>
+    <div class="zh-stat">
+      <div class="zh-stat-icon amber"><i class="fas fa-code" aria-hidden="true"></i></div>
+      <div>
+        <div class="zh-stat-value" id="statWorking">—</div>
+        <div class="zh-stat-label">Working</div>
+      </div>
+    </div>
+    <div class="zh-stat">
+      <div class="zh-stat-icon purple"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+      <div>
+        <div class="zh-stat-value" id="statSubmitted">—</div>
+        <div class="zh-stat-label">Submitted</div>
+      </div>
+    </div>
+    <div class="zh-stat">
+      <div class="zh-stat-icon green"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+      <div>
+        <div class="zh-stat-value" id="statApproved">—</div>
+        <div class="zh-stat-label">Approved</div>
+      </div>
+    </div>
+    <div class="zh-stat">
+      <div class="zh-stat-icon pink"><i class="fas fa-coins" aria-hidden="true"></i></div>
+      <div>
+        <div class="zh-stat-value" id="statEarned">—</div>
+        <div class="zh-stat-label">Earned (KES)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zh-filters" id="tasks" aria-label="Task filters">
+    <div class="zh-filter-row">
+      <span class="zh-filter-row-label">Status</span>
+      <button type="button" class="zh-chip active" data-status="all" onclick="setStatusFilter('all')">
+        All <span class="count" id="countAll">0</span>
+      </button>
+      <button type="button" class="zh-chip" data-status="claimed" onclick="setStatusFilter('claimed')">
+        <i class="fas fa-hand-sparkles" aria-hidden="true"></i> Claimed <span class="count" id="countClaimed">0</span>
+      </button>
+      <button type="button" class="zh-chip" data-status="working" onclick="setStatusFilter('working')">
+        <i class="fas fa-code" aria-hidden="true"></i> Working <span class="count" id="countWorking">0</span>
+      </button>
+      <button type="button" class="zh-chip" data-status="submitted" onclick="setStatusFilter('submitted')">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Submitted <span class="count" id="countSubmitted">0</span>
+      </button>
+      <button type="button" class="zh-chip" data-status="revision" onclick="setStatusFilter('revision')">
+        <i class="fas fa-redo" aria-hidden="true"></i> Revision <span class="count" id="countRevision">0</span>
+      </button>
+      <button type="button" class="zh-chip" data-status="approved" onclick="setStatusFilter('approved')">
+        <i class="fas fa-circle-check" aria-hidden="true"></i> Approved <span class="count" id="countApproved">0</span>
+      </button>
+    </div>
+
+    <div class="zh-filter-row">
+      <span class="zh-filter-row-label">Tech</span>
+      <div id="techChips" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+
+      <div class="zh-search-wrap">
+        <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" id="searchInput" class="zh-search" placeholder="Search tasks, stacks, clients…" aria-label="Search tasks" oninput="onSearchInput()">
+      </div>
+    </div>
+  </section>
+
+  <section id="taskGrid" aria-live="polite" aria-busy="true">
+    <div class="zh-loading-grid">
+      <div class="zh-loading-card"></div>
+      <div class="zh-loading-card"></div>
+      <div class="zh-loading-card"></div>
+      <div class="zh-loading-card"></div>
+      <div class="zh-loading-card"></div>
+      <div class="zh-loading-card"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="zh-footer">
+  <div class="zh-footer-inner">
+    <div class="zh-footer-brand">
+      <i class="fas fa-rocket" aria-hidden="true"></i> Zindua Hub · by Janta
+    </div>
+    <nav class="zh-footer-links" aria-label="Footer">
+      <a href="index.html">Open Tasks</a>
+      <a href="../../index.html">Janta</a>
+      <a href="mailto:operations@kazinni.com">Contact</a>
+    </nav>
+    <div>© <span id="footerYear"></span> Teleio Savour</div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="zh-modal wide" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+  <button type="button" class="zh-modal-close" onclick="closeDetail()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div id="detailBody"></div>
+</div>
+
+<div class="modal-overlay" id="submitOverlay" onclick="closeSubmit()"></div>
+<div class="zh-modal wide" id="submitModal" role="dialog" aria-modal="true" aria-labelledby="submitTitle" aria-hidden="true">
+  <button type="button" class="zh-modal-close" onclick="closeSubmit()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="zh-modal-plain">
+    <h3 id="submitTitle"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit your tech work</h3>
+    <p id="submitSubtitle">—</p>
+
+    <form id="submitForm" onsubmit="submitWork(event)">
+      <input type="hidden" id="submitTaskId">
+
+      <div class="zh-form-group">
+        <label>Submission Links</label>
+        <div id="submitLinks"></div>
+        <button type="button" class="zh-add-link" onclick="addLinkField('')">
+          <i class="fas fa-plus" aria-hidden="true"></i> Add another link
+        </button>
+        <div class="zh-hint">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          <span>Paste repo, deployed URL, Figma file or demo video. Reviewers need to see what you built.</span>
+        </div>
+      </div>
+
+      <div class="zh-form-group">
+        <label>Notes for Reviewer (optional)</label>
+        <textarea class="zh-textarea" id="submitNotes" rows="3" placeholder="What did you build? Any deploy notes, credentials, or known limitations…"></textarea>
+      </div>
+
+      <div class="zh-action-row">
+        <button type="submit" class="zh-modal-btn primary" id="submitBtn">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review
+        </button>
+        <button type="button" class="zh-modal-btn secondary" style="flex:0 0 auto;" onclick="closeSubmit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+let auth, database;
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  database = firebase.database();
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+} catch (e) { console.error('Firebase init failed:', e); }
+
+/* TECH CATEGORIES */
+const TECH_CATEGORIES = {
+  frontend:  { name: 'Frontend',      icon: 'fa-code',           color: '#0ea5e9' },
+  backend:   { name: 'Backend',       icon: 'fa-server',         color: '#059669' },
+  fullstack: { name: 'Full Stack',    icon: 'fa-layer-group',    color: '#7c3aed' },
+  mobile:    { name: 'Mobile',        icon: 'fa-mobile-screen',  color: '#f59e0b' },
+  data:      { name: 'Data & ML',     icon: 'fa-chart-line',     color: '#db2777' },
+  devops:    { name: 'DevOps / Cloud', icon: 'fa-cloud',         color: '#0891b2' },
+  design:    { name: 'UI/UX Design',  icon: 'fa-pen-ruler',      color: '#e11d48' },
+  security:  { name: 'Security',      icon: 'fa-shield-halved',  color: '#dc2626' },
+  qa:        { name: 'QA & Testing',  icon: 'fa-vial-circle-check', color: '#16a34a' },
+  other:     { name: 'Other Tech',    icon: 'fa-microchip',      color: '#4f46e5' }
+};
+
+const DIFFICULTY = {
+  junior: { name: 'Junior',  color: '#10b981' },
+  mid:    { name: 'Mid',     color: '#3b82f6' },
+  senior: { name: 'Senior',  color: '#8b5cf6' }
+};
+
+/* STATE */
+let currentUser = null;
+let currentTasker = null;
+let currentPerms = {};
+let allTasks = [];
+let myTasks = [];
+let filteredTasks = [];
+let techFilters = new Set();
+let statusFilter = 'all';
+let searchTerm = '';
+let currentDetailTask = null;
+let dataListener = null;
+let notifListener = null;
+let notifications = [];
+let lastSeenNotif = 0;
+
+/* UTILS */
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'Just now';
+}
+
+function formatDate(str) {
+  if (!str) return '';
+  try {
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return str;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch (e) { return str; }
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function techInfo(key) { return TECH_CATEGORIES[key] || TECH_CATEGORIES.other; }
+function difficultyInfo(key) { return DIFFICULTY[key] || null; }
+
+function showToast(msg, type = 'info') {
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
+}
+
+function claimStatusBadge(status) {
+  const s = (status || 'claimed').toLowerCase();
+  const map = {
+    'claimed': 'claimed', 'working': 'working', 'started': 'working',
+    'submitted': 'submitted', 'review': 'submitted',
+    'revision': 'revision',
+    'approved': 'approved', 'completed': 'approved'
+  };
+  const labels = {
+    'claimed': 'Claimed', 'working': 'Working', 'started': 'Working',
+    'submitted': 'Submitted', 'review': 'Submitted',
+    'revision': 'Revision',
+    'approved': 'Approved', 'completed': 'Approved'
+  };
+  const cls = map[s] || 'claimed';
+  const label = labels[s] || s;
+  return `<span class="zh-pill ${cls}">${escapeHtml(label)}</span>`;
+}
+
+/* AUTH GATE */
+if (auth) {
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) { window.location.href = '../../index.html'; return; }
+    currentUser = user;
+
+    try {
+      const snap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+      currentPerms = snap.exists() ? (snap.val() || {}) : {};
+    } catch (e) { currentPerms = {}; }
+
+    const hasAccess = currentPerms.zindua === true || currentPerms.ekazi === true;
+    if (!hasAccess) {
+      document.getElementById('main').innerHTML = `
+        <div class="zh-empty" style="margin-top:2rem;">
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <h3>No access to Zindua Hub</h3>
+          <p>Your account has not been granted access to the tech-task board. Contact your Janta coordinator to request access.</p>
+          <div style="margin-top:1.2rem;">
+            <a href="../../index.html" class="zh-btn zh-btn-zd">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Janta
+            </a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    try {
+      const snap = await database.ref(`taskers/${user.uid}`).once('value');
+      currentTasker = snap.exists() ? snap.val() : null;
+    } catch (e) { currentTasker = null; }
+
+    renderAccount();
+    attachTaskListener();
+    attachNotifListener();
+    setFooterYear();
+  });
+}
+
+function setFooterYear() {
+  const el = document.getElementById('footerYear');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ACCOUNT */
+function renderAccount() {
+  const wrap = document.getElementById('accountWrap');
+  if (!wrap || !currentUser) return;
+
+  const name = (currentTasker && currentTasker.name)
+    || currentUser.displayName
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'Tasker');
+  const initials = getInitials(name);
+  const email = currentUser.email || '';
+
+  wrap.innerHTML = `
+    <button type="button" class="zh-account-btn" id="accountBtn" onclick="toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+      <div class="zh-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+      <span class="zh-account-name">${escapeHtml(name)}</span>
+      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <div class="zh-dropdown" id="accountDropdown" role="menu">
+      <div class="zh-dd-header">
+        <div class="zh-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+        <div class="zh-dd-info">
+          <div class="zh-dd-name">${escapeHtml(name)}</div>
+          <div class="zh-dd-email">${escapeHtml(email)}</div>
+        </div>
+      </div>
+      <div class="zh-dd-body">
+        <div class="zh-dd-label">Zindua Hub</div>
+        <a href="my-tasks.html" class="zh-dd-item" role="menuitem">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i> My tech tasks
+        </a>
+        <a href="index.html" class="zh-dd-item" role="menuitem">
+          <i class="fas fa-code" aria-hidden="true"></i> Open task board
+        </a>
+        <div class="zh-dd-divider"></div>
+        <div class="zh-dd-label">Janta workspace</div>
+        ${renderDropdownApps()}
+        <div class="zh-dd-divider"></div>
+        <button type="button" class="zh-dd-item danger" onclick="handleSignOut()" role="menuitem">
+          <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderDropdownApps() {
+  const apps = [
+    { name: 'FlexiKazi',  icon: 'fa-list-check',     link: '../flexikazi/my-tasks.html',  perm: 'ekazi',      fallback: null },
+    { name: 'Kasikazi',   icon: 'fa-bullhorn',       link: '../kasikazi/',                perm: 'kasikazi',   fallback: 'ekazi' },
+    { name: 'CraftiKazi', icon: 'fa-hammer',         link: '../craftikazi/',              perm: 'craftikazi', fallback: 'ekazi' },
+    { name: 'Learning',   icon: 'fa-graduation-cap', link: '../../learning/index.html',   perm: 'learning',   fallback: null },
+    { name: 'Janta Home', icon: 'fa-cube',           link: '../../index.html',            perm: null,         fallback: null }
+  ];
+  return apps
+    .filter(a => {
+      if (a.perm === null) return true;
+      if (currentPerms[a.perm] === true) return true;
+      if (a.fallback && currentPerms[a.fallback] === true) return true;
+      return false;
+    })
+    .map(a => `
+      <a href="${escapeHtml(a.link)}" class="zh-dd-item" role="menuitem">
+        <i class="fas ${escapeHtml(a.icon)}" aria-hidden="true"></i> ${escapeHtml(a.name)}
+      </a>
+    `).join('');
+}
+
+window.toggleDropdown = function(e) {
+  if (e) e.stopPropagation();
+  const btn = document.getElementById('accountBtn');
+  const dd = document.getElementById('accountDropdown');
+  if (!btn || !dd) return;
+  const open = dd.classList.toggle('active');
+  btn.classList.toggle('active', open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+};
+
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('accountWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = document.getElementById('accountDropdown');
+    const btn = document.getElementById('accountBtn');
+    if (dd) dd.classList.remove('active');
+    if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+  }
+});
+
+window.handleSignOut = async function() {
+  if (!confirm('Sign out of Zindua Hub?')) return;
+  detachListeners();
+  await auth.signOut();
+  window.location.href = '../../index.html';
+};
+
+/* TASK LISTENER (whole node, filter by claimedBy) */
+function attachTaskListener() {
+  detachTaskListener();
+  const uid = currentUser.uid;
+
+  const ref = database.ref('zindua_tasks');
+  const cb = (snap) => {
+    const val = snap.val() || {};
+    allTasks = Object.entries(val)
+      .map(([id, t]) => ({ id, ...t }))
+      .sort((a, b) => (b.postedAt || 0) - (a.postedAt || 0));
+
+    myTasks = allTasks.filter(t => t.claimedBy && t.claimedBy[uid]);
+    updateCounts();
+    updateStats();
+    applyFilters();
+  };
+
+  ref.on('value', cb, (err) => {
+    console.error('Task listener error:', err);
+    const container = document.getElementById('taskGrid');
+    const code = err && err.code;
+    let title = 'Could not load tasks';
+    let msg = 'Something went wrong loading your claimed tasks. Try refreshing.';
+    if (code === 'PERMISSION_DENIED') {
+      title = 'Access denied';
+      msg = 'Your account does not have permission to read Zindua tasks. Ask your coordinator to grant the "zindua" or "ekazi" permission.';
+    } else if (code === 'NETWORK_ERROR' || code === 'DISCONNECTED') {
+      title = 'Network unavailable';
+      msg = 'We could not reach the server. Check your connection and refresh.';
+    }
+    container.innerHTML = `
+      <div class="zh-empty">
+        <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(msg)}</p>
+        <div style="margin-top:1.2rem;">
+          <button type="button" class="zh-btn zh-btn-zd" onclick="location.reload()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i> Retry
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  dataListener = { ref, cb };
+}
+
+function detachTaskListener() {
+  if (dataListener) {
+    try { dataListener.ref.off('value', dataListener.cb); } catch (e) {}
+    dataListener = null;
+  }
+}
+
+/* NOTIFICATIONS */
+function attachNotifListener() {
+  detachNotifListener();
+  if (!currentUser) return;
+  lastSeenNotif = Number(localStorage.getItem('zindua_notif_lastseen') || 0);
+  try {
+    const ref = database.ref(`kazinni_notifications/${currentUser.uid}`).limitToLast(30);
+    const cb = (snap) => {
+      const val = snap.val() || {};
+      notifications = Object.entries(val)
+        .map(([id, n]) => ({ id, ...n }))
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      updateNotifBadge();
+    };
+    ref.on('value', cb, () => {});
+    notifListener = { ref, cb };
+  } catch (e) {}
+}
+
+function detachNotifListener() {
+  if (notifListener) {
+    try { notifListener.ref.off('value', notifListener.cb); } catch (e) {}
+    notifListener = null;
+  }
+}
+
+function updateNotifBadge() {
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  const unread = notifications.filter(n => (n.timestamp || 0) > lastSeenNotif && n.read !== true).length;
+  if (unread > 0) {
+    badge.textContent = unread > 9 ? '9+' : String(unread);
+    badge.classList.add('visible');
+  } else badge.classList.remove('visible');
+}
+
+window.toggleNotifications = function(e) {
+  if (e) e.stopPropagation();
+  if (notifications.length === 0) { showToast('No notifications yet', 'info'); return; }
+  localStorage.setItem('zindua_notif_lastseen', String(Date.now()));
+  lastSeenNotif = Date.now();
+  updateNotifBadge();
+  const latest = notifications[0];
+  showToast(`${latest.title || 'Notification'} — ${latest.body || ''}`, 'info');
+};
+
+/* COUNTS / STATS */
+function claimStatus(t) {
+  const uid = currentUser.uid;
+  const c = t.claimedBy && t.claimedBy[uid];
+  return c ? (c.status || 'claimed').toLowerCase() : null;
+}
+
+function updateCounts() {
+  const counts = { all: myTasks.length, claimed: 0, working: 0, submitted: 0, revision: 0, approved: 0 };
+  myTasks.forEach(t => {
+    const s = claimStatus(t);
+    if (!s) return;
+    if (s === 'approved' || s === 'completed') counts.approved++;
+    else if (s === 'revision') counts.revision++;
+    else if (s === 'submitted' || s === 'review') counts.submitted++;
+    else if (s === 'working' || s === 'started') counts.working++;
+    else counts.claimed++;
+  });
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('countAll', counts.all);
+  set('countClaimed', counts.claimed);
+  set('countWorking', counts.working);
+  set('countSubmitted', counts.submitted);
+  set('countRevision', counts.revision);
+  set('countApproved', counts.approved);
+}
+
+function updateStats() {
+  let claimed = 0, working = 0, submitted = 0, approved = 0, earned = 0;
+  myTasks.forEach(t => {
+    const s = claimStatus(t);
+    const amount = Number(t.payRate) || 0;
+    if (!s) return;
+    if (s === 'approved' || s === 'completed') { approved++; earned += amount; }
+    else if (s === 'submitted' || s === 'review') submitted++;
+    else if (s === 'working' || s === 'started') working++;
+    else claimed++;
+  });
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('statClaimed', claimed);
+  set('statWorking', working);
+  set('statSubmitted', submitted);
+  set('statApproved', approved);
+  set('statEarned', earned.toLocaleString());
+
+  const heroStatus = document.getElementById('heroStatus');
+  if (heroStatus) {
+    heroStatus.textContent = myTasks.length === 0
+      ? 'No tech tasks claimed yet'
+      : `${myTasks.length} task${myTasks.length === 1 ? '' : 's'} claimed · ${claimed + working} active`;
+  }
+}
+
+/* FILTERS */
+window.setStatusFilter = function(status) {
+  statusFilter = status;
+  document.querySelectorAll('.zh-chip[data-status]').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.status === status);
+  });
+  applyFilters();
+};
+
+window.onSearchInput = function() {
+  const el = document.getElementById('searchInput');
+  searchTerm = (el ? el.value : '').toLowerCase().trim();
+  applyFilters();
+};
+
+window.toggleTechFilter = function(key) {
+  if (techFilters.has(key)) techFilters.delete(key);
+  else techFilters.add(key);
+  renderTechChips();
+  applyFilters();
+};
+
+function applyFilters() {
+  filteredTasks = myTasks.filter(t => {
+    const s = claimStatus(t);
+    if (!s) return false;
+    if (statusFilter !== 'all') {
+      if (statusFilter === 'approved') { if (s !== 'approved' && s !== 'completed') return false; }
+      else if (statusFilter === 'submitted') { if (s !== 'submitted' && s !== 'review') return false; }
+      else if (statusFilter === 'revision') { if (s !== 'revision') return false; }
+      else if (statusFilter === 'working') { if (s !== 'working' && s !== 'started') return false; }
+      else if (statusFilter === 'claimed') { if (!['claimed', ''].includes(s)) return false; }
+    }
+    if (techFilters.size > 0) {
+      const key = t.tech || 'other';
+      if (!techFilters.has(key)) return false;
+    }
+    if (searchTerm) {
+      const stackArr = Array.isArray(t.stack) ? t.stack.join(' ') : (t.stack || '');
+      const hay = [t.title || '', t.description || '', t.clientName || '', stackArr].join(' ').toLowerCase();
+      if (!hay.includes(searchTerm)) return false;
+    }
+    return true;
+  });
+  renderTasks();
+  renderTechChips();
+}
+
+function renderTechChips() {
+  const container = document.getElementById('techChips');
+  if (!container) return;
+  const counts = {};
+  myTasks.forEach(t => {
+    const key = t.tech || 'other';
+    counts[key] = (counts[key] || 0) + 1;
+  });
+  const keys = Object.keys(TECH_CATEGORIES).filter(k => counts[k] > 0);
+  if (keys.length === 0) {
+    container.innerHTML = `<span style="font-size:0.74rem;color:var(--text-muted);">No tech categories yet</span>`;
+    return;
+  }
+  container.innerHTML = keys.map(k => {
+    const c = TECH_CATEGORIES[k];
+    const active = techFilters.has(k) ? 'active' : '';
+    return `
+      <button type="button" class="zh-chip ${active}" data-tech="${escapeHtml(k)}" onclick="toggleTechFilter('${escapeHtml(k)}')">
+        <i class="fas ${escapeHtml(c.icon)}" aria-hidden="true"></i>
+        ${escapeHtml(c.name)}
+        <span class="count">${counts[k]}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+/* RENDER */
+function renderTasks() {
+  const container = document.getElementById('taskGrid');
+  if (!container) return;
+  container.setAttribute('aria-busy', 'false');
+
+  if (filteredTasks.length === 0) {
+    if (myTasks.length === 0) {
+      container.innerHTML = `
+        <div class="zh-empty">
+          <i class="fas fa-code" aria-hidden="true"></i>
+          <h3>No tech tasks claimed yet</h3>
+          <p>Head to the Zindua open board, claim a task, and it will appear here for you to work on and submit.</p>
+          <div class="hint"><i class="fas fa-arrow-up"></i> Claim a task from the open board</div>
+          <div style="margin-top:1.2rem;">
+            <a href="index.html" class="zh-btn zh-btn-zd">
+              <i class="fas fa-code" aria-hidden="true"></i> Open task board
+            </a>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="zh-empty">
+          <i class="fas fa-filter" aria-hidden="true"></i>
+          <h3>No matches</h3>
+          <p>Try changing the filter or clearing the search.</p>
+        </div>
+      `;
+    }
+    return;
+  }
+
+  container.innerHTML = `<div class="zh-grid">${filteredTasks.map(taskCard).join('')}</div>`;
+}
+
+function taskCard(t) {
+  const tech = techInfo(t.tech);
+  const diff = difficultyInfo(t.difficulty);
+  const s = claimStatus(t);
+  const pay = t.payRate ? `KES ${Number(t.payRate).toLocaleString()}` : '—';
+  const due = t.dueDate ? formatDate(t.dueDate) : '—';
+  const stackArr = Array.isArray(t.stack) ? t.stack.slice(0, 3) : [];
+  const extraStack = Array.isArray(t.stack) && t.stack.length > 3 ? t.stack.length - 3 : 0;
+
+  const statusClass = ['claimed', 'working', 'submitted', 'approved', 'revision'].includes(s) ? s : 'claimed';
+
+  return `
+    <article class="zh-card" role="button" tabindex="0"
+      onclick="viewTask('${escapeHtml(t.id)}')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();viewTask('${escapeHtml(t.id)}');}"
+      aria-label="${escapeHtml(t.title || 'Tech task')}">
+      <div class="zh-card-media">
+        <div class="code-lines" aria-hidden="true">
+          <div class="code-line"></div><div class="code-line"></div><div class="code-line"></div>
+          <div class="code-line"></div><div class="code-line"></div>
+        </div>
+        <div class="placeholder-icon"><i class="fas ${escapeHtml(tech.icon)}"></i></div>
+        <span class="zh-card-tech-badge">
+          <i class="fas ${escapeHtml(tech.icon)}" aria-hidden="true"></i>
+          ${escapeHtml(tech.name)}
+        </span>
+        ${diff ? `<span class="zh-card-diff-badge ${escapeHtml(t.difficulty)}">${escapeHtml(diff.name)}</span>` : ''}
+        <span class="zh-card-status-badge ${statusClass}">${escapeHtml(labelForStatus(s))}</span>
+      </div>
+      <div class="zh-card-body">
+        <h3 class="zh-card-title">${escapeHtml(t.title || 'Untitled tech task')}</h3>
+        <p class="zh-card-desc">${escapeHtml(t.description || 'No description provided.')}</p>
+        ${stackArr.length ? `
+          <div class="zh-card-tags">
+            ${stackArr.map(x => `<span class="zh-tag"><i class="fas fa-code-branch" aria-hidden="true"></i> ${escapeHtml(x)}</span>`).join('')}
+            ${extraStack ? `<span class="zh-tag">+${extraStack}</span>` : ''}
+          </div>
+        ` : ''}
+        <div class="zh-card-meta">
+          ${t.clientName ? `<span><i class="fas fa-user" aria-hidden="true"></i> ${escapeHtml(t.clientName)}</span>` : ''}
+          <span><i class="fas fa-calendar" aria-hidden="true"></i> Due ${escapeHtml(due)}</span>
+        </div>
+        <div class="zh-card-foot">
+          <div class="zh-card-pay">${escapeHtml(pay.replace('KES ', ''))}<span class="unit">KES</span></div>
+          ${claimStatusBadge(s)}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function labelForStatus(s) {
+  const map = {
+    'claimed': 'Claimed', 'working': 'Working', 'started': 'Working',
+    'submitted': 'Submitted', 'review': 'Submitted',
+    'revision': 'Revision', 'approved': 'Approved', 'completed': 'Approved'
+  };
+  return map[(s || 'claimed').toLowerCase()] || 'Claimed';
+}
+
+/* DETAIL MODAL */
+window.viewTask = function(id) {
+  const t = myTasks.find(x => x.id === id);
+  if (!t) { showToast('Task not found', 'error'); return; }
+
+  currentDetailTask = t;
+  const tech = techInfo(t.tech);
+  const diff = difficultyInfo(t.difficulty);
+  const uid = currentUser.uid;
+  const c = t.claimedBy && t.claimedBy[uid];
+  const s = (c && c.status ? c.status : 'claimed').toLowerCase();
+  const due = t.dueDate ? formatDate(t.dueDate) : '—';
+  const stack = Array.isArray(t.stack) ? t.stack : [];
+  const links = Array.isArray(c && c.submissionLinks)
+    ? c.submissionLinks
+    : (c && c.submissionLinks ? [c.submissionLinks] : []);
+
+  const timeline = buildTimeline(s);
+  const actions = buildActions(t, s);
+
+  const reviewerNoteBlock = (s === 'revision' && c && c.reviewNote) ? `
+    <div class="zh-banner danger" style="margin-top:0.8rem;">
+      <i class="fas fa-comment-dots" aria-hidden="true"></i>
+      <div><strong>Reviewer feedback:</strong><br>${escapeHtml(c.reviewNote)}</div>
+    </div>
+  ` : '';
+
+  const submissionBlock = links.length ? `
+    <div class="zh-modal-section">
+      <div class="zh-modal-section-title">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Your Submission
+        ${claimStatusBadge(s)}
+      </div>
+      <div class="zh-submission">
+        <div class="links">
+          ${links.map(l => `<a href="${escapeHtml(l)}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> <span>${escapeHtml(l)}</span></a>`).join('')}
+        </div>
+        ${c.submissionNotes ? `<div class="note">"${escapeHtml(c.submissionNotes)}"</div>` : ''}
+        <div class="meta">
+          <span><i class="fas fa-clock" aria-hidden="true"></i> Submitted ${c.submittedAt ? getTimeAgo(c.submittedAt) : '—'}</span>
+        </div>
+      </div>
+    </div>
+  ` : '';
+
+  document.getElementById('detailBody').innerHTML = `
+    <div class="zh-modal-hero">
+      <div class="zh-modal-hero-inner">
+        <h2 class="zh-modal-hero-title" id="detailTitle">
+          <i class="fas ${escapeHtml(tech.icon)}" aria-hidden="true"></i>
+          <span>${escapeHtml(t.title || 'Untitled tech task')}</span>
+        </h2>
+        <div class="zh-modal-hero-meta">
+          ${claimStatusBadge(s)}
+          <span><i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(tech.name)}</span>
+          ${diff ? `<span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(diff.name)}</span>` : ''}
+          <span><i class="fas fa-hashtag" aria-hidden="true"></i> ${escapeHtml(t.id.slice(-8))}</span>
+        </div>
+      </div>
+    </div>
+
+    ${timeline}
+
+    <div class="zh-detail-list" style="margin-top:1rem;">
+      <div class="zh-detail-item">
+        <span class="zh-detail-label">Pay Rate</span>
+        <span class="zh-detail-value"><span class="pay">KES ${Number(t.payRate || 0).toLocaleString()}</span></span>
+      </div>
+      <div class="zh-detail-item">
+        <span class="zh-detail-label">Client</span>
+        <span class="zh-detail-value">
+          ${escapeHtml(t.clientName || '—')}
+          ${t.clientEmail ? `<br><span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(t.clientEmail)}</span>` : ''}
+        </span>
+      </div>
+      <div class="zh-detail-item">
+        <span class="zh-detail-label">Due Date</span>
+        <span class="zh-detail-value">${escapeHtml(due)}</span>
+      </div>
+      <div class="zh-detail-item">
+        <span class="zh-detail-label">Claimed</span>
+        <span class="zh-detail-value">${c && c.claimedAt ? getTimeAgo(c.claimedAt) : '—'}</span>
+      </div>
+      ${t.repoLink ? `
+        <div class="zh-detail-item">
+          <span class="zh-detail-label">Repo / Starter</span>
+          <span class="zh-detail-value"><a href="${escapeHtml(t.repoLink)}" target="_blank" rel="noopener"><i class="fas fa-code-branch" aria-hidden="true"></i> Open</a></span>
+        </div>
+      ` : ''}
+      ${t.jobLink ? `
+        <div class="zh-detail-item">
+          <span class="zh-detail-label">Reference</span>
+          <span class="zh-detail-value"><a href="${escapeHtml(t.jobLink)}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open</a></span>
+        </div>
+      ` : ''}
+    </div>
+
+    ${stack.length ? `
+      <div class="zh-modal-section">
+        <div class="zh-modal-section-title"><i class="fas fa-code-branch" aria-hidden="true"></i> Tech Stack</div>
+        <div class="zh-stack-list">
+          ${stack.map(x => `<span class="zh-stack-chip"><i class="fas fa-cube" aria-hidden="true"></i> ${escapeHtml(x)}</span>`).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    ${t.description ? `
+      <div class="zh-modal-section">
+        <div class="zh-modal-section-title"><i class="fas fa-align-left" aria-hidden="true"></i> Description</div>
+        <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;">${escapeHtml(t.description)}</div>
+      </div>
+    ` : ''}
+
+    ${t.requirements ? `
+      <div class="zh-modal-section">
+        <div class="zh-modal-section-title"><i class="fas fa-list-check" aria-hidden="true"></i> Requirements</div>
+        <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;">${escapeHtml(t.requirements)}</div>
+      </div>
+    ` : ''}
+
+    ${t.notes ? `
+      <div class="zh-modal-section">
+        <div class="zh-modal-section-title"><i class="fas fa-sticky-note" aria-hidden="true"></i> Notes</div>
+        <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;padding:0.8rem 0.9rem;background:var(--surface-2);border-left:3px solid var(--zindua);border-radius:8px;white-space:pre-wrap;">${escapeHtml(t.notes)}</div>
+      </div>
+    ` : ''}
+
+    ${reviewerNoteBlock}
+    ${submissionBlock}
+    ${actions}
+  `;
+
+  document.getElementById('detailModal').classList.add('active');
+  document.getElementById('detailOverlay').classList.add('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeDetail = function() {
+  document.getElementById('detailModal').classList.remove('active');
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'true');
+  currentDetailTask = null;
+};
+
+function buildTimeline(status) {
+  const steps = [
+    { key: 'claimed', label: 'Claimed', icon: 'fa-hand-sparkles' },
+    { key: 'working', label: 'Working', icon: 'fa-code' },
+    { key: 'submitted', label: 'Submitted', icon: 'fa-paper-plane' },
+    { key: 'approved', label: 'Approved', icon: 'fa-circle-check' }
+  ];
+
+  let currentIndex = 0;
+  if (status === 'claimed') currentIndex = 0;
+  else if (status === 'working' || status === 'started') currentIndex = 1;
+  else if (status === 'submitted' || status === 'review' || status === 'revision') currentIndex = 2;
+  else if (status === 'approved' || status === 'completed') currentIndex = 3;
+
+  let html = '<div class="zh-timeline">';
+  steps.forEach((step, i) => {
+    let cls = '';
+    if (i < currentIndex) cls = 'done';
+    else if (i === currentIndex) cls = 'current';
+    if (status === 'revision' && i === 2) cls = 'current';
+    if (status === 'revision' && i === 3) cls = '';
+    html += `
+      <div class="zh-tl-step ${cls}">
+        <div class="line"></div>
+        <div class="dot"><i class="fas ${cls === 'done' ? 'fa-check' : step.icon}" aria-hidden="true"></i></div>
+        <div class="label">${step.label}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  return html;
+}
+
+function buildActions(t, status) {
+  if (status === 'approved' || status === 'completed') {
+    return `
+      <div class="zh-action-row">
+        <div class="zh-banner success" style="flex:1;margin:0;">
+          <i class="fas fa-check-circle" aria-hidden="true"></i>
+          <div>
+            <strong>Task Approved 🎉</strong><br>
+            Payment of KES ${Number(t.payRate || 0).toLocaleString()} will be processed within 48 hours.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  if (status === 'submitted' || status === 'review') {
+    return `
+      <div class="zh-action-row">
+        <div class="zh-banner warning" style="flex:1;margin:0;">
+          <i class="fas fa-clock" aria-hidden="true"></i>
+          <div>
+            <strong>Awaiting review</strong><br>
+            Your submission is being reviewed. You will receive a notification once there's a decision.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  if (status === 'revision') {
+    return `
+      <div class="zh-action-row">
+        <button type="button" class="zh-modal-btn primary" onclick="openSubmitFromDetail()">
+          <i class="fas fa-redo" aria-hidden="true"></i> Fix & Resubmit
+        </button>
+        <button type="button" class="zh-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+  if (status === 'working' || status === 'started') {
+    return `
+      <div class="zh-action-row">
+        <button type="button" class="zh-modal-btn primary" onclick="openSubmitFromDetail()">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Tech Work
+        </button>
+        <button type="button" class="zh-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+  if (status === 'claimed') {
+    return `
+      <div class="zh-banner info" style="margin-top:0.8rem;">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <div><strong>Ready to start?</strong> Begin working on this tech task and submit your repo / deployed link when done.</div>
+      </div>
+      <div class="zh-action-row">
+        <button type="button" class="zh-modal-btn dark" id="startBtn" onclick="startWork()">
+          <i class="fas fa-code" aria-hidden="true"></i> Start Working
+        </button>
+        <button type="button" class="zh-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+  return `
+    <div class="zh-action-row">
+      <button type="button" class="zh-modal-btn secondary" onclick="closeDetail()">Close</button>
+    </div>
+  `;
+}
+
+/* START WORK */
+window.startWork = async function() {
+  const t = currentDetailTask;
+  if (!t || !currentUser) return;
+  const btn = document.getElementById('startBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Starting…'; }
+  try {
+    await database.ref(`zindua_tasks/${t.id}/claimedBy/${currentUser.uid}`).update({
+      status: 'working',
+      startedAt: Date.now(),
+      updatedAt: firebase.database.ServerValue.TIMESTAMP
+    });
+    showToast('Task started. Time to ship!', 'success');
+    closeDetail();
+  } catch (e) {
+    console.error('Start failed:', e);
+    showToast('Could not start: ' + (e.message || 'Unknown'), 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-code"></i> Start Working'; }
+  }
+};
+
+/* SUBMIT WORK */
+window.openSubmitFromDetail = function() {
+  const t = currentDetailTask;
+  if (!t || !currentUser) return;
+  const c = t.claimedBy && t.claimedBy[currentUser.uid];
+
+  document.getElementById('submitTaskId').value = t.id;
+  document.getElementById('submitSubtitle').innerHTML = `For: <strong>${escapeHtml(t.title || 'Tech task')}</strong>`;
+  document.getElementById('submitNotes').value = '';
+
+  const container = document.getElementById('submitLinks');
+  container.innerHTML = '';
+
+  const existing = (c && Array.isArray(c.submissionLinks)) ? c.submissionLinks : [];
+  if (existing.length > 0) {
+    existing.forEach(l => addLinkField(l));
+    document.getElementById('submitNotes').value = c.submissionNotes || '';
+  } else {
+    addLinkField('');
+  }
+
+  closeDetail();
+  document.getElementById('submitModal').classList.add('active');
+  document.getElementById('submitOverlay').classList.add('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeSubmit = function() {
+  document.getElementById('submitModal').classList.remove('active');
+  document.getElementById('submitOverlay').classList.remove('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'true');
+  const btn = document.getElementById('submitBtn');
+  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review'; }
+};
+
+window.addLinkField = function(value) {
+  const container = document.getElementById('submitLinks');
+  const id = 'link_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const div = document.createElement('div');
+  div.className = 'zh-link-row';
+  div.innerHTML = `
+    <input type="url" class="zh-input" id="${id}" placeholder="https://github.com/... or https://your-app.vercel.app" value="${escapeHtml(value || '')}">
+    <button type="button" class="zh-link-remove" onclick="this.parentElement.remove()" aria-label="Remove link">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  `;
+  container.appendChild(div);
+};
+
+window.submitWork = async function(e) {
+  e.preventDefault();
+  if (!currentUser) return;
+  const btn = document.getElementById('submitBtn');
+  const taskId = document.getElementById('submitTaskId').value;
+  const notes = document.getElementById('submitNotes').value.trim();
+
+  const linkInputs = document.querySelectorAll('#submitLinks input[type="url"]');
+  const links = Array.from(linkInputs).map(inp => inp.value.trim()).filter(Boolean);
+
+  if (links.length === 0) { showToast('Please add at least one submission link', 'error'); return; }
+  const invalid = links.filter(l => !/^https?:\/\//i.test(l));
+  if (invalid.length > 0) { showToast('Links must start with http:// or https://', 'error'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Submitting…';
+
+  try {
+    const now = Date.now();
+    await database.ref(`zindua_tasks/${taskId}/claimedBy/${currentUser.uid}`).update({
+      status: 'submitted',
+      submittedAt: now,
+      submissionLinks: links,
+      submissionNotes: notes || ''
+    });
+    await database.ref(`zindua_tasks/${taskId}`).update({
+      updatedAt: now,
+      updatedBy: currentUser.email
+    });
+
+    try {
+      const logId = database.ref('admin_logs').push().key;
+      await database.ref(`admin_logs/${logId}`).set({
+        action: 'zindua_submission',
+        taskId: taskId,
+        taskerUid: currentUser.uid,
+        taskerEmail: currentUser.email,
+        workspace: 'zindua',
+        timestamp: now
+      });
+    } catch (logErr) { console.warn('Log write failed:', logErr); }
+
+    showToast('Work submitted! Awaiting review.', 'success');
+    closeSubmit();
+  } catch (err) {
+    console.error('Submit failed:', err);
+    showToast('Could not submit. Please try again.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review';
+  }
+};
+
+/* UTILITY */
+window.scrollToTasks = function() {
+  const el = document.getElementById('tasks');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+function detachListeners() {
+  detachTaskListener();
+  detachNotifListener();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDetail(); closeSubmit(); }
+});
+
+window.addEventListener('beforeunload', detachListeners);
+</script>
+</body>
+</html>
