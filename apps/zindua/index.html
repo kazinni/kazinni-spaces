@@ -1,1 +1,2495 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4f46e5">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Zindua Hub — the tech-task marketplace for code, design, data and cloud work.">
+<title>Zindua Hub · Tech Tasks</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS  (Zindua indigo tech accent)
+   ============================================================ */
+:root {
+  --zd: #4f46e5;
+  --zd-dark: #3730a3;
+  --zd-light: #6366f1;
+  --zd-soft: #eef2ff;
+  --zd-glow: rgba(79, 70, 229, 0.14);
+  --zd-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #818cf8 100%);
+
+  --gold: #ca8a04;
+  --gold-dark: #a16207;
+  --gold-light: #fbbf24;
+  --gold-soft: #fef3c7;
+  --gold-gradient: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #fbbf24 100%);
+
+  --ink: #0f0f1e;
+  --ink-2: #1a1a2e;
+  --ink-3: #2d2d4a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  --text-primary: #0f0f1e;
+  --text-secondary: #4a4a5e;
+  --text-muted: #6b7280;
+  --border-light: #e9ecef;
+  --border-medium: #d1d5db;
+  --surface: #ffffff;
+  --surface-2: #faf9f7;
+  --surface-3: #f4f3f1;
+
+  --header-h: 64px;
+
+  --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 100px;
+
+  --t-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-base: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-slow: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
+  --shadow-zd: 0 20px 48px rgba(79,70,229,0.2);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-body);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--zd); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+}
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes floatCode {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-6px) rotate(4deg); }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.zd-header {
+  position: sticky; top: 0; z-index: 1000;
+  height: var(--header-h);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(15,15,30,0.06);
+  padding: 0 1.5rem;
+}
+.zd-header-inner {
+  max-width: 1400px; height: 100%; margin: 0 auto;
+  display: flex; align-items: center; gap: 1rem;
+}
+.zd-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; flex-shrink: 0; }
+.zd-logo img { height: 30px; }
+.zd-logo-text {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.05rem; color: var(--ink); letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+.zd-logo-text .accent {
+  background: var(--zd-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.zd-crumb {
+  display: none; align-items: center; gap: 0.4rem;
+  font-family: var(--font-heading); font-size: 0.78rem;
+  color: var(--text-muted); font-weight: 500;
+  padding-left: 0.5rem; border-left: 1px solid var(--border-light);
+  margin-left: 0.3rem;
+}
+.zd-crumb a { color: var(--text-muted); text-decoration: none; }
+.zd-crumb a:hover { color: var(--zd); }
+.zd-crumb i { font-size: 0.6rem; opacity: 0.6; }
+@media (min-width: 700px) { .zd-crumb { display: flex; } }
+
+.zd-nav { display: none; align-items: center; gap: 0.3rem; margin-left: auto; }
+@media (min-width: 900px) { .zd-nav { display: flex; } }
+.zd-nav-link {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.83rem; font-weight: 600;
+  font-family: var(--font-heading);
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  transition: all var(--t-fast); white-space: nowrap;
+  background: none; border: none; cursor: pointer;
+}
+.zd-nav-link i { font-size: 0.75rem; color: var(--text-muted); transition: color var(--t-fast); }
+.zd-nav-link:hover { color: var(--ink); background: rgba(15,15,30,0.04); }
+.zd-nav-link:hover i { color: var(--zd); }
+.zd-nav-link.active {
+  background: white; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(15,15,30,0.06);
+}
+.zd-nav-link.active i { color: var(--zd); }
+
+.zd-header-right { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+@media (min-width: 900px) { .zd-header-right { margin-left: 0; } }
+
+.zd-icon-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 0.95rem;
+  transition: background var(--t-fast);
+  position: relative;
+}
+.zd-icon-btn:hover { background: rgba(15,15,30,0.05); color: var(--ink); }
+.zd-icon-btn .dot-badge {
+  position: absolute; top: 5px; right: 5px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: var(--danger); color: white;
+  border-radius: var(--radius-pill); border: 2px solid white;
+  font-size: 0.55rem; font-weight: 800;
+  display: none; align-items: center; justify-content: center;
+  font-family: var(--font-heading);
+}
+.zd-icon-btn .dot-badge.visible { display: flex; }
+
+.zd-account-wrap { position: relative; }
+.zd-account-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+  border-radius: var(--radius-pill); background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  font-family: var(--font-body);
+}
+.zd-account-btn:hover { background: rgba(15,15,30,0.04); border-color: var(--border-light); }
+.zd-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--zd-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
+}
+.zd-account-name {
+  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-heading);
+}
+@media (max-width: 640px) { .zd-account-name { display: none; } }
+.zd-account-btn .fa-chevron-down { font-size: 0.55rem; color: var(--text-muted); transition: transform var(--t-base); }
+.zd-account-btn.active .fa-chevron-down { transform: rotate(180deg); }
+
+.zd-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 300px; background: white; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--border-light);
+  overflow: hidden; display: none; z-index: 1001;
+}
+.zd-dropdown.active { display: block; animation: popIn 0.2s ease; }
+.zd-dd-header {
+  padding: 1rem 1.1rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.zd-dd-header .zd-avatar { width: 42px; height: 42px; font-size: 1rem; }
+.zd-dd-info { min-width: 0; flex: 1; }
+.zd-dd-name {
+  font-weight: 700; font-size: 0.9rem; color: var(--ink);
+  font-family: var(--font-heading);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.zd-dd-email {
+  font-size: 0.74rem; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.zd-dd-body { padding: 0.5rem; }
+.zd-dd-label {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted);
+  padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+}
+.zd-dd-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.6rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--t-fast);
+  border: none; background: none; width: 100%;
+  text-align: left; font-size: 0.84rem;
+  color: var(--text-secondary); text-decoration: none;
+  font-family: var(--font-body); font-weight: 500;
+}
+.zd-dd-item i { width: 18px; font-size: 0.82rem; color: var(--text-muted); transition: color var(--t-fast); }
+.zd-dd-item:hover { background: var(--surface-2); color: var(--ink); }
+.zd-dd-item:hover i { color: var(--zd); }
+.zd-dd-item.danger { color: var(--danger); }
+.zd-dd-item.danger i { color: var(--danger); }
+.zd-dd-item.danger:hover { background: #fef2f2; }
+.zd-dd-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+.zd-main {
+  max-width: 1400px; margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+@media (max-width: 640px) { .zd-main { padding: 1.25rem 1rem 3rem; } }
+
+/* HERO */
+.zd-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-xl);
+  padding: 2.2rem 2.4rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(15,15,30,0.15);
+}
+.zd-hero::before {
+  content: ''; position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--zd) 0%, transparent 65%);
+  opacity: 0.3;
+  top: -200px; right: -160px; pointer-events: none;
+}
+.zd-hero::after {
+  content: ''; position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(129,140,248,0.22) 0%, transparent 65%);
+  bottom: -180px; left: -100px; pointer-events: none;
+}
+.zd-hero-inner {
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 2rem; flex-wrap: wrap;
+}
+.zd-hero-left { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+.zd-hero-icon {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: var(--zd-gradient); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.9rem; flex-shrink: 0;
+  box-shadow: 0 12px 32px rgba(79,70,229,0.4);
+}
+.zd-hero-icon i { animation: floatCode 6s ease-in-out infinite; }
+.zd-hero-text h1 {
+  color: white; font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800; font-family: var(--font-display);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.zd-hero-text p {
+  color: rgba(255,255,255,0.68); font-size: 0.88rem;
+  font-family: var(--font-heading); max-width: 520px;
+}
+.zd-hero-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.zd-hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80; animation: pulseDot 2s infinite;
+}
+.zd-hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+
+.zd-btn {
+  padding: 0.7rem 1.4rem; border: none; border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 0.84rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: all var(--t-base); font-family: var(--font-heading);
+  text-decoration: none; white-space: nowrap;
+}
+.zd-btn-zd {
+  background: var(--zd-gradient); color: white;
+  box-shadow: 0 8px 22px rgba(79,70,229,0.4);
+}
+.zd-btn-zd:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(79,70,229,0.5); }
+.zd-btn-ghost {
+  background: rgba(255,255,255,0.1); color: white;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.zd-btn-ghost:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
+.zd-btn-dark { background: var(--ink); color: white; }
+.zd-btn-dark:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(15,15,30,0.25); }
+.zd-btn-outline {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.zd-btn-outline:hover { border-color: var(--zd); color: var(--zd); }
+.zd-btn-sm { padding: 0.42rem 1rem; font-size: 0.75rem; }
+.zd-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* STATS */
+.zd-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 900px) { .zd-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .zd-stats { grid-template-columns: 1fr; } }
+.zd-stat {
+  background: white; border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); padding: 1.15rem 1.25rem;
+  display: flex; align-items: center; gap: 0.9rem;
+  transition: all var(--t-fast);
+  position: relative; overflow: hidden;
+}
+.zd-stat::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--zd-gradient);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform var(--t-slow);
+  border-radius: 0 4px 4px 0;
+}
+.zd-stat:hover::before { transform: scaleY(1); }
+.zd-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: rgba(79,70,229,0.25); }
+.zd-stat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.zd-stat-icon.zd    { background: var(--zd-soft); color: var(--zd-dark); }
+.zd-stat-icon.blue  { background: #eff6ff; color: #2563eb; }
+.zd-stat-icon.green { background: #ecfdf5; color: #059669; }
+.zd-stat-icon.pink  { background: #fdf2f8; color: #db2777; }
+.zd-stat-value {
+  font-family: var(--font-display); font-size: 1.6rem;
+  font-weight: 700; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.zd-stat-label {
+  font-size: 0.72rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* FILTERS */
+.zd-filters {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.zd-filter-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.zd-filter-row + .zd-filter-row {
+  margin-top: 0.7rem; padding-top: 0.7rem;
+  border-top: 1px dashed var(--border-light);
+}
+.zd-filter-row-label {
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--text-muted); font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.7px;
+  margin-right: 0.3rem; white-space: nowrap;
+}
+.zd-chip {
+  padding: 0.42rem 0.9rem; border-radius: var(--radius-pill);
+  background: var(--surface-2); border: 1.5px solid transparent;
+  font-size: 0.74rem; font-weight: 600; font-family: var(--font-heading);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  white-space: nowrap;
+}
+.zd-chip:hover { background: var(--zd-soft); color: var(--zd-dark); }
+.zd-chip.active {
+  background: var(--zd-gradient); color: white;
+  box-shadow: 0 4px 12px rgba(79,70,229,0.28);
+}
+.zd-chip .count {
+  font-size: 0.62rem; padding: 1px 6px; border-radius: 10px;
+  background: rgba(0,0,0,0.06); font-weight: 700;
+}
+.zd-chip.active .count { background: rgba(255,255,255,0.25); }
+.zd-chip i { font-size: 0.7rem; }
+
+.zd-search-wrap {
+  position: relative; flex: 1;
+  min-width: 220px; margin-left: auto;
+}
+.zd-search-wrap i {
+  position: absolute; left: 0.85rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted); font-size: 0.8rem;
+  pointer-events: none;
+}
+.zd-search {
+  width: 100%; padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-light);
+  background: var(--surface-2);
+  font-family: var(--font-body); font-size: 0.84rem;
+  color: var(--ink); transition: all var(--t-fast);
+}
+.zd-search:focus {
+  outline: none; background: white;
+  border-color: var(--zd);
+  box-shadow: 0 0 0 3px var(--zd-glow);
+}
+
+/* TASK GRID */
+.zd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 480px) { .zd-grid { grid-template-columns: 1fr; } }
+
+.zd-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all var(--t-base);
+  position: relative;
+  cursor: pointer;
+}
+.zd-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(15,15,30,0.1);
+  border-color: rgba(79,70,229,0.3);
+}
+.zd-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--zd-soft), #c7d2fe);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.zd-card-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--t-slow);
+}
+.zd-card:hover .zd-card-media img { transform: scale(1.05); }
+.zd-card-media .placeholder-icon {
+  font-size: 2.4rem; color: var(--zd);
+  opacity: 0.4;
+  animation: floatCode 5s ease-in-out infinite;
+}
+/* Code-preview strips on the media placeholder */
+.zd-card-media .code-lines {
+  position: absolute;
+  inset: 0;
+  padding: 1.2rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.zd-card-media .code-line {
+  height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--zd) 0%, transparent 100%);
+}
+.zd-card-media .code-line:nth-child(1) { width: 40%; }
+.zd-card-media .code-line:nth-child(2) { width: 70%; margin-left: 1rem; }
+.zd-card-media .code-line:nth-child(3) { width: 55%; margin-left: 2rem; }
+.zd-card-media .code-line:nth-child(4) { width: 80%; margin-left: 1rem; }
+.zd-card-media .code-line:nth-child(5) { width: 30%; margin-left: 2.5rem; }
+
+.zd-card-stack-badge {
+  position: absolute; top: 0.7rem; left: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(15,15,30,0.85);
+  backdrop-filter: blur(8px);
+  color: white; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zd-card-stack-badge i { font-size: 0.65rem; color: #a5b4fc; }
+.zd-card-diff-badge {
+  position: absolute; bottom: 0.7rem; left: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.62rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  backdrop-filter: blur(8px);
+}
+.zd-card-diff-badge.junior { background: rgba(16,185,129,0.9); color: white; }
+.zd-card-diff-badge.mid    { background: rgba(59,130,246,0.9); color: white; }
+.zd-card-diff-badge.senior { background: rgba(139,92,246,0.9); color: white; }
+
+.zd-card-slot-badge {
+  position: absolute; top: 0.7rem; right: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--success); color: white;
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+}
+.zd-card-slot-badge.full { background: var(--text-muted); }
+.zd-card-slot-badge.mine {
+  background: var(--zd-gradient);
+  box-shadow: 0 4px 12px rgba(79,70,229,0.4);
+}
+
+.zd-card-body {
+  padding: 1.1rem 1.15rem 1rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  flex: 1;
+}
+.zd-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.02rem; font-weight: 700;
+  color: var(--ink); line-height: 1.3;
+  letter-spacing: -0.015em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.zd-card-desc {
+  font-size: 0.82rem; color: var(--text-secondary);
+  line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.zd-card-tags {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+}
+.zd-tag {
+  padding: 0.2rem 0.55rem;
+  background: var(--surface-3);
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.25rem;
+}
+.zd-tag i { font-size: 0.6rem; color: var(--zd); }
+.zd-card-meta {
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.zd-card-meta span {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zd-card-meta i { color: var(--zd); font-size: 0.7rem; }
+.zd-card-foot {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.6rem;
+}
+.zd-card-pay {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--zd-dark);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.zd-card-pay .unit {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-left: 3px;
+}
+
+/* STATUS PILLS */
+.zd-pill {
+  padding: 0.3rem 0.7rem; border-radius: var(--radius-pill);
+  font-size: 0.66rem; font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+}
+.zd-pill.open { background: var(--zd-soft); color: var(--zd-dark); }
+.zd-pill.claimed { background: #dbeafe; color: #1e40af; }
+.zd-pill.started { background: #fef3c7; color: #92400e; }
+.zd-pill.submitted { background: #e0e7ff; color: #4338ca; }
+.zd-pill.revision { background: #fee2e2; color: #991b1b; }
+.zd-pill.approved { background: #d1fae5; color: #065f46; }
+
+/* EMPTY / LOADING */
+.zd-empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: white;
+  border: 1.5px dashed var(--border-medium);
+  border-radius: var(--radius-lg);
+}
+.zd-empty i {
+  font-size: 2.4rem; color: var(--zd);
+  opacity: 0.35; margin-bottom: 0.6rem; display: block;
+}
+.zd-empty h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.35rem;
+}
+.zd-empty p {
+  font-size: 0.85rem; color: var(--text-muted);
+  max-width: 440px; margin: 0 auto;
+}
+
+.zd-loading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+.zd-loading-card {
+  height: 340px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,15,30,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000; display: none;
+}
+.modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+
+.zd-modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white; border-radius: var(--radius-xl);
+  padding: 1.8rem 1.8rem 1.6rem;
+  max-width: 560px; width: calc(100% - 2rem);
+  z-index: 2001;
+  box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+  display: none; max-height: 92vh; overflow-y: auto;
+}
+.zd-modal.wide { max-width: 660px; }
+.zd-modal.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.zd-modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: none; border: none; font-size: 1rem;
+  cursor: pointer; color: var(--text-muted);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.zd-modal-close:hover { color: var(--danger); background: #fef2f2; }
+
+.zd-modal-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
+  margin: -0.6rem -0.6rem 1.2rem;
+  position: relative; overflow: hidden;
+}
+.zd-modal-hero::before {
+  content: ''; position: absolute;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, var(--zd) 0%, transparent 65%);
+  opacity: 0.3;
+  top: -140px; right: -110px; pointer-events: none;
+}
+.zd-modal-hero-inner { position: relative; z-index: 2; }
+.zd-modal-hero-title {
+  color: white; font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.25;
+  margin-bottom: 0.5rem;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+}
+.zd-modal-hero-title i {
+  color: #a5b4fc; margin-top: 5px; flex-shrink: 0;
+  font-size: 0.95rem;
+}
+.zd-modal-hero-meta {
+  display: flex; align-items: center; gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.zd-modal-hero-meta span {
+  color: rgba(255,255,255,0.72); font-size: 0.76rem;
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zd-modal-hero-meta span i { color: #a5b4fc; font-size: 0.7rem; }
+
+.zd-detail-list {
+  display: flex; flex-direction: column; gap: 0;
+  margin-bottom: 1rem;
+}
+.zd-detail-item {
+  display: flex; justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.85rem; gap: 1rem;
+}
+.zd-detail-item:last-child { border-bottom: none; }
+.zd-detail-label {
+  color: var(--text-muted); font-weight: 600;
+  font-family: var(--font-heading); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+.zd-detail-value {
+  color: var(--text-primary); font-weight: 500;
+  text-align: right; max-width: 65%;
+  word-break: break-word;
+}
+.zd-detail-value a {
+  color: var(--zd-dark); text-decoration: none;
+  font-weight: 600; word-break: break-all;
+}
+.zd-detail-value a:hover { text-decoration: underline; }
+.zd-detail-value .pay {
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--zd-dark); font-size: 1.05rem;
+}
+
+.zd-modal-section {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--border-light);
+}
+.zd-modal-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.72rem; font-weight: 800;
+  color: var(--zd-dark);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.zd-modal-section-title i { font-size: 0.7rem; }
+
+/* Tech stack chips inside modal */
+.zd-stack-list {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.zd-stack-chip {
+  padding: 0.35rem 0.75rem;
+  background: var(--zd-soft); color: var(--zd-dark);
+  border: 1px solid rgba(79,70,229,0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem; font-weight: 600;
+  font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.zd-stack-chip i { font-size: 0.65rem; }
+
+/* Attachments */
+.zd-attachments {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.6rem;
+}
+.zd-attachments a {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.zd-attachments a:hover {
+  transform: scale(1.03);
+  border-color: var(--zd);
+}
+.zd-attachments img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.zd-banner {
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.05rem;
+  margin: 0.9rem 0;
+  font-size: 0.83rem;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  line-height: 1.5;
+}
+.zd-banner i { font-size: 1.05rem; margin-top: 2px; flex-shrink: 0; }
+.zd-banner.success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #065f46; }
+.zd-banner.warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #92400e; }
+.zd-banner.info    { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #1e40af; }
+.zd-banner.danger  { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #991b1b; }
+.zd-banner strong { font-weight: 700; }
+
+.zd-action-row {
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+.zd-action-row .zd-modal-btn { flex: 1; min-width: 140px; }
+
+.zd-modal-btn {
+  padding: 0.82rem 1.3rem;
+  border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600; font-size: 0.86rem;
+  cursor: pointer;
+  transition: all var(--t-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; text-decoration: none;
+}
+.zd-modal-btn.primary {
+  background: var(--zd-gradient); color: white;
+  box-shadow: 0 8px 20px rgba(79,70,229,0.28);
+}
+.zd-modal-btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(79,70,229,0.38);
+}
+.zd-modal-btn.dark { background: var(--ink); color: white; }
+.zd-modal-btn.dark:hover:not(:disabled) {
+  background: var(--ink);
+  box-shadow: 0 12px 30px rgba(15,15,30,0.28);
+}
+.zd-modal-btn.secondary {
+  background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border-light);
+}
+.zd-modal-btn.secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+.zd-modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* FORM */
+.zd-form-group { margin-bottom: 1rem; }
+.zd-form-group label {
+  display: block; font-size: 0.74rem; font-weight: 700;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  margin-bottom: 0.4rem;
+}
+.zd-input, .zd-textarea {
+  width: 100%; padding: 0.78rem 1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body); font-size: 0.88rem;
+  background: var(--surface-2); color: var(--ink);
+  transition: all var(--t-fast);
+}
+.zd-input:focus, .zd-textarea:focus {
+  outline: none; border-color: var(--zd);
+  background: white;
+  box-shadow: 0 0 0 3px var(--zd-glow);
+}
+.zd-textarea { resize: vertical; min-height: 80px; }
+.zd-input::placeholder, .zd-textarea::placeholder { color: var(--text-muted); }
+
+.zd-link-row {
+  display: flex; gap: 0.4rem; margin-bottom: 0.5rem; align-items: center;
+}
+.zd-link-row .zd-input { flex: 1; padding: 0.7rem 0.9rem; font-size: 0.84rem; }
+.zd-link-remove {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  border: none; background: #fef2f2; color: #dc2626;
+  cursor: pointer; font-size: 0.85rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--t-fast);
+}
+.zd-link-remove:hover { background: #dc2626; color: white; }
+.zd-add-link {
+  padding: 0.5rem 1rem; border-radius: var(--radius-pill);
+  border: 1.5px dashed var(--border-medium);
+  background: transparent; color: var(--zd-dark);
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-heading);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all var(--t-fast);
+}
+.zd-add-link:hover { border-color: var(--zd); background: var(--zd-soft); }
+
+.zd-hint {
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-top: 0.4rem; display: flex; align-items: flex-start; gap: 0.4rem;
+  line-height: 1.5;
+}
+.zd-hint i { color: var(--zd); margin-top: 2px; }
+
+.zd-modal-plain h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 0.35rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.zd-modal-plain h3 i { color: var(--zd); }
+.zd-modal-plain > p {
+  font-size: 0.82rem; color: var(--text-muted);
+  margin-bottom: 1.1rem;
+}
+
+/* TIMELINE */
+.zd-timeline {
+  display: flex; align-items: center; gap: 0;
+  margin: 1rem 0 0.6rem;
+}
+.zd-tl-step {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; position: relative;
+}
+.zd-tl-step .dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--surface-2); color: var(--text-muted);
+  border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; z-index: 2;
+  transition: all var(--t-base);
+}
+.zd-tl-step .line {
+  position: absolute; top: 13px; left: 50%;
+  width: 100%; height: 2px;
+  background: var(--border-light); z-index: 1;
+}
+.zd-tl-step:last-child .line { display: none; }
+.zd-tl-step .label {
+  font-size: 0.62rem; color: var(--text-muted);
+  font-family: var(--font-heading); font-weight: 600;
+  margin-top: 0.4rem; text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.zd-tl-step.done .dot {
+  background: var(--success); color: white; border-color: var(--success);
+}
+.zd-tl-step.done .line { background: var(--success); }
+.zd-tl-step.done .label { color: var(--success); }
+.zd-tl-step.current .dot {
+  background: var(--zd-gradient); color: white;
+  border-color: var(--zd);
+  box-shadow: 0 0 0 4px var(--zd-glow);
+}
+.zd-tl-step.current .line { background: var(--success); }
+.zd-tl-step.current .label { color: var(--zd-dark); }
+
+/* SUBMISSION DISPLAY */
+.zd-submission {
+  background: var(--surface-2);
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-md);
+  font-size: 0.83rem;
+  border: 1px solid var(--border-light);
+}
+.zd-submission .links {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.zd-submission .links a {
+  color: var(--zd-dark); font-weight: 600;
+  text-decoration: none; word-break: break-all;
+  font-size: 0.8rem;
+  display: flex; align-items: flex-start; gap: 0.4rem;
+}
+.zd-submission .links a i { margin-top: 4px; font-size: 0.7rem; flex-shrink: 0; }
+.zd-submission .links a:hover { text-decoration: underline; }
+.zd-submission .note {
+  color: var(--text-secondary); font-size: 0.78rem;
+  margin-top: 0.4rem; font-style: italic;
+  padding: 0.5rem 0.7rem; background: white;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--zd);
+}
+.zd-submission .meta {
+  font-size: 0.68rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-top: 0.5rem; padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-light);
+}
+
+/* TOASTS */
+.toast-container {
+  position: fixed; top: calc(var(--header-h) + 16px); right: 16px;
+  z-index: 4000;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none; max-width: calc(100vw - 32px);
+}
+.toast {
+  background: var(--ink); color: white;
+  border-radius: var(--radius-md); padding: 0.8rem 1.1rem;
+  box-shadow: 0 20px 40px rgba(15,15,30,0.22);
+  display: flex; align-items: center; gap: 0.65rem;
+  font-family: var(--font-heading); font-size: 0.85rem;
+  animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 360px; font-weight: 500; pointer-events: auto;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.toast i { font-size: 0.95rem; }
+.toast.success i { color: #34d399; }
+.toast.error i { color: #f87171; }
+.toast.info i { color: #a5b4fc; }
+.toast.leaving { opacity: 0; transform: translateX(24px); }
+
+/* FOOTER */
+.zd-footer {
+  border-top: 1px solid var(--border-light);
+  background: white;
+  padding: 1.4rem 1.5rem;
+  margin-top: 3rem;
+}
+.zd-footer-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  font-size: 0.74rem; color: var(--text-muted);
+  font-family: var(--font-heading);
+}
+.zd-footer-brand {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-weight: 700; color: var(--ink);
+}
+.zd-footer-brand i { color: var(--zd); }
+.zd-footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.zd-footer-links a {
+  color: var(--text-muted); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.zd-footer-links a:hover { color: var(--zd); }
+
+.zd-loadmore-wrap {
+  display: flex; justify-content: center; margin-top: 1.5rem;
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:white;border-radius:8px;z-index:9999;">Skip to main content</a>
+
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="zd-header">
+  <div class="zd-header-inner">
+    <a href="../../index.html" class="zd-logo" aria-label="Back to Janta">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="zd-logo-text">Jan<span class="accent">ta</span></span>
+    </a>
+
+    <nav class="zd-crumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Janta</a>
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <span style="color:var(--zd-dark);font-weight:600;">Zindua Hub</span>
+    </nav>
+
+    <nav class="zd-nav" aria-label="Zindua navigation">
+      <a href="index.html" class="zd-nav-link active">
+        <i class="fas fa-code" aria-hidden="true"></i> <span>Open Tasks</span>
+      </a>
+      <a href="my-tasks.html" class="zd-nav-link">
+        <i class="fas fa-clipboard-check" aria-hidden="true"></i> <span>My Tasks</span>
+      </a>
+      <a href="../../index.html" class="zd-nav-link">
+        <i class="fas fa-cube" aria-hidden="true"></i> <span>Janta</span>
+      </a>
+    </nav>
+
+    <div class="zd-header-right">
+      <button type="button" class="zd-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotifications(event)">
+        <i class="far fa-bell" aria-hidden="true"></i>
+        <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
+      </button>
+
+      <div class="zd-account-wrap" id="accountWrap"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main class="zd-main" id="main">
+
+  <!-- HERO -->
+  <section class="zd-hero" id="hero" aria-labelledby="heroTitle">
+    <div class="zd-hero-inner">
+      <div class="zd-hero-left">
+        <div class="zd-hero-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
+        <div class="zd-hero-text">
+          <h1 id="heroTitle">Zindua Hub</h1>
+          <p>The tech-task marketplace — pick up real code, design, data, devops and security work posted by Janta clients and partners.</p>
+          <div class="zd-hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="heroStatus">Loading tech tasks…</span>
+          </div>
+        </div>
+      </div>
+      <div class="zd-hero-actions">
+        <button type="button" class="zd-btn zd-btn-ghost" onclick="scrollToTasks()">
+          <i class="fas fa-arrow-down" aria-hidden="true"></i> Browse tasks
+        </button>
+        <a href="my-tasks.html" class="zd-btn zd-btn-zd">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i> My Tasks
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="zd-stats" aria-label="Zindua statistics">
+    <div class="zd-stat">
+      <div class="zd-stat-icon zd"><i class="fas fa-code" aria-hidden="true"></i></div>
+      <div>
+        <div class="zd-stat-value" id="statOpen">—</div>
+        <div class="zd-stat-label">Open Tech Tasks</div>
+      </div>
+    </div>
+    <div class="zd-stat">
+      <div class="zd-stat-icon blue"><i class="fas fa-hand-sparkles" aria-hidden="true"></i></div>
+      <div>
+        <div class="zd-stat-value" id="statMine">—</div>
+        <div class="zd-stat-label">Claimed by Me</div>
+      </div>
+    </div>
+    <div class="zd-stat">
+      <div class="zd-stat-icon green"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+      <div>
+        <div class="zd-stat-value" id="statCompleted">—</div>
+        <div class="zd-stat-label">Completed</div>
+      </div>
+    </div>
+    <div class="zd-stat">
+      <div class="zd-stat-icon pink"><i class="fas fa-coins" aria-hidden="true"></i></div>
+      <div>
+        <div class="zd-stat-value" id="statValue">—</div>
+        <div class="zd-stat-label">Open Value (KES)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="zd-filters" id="tasks" aria-label="Task filters">
+    <div class="zd-filter-row">
+      <span class="zd-filter-row-label">Status</span>
+      <button type="button" class="zd-chip active" data-status="all" onclick="setStatusFilter('all')">
+        All <span class="count" id="countAll">0</span>
+      </button>
+      <button type="button" class="zd-chip" data-status="open" onclick="setStatusFilter('open')">
+        <i class="fas fa-door-open" aria-hidden="true"></i> Open <span class="count" id="countOpen">0</span>
+      </button>
+      <button type="button" class="zd-chip" data-status="mine" onclick="setStatusFilter('mine')">
+        <i class="fas fa-hand-sparkles" aria-hidden="true"></i> Claimed by Me <span class="count" id="countMine">0</span>
+      </button>
+      <button type="button" class="zd-chip" data-status="completed" onclick="setStatusFilter('completed')">
+        <i class="fas fa-circle-check" aria-hidden="true"></i> Completed <span class="count" id="countCompleted">0</span>
+      </button>
+    </div>
+
+    <div class="zd-filter-row">
+      <span class="zd-filter-row-label">Tech</span>
+      <div id="techChips" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+
+      <div class="zd-search-wrap">
+        <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" id="searchInput" class="zd-search" placeholder="Search tasks, stacks, clients…" aria-label="Search tech tasks" oninput="onSearchInput()">
+      </div>
+    </div>
+  </section>
+
+  <!-- TASK GRID -->
+  <section id="taskGrid" aria-live="polite" aria-busy="true">
+    <div class="zd-loading-grid">
+      <div class="zd-loading-card"></div>
+      <div class="zd-loading-card"></div>
+      <div class="zd-loading-card"></div>
+      <div class="zd-loading-card"></div>
+      <div class="zd-loading-card"></div>
+      <div class="zd-loading-card"></div>
+    </div>
+  </section>
+
+  <div class="zd-loadmore-wrap" id="loadMoreWrap" style="display:none;">
+    <button type="button" class="zd-btn zd-btn-outline" id="loadMoreBtn" onclick="loadMore()">
+      <i class="fas fa-arrow-down" aria-hidden="true"></i> Load more tasks
+    </button>
+  </div>
+
+</main>
+
+<footer class="zd-footer">
+  <div class="zd-footer-inner">
+    <div class="zd-footer-brand">
+      <i class="fas fa-rocket" aria-hidden="true"></i> Zindua Hub · by Janta
+    </div>
+    <nav class="zd-footer-links" aria-label="Footer">
+      <a href="my-tasks.html">My Tasks</a>
+      <a href="../../index.html">Janta</a>
+      <a href="mailto:operations@kazinni.com">Contact</a>
+    </nav>
+    <div>© <span id="footerYear"></span> Teleio Savour</div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     TASK DETAIL MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="zd-modal wide" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+  <button type="button" class="zd-modal-close" onclick="closeDetail()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div id="detailBody"></div>
+</div>
+
+<!-- ============================================================
+     SUBMIT WORK MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="submitOverlay" onclick="closeSubmit()"></div>
+<div class="zd-modal wide" id="submitModal" role="dialog" aria-modal="true" aria-labelledby="submitTitle" aria-hidden="true">
+  <button type="button" class="zd-modal-close" onclick="closeSubmit()" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+  <div class="zd-modal-plain">
+    <h3 id="submitTitle"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit your work</h3>
+    <p id="submitSubtitle">—</p>
+
+    <form id="submitForm" onsubmit="submitWork(event)">
+      <input type="hidden" id="submitTaskId">
+
+      <div class="zd-form-group">
+        <label>Submission Links</label>
+        <div id="submitLinks"></div>
+        <button type="button" class="zd-add-link" onclick="addLinkField('')">
+          <i class="fas fa-plus" aria-hidden="true"></i> Add another link
+        </button>
+        <div class="zd-hint">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          <span>Paste repo (GitHub/GitLab), live URL (Vercel/Netlify), Figma file, or Drive folder so the reviewer can inspect your work.</span>
+        </div>
+      </div>
+
+      <div class="zd-form-group">
+        <label>Notes for Reviewer (optional)</label>
+        <textarea class="zd-textarea" id="submitNotes" rows="3" placeholder="What did you build? Any deploy notes, credentials, or known limitations…"></textarea>
+      </div>
+
+      <div class="zd-action-row">
+        <button type="submit" class="zd-modal-btn primary" id="submitBtn">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review
+        </button>
+        <button type="button" class="zd-modal-btn secondary" style="flex:0 0 auto;" onclick="closeSubmit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+
+/* ============================================================
+   FIREBASE  (UNTOUCHED)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+let auth, database;
+
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  database = firebase.database();
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+} catch (e) {
+  console.error('Firebase init failed:', e);
+}
+
+/* ============================================================
+   TECH CATEGORIES  (Zindua-specific)
+   ============================================================ */
+const TECH_CATEGORIES = {
+  frontend:  { name: 'Frontend',      icon: 'fa-code',           color: '#0ea5e9' },
+  backend:   { name: 'Backend',       icon: 'fa-server',         color: '#059669' },
+  fullstack: { name: 'Full Stack',    icon: 'fa-layer-group',    color: '#7c3aed' },
+  mobile:    { name: 'Mobile',        icon: 'fa-mobile-screen',  color: '#f59e0b' },
+  data:      { name: 'Data & ML',     icon: 'fa-chart-line',     color: '#db2777' },
+  devops:    { name: 'DevOps / Cloud', icon: 'fa-cloud',         color: '#0891b2' },
+  design:    { name: 'UI/UX Design',  icon: 'fa-pen-ruler',      color: '#e11d48' },
+  security:  { name: 'Security',      icon: 'fa-shield-halved',  color: '#dc2626' },
+  qa:        { name: 'QA & Testing',  icon: 'fa-vial-circle-check', color: '#16a34a' },
+  other:     { name: 'Other Tech',    icon: 'fa-microchip',      color: '#4f46e5' }
+};
+
+/* Difficulty levels */
+const DIFFICULTY = {
+  junior: { name: 'Junior',  color: '#10b981' },
+  mid:    { name: 'Mid',     color: '#3b82f6' },
+  senior: { name: 'Senior',  color: '#8b5cf6' }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentUser = null;
+let currentTasker = null;
+let currentPerms = {};
+let allTasks = [];
+let filteredTasks = [];
+let techFilters = new Set();
+let statusFilter = 'all';
+let searchTerm = '';
+let pageSize = 12;
+let currentPage = 1;
+let detailTask = null;
+let taskListeners = [];
+let notifListener = null;
+let notifications = [];
+let lastSeenNotif = 0;
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function showToast(msg, type = 'info') {
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i> <span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('leaving');
+    setTimeout(() => t.remove(), 400);
+  }, 4000);
+}
+
+function getTimeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'Just now';
+}
+
+function formatDate(str) {
+  if (!str) return '';
+  try {
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return str;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch (e) { return str; }
+}
+
+function getInitials(name) {
+  if (!name) return 'U';
+  const p = name.trim().split(/[\s._-]+/).filter(Boolean);
+  if (p.length === 0) return 'U';
+  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+}
+
+function techInfo(key) {
+  return TECH_CATEGORIES[key] || TECH_CATEGORIES.other;
+}
+
+function difficultyInfo(key) {
+  return DIFFICULTY[key] || null;
+}
+
+/* ============================================================
+   AUTH GATE
+   ============================================================ */
+if (auth) {
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = '../../index.html';
+      return;
+    }
+    currentUser = user;
+
+    try {
+      const snap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+      currentPerms = snap.exists() ? (snap.val() || {}) : {};
+    } catch (e) { currentPerms = {}; }
+
+    // Gate: requires zindua permission (falls back to ekazi)
+    const hasAccess = currentPerms.zindua === true || currentPerms.ekazi === true;
+    if (!hasAccess) {
+      document.getElementById('main').innerHTML = `
+        <div class="zd-empty" style="margin-top:2rem;">
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <h3>No access to Zindua Hub</h3>
+          <p>Your account has not been granted access to the tech-task marketplace. Contact your Janta coordinator to request access.</p>
+          <div style="margin-top:1.2rem;">
+            <a href="../../index.html" class="zd-btn zd-btn-zd">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Janta
+            </a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    try {
+      const snap = await database.ref(`taskers/${user.uid}`).once('value');
+      currentTasker = snap.exists() ? snap.val() : null;
+    } catch (e) { currentTasker = null; }
+
+    renderAccount();
+    attachTaskListener();
+    attachNotifListener();
+    setFooterYear();
+  });
+}
+
+function setFooterYear() {
+  const el = document.getElementById('footerYear');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ============================================================
+   ACCOUNT
+   ============================================================ */
+function renderAccount() {
+  const wrap = document.getElementById('accountWrap');
+  if (!wrap || !currentUser) return;
+
+  const name = (currentTasker && currentTasker.name)
+    || currentUser.displayName
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'Tasker');
+  const initials = getInitials(name);
+  const email = currentUser.email || '';
+
+  wrap.innerHTML = `
+    <button type="button" class="zd-account-btn" id="accountBtn" onclick="toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+      <div class="zd-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+      <span class="zd-account-name">${escapeHtml(name)}</span>
+      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <div class="zd-dropdown" id="accountDropdown" role="menu">
+      <div class="zd-dd-header">
+        <div class="zd-avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+        <div class="zd-dd-info">
+          <div class="zd-dd-name">${escapeHtml(name)}</div>
+          <div class="zd-dd-email">${escapeHtml(email)}</div>
+        </div>
+      </div>
+      <div class="zd-dd-body">
+        <div class="zd-dd-label">Zindua Hub</div>
+        <a href="my-tasks.html" class="zd-dd-item" role="menuitem">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i> My tech tasks
+        </a>
+        <a href="index.html" class="zd-dd-item" role="menuitem">
+          <i class="fas fa-code" aria-hidden="true"></i> Open task board
+        </a>
+        <div class="zd-dd-divider"></div>
+        <div class="zd-dd-label">Janta workspace</div>
+        ${renderDropdownApps()}
+        <div class="zd-dd-divider"></div>
+        <button type="button" class="zd-dd-item danger" onclick="handleSignOut()" role="menuitem">
+          <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderDropdownApps() {
+  const apps = [
+    { name: 'FlexiKazi',   icon: 'fa-list-check',     link: '../flexikazi/',  perm: 'ekazi',      fallback: null },
+    { name: 'Kasikazi',    icon: 'fa-bullhorn',       link: '../kasikazi/',   perm: 'kasikazi',   fallback: 'ekazi' },
+    { name: 'CraftiKazi',  icon: 'fa-hammer',         link: '../craftikazi/', perm: 'craftikazi', fallback: 'ekazi' },
+    { name: 'Learning',    icon: 'fa-graduation-cap', link: '../../learning/index.html', perm: 'learning', fallback: null },
+    { name: 'Janta Home',  icon: 'fa-cube',           link: '../../index.html', perm: null, fallback: null }
+  ];
+
+  return apps
+    .filter(a => {
+      if (a.perm === null) return true;
+      if (currentPerms[a.perm] === true) return true;
+      if (a.fallback && currentPerms[a.fallback] === true) return true;
+      return false;
+    })
+    .map(a => `
+      <a href="${escapeHtml(a.link)}" class="zd-dd-item" role="menuitem">
+        <i class="fas ${escapeHtml(a.icon)}" aria-hidden="true"></i> ${escapeHtml(a.name)}
+      </a>
+    `).join('');
+}
+
+window.toggleDropdown = function(e) {
+  if (e) e.stopPropagation();
+  const btn = document.getElementById('accountBtn');
+  const dd = document.getElementById('accountDropdown');
+  if (!btn || !dd) return;
+  const open = dd.classList.toggle('active');
+  btn.classList.toggle('active', open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+};
+
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('accountWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = document.getElementById('accountDropdown');
+    const btn = document.getElementById('accountBtn');
+    if (dd) dd.classList.remove('active');
+    if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+  }
+});
+
+window.handleSignOut = async function() {
+  if (!confirm('Sign out of Zindua Hub?')) return;
+  detachTaskListener();
+  detachNotifListener();
+  await auth.signOut();
+  window.location.href = '../../index.html';
+};
+
+/* ============================================================
+   TASK LISTENER
+   ============================================================ */
+function attachTaskListener() {
+  detachTaskListener();
+
+  const ref = database.ref('zindua_tasks');
+  const cb = (snap) => {
+    const val = snap.val() || {};
+    allTasks = Object.entries(val)
+      .map(([id, t]) => ({ id, ...t }))
+      .sort((a, b) => (b.postedAt || 0) - (a.postedAt || 0));
+
+    updateCounts();
+    updateStats();
+    applyFilters();
+
+    const status = document.getElementById('heroStatus');
+    if (status) {
+      const openCount = allTasks.filter(t => (t.status || 'open') === 'open').length;
+      status.textContent = openCount === 0
+        ? 'No open tasks right now'
+        : `${openCount} open tech task${openCount === 1 ? '' : 's'} available`;
+    }
+  };
+
+  ref.on('value', cb, (err) => {
+    console.error('Task listener error:', err);
+    document.getElementById('taskGrid').innerHTML = `
+      <div class="zd-empty">
+        <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+        <h3>Could not load tasks</h3>
+        <p>Check your connection and try refreshing.</p>
+      </div>
+    `;
+  });
+
+  taskListeners.push({ ref, cb });
+}
+
+function detachTaskListener() {
+  taskListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
+  taskListeners = [];
+}
+
+/* ============================================================
+   NOTIFICATIONS
+   ============================================================ */
+function attachNotifListener() {
+  detachNotifListener();
+  if (!currentUser) return;
+
+  lastSeenNotif = Number(localStorage.getItem('zindua_notif_lastseen') || 0);
+
+  const ref = database.ref(`kazinni_notifications/${currentUser.uid}`).limitToLast(30);
+  const cb = (snap) => {
+    const val = snap.val() || {};
+    notifications = Object.entries(val)
+      .map(([id, n]) => ({ id, ...n }))
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    updateNotifBadge();
+  };
+  ref.on('value', cb, () => {});
+  notifListener = { ref, cb };
+}
+
+function detachNotifListener() {
+  if (notifListener) {
+    try { notifListener.ref.off('value', notifListener.cb); } catch (e) {}
+    notifListener = null;
+  }
+}
+
+function updateNotifBadge() {
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  const unread = notifications.filter(n => (n.timestamp || 0) > lastSeenNotif && n.read !== true).length;
+  if (unread > 0) {
+    badge.textContent = unread > 9 ? '9+' : String(unread);
+    badge.classList.add('visible');
+  } else {
+    badge.classList.remove('visible');
+  }
+}
+
+window.toggleNotifications = function(e) {
+  if (e) e.stopPropagation();
+  if (notifications.length === 0) {
+    showToast('No notifications yet', 'info');
+    return;
+  }
+  localStorage.setItem('zindua_notif_lastseen', String(Date.now()));
+  lastSeenNotif = Date.now();
+  updateNotifBadge();
+  const latest = notifications[0];
+  showToast(`${latest.title || 'Notification'} — ${latest.body || ''}`, 'info');
+};
+
+/* ============================================================
+   FILTERS & COUNTS
+   ============================================================ */
+function updateCounts() {
+  let open = 0, mine = 0, completed = 0;
+  const uid = currentUser ? currentUser.uid : '';
+
+  allTasks.forEach(t => {
+    const status = (t.status || 'open').toLowerCase();
+    const claimed = t.claimedBy && t.claimedBy[uid];
+
+    if (claimed) {
+      const cs = (claimed.status || 'claimed').toLowerCase();
+      if (cs === 'approved') completed++;
+      else mine++;
+    } else if (status === 'open') {
+      open++;
+    }
+  });
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('countAll', allTasks.length);
+  set('countOpen', open);
+  set('countMine', mine);
+  set('countCompleted', completed);
+}
+
+function updateStats() {
+  const uid = currentUser ? currentUser.uid : '';
+  let open = 0, mine = 0, completed = 0, value = 0;
+
+  allTasks.forEach(t => {
+    const status = (t.status || 'open').toLowerCase();
+    const claimed = t.claimedBy && t.claimedBy[uid];
+
+    if (claimed) {
+      const cs = (claimed.status || 'claimed').toLowerCase();
+      if (cs === 'approved') completed++;
+      else mine++;
+    } else if (status === 'open') {
+      open++;
+      value += Number(t.payRate) || 0;
+    }
+  });
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('statOpen', open);
+  set('statMine', mine);
+  set('statCompleted', completed);
+  set('statValue', value.toLocaleString());
+}
+
+function renderTechChips() {
+  const container = document.getElementById('techChips');
+  if (!container) return;
+
+  const counts = {};
+  allTasks.forEach(t => {
+    const key = t.tech || 'other';
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  const keys = Object.keys(TECH_CATEGORIES).filter(k => counts[k] > 0);
+
+  if (keys.length === 0) {
+    container.innerHTML = `<span style="font-size:0.74rem;color:var(--text-muted);">No tech categories yet</span>`;
+    return;
+  }
+
+  container.innerHTML = keys.map(k => {
+    const c = TECH_CATEGORIES[k];
+    const active = techFilters.has(k) ? 'active' : '';
+    return `
+      <button type="button" class="zd-chip ${active}" data-tech="${escapeHtml(k)}" onclick="toggleTechFilter('${escapeHtml(k)}')">
+        <i class="fas ${escapeHtml(c.icon)}" aria-hidden="true"></i>
+        ${escapeHtml(c.name)}
+        <span class="count">${counts[k]}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+window.setStatusFilter = function(status) {
+  statusFilter = status;
+  document.querySelectorAll('.zd-chip[data-status]').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.status === status);
+  });
+  currentPage = 1;
+  applyFilters();
+};
+
+window.toggleTechFilter = function(key) {
+  if (techFilters.has(key)) techFilters.delete(key);
+  else techFilters.add(key);
+  renderTechChips();
+  currentPage = 1;
+  applyFilters();
+};
+
+window.onSearchInput = function() {
+  const el = document.getElementById('searchInput');
+  searchTerm = (el ? el.value : '').toLowerCase().trim();
+  currentPage = 1;
+  applyFilters();
+};
+
+function applyFilters() {
+  const uid = currentUser ? currentUser.uid : '';
+
+  filteredTasks = allTasks.filter(t => {
+    const status = (t.status || 'open').toLowerCase();
+    const claimed = t.claimedBy && t.claimedBy[uid];
+    const cs = claimed ? (claimed.status || 'claimed').toLowerCase() : null;
+
+    if (statusFilter === 'open') {
+      if (claimed || status !== 'open') return false;
+    } else if (statusFilter === 'mine') {
+      if (!claimed || cs === 'approved') return false;
+    } else if (statusFilter === 'completed') {
+      if (!claimed || cs !== 'approved') return false;
+    }
+
+    if (techFilters.size > 0) {
+      const key = t.tech || 'other';
+      if (!techFilters.has(key)) return false;
+    }
+
+    if (searchTerm) {
+      const stackArr = Array.isArray(t.stack) ? t.stack.join(' ') : (t.stack || '');
+      const hay = [
+        t.title || '',
+        t.description || '',
+        t.clientName || '',
+        t.category || '',
+        stackArr
+      ].join(' ').toLowerCase();
+      if (!hay.includes(searchTerm)) return false;
+    }
+
+    return true;
+  });
+
+  renderTaskGrid();
+  renderTechChips();
+}
+
+/* ============================================================
+   TASK GRID
+   ============================================================ */
+function renderTaskGrid() {
+  const container = document.getElementById('taskGrid');
+  if (!container) return;
+
+  const total = filteredTasks.length;
+  const pageItems = filteredTasks.slice(0, currentPage * pageSize);
+
+  if (total === 0) {
+    container.innerHTML = `
+      <div class="zd-empty">
+        <i class="fas fa-code" aria-hidden="true"></i>
+        <h3>No tech tasks match your filters</h3>
+        <p>Try clearing filters or search. New tech work is posted regularly.</p>
+      </div>
+    `;
+    document.getElementById('loadMoreWrap').style.display = 'none';
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="zd-grid">
+      ${pageItems.map(taskCard).join('')}
+    </div>
+  `;
+
+  const moreWrap = document.getElementById('loadMoreWrap');
+  moreWrap.style.display = pageItems.length < total ? 'flex' : 'none';
+  container.setAttribute('aria-busy', 'false');
+}
+
+window.loadMore = function() {
+  currentPage++;
+  renderTaskGrid();
+};
+
+function taskCard(t) {
+  const tech = techInfo(t.tech);
+  const diff = difficultyInfo(t.difficulty);
+  const uid = currentUser ? currentUser.uid : '';
+  const claimed = t.claimedBy && t.claimedBy[uid];
+  const claimedByMe = !!claimed;
+  const cs = claimedByMe ? (claimed.status || 'claimed').toLowerCase() : null;
+
+  const slotBadge = claimedByMe
+    ? `<span class="zd-card-slot-badge mine">Yours</span>`
+    : (t.slots && t.claimedCount >= t.slots
+        ? `<span class="zd-card-slot-badge full">Full</span>`
+        : '');
+
+  const stackArr = Array.isArray(t.stack) ? t.stack.slice(0, 3) : [];
+  const extraStack = Array.isArray(t.stack) && t.stack.length > 3 ? t.stack.length - 3 : 0;
+
+  const pill = claimedByMe
+    ? `<span class="zd-pill ${cs}">${statusLabel(cs)}</span>`
+    : `<span class="zd-pill open">Open</span>`;
+
+  const cover = (Array.isArray(t.attachments) && t.attachments.length)
+    ? `<img src="${escapeHtml(t.attachments[0])}" alt="" loading="lazy" onerror="this.style.display='none';">`
+    : `<div class="code-lines" aria-hidden="true">
+        <div class="code-line"></div>
+        <div class="code-line"></div>
+        <div class="code-line"></div>
+        <div class="code-line"></div>
+        <div class="code-line"></div>
+      </div>
+      <div class="placeholder-icon"><i class="fas ${escapeHtml(tech.icon)}"></i></div>`;
+
+  return `
+    <article class="zd-card" role="button" tabindex="0"
+      onclick="viewTask('${escapeHtml(t.id)}')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();viewTask('${escapeHtml(t.id)}');}"
+      aria-label="${escapeHtml(t.title || 'Tech task')}">
+      <div class="zd-card-media">
+        ${cover}
+        <span class="zd-card-stack-badge">
+          <i class="fas ${escapeHtml(tech.icon)}" aria-hidden="true"></i>
+          ${escapeHtml(tech.name)}
+        </span>
+        ${diff ? `<span class="zd-card-diff-badge ${escapeHtml(t.difficulty)}">${escapeHtml(diff.name)}</span>` : ''}
+        ${slotBadge}
+      </div>
+      <div class="zd-card-body">
+        <h3 class="zd-card-title">${escapeHtml(t.title || 'Untitled tech task')}</h3>
+        <p class="zd-card-desc">${escapeHtml(t.description || 'No description provided.')}</p>
+
+        ${stackArr.length ? `
+          <div class="zd-card-tags">
+            ${stackArr.map(s => `<span class="zd-tag"><i class="fas fa-code-branch" aria-hidden="true"></i> ${escapeHtml(s)}</span>`).join('')}
+            ${extraStack ? `<span class="zd-tag">+${extraStack}</span>` : ''}
+          </div>
+        ` : ''}
+
+        <div class="zd-card-meta">
+          ${t.clientName ? `<span><i class="fas fa-user" aria-hidden="true"></i> ${escapeHtml(t.clientName)}</span>` : ''}
+          ${t.dueDate ? `<span><i class="fas fa-calendar" aria-hidden="true"></i> ${escapeHtml(formatDate(t.dueDate))}</span>` : ''}
+          ${t.postedAt ? `<span><i class="fas fa-clock" aria-hidden="true"></i> ${escapeHtml(getTimeAgo(t.postedAt))}</span>` : ''}
+        </div>
+        <div class="zd-card-foot">
+          <div class="zd-card-pay">
+            KES ${Number(t.payRate || 0).toLocaleString()}
+            <span class="unit">total</span>
+          </div>
+          ${pill}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function statusLabel(s) {
+  const map = {
+    claimed: 'Claimed',
+    started: 'In Progress',
+    submitted: 'In Review',
+    revision: 'Revision',
+    approved: 'Approved'
+  };
+  return map[s] || 'Open';
+}
+
+/* ============================================================
+   TASK DETAIL
+   ============================================================ */
+window.viewTask = function(id) {
+  const t = allTasks.find(x => x.id === id);
+  if (!t) { showToast('Task not found', 'error'); return; }
+
+  detailTask = t;
+  const tech = techInfo(t.tech);
+  const diff = difficultyInfo(t.difficulty);
+  const uid = currentUser ? currentUser.uid : '';
+  const claimed = t.claimedBy && t.claimedBy[uid];
+  const cs = claimed ? (claimed.status || 'claimed').toLowerCase() : 'open';
+
+  const attachments = Array.isArray(t.attachments) ? t.attachments : [];
+  const stack = Array.isArray(t.stack) ? t.stack : [];
+
+  const timeline = buildTimeline(cs);
+  const actions = buildActions(t, cs);
+  const submissionBlock = (claimed && claimed.submissionLinks && claimed.submissionLinks.length)
+    ? buildSubmissionBlock(claimed)
+    : '';
+
+  const body = document.getElementById('detailBody');
+  body.innerHTML = `
+    <div class="zd-modal-hero">
+      <div class="zd-modal-hero-inner">
+        <h2 class="zd-modal-hero-title" id="detailTitle">
+          <i class="fas ${escapeHtml(tech.icon)}" aria-hidden="true"></i>
+          <span>${escapeHtml(t.title || 'Untitled tech task')}</span>
+        </h2>
+        <div class="zd-modal-hero-meta">
+          <span><i class="fas fa-tag" aria-hidden="true"></i> ${escapeHtml(tech.name)}</span>
+          ${diff ? `<span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(diff.name)}</span>` : ''}
+          ${t.estHours ? `<span><i class="fas fa-hourglass-half" aria-hidden="true"></i> ~${escapeHtml(String(t.estHours))}h</span>` : ''}
+          <span><i class="fas fa-hashtag" aria-hidden="true"></i> ${escapeHtml(t.id.slice(-8))}</span>
+        </div>
+      </div>
+    </div>
+
+    ${timeline}
+
+    <div class="zd-detail-list" style="margin-top:1rem;">
+      <div class="zd-detail-item">
+        <span class="zd-detail-label">Pay Rate</span>
+        <span class="zd-detail-value"><span class="pay">KES ${Number(t.payRate || 0).toLocaleString()}</span></span>
+      </div>
+      <div class="zd-detail-item">
+        <span class="zd-detail-label">Client</span>
+        <span class="zd-detail-value">
+          ${escapeHtml(t.clientName || '—')}
+          ${t.clientEmail ? `<br><span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(t.clientEmail)}</span>` : ''}
+        </span>
+      </div>
+      ${t.dueDate ? `
+        <div class="zd-detail-item">
+          <span class="zd-detail-label">Deadline</span>
+          <span class="zd-detail-value">${escapeHtml(formatDate(t.dueDate))}</span>
+        </div>
+      ` : ''}
+      ${t.slots ? `
+        <div class="zd-detail-item">
+          <span class="zd-detail-label">Slots</span>
+          <span class="zd-detail-value">${t.claimedCount || 0} of ${t.slots} claimed</span>
+        </div>
+      ` : ''}
+      ${t.repoLink ? `
+        <div class="zd-detail-item">
+          <span class="zd-detail-label">Repo / Brief</span>
+          <span class="zd-detail-value">
+            <a href="${escapeHtml(t.repoLink)}" target="_blank" rel="noopener">
+              <i class="fas fa-code-branch" aria-hidden="true"></i> Open
+            </a>
+          </span>
+        </div>
+      ` : ''}
+      ${t.jobLink ? `
+        <div class="zd-detail-item">
+          <span class="zd-detail-label">Reference</span>
+          <span class="zd-detail-value">
+            <a href="${escapeHtml(t.jobLink)}" target="_blank" rel="noopener">
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i> Open
+            </a>
+          </span>
+        </div>
+      ` : ''}
+    </div>
+
+    ${stack.length ? `
+      <div class="zd-modal-section">
+        <div class="zd-modal-section-title"><i class="fas fa-code-branch" aria-hidden="true"></i> Tech Stack</div>
+        <div class="zd-stack-list">
+          ${stack.map(s => `<span class="zd-stack-chip"><i class="fas fa-cube" aria-hidden="true"></i> ${escapeHtml(s)}</span>`).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    ${t.description ? `
+      <div class="zd-modal-section">
+        <div class="zd-modal-section-title"><i class="fas fa-align-left" aria-hidden="true"></i> Description</div>
+        <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;">${escapeHtml(t.description)}</div>
+      </div>
+    ` : ''}
+
+    ${t.requirements ? `
+      <div class="zd-modal-section">
+        <div class="zd-modal-section-title"><i class="fas fa-list-check" aria-hidden="true"></i> Requirements</div>
+        <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;">${escapeHtml(t.requirements)}</div>
+      </div>
+    ` : ''}
+
+    ${t.notes ? `
+      <div class="zd-modal-section">
+        <div class="zd-modal-section-title"><i class="fas fa-sticky-note" aria-hidden="true"></i> Notes</div>
+        <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;padding:0.8rem 0.9rem;background:var(--surface-2);border-left:3px solid var(--zd);border-radius:8px;white-space:pre-wrap;">${escapeHtml(t.notes)}</div>
+      </div>
+    ` : ''}
+
+    ${attachments.length ? `
+      <div class="zd-modal-section">
+        <div class="zd-modal-section-title"><i class="fas fa-image" aria-hidden="true"></i> Reference Attachments (${attachments.length})</div>
+        <div class="zd-attachments">
+          ${attachments.map(url => `
+            <a href="${escapeHtml(url)}" target="_blank" rel="noopener" title="Open attachment">
+              <img src="${escapeHtml(url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-file\\' style=\\'color:var(--text-muted);\\'></i>';">
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
+
+    ${submissionBlock}
+    ${actions}
+  `;
+
+  document.getElementById('detailModal').classList.add('active');
+  document.getElementById('detailOverlay').classList.add('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeDetail = function() {
+  document.getElementById('detailModal').classList.remove('active');
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.getElementById('detailModal').setAttribute('aria-hidden', 'true');
+  detailTask = null;
+};
+
+function buildTimeline(status) {
+  const steps = [
+    { key: 'open', label: 'Open' },
+    { key: 'claimed', label: 'Claimed' },
+    { key: 'started', label: 'In Progress' },
+    { key: 'submitted', label: 'In Review' },
+    { key: 'approved', label: 'Approved' }
+  ];
+
+  let currentIndex = 0;
+  if (status === 'open') currentIndex = 0;
+  else if (status === 'claimed') currentIndex = 1;
+  else if (status === 'started') currentIndex = 2;
+  else if (status === 'submitted' || status === 'revision') currentIndex = 3;
+  else if (status === 'approved') currentIndex = 4;
+
+  let html = '<div class="zd-timeline">';
+  steps.forEach((s, i) => {
+    let cls = '';
+    if (i < currentIndex) cls = 'done';
+    else if (i === currentIndex) cls = 'current';
+    if (status === 'revision' && i === 3) cls = 'current';
+
+    const icon = cls === 'done' ? 'fa-check' : (
+      i === 0 ? 'fa-door-open' :
+      i === 1 ? 'fa-hand-sparkles' :
+      i === 2 ? 'fa-code' :
+      i === 3 ? 'fa-paper-plane' : 'fa-circle-check'
+    );
+
+    html += `
+      <div class="zd-tl-step ${cls}">
+        <div class="line"></div>
+        <div class="dot"><i class="fas ${icon}" aria-hidden="true"></i></div>
+        <div class="label">${s.label}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  return html;
+}
+
+function buildSubmissionBlock(claimed) {
+  const links = Array.isArray(claimed.submissionLinks) ? claimed.submissionLinks : [];
+  const status = (claimed.status || 'submitted').toLowerCase();
+
+  return `
+    <div class="zd-modal-section">
+      <div class="zd-modal-section-title">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Your Submission
+        <span class="zd-pill ${status}" style="margin-left:0.5rem;">${statusLabel(status)}</span>
+      </div>
+      <div class="zd-submission">
+        ${links.length ? `
+          <div class="links">
+            ${links.map(l => `
+              <a href="${escapeHtml(l)}" target="_blank" rel="noopener">
+                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                <span>${escapeHtml(l)}</span>
+              </a>
+            `).join('')}
+          </div>
+        ` : '<p style="color:var(--text-muted);font-size:0.8rem;">No links submitted</p>'}
+        ${claimed.submissionNotes ? `<div class="note">"${escapeHtml(claimed.submissionNotes)}"</div>` : ''}
+        <div class="meta">
+          <span><i class="fas fa-clock" aria-hidden="true"></i> Submitted ${claimed.submittedAt ? getTimeAgo(claimed.submittedAt) : '—'}</span>
+          ${claimed.reviewNote ? `<span><i class="fas fa-comment-dots" aria-hidden="true"></i> Feedback: ${escapeHtml(claimed.reviewNote)}</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildActions(t, status) {
+  const uid = currentUser ? currentUser.uid : '';
+  const claimed = t.claimedBy && t.claimedBy[uid];
+
+  if (status === 'approved') {
+    return `
+      <div class="zd-action-row">
+        <div class="zd-banner success" style="flex:1;margin:0;">
+          <i class="fas fa-check-circle" aria-hidden="true"></i>
+          <div>
+            <strong>Tech work approved 🎉</strong><br>
+            Payment of KES ${Number(t.payRate || 0).toLocaleString()} will be processed within 48 hours.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (status === 'submitted') {
+    return `
+      <div class="zd-action-row">
+        <div class="zd-banner warning" style="flex:1;margin:0;">
+          <i class="fas fa-clock" aria-hidden="true"></i>
+          <div>
+            <strong>Awaiting review</strong><br>
+            The coordinator will review your submission. You'll be notified once there's a decision.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (status === 'revision') {
+    return `
+      <div class="zd-action-row">
+        <button type="button" class="zd-modal-btn primary" onclick="openSubmitFromDetail()">
+          <i class="fas fa-redo" aria-hidden="true"></i> Fix & Resubmit
+        </button>
+        <button type="button" class="zd-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+
+  if (status === 'claimed' && claimed) {
+    return `
+      <div class="zd-banner info" style="margin-top:1rem;">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <div>
+          <strong>You've claimed this task.</strong> Once you begin coding, tap <strong>Start Working</strong> so the coordinator knows.
+        </div>
+      </div>
+      <div class="zd-action-row">
+        <button type="button" class="zd-modal-btn dark" id="startBtn" onclick="startTask()">
+          <i class="fas fa-play" aria-hidden="true"></i> Start Working
+        </button>
+        <button type="button" class="zd-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+
+  if (status === 'started' && claimed) {
+    return `
+      <div class="zd-action-row">
+        <button type="button" class="zd-modal-btn primary" id="submitFromDetailBtn" onclick="openSubmitFromDetail()">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Work
+        </button>
+        <button type="button" class="zd-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Close</button>
+      </div>
+    `;
+  }
+
+  if (status === 'open' || !claimed) {
+    const isFull = t.slots && t.claimedCount >= t.slots;
+    if (isFull) {
+      return `
+        <div class="zd-action-row">
+          <div class="zd-banner warning" style="flex:1;margin:0;">
+            <i class="fas fa-users-slash" aria-hidden="true"></i>
+            <div><strong>All slots taken.</strong> This task has been fully claimed by other taskers.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="zd-action-row">
+        <button type="button" class="zd-modal-btn primary" id="claimBtn" onclick="claimTask()">
+          <i class="fas fa-hand-sparkles" aria-hidden="true"></i> Claim This Task
+        </button>
+        <button type="button" class="zd-modal-btn secondary" style="flex:0 0 auto;" onclick="closeDetail()">Not Now</button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="zd-action-row">
+      <button type="button" class="zd-modal-btn secondary" onclick="closeDetail()">Close</button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   CLAIM / START / SUBMIT
+   ============================================================ */
+window.claimTask = async function() {
+  if (!detailTask || !currentUser) return;
+  const btn = document.getElementById('claimBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Claiming…'; }
+
+  try {
+    const ref = database.ref(`zindua_tasks/${detailTask.id}`);
+    const snap = await ref.once('value');
+    const t = snap.val() || {};
+
+    if (t.slots && t.claimedCount >= t.slots) {
+      showToast('This task is already full', 'error');
+      closeDetail();
+      return;
+    }
+
+    const now = Date.now();
+    const updates = {};
+    updates[`zindua_tasks/${detailTask.id}/claimedBy/${currentUser.uid}`] = {
+      claimedAt: now,
+      email: currentUser.email,
+      name: (currentTasker && currentTasker.name) || currentUser.displayName || currentUser.email,
+      status: 'claimed'
+    };
+    updates[`zindua_tasks/${detailTask.id}/claimedCount`] = (t.claimedCount || 0) + 1;
+    updates[`zindua_tasks/${detailTask.id}/updatedAt`] = now;
+    updates[`zindua_tasks/${detailTask.id}/updatedBy`] = currentUser.email;
+
+    await database.ref().update(updates);
+    showToast('Task claimed! You can start working on it now.', 'success');
+    closeDetail();
+  } catch (e) {
+    console.error('Claim failed:', e);
+    showToast('Could not claim task. Try again.', 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-hand-sparkles"></i> Claim This Task'; }
+  }
+};
+
+window.startTask = async function() {
+  if (!detailTask || !currentUser) return;
+  const btn = document.getElementById('startBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Starting…'; }
+
+  try {
+    const now = Date.now();
+    await database.ref(`zindua_tasks/${detailTask.id}/claimedBy/${currentUser.uid}`).update({
+      status: 'started',
+      startedAt: now
+    });
+    await database.ref(`zindua_tasks/${detailTask.id}`).update({
+      updatedAt: now,
+      updatedBy: currentUser.email
+    });
+    showToast('Task started. Happy shipping!', 'success');
+    closeDetail();
+  } catch (e) {
+    console.error('Start failed:', e);
+    showToast('Could not start. Try again.', 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-play"></i> Start Working'; }
+  }
+};
+
+window.openSubmitFromDetail = function() {
+  if (!detailTask || !currentUser) return;
+  const uid = currentUser.uid;
+  const claimed = detailTask.claimedBy && detailTask.claimedBy[uid];
+
+  document.getElementById('submitTaskId').value = detailTask.id;
+  document.getElementById('submitSubtitle').innerHTML =
+    `For: <strong>${escapeHtml(detailTask.title || 'Tech task')}</strong>`;
+
+  const container = document.getElementById('submitLinks');
+  container.innerHTML = '';
+
+  const existing = (claimed && Array.isArray(claimed.submissionLinks)) ? claimed.submissionLinks : [];
+  if (existing.length > 0) {
+    existing.forEach(l => addLinkField(l));
+  } else {
+    addLinkField('');
+  }
+
+  document.getElementById('submitNotes').value = (claimed && claimed.submissionNotes) || '';
+
+  closeDetail();
+  document.getElementById('submitModal').classList.add('active');
+  document.getElementById('submitOverlay').classList.add('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'false');
+};
+
+window.closeSubmit = function() {
+  document.getElementById('submitModal').classList.remove('active');
+  document.getElementById('submitOverlay').classList.remove('active');
+  document.getElementById('submitModal').setAttribute('aria-hidden', 'true');
+};
+
+window.addLinkField = function(value) {
+  const container = document.getElementById('submitLinks');
+  const id = 'link_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const div = document.createElement('div');
+  div.className = 'zd-link-row';
+  div.innerHTML = `
+    <input type="url" class="zd-input" id="${id}" placeholder="https://github.com/... or https://your-app.vercel.app" value="${escapeHtml(value || '')}">
+    <button type="button" class="zd-link-remove" onclick="this.parentElement.remove()" aria-label="Remove link">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  `;
+  container.appendChild(div);
+};
+
+window.submitWork = async function(e) {
+  e.preventDefault();
+  if (!currentUser) return;
+
+  const btn = document.getElementById('submitBtn');
+  const taskId = document.getElementById('submitTaskId').value;
+  const notes = document.getElementById('submitNotes').value.trim();
+
+  const linkInputs = document.querySelectorAll('#submitLinks input[type="url"]');
+  const links = Array.from(linkInputs).map(inp => inp.value.trim()).filter(Boolean);
+
+  if (links.length === 0) { showToast('Please add at least one submission link', 'error'); return; }
+  const invalid = links.filter(l => !/^https?:\/\//i.test(l));
+  if (invalid.length > 0) { showToast('Links must start with http:// or https://', 'error'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Submitting…';
+
+  try {
+    const now = Date.now();
+    await database.ref(`zindua_tasks/${taskId}/claimedBy/${currentUser.uid}`).update({
+      status: 'submitted',
+      submittedAt: now,
+      submissionLinks: links,
+      submissionNotes: notes
+    });
+    await database.ref(`zindua_tasks/${taskId}`).update({
+      updatedAt: now,
+      updatedBy: currentUser.email
+    });
+
+    try {
+      const logRef = database.ref('admin_logs').push();
+      await logRef.set({
+        action: 'zindua_submission',
+        taskId: taskId,
+        taskerUid: currentUser.uid,
+        taskerEmail: currentUser.email,
+        workspace: 'zindua',
+        timestamp: now
+      });
+    } catch (logErr) { console.warn('Log write failed:', logErr); }
+
+    showToast('Work submitted! Awaiting review.', 'success');
+    closeSubmit();
+  } catch (err) {
+    console.error('Submit failed:', err);
+    showToast('Could not submit. Try again.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit for Review';
+  }
+};
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+window.scrollToTasks = function() {
+  const el = document.getElementById('tasks');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDetail(); closeSubmit(); }
+});
+
+window.addEventListener('beforeunload', () => {
+  detachTaskListener();
+  detachNotifListener();
+});
+</script>
+</body>
+</html>
