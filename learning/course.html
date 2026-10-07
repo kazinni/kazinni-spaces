@@ -60,9 +60,12 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .lesson-item{display:flex;align-items:center;gap:.7rem;padding:.7rem .8rem;border-radius:var(--r-sm);color:var(--text-2);text-decoration:none;font-family:var(--f-head);font-size:.83rem;font-weight:500;transition:background var(--t-fast),color var(--t-fast);cursor:pointer;background:none;border:none;width:100%;text-align:left}
 .lesson-item:hover{background:var(--surface-2);color:var(--ink)}
 .lesson-item.active{background:rgba(202,138,4,.1);color:var(--gold-dark);font-weight:600}
+.lesson-item.locked{opacity:.55;cursor:not-allowed}
+.lesson-item.locked:hover{background:transparent;color:var(--text-2)}
 .lesson-item-icon{width:26px;height:26px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);flex-shrink:0}
 .lesson-item.completed .lesson-item-icon{background:#d1fae5;color:#065f46}
 .lesson-item.active .lesson-item-icon{background:var(--gold-gradient);color:#fff}
+.lesson-item.locked .lesson-item-icon{background:var(--surface-3);color:var(--muted)}
 .lesson-item-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lesson-item-duration{font-size:.68rem;color:var(--muted);font-family:var(--f-head)}
 
@@ -93,49 +96,78 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .empty-state p{font-size:.85rem;margin-bottom:.8rem}
 
-/* ── NOTES DOWNLOAD ────────────────────────────────── */
-.notes-menu-wrap{position:relative;display:inline-block}
-.notes-menu-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .9rem;border-radius:var(--r-pill);border:1.5px solid var(--border-2);background:#fff;color:var(--ink);font-family:var(--f-head);font-size:.78rem;font-weight:600;cursor:pointer;transition:all var(--t-fast);white-space:nowrap}
+/* ── NOTES DOWNLOAD — sidebar (fixed) ─────────────────── */
+.player-sidebar-actions{padding:0 .5rem .9rem;margin-bottom:.6rem;border-bottom:1px dashed var(--border)}
+.notes-menu-wrap{position:relative;display:block}
+.notes-menu-btn{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:.55rem .85rem;border-radius:var(--r-md);border:1.5px solid var(--border-2);background:#fff;color:var(--ink);font-family:var(--f-head);font-size:.8rem;font-weight:600;cursor:pointer;transition:all var(--t-fast)}
 .notes-menu-btn:hover{border-color:var(--ink);background:var(--surface-2)}
+.notes-menu-btn i:first-child{color:var(--gold-dark)}
 .notes-menu-btn i.chev{font-size:.6rem;opacity:.6;transition:transform var(--t-fast)}
 .notes-menu-wrap.open .notes-menu-btn i.chev{transform:rotate(180deg)}
-.notes-menu{position:absolute;bottom:calc(100% + .4rem);left:0;min-width:240px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:0 20px 44px rgba(15,15,30,.14);padding:.35rem;display:none;z-index:60}
+.notes-menu{position:absolute;top:calc(100% + .35rem);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:0 20px 44px rgba(15,15,30,.14);padding:.35rem;display:none;z-index:70}
 .notes-menu-wrap.open .notes-menu{display:block;animation:fadeUp .18s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.notes-menu button{display:flex;align-items:flex-start;gap:.6rem;width:100%;padding:.6rem .7rem;border:none;background:none;border-radius:var(--r-sm);font-family:var(--f-head);font-size:.8rem;font-weight:500;color:var(--text-2);cursor:pointer;text-align:left;transition:all var(--t-fast)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.notes-menu button{display:flex;align-items:flex-start;gap:.6rem;width:100%;padding:.55rem .6rem;border:none;background:none;border-radius:var(--r-sm);font-family:var(--f-head);font-size:.78rem;font-weight:500;color:var(--text-2);cursor:pointer;text-align:left;transition:all var(--t-fast)}
 .notes-menu button:hover{background:var(--surface-2);color:var(--ink)}
 .notes-menu button:disabled{opacity:.5;cursor:wait}
 .notes-menu button i{width:14px;text-align:center;color:var(--gold-dark);font-size:.78rem;margin-top:2px;flex-shrink:0}
-.notes-menu button small{display:block;font-size:.66rem;color:var(--muted);font-weight:400;margin-top:.1rem}
-.player-sidebar-actions{margin:0 .5rem 1rem;display:flex;flex-direction:column;gap:.4rem}
-.player-sidebar-actions .notes-menu-wrap,
-.player-sidebar-actions .notes-menu-btn{width:100%;justify-content:center}
-.player-sidebar-actions .notes-menu{left:0;right:0;min-width:0}
+.notes-menu button small{display:block;font-size:.64rem;color:var(--muted);font-weight:400;margin-top:.1rem;line-height:1.3}
 
-/* QUIZ LAUNCH CARD */
+/* In-player action bar menu (lesson notes) */
+.player-actions-right .notes-menu-wrap{display:inline-block;width:auto}
+.player-actions-right .notes-menu-btn{width:auto;justify-content:center;padding:.55rem .9rem;border-radius:var(--r-pill);font-size:.78rem}
+.player-actions-right .notes-menu{top:auto;bottom:calc(100% + .35rem);left:0;right:auto;min-width:230px}
+
+/* ── QUIZ LAUNCH CARD ─────────────────────────────────── */
 .quiz-launch{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1px solid rgba(202,138,4,.25);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem;position:relative;overflow:hidden}
 .quiz-launch::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.15) 0%,transparent 70%);top:-140px;right:-100px;pointer-events:none}
 .quiz-launch-icon{width:64px;height:64px;border-radius:20px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;box-shadow:0 12px 30px rgba(202,138,4,.3);position:relative;z-index:1}
 .quiz-launch h2{font-family:var(--f-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.4rem;position:relative;z-index:1}
-.quiz-launch p{font-size:.88rem;color:var(--text-2);max-width:420px;margin:0 auto 1.4rem;position:relative;z-index:1;line-height:1.6}
+.quiz-launch p{font-size:.88rem;color:var(--text-2);max-width:440px;margin:0 auto 1.4rem;position:relative;z-index:1;line-height:1.6}
 .quiz-launch-stats{display:flex;justify-content:center;gap:2rem;margin-bottom:1.4rem;position:relative;z-index:1;flex-wrap:wrap}
 .quiz-stat{text-align:center}
 .quiz-stat-value{font-family:var(--f-display);font-size:1.5rem;font-weight:700;color:var(--gold-dark);letter-spacing:-.02em;line-height:1}
 .quiz-stat-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-family:var(--f-head);font-weight:600;margin-top:.3rem}
 .quiz-launch-actions{position:relative;z-index:1;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
 
-/* QUIZ MODAL */
+/* Locked state panel */
+.quiz-locked{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem;position:relative}
+.quiz-locked-icon{width:64px;height:64px;border-radius:20px;background:var(--surface-3);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem}
+.quiz-locked h2{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.4rem}
+.quiz-locked p{font-size:.88rem;color:var(--text-2);max-width:420px;margin:0 auto 1.2rem;line-height:1.6}
+.quiz-locked-progress{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);font-family:var(--f-head);font-size:.78rem;font-weight:600;color:var(--text-2)}
+.quiz-locked-progress i{color:var(--gold-dark)}
+.quiz-locked-progress b{color:var(--ink)}
+
+/* ── QUIZ MODAL ───────────────────────────────────────── */
 .quiz-overlay{position:fixed;inset:0;background:rgba(15,15,30,.6);backdrop-filter:blur(8px);z-index:2000;display:none}
 .quiz-overlay.active{display:block;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .quiz-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:24px;width:calc(100% - 2rem);max-width:760px;max-height:92vh;z-index:2001;display:none;flex-direction:column;box-shadow:0 40px 80px rgba(15,15,30,.3);overflow:hidden}
 .quiz-modal.active{display:flex;animation:quizIn .3s cubic-bezier(.2,.8,.2,1)}
 @keyframes quizIn{from{opacity:0;transform:translate(-50%,-46%)}to{opacity:1;transform:translate(-50%,-50%)}}
-.quiz-header{padding:1.6rem 1.8rem 1.2rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);flex-shrink:0;position:relative}
-.quiz-header-title{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.3rem}
-.quiz-header-sub{font-size:.8rem;color:var(--text-2);font-family:var(--f-head)}
+.quiz-header{padding:1.4rem 1.8rem 1.1rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);flex-shrink:0;position:relative}
+.quiz-header-top{display:flex;align-items:flex-start;gap:1rem;padding-right:2.8rem}
+.quiz-header-title-block{flex:1;min-width:0}
+.quiz-header-title{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.2rem}
+.quiz-header-sub{font-size:.78rem;color:var(--text-2);font-family:var(--f-head)}
 .quiz-header-close{position:absolute;top:1rem;right:1.2rem;background:rgba(255,255,255,.7);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;color:var(--text-2);display:flex;align-items:center;justify-content:center;transition:all var(--t-fast)}
 .quiz-header-close:hover{background:white;color:var(--danger);transform:rotate(90deg)}
+
+/* timer */
+.quiz-timer{display:flex;align-items:center;gap:.55rem;padding:.5rem .85rem;background:#fff;border:1.5px solid var(--border);border-radius:var(--r-pill);font-family:var(--f-head);font-weight:700;font-size:.9rem;color:var(--ink);flex-shrink:0;transition:all var(--t-base);min-width:110px}
+.quiz-timer .timer-icon{font-size:.85rem;color:var(--gold-dark);flex-shrink:0}
+.quiz-timer .timer-body{display:flex;flex-direction:column;line-height:1}
+.quiz-timer .timer-label{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-bottom:2px}
+.quiz-timer .timer-value{font-variant-numeric:tabular-nums;font-size:.92rem}
+.quiz-timer.warn{background:#fef3c7;border-color:#f59e0b}
+.quiz-timer.warn .timer-icon,.quiz-timer.warn .timer-value{color:#92400e}
+.quiz-timer.warn .timer-label{color:#92400e;opacity:.8}
+.quiz-timer.danger{background:#fee2e2;border-color:#ef4444;animation:timerPulse 1s infinite}
+.quiz-timer.danger .timer-icon,.quiz-timer.danger .timer-value{color:#991b1b}
+.quiz-timer.danger .timer-label{color:#991b1b;opacity:.8}
+@keyframes timerPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+
 .quiz-progress{height:4px;background:rgba(15,15,30,.06);margin-top:1rem;border-radius:2px;overflow:hidden}
 .quiz-progress-fill{height:100%;background:var(--gold-gradient);border-radius:2px;transition:width .3s ease;width:0%}
 .quiz-body{padding:1.6rem 1.8rem;overflow-y:auto;flex:1}
@@ -164,19 +196,20 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-result-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;margin:0 auto 1.2rem}
 .quiz-result-icon.pass{background:var(--success);box-shadow:0 14px 34px rgba(16,185,129,.35)}
 .quiz-result-icon.fail{background:var(--danger);box-shadow:0 14px 34px rgba(239,68,68,.35)}
+.quiz-result-icon.timeout{background:var(--warning);box-shadow:0 14px 34px rgba(245,158,11,.35)}
 .quiz-result h2{font-family:var(--f-display);font-size:1.6rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);margin-bottom:.5rem}
-.quiz-result p{font-size:.92rem;color:var(--text-2);max-width:420px;margin:0 auto 1.6rem;line-height:1.6}
+.quiz-result p{font-size:.92rem;color:var(--text-2);max-width:440px;margin:0 auto 1.6rem;line-height:1.6}
 .quiz-score-ring{position:relative;width:140px;height:140px;margin:0 auto 1.4rem}
 .quiz-score-ring svg{transform:rotate(-90deg)}
 .quiz-score-ring .track{stroke:rgba(15,15,30,.06);fill:none;stroke-width:8}
 .quiz-score-ring .fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
 .quiz-score-ring .fill.pass{stroke:var(--success)}
 .quiz-score-ring .fill.fail{stroke:var(--danger)}
+.quiz-score-ring .fill.timeout{stroke:var(--warning)}
 .quiz-score-ring .label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .quiz-score-value{font-family:var(--f-display);font-size:2.4rem;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
 .quiz-score-max{font-family:var(--f-head);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:.2rem}
 
-/* REVIEW LIST */
 .quiz-review{margin-top:1.8rem;text-align:left;max-width:580px;margin-left:auto;margin-right:auto}
 .quiz-review-title{font-family:var(--f-head);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-2);margin-bottom:.8rem;text-align:center}
 .quiz-review-item{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.1rem;margin-bottom:.6rem}
@@ -191,15 +224,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-review-row.answer i{color:var(--gold)}
 .quiz-review-explain{font-size:.78rem;color:var(--text-2);margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border);line-height:1.55;font-style:italic}
 
-/* Toasts */
-.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s;box-shadow:0 16px 36px rgba(15,15,30,.22)}
-.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
-.toast.leaving{opacity:0;transform:translateX(24px)}
-
-/* Hidden render target for PDF generation */
-#pdfRender{position:absolute;left:-9999px;top:0;width:794px;background:#fff;color:#0f0f1e;font-family:var(--f-body);padding:48px 56px;line-height:1.65;box-sizing:border-box}
-
 @media(max-width:900px){
   .player-layout{grid-template-columns:1fr}
   .player-sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:280px;max-width:84vw;transform:translateX(-100%);transition:transform var(--t-base);z-index:900;box-shadow:0 20px 60px rgba(15,15,30,.18)}
@@ -212,7 +236,16 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   .quiz-actions .quiz-btn{width:100%;justify-content:center}
   .quiz-counter{align-self:center}
   .player-actions .notes-menu{left:auto;right:0}
+  .quiz-header-top{flex-direction:column;gap:.7rem}
+  .quiz-timer{align-self:flex-start}
 }
+.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
+.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
+.toast.leaving{opacity:0;transform:translateX(24px)}
+
+/* Hidden target for PDF */
+#pdfRender{position:absolute;left:-9999px;top:0;width:794px;background:#fff;color:#0f0f1e;font-family:var(--f-body);padding:48px 56px;line-height:1.65;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -254,8 +287,19 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 <div class="quiz-overlay" id="quizOverlay" onclick="closeQuiz(false)"></div>
 <div class="quiz-modal" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
   <div class="quiz-header">
-    <div class="quiz-header-title" id="quizTitle">Quiz</div>
-    <div class="quiz-header-sub" id="quizSubtitle">Answer all questions to continue</div>
+    <div class="quiz-header-top">
+      <div class="quiz-header-title-block">
+        <div class="quiz-header-title" id="quizTitle">Quiz</div>
+        <div class="quiz-header-sub" id="quizSubtitle">Answer all questions to continue</div>
+      </div>
+      <div class="quiz-timer" id="quizTimer" style="display:none;" aria-live="polite">
+        <i class="fas fa-hourglass-half timer-icon" aria-hidden="true"></i>
+        <div class="timer-body">
+          <span class="timer-label">Time left</span>
+          <span class="timer-value" id="quizTimerValue">--:--</span>
+        </div>
+      </div>
+    </div>
     <button type="button" class="quiz-header-close" onclick="closeQuiz(true)" aria-label="Close quiz">
       <i class="fas fa-times" aria-hidden="true"></i>
     </button>
@@ -265,7 +309,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   <div class="quiz-actions" id="quizActions"></div>
 </div>
 
-<!-- Hidden target used by PDF generator -->
+<!-- Hidden target for PDF notes -->
 <div id="pdfRender" aria-hidden="true"></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -276,6 +320,9 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 <script>
 'use strict';
 
+// ══════════════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
   authDomain: "mugera-e51cc.firebaseapp.com",
@@ -291,9 +338,15 @@ let course = null;
 let lessons = [];
 let activeIndex = 0;
 let progress = null;
+
+// Quiz state
 let quizAnswers = {};
 let quizAttemptStart = 0;
 let lastQuizResult = null;
+let quizTimerInterval = null;
+let quizTimeLimitSec = 0;     // 0 = untimed
+let quizTimeRemainingSec = 0; // counts down
+let quizTimedOut = false;
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -304,7 +357,6 @@ function escapeHtml(text) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
 function getInitials(name) {
   if (!name) return 'U';
   const p = name.trim().split(/[\s._-]+/).filter(Boolean);
@@ -312,7 +364,6 @@ function getInitials(name) {
   if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
   return (p[0][0] + p[p.length - 1][0]).toUpperCase();
 }
-
 function showToast(msg, type = 'success') {
   const c = document.getElementById('toastContainer');
   if (!c) return;
@@ -324,9 +375,19 @@ function showToast(msg, type = 'success') {
   c.appendChild(t);
   setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
 }
+function formatClock(totalSec) {
+  const s = Math.max(0, Math.floor(totalSec));
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+}
+function safeFilename(s) {
+  return String(s || 'notes').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'notes';
+}
 
 // ══════════════════════════════════════════════════════════════
-// CERTIFICATE ID + ISSUANCE
+// CERTIFICATE ISSUANCE
 // ══════════════════════════════════════════════════════════════
 function generateCertificateCode() {
   const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -335,7 +396,6 @@ function generateCertificateCode() {
   for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)];
   return `KAZ-${year}-${code}`;
 }
-
 async function generateUniqueCertificateId() {
   for (let attempt = 0; attempt < 5; attempt++) {
     const candidate = generateCertificateCode();
@@ -344,7 +404,6 @@ async function generateUniqueCertificateId() {
   }
   return `KAZ-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
 }
-
 async function issueCertificate(courseId, courseTitle, options = {}) {
   if (!currentUser) return null;
   const certificateId = await generateUniqueCertificateId();
@@ -352,17 +411,64 @@ async function issueCertificate(courseId, courseTitle, options = {}) {
   const recipientName = currentUser.displayName
     || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
   const status = options.status || 'auto_issued';
-
   const userPayload = { courseId, courseTitle, certificateId, issuedAt, status };
   if (typeof options.grade === 'number') userPayload.grade = options.grade;
-
   const indexPayload = { uid: currentUser.uid, recipientName, courseId, courseTitle, issuedAt, status };
   if (typeof options.grade === 'number') indexPayload.grade = options.grade;
 
   await window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set(userPayload);
   await window._db.ref(`learning_certificate_index/${certificateId}`).set(indexPayload);
-  console.log('[issueCertificate] Issued:', certificateId, 'status:', status);
   return userPayload;
+}
+
+// ══════════════════════════════════════════════════════════════
+// COMPLETION GATE — the only place completion is decided
+// ══════════════════════════════════════════════════════════════
+function isQuizLesson(l) { return l && l.type === 'quiz'; }
+
+function getNonQuizIndices() {
+  return lessons.map((l, i) => isQuizLesson(l) ? -1 : i).filter(i => i >= 0);
+}
+function getQuizIndices() {
+  return lessons.map((l, i) => isQuizLesson(l) ? i : -1).filter(i => i >= 0);
+}
+function areAllNonQuizLessonsComplete(completedLessons) {
+  const ids = getNonQuizIndices();
+  if (ids.length === 0) return true;
+  return ids.every(i => completedLessons[i] === true || completedLessons[String(i)] === true);
+}
+function isCourseFullyComplete(existingProgress) {
+  const completed = (existingProgress && existingProgress.completedLessons) || {};
+  const allLessons = areAllNonQuizLessonsComplete(completed);
+  const quizIdx = getQuizIndices();
+  // If the course has a quiz, it must be passed.
+  const quizOk = quizIdx.length === 0 ? true : existingProgress.quizPassed === true;
+  return allLessons && quizOk;
+}
+
+/**
+ * Single exit point for completion — called by both markComplete and
+ * submitQuiz. Only issues a certificate if the full gate is satisfied.
+ * Returns { completed: bool, issued: bool, failed: bool }.
+ */
+async function finalizeCourseCompletion(progressRef, existing, updates) {
+  // `existing` is the pre-change progress; `updates` is the pending payload.
+  const merged = { ...existing, ...updates };
+  if (existing.completedAt) return { completed: true, issued: false, failed: false }; // already done
+
+  if (!isCourseFullyComplete(merged)) return { completed: false, issued: false, failed: false };
+
+  try {
+    await issueCertificate(course.id, course.title, {
+      grade: merged.quizBestScore || undefined
+    });
+    updates.completedAt = Date.now();
+    try { await sendNotification(course.id, course.title, 100, true); } catch (e) {}
+    return { completed: true, issued: true, failed: false };
+  } catch (e) {
+    console.error('[completion] certificate failed:', e);
+    return { completed: false, issued: false, failed: true };
+  }
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -373,19 +479,24 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFatal('Firebase SDK failed to load', 'Check your internet connection.');
     return;
   }
-  try {
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  } catch (e) {
-    renderFatal('Firebase init failed', e.message);
-    return;
-  }
+  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); }
+  catch (e) { renderFatal('Firebase init failed', e.message); return; }
 
   const auth = firebase.auth();
   const db = firebase.database();
-  window._auth = auth;
-  window._db = db;
+  window._auth = auth; window._db = db;
 
   auth.onAuthStateChanged(onAuthChanged);
+
+  // Warn on unload if a quiz is in progress
+  window.addEventListener('beforeunload', (e) => {
+    const modalOpen = document.getElementById('quizModal').classList.contains('active');
+    const submitting = !lastQuizResult;
+    if (modalOpen && submitting && Object.keys(quizAnswers).length > 0) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
 });
 
 function renderFatal(title, detail) {
@@ -424,7 +535,6 @@ function renderAccountChip(user) {
 async function initCourse() {
   const params = new URLSearchParams(window.location.search);
   const courseId = params.get('id');
-
   if (!courseId) { renderFatal('No course specified', 'The URL is missing an ?id= parameter.'); return; }
 
   try {
@@ -460,24 +570,21 @@ async function initCourse() {
   try {
     const snap = await window._db.ref(`learning_progress/${currentUser.uid}/${courseId}`).once('value');
     progress = snap.exists() ? snap.val() : null;
-  } catch (e) {
-    console.warn('[course] Progress read failed:', e);
-    progress = null;
-  }
+  } catch (e) { progress = null; }
 
   const infoEl = document.getElementById('playerCourseInfo');
   infoEl.innerHTML = `
     <h2>${escapeHtml(course.title || 'Untitled')}</h2>
     <p>${lessons.length} lesson${lessons.length === 1 ? '' : 's'} · ${course.duration || 0} min</p>`;
 
-  // Course-level notes download
+  // Course-level notes download (sidebar)
   if (!document.querySelector('.player-sidebar-actions')) {
     const row = document.createElement('div');
     row.className = 'player-sidebar-actions';
     row.innerHTML = `
       <div class="notes-menu-wrap">
         <button type="button" class="notes-menu-btn" onclick="toggleNotesMenu(this)">
-          <i class="fas fa-download"></i> Download notes
+          <span><i class="fas fa-download"></i> Download notes</span>
           <i class="fas fa-chevron-down chev"></i>
         </button>
         <div class="notes-menu" role="menu">
@@ -495,8 +602,7 @@ async function initCourse() {
   }
 
   const startIndex = (progress && typeof progress.lastLessonIndex === 'number' && progress.lastLessonIndex < lessons.length)
-    ? progress.lastLessonIndex
-    : 0;
+    ? progress.lastLessonIndex : 0;
 
   renderLessons();
   loadLesson(startIndex);
@@ -506,53 +612,73 @@ async function initCourse() {
 // ══════════════════════════════════════════════════════════════
 // LESSON RENDERING
 // ══════════════════════════════════════════════════════════════
+function isQuizLocked() {
+  const completed = (progress && progress.completedLessons) || {};
+  return !areAllNonQuizLessonsComplete(completed);
+}
+
 function renderLessons() {
   const el = document.getElementById('playerLessons');
   if (!el) return;
   const completed = (progress && progress.completedLessons) || {};
+  const quizLocked = isQuizLocked();
 
   el.innerHTML = lessons.map((l, i) => {
     const isDone = completed[i] === true || completed[String(i)] === true;
     const isActive = i === activeIndex;
-    const icon = isDone ? 'fa-check' : (isActive ? 'fa-play' : (l.type === 'quiz' ? 'fa-question' : 'fa-book'));
+    const locked = isQuizLesson(l) && quizLocked;
+
+    let icon;
+    if (locked) icon = 'fa-lock';
+    else if (isDone) icon = 'fa-check';
+    else if (isActive) icon = 'fa-play';
+    else icon = isQuizLesson(l) ? 'fa-question' : 'fa-book';
+
     return `
-      <button type="button" class="lesson-item ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}"
-              onclick="loadLesson(${i})">
+      <button type="button" class="lesson-item ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''} ${locked ? 'locked' : ''}"
+              onclick="loadLesson(${i})" ${locked ? 'aria-disabled="true"' : ''}>
         <span class="lesson-item-icon"><i class="fas ${icon}"></i></span>
         <span class="lesson-item-name">${escapeHtml(l.title || `Lesson ${i + 1}`)}</span>
-        <span class="lesson-item-duration">${l.duration || 0} min</span>
+        <span class="lesson-item-duration">${locked ? 'Locked' : (l.duration || 0) + ' min'}</span>
       </button>`;
   }).join('');
 }
 
 function loadLesson(index) {
   if (index < 0 || index >= lessons.length) return;
+  const target = lessons[index];
+
+  // Block quiz if not unlocked
+  if (isQuizLesson(target) && isQuizLocked()) {
+    showToast('Finish all lessons first to unlock the quiz', 'info');
+    return;
+  }
+
   activeIndex = index;
   renderLessons();
 
-  const lesson = lessons[index];
   const main = document.getElementById('playerMain');
   const completed = (progress && progress.completedLessons) || {};
   const isDone = completed[index] === true || completed[String(index)] === true;
 
-  if (lesson.type === 'quiz') {
-    renderQuizLesson(main, lesson, isDone);
+  if (isQuizLesson(target)) {
+    renderQuizLesson(main, target, isDone);
     if (window.innerWidth <= 900) document.body.classList.remove('sidebar-open');
     return;
   }
 
+  // Video + content
   let videoHtml = '';
-  if (lesson.type === 'video') {
-    if (lesson.videoUrl) videoHtml = `<div class="player-video">${renderVideoEmbed(lesson.videoUrl)}</div>`;
+  if (target.type === 'video') {
+    if (target.videoUrl) videoHtml = `<div class="player-video">${renderVideoEmbed(target.videoUrl)}</div>`;
     else videoHtml = `<div class="player-video"><div class="player-video-placeholder"><i class="fas fa-play-circle"></i><p>Video coming soon</p></div></div>`;
   }
-
-  const contentHtml = lesson.content ? `<div class="player-content">${lesson.content}</div>` : '';
+  const contentHtml = target.content ? `<div class="player-content">${target.content}</div>` : '';
 
   main.innerHTML = `
     <div class="player-lesson-header">
       <div class="player-lesson-label">Lesson ${index + 1} of ${lessons.length}</div>
-      <h1>${escapeHtml(lesson.title || `Lesson ${index + 1}`)}</h1>
+      <h1>${escapeHtml(target.title || `Lesson ${index + 1}`)}</h1>
       <p>${escapeHtml(course.title || '')}</p>
     </div>
     ${videoHtml}
@@ -604,6 +730,7 @@ function renderQuizLesson(main, lesson, isDone) {
   const questions = quiz.questions || {};
   const questionCount = Object.keys(questions).length;
   const passingScore = quiz.passingScore || 70;
+  const timeLimit = Number(quiz.timeLimit) || 0; // minutes
 
   if (questionCount === 0) {
     main.innerHTML = `
@@ -656,6 +783,11 @@ function renderQuizLesson(main, lesson, isDone) {
           <div class="quiz-stat-value">${passingScore}%</div>
           <div class="quiz-stat-label">To Pass</div>
         </div>
+        ${timeLimit > 0 ? `
+        <div class="quiz-stat">
+          <div class="quiz-stat-value">${timeLimit}</div>
+          <div class="quiz-stat-label">Minute${timeLimit === 1 ? '' : 's'} Limit</div>
+        </div>` : ''}
         ${bestScore !== null ? `
         <div class="quiz-stat">
           <div class="quiz-stat-value">${bestScore}%</div>
@@ -666,22 +798,6 @@ function renderQuizLesson(main, lesson, isDone) {
         <button type="button" class="ws-btn ws-btn-primary" onclick="openQuiz()">
           <i class="fas fa-play"></i> ${hasPassed ? 'Retake Quiz' : 'Start Quiz'}
         </button>
-        <div class="notes-menu-wrap">
-          <button type="button" class="notes-menu-btn" onclick="toggleNotesMenu(this)">
-            <i class="fas fa-download"></i> Notes
-            <i class="fas fa-chevron-down chev"></i>
-          </button>
-          <div class="notes-menu" role="menu">
-            <button type="button" onclick="downloadLessonNotesPDF(this)">
-              <i class="fas fa-file-pdf"></i>
-              <span>Quiz outline — PDF<small>Questions &amp; choices</small></span>
-            </button>
-            <button type="button" onclick="downloadLessonNotes()">
-              <i class="fas fa-file-lines"></i>
-              <span>Markdown (.md)</span>
-            </button>
-          </div>
-        </div>
         <button type="button" class="ws-btn ws-btn-ghost" ${activeIndex === 0 ? 'disabled' : ''} onclick="loadLesson(${activeIndex - 1})">
           <i class="fas fa-arrow-left"></i> Previous
         </button>
@@ -705,10 +821,13 @@ function renderVideoEmbed(url) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// MARK COMPLETE
+// MARK COMPLETE (non-quiz lessons only)
 // ══════════════════════════════════════════════════════════════
 async function markComplete(index) {
   if (!currentUser || !course) return;
+  // Never allow completing a quiz lesson via this path.
+  if (isQuizLesson(lessons[index])) return;
+
   try {
     const ref = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
     const snap = await ref.once('value');
@@ -718,9 +837,8 @@ async function markComplete(index) {
 
     const completedCount = Object.keys(completedLessons).length;
     const progressPct = Math.min(100, Math.round((completedCount / lessons.length) * 100));
-    const allDone = completedCount >= lessons.length;
 
-    const payload = {
+    const updates = {
       title: course.title,
       completedLessons,
       lastLessonIndex: index,
@@ -728,29 +846,18 @@ async function markComplete(index) {
       updatedAt: Date.now()
     };
 
-    let certificateIssued = false;
-    let certificateFailed = false;
+    // Completion gate — only fires if quiz already passed & all lessons done.
+    const result = await finalizeCourseCompletion(ref, existing, updates);
+    await ref.set(updates);
+    progress = { ...existing, ...updates };
 
-    if (allDone && !existing.completedAt) {
-      try {
-        await issueCertificate(course.id, course.title);
-        payload.completedAt = Date.now();
-        certificateIssued = true;
-        try { await sendNotification(course.id, course.title, 100, true); } catch (e) {}
-      } catch (certErr) {
-        console.error('[course] Certificate issuance FAILED:', certErr);
-        certificateFailed = true;
-      }
-    }
-
-    await ref.set(payload);
-    progress = payload;
     renderLessons();
 
-    if (certificateIssued) showToast('Course complete! Certificate issued.', 'success');
-    else if (certificateFailed) showToast('Work saved, but certificate failed. Reopen to retry.', 'error');
+    if (result.issued) showToast('Course complete! Certificate issued.', 'success');
+    else if (result.failed) showToast('Work saved, but certificate failed. Reopen to retry.', 'error');
     else showToast(`Progress saved — ${progressPct}%`, 'success');
 
+    // Auto-advance
     if (index < lessons.length - 1) setTimeout(() => loadLesson(index + 1), 500);
   } catch (e) {
     console.error('[markComplete]', e);
@@ -761,8 +868,7 @@ async function markComplete(index) {
 async function sendNotification(courseId, courseTitle, pct, completed) {
   if (!currentUser) return;
   try {
-    const ref = window._db.ref(`kazinni_notifications/${currentUser.uid}`).push();
-    await ref.set({
+    await window._db.ref(`kazinni_notifications/${currentUser.uid}`).push({
       type: 'learning',
       title: completed ? 'Course completed' : 'Course progress saved',
       body: completed ? `${courseTitle} — certificate available` : `${courseTitle} — ${pct}% complete`,
@@ -774,29 +880,88 @@ async function sendNotification(courseId, courseTitle, pct, completed) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// QUIZ — OPEN / RENDER / SUBMIT / RESULT
+// QUIZ — OPEN / RENDER / TIMER / SUBMIT / RESULT
 // ══════════════════════════════════════════════════════════════
 function openQuiz() {
+  if (isQuizLocked()) { showToast('Finish all lessons first to unlock the quiz', 'info'); return; }
+
   const quiz = course.quiz || {};
   const questions = quiz.questions || {};
   if (Object.keys(questions).length === 0) { showToast('Quiz not available yet', 'error'); return; }
 
   quizAnswers = {};
-  quizAttemptStart = Date.now();
   lastQuizResult = null;
+  quizAttemptStart = Date.now();
+  quizTimedOut = false;
+
+  // Set up timer from quiz.timeLimit (minutes).
+  const minutes = Number(quiz.timeLimit) || 0;
+  quizTimeLimitSec = minutes > 0 ? Math.round(minutes * 60) : 0;
+  quizTimeRemainingSec = quizTimeLimitSec;
 
   document.getElementById('quizTitle').textContent = course.title + ' — Quiz';
-  document.getElementById('quizSubtitle').textContent = 'Answer all questions, then submit.';
+  document.getElementById('quizSubtitle').textContent = quizTimeLimitSec > 0
+    ? `You have ${minutes} minute${minutes === 1 ? '' : 's'}. Answers are auto-submitted when time runs out.`
+    : 'Answer all questions, then submit.';
 
   renderQuizForm();
   document.getElementById('quizOverlay').classList.add('active');
   document.getElementById('quizModal').classList.add('active');
+
+  startQuizTimer();
 }
 
 function closeQuiz(force) {
-  if (!force && !confirm('Close the quiz? Your answers will be lost.')) return;
+  if (!force) {
+    const unanswered = Object.keys(quizAnswers).length;
+    const msg = quizTimeLimitSec > 0
+      ? 'Close the quiz? Your time will keep counting only if you reopen — actually, closing cancels this attempt.'
+      : 'Close the quiz? Your answers will be lost.';
+    if (!confirm(msg)) return;
+  }
+  stopQuizTimer();
   document.getElementById('quizOverlay').classList.remove('active');
   document.getElementById('quizModal').classList.remove('active');
+}
+
+function startQuizTimer() {
+  stopQuizTimer();
+  const wrap = document.getElementById('quizTimer');
+  const valEl = document.getElementById('quizTimerValue');
+
+  if (quizTimeLimitSec <= 0) {
+    wrap.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'flex';
+
+  const tick = () => {
+    const elapsed = Math.floor((Date.now() - quizAttemptStart) / 1000);
+    quizTimeRemainingSec = Math.max(0, quizTimeLimitSec - elapsed);
+    valEl.textContent = formatClock(quizTimeRemainingSec);
+
+    // Colour thresholds
+    wrap.classList.remove('warn', 'danger');
+    const ratio = quizTimeRemainingSec / quizTimeLimitSec;
+    if (quizTimeRemainingSec <= 60) wrap.classList.add('danger');
+    else if (ratio <= 0.2) wrap.classList.add('warn');
+
+    if (quizTimeRemainingSec <= 0) {
+      stopQuizTimer();
+      quizTimedOut = true;
+      submitQuiz({ timedOut: true });
+    }
+  };
+
+  tick();
+  quizTimerInterval = setInterval(tick, 1000);
+}
+
+function stopQuizTimer() {
+  if (quizTimerInterval) {
+    clearInterval(quizTimerInterval);
+    quizTimerInterval = null;
+  }
 }
 
 function getQuizQuestionsSorted() {
@@ -855,11 +1020,11 @@ function renderQuizForm() {
   }).join('');
 
   actions.innerHTML = `
-    <button type="button" class="quiz-btn secondary" onclick="closeQuiz(true)">
+    <button type="button" class="quiz-btn secondary" onclick="closeQuiz(false)">
       <i class="fas fa-times"></i> Cancel
     </button>
     <div class="quiz-counter" id="quizCounter">0 of ${questions.length} answered</div>
-    <button type="button" class="quiz-btn primary" id="quizSubmitBtn" onclick="submitQuiz()" disabled>
+    <button type="button" class="quiz-btn primary" id="quizSubmitBtn" onclick="submitQuiz({})" disabled>
       <i class="fas fa-paper-plane"></i> Submit Quiz
     </button>
   `;
@@ -885,10 +1050,17 @@ function updateQuizProgress() {
   const counter = document.getElementById('quizCounter');
   if (counter) counter.textContent = `${answered} of ${total} answered`;
   const btn = document.getElementById('quizSubmitBtn');
-  if (btn) btn.disabled = answered < total;
+  if (btn) {
+    // Disabled while a countdown is running and not all answered,
+    // but timeout will force-submit even with blanks.
+    btn.disabled = answered < total;
+  }
 }
 
-async function submitQuiz() {
+async function submitQuiz(opts = {}) {
+  const timedOut = !!opts.timedOut;
+  stopQuizTimer();
+
   const questions = getQuizQuestionsSorted();
   const quiz = course.quiz || {};
   const passingScore = quiz.passingScore || 70;
@@ -897,36 +1069,30 @@ async function submitQuiz() {
   try {
     const keySnap = await window._db.ref(`learning_quiz_keys/${course.id}`).once('value');
     answerKey = keySnap.exists() ? keySnap.val() : {};
-  } catch (e) {
-    console.warn('[quiz] Could not read answer key:', e);
-  }
+  } catch (e) { console.warn('[quiz] answer key read failed:', e); }
 
-  let correct = 0;
-  let totalPoints = 0;
-  let earnedPoints = 0;
-
+  let totalPoints = 0, earnedPoints = 0;
   const review = questions.map(q => {
     const points = Number(q.points) || 1;
     totalPoints += points;
     const userChoice = quizAnswers[q.id] || null;
     const correctChoice = answerKey[q.id] || null;
     const isCorrect = userChoice === correctChoice;
-    if (isCorrect) { correct++; earnedPoints += points; }
+    if (isCorrect) earnedPoints += points;
     const choices = q.choices || {};
     return {
-      id: q.id,
-      text: q.text || '',
-      userChoice,
-      userChoiceText: userChoice ? (choices[userChoice] || '') : '',
-      correctChoice,
-      correctChoiceText: correctChoice ? (choices[correctChoice] || '') : '',
-      isCorrect,
-      explanation: q.explanation || ''
+      id: q.id, text: q.text || '',
+      userChoice, userChoiceText: userChoice ? (choices[userChoice] || '') : '',
+      correctChoice, correctChoiceText: correctChoice ? (choices[correctChoice] || '') : '',
+      isCorrect, explanation: q.explanation || ''
     };
   });
 
   const score = totalPoints === 0 ? 0 : Math.round((earnedPoints / totalPoints) * 100);
-  const passed = score >= passingScore;
+  const passed = score >= passingScore && !timedOut ? true : (score >= passingScore && timedOut ? true : false);
+  // Note: timeout does NOT auto-fail if score ≥ passing. Timeout just submits.
+
+  const durationSec = Math.round((Date.now() - quizAttemptStart) / 1000);
 
   try {
     const attemptId = 'attempt_' + Date.now().toString(36);
@@ -934,7 +1100,10 @@ async function submitQuiz() {
       submittedAt: Date.now(),
       answers: quizAnswers,
       score, passed,
-      durationSec: Math.round((Date.now() - quizAttemptStart) / 1000)
+      durationSec,
+      timeLimitSec: quizTimeLimitSec,
+      timeUsedSec: durationSec,
+      timedOut
     };
 
     const progressRef = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
@@ -960,37 +1129,24 @@ async function submitQuiz() {
     }
 
     const completedLessons = existingProgress.completedLessons || {};
-    completedLessons[activeIndex] = true;
+    if (passed) completedLessons[activeIndex] = true; // quiz lesson marked done only if passed
     updates.completedLessons = completedLessons;
 
     const completedCount = Object.keys(completedLessons).length;
-    const progressPct = Math.min(100, Math.round((completedCount / lessons.length) * 100));
-    updates.progress = progressPct;
+    updates.progress = Math.min(100, Math.round((completedCount / lessons.length) * 100));
     updates.lastLessonIndex = activeIndex;
     updates.title = course.title;
 
-    const allDone = completedCount >= lessons.length;
-    let certificateIssued = false;
-
-    if (passed && allDone && !existingProgress.completedAt) {
-      try {
-        await issueCertificate(course.id, course.title, { grade: score });
-        updates.completedAt = Date.now();
-        certificateIssued = true;
-        try { await sendNotification(course.id, course.title, 100, true); } catch (e) {}
-      } catch (certErr) {
-        console.error('[quiz] Certificate issuance failed:', certErr);
-      }
-    }
-
+    // Single completion gate — only completes when quiz passed AND all other lessons done.
+    const result = await finalizeCourseCompletion(progressRef, existingProgress, updates);
     await progressRef.set(updates);
     progress = { ...existingProgress, ...updates };
 
-    lastQuizResult = { score, passed, review, certificateIssued };
+    lastQuizResult = { score, passed, review, certificateIssued: result.issued, timedOut };
     renderQuizResult();
     renderLessons();
   } catch (e) {
-    console.error('[quiz] Save failed:', e);
+    console.error('[quiz] save failed:', e);
     showToast('Could not save quiz attempt: ' + e.message, 'error');
   }
 }
@@ -1003,26 +1159,45 @@ function renderQuizResult() {
   if (!result) return;
 
   progressFill.style.width = '100%';
-
-  const { score, passed, review, certificateIssued } = result;
+  const { score, passed, review, certificateIssued, timedOut } = result;
   const circumference = 2 * Math.PI * 60;
+
+  // Headline varies by outcome
+  let iconClass = 'fail';
+  let iconFa = 'fa-times';
+  let headline = 'Not Quite';
+  let blurb = `You scored ${score}%. You need ${course.quiz.passingScore || 70}% to pass. Review the answers below and try again.`;
+
+  if (timedOut && passed) {
+    iconClass = 'pass'; iconFa = 'fa-check';
+    headline = "Time's up — but you passed";
+    blurb = certificateIssued
+      ? 'Your answers were auto-submitted when time ran out and you passed. Certificate issued.'
+      : 'Your answers were auto-submitted when time ran out and you passed. Complete remaining lessons to earn your certificate.';
+  } else if (timedOut && !passed) {
+    iconClass = 'timeout'; iconFa = 'fa-hourglass-end';
+    headline = "Time's up";
+    blurb = `Time ran out — your answers were auto-submitted at ${score}%. You need ${course.quiz.passingScore || 70}% to pass.`;
+  } else if (passed) {
+    iconClass = 'pass'; iconFa = 'fa-check';
+    headline = 'You Passed!';
+    blurb = certificateIssued
+      ? 'Your certificate has been issued. You can view it from the Certificates page.'
+      : 'You passed. Complete any remaining lessons to earn your certificate.';
+  }
 
   body.innerHTML = `
     <div class="quiz-result">
-      <div class="quiz-result-icon ${passed ? 'pass' : 'fail'}">
-        <i class="fas ${passed ? 'fa-check' : 'fa-times'}"></i>
+      <div class="quiz-result-icon ${iconClass}">
+        <i class="fas ${iconFa}"></i>
       </div>
-      <h2>${passed ? 'You Passed!' : 'Not Quite'}</h2>
-      <p>${passed
-        ? (certificateIssued
-            ? 'Your certificate has been issued. You can view it from the Certificates page.'
-            : 'You passed. Complete any remaining lessons to earn your certificate.')
-        : `You scored ${score}%. You need ${course.quiz.passingScore || 70}% to pass. Review the answers below and try again.`}</p>
+      <h2>${headline}</h2>
+      <p>${blurb}</p>
 
       <div class="quiz-score-ring">
         <svg width="140" height="140">
           <circle class="track" cx="70" cy="70" r="60"></circle>
-          <circle class="fill ${passed ? 'pass' : 'fail'}" cx="70" cy="70" r="60"
+          <circle class="fill ${iconClass}" cx="70" cy="70" r="60"
                   stroke-dasharray="${circumference}"
                   stroke-dashoffset="${circumference}"></circle>
         </svg>
@@ -1073,7 +1248,10 @@ function retryQuiz() {
   quizAnswers = {};
   lastQuizResult = null;
   quizAttemptStart = Date.now();
+  quizTimedOut = false;
+  quizTimeRemainingSec = quizTimeLimitSec;
   renderQuizForm();
+  startQuizTimer();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1092,46 +1270,33 @@ function addMobileSidebarToggle() {
 // ══════════════════════════════════════════════════════════════
 // NOTES DOWNLOAD — Markdown + PDF
 // ══════════════════════════════════════════════════════════════
-
-/** HTML → Markdown (subset). */
 function htmlToMarkdown(html) {
   if (!html) return '';
   let s = String(html).replace(/\r\n?/g, '\n');
-
   s = s.replace(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/gi,
     (_, code) => '\n```\n' + decodeEntities(stripTags(code)).trim() + '\n```\n');
   s = s.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi,
     (_, code) => '\n```\n' + decodeEntities(stripTags(code)).trim() + '\n```\n');
-
   s = s.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, t) => '\n# ' + inline(t).trim() + '\n');
   s = s.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => '\n## ' + inline(t).trim() + '\n');
   s = s.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => '\n### ' + inline(t).trim() + '\n');
   s = s.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, t) => '\n#### ' + inline(t).trim() + '\n');
-  s = s.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, (_, t) => '\n##### ' + inline(t).trim() + '\n');
-  s = s.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, (_, t) => '\n###### ' + inline(t).trim() + '\n');
-
   s = s.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, t) =>
     '\n' + inline(t).trim().split('\n').map(l => '> ' + l).join('\n') + '\n');
-
   s = s.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_, inner) => {
     let i = 1;
     return '\n' + inner.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => `${i++}. ${inline(t).trim()}\n`) + '\n';
   });
-
   s = s.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/gi, (_, inner) =>
     '\n' + inner.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => `- ${inline(t).trim()}\n`) + '\n');
-
   s = s.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, t) => '\n' + inline(t).trim() + '\n');
   s = s.replace(/<br\s*\/?>/gi, '\n');
   s = s.replace(/<hr\s*\/?>/gi, '\n---\n');
-
   s = stripTags(s);
   s = s.replace(/\n{3,}/g, '\n\n').trim();
   return s;
 }
-
 function stripTags(s) { return String(s).replace(/<[^>]+>/g, ''); }
-
 function decodeEntities(s) {
   return String(s)
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
@@ -1139,7 +1304,6 @@ function decodeEntities(s) {
     .replace(/&#x27;/g, "'").replace(/&hellip;/g, '…')
     .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–');
 }
-
 function inline(s) {
   s = String(s);
   s = s.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '**$1**');
@@ -1152,12 +1316,6 @@ function inline(s) {
   return decodeEntities(s);
 }
 
-function safeFilename(s) {
-  return String(s || 'notes').toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'notes';
-}
-
-// ── Markdown builders ──
 function buildLessonMarkdown(lesson, index) {
   const courseTitle = course.title || 'Course';
   const lessonTitle = lesson.title || `Lesson ${index + 1}`;
@@ -1173,24 +1331,7 @@ function buildLessonMarkdown(lesson, index) {
   let body = '';
   if (lesson.type === 'video' && lesson.videoUrl) body += `> 🎥 **Video lesson** — ${lesson.videoUrl}\n\n`;
   if (lesson.type === 'quiz') {
-    const quiz = course.quiz || {};
-    const sorted = Object.entries(quiz.questions || {})
-      .map(([id, q]) => ({ id, ...q }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999));
-    if (sorted.length === 0) body += '_Quiz not configured._\n';
-    else {
-      body += `## Quiz — ${sorted.length} question${sorted.length === 1 ? '' : 's'}\n\n`;
-      body += `Passing score: **${quiz.passingScore || 70}%**\n\n`;
-      sorted.forEach((q, i) => {
-        body += `### ${i + 1}. ${(q.text || '').trim()}\n\n`;
-        Object.entries(q.choices || {})
-          .map(([k, v]) => ({ key: k, text: v }))
-          .sort((a, b) => a.key.localeCompare(b.key))
-          .forEach(c => { body += `- **${c.key.toUpperCase()}.** ${c.text}\n`; });
-        body += '\n';
-      });
-      body += '_Answer key not included in notes._\n';
-    }
+    body += '_Quiz lessons are not downloadable._\n';
   } else if (lesson.content) body += htmlToMarkdown(lesson.content);
   else if (!lesson.videoUrl) body += '_No content for this lesson yet._\n';
 
@@ -1210,7 +1351,9 @@ function buildCourseMarkdown() {
     `- **Downloaded:** ${new Date().toLocaleString()}`, '',
     '---', ''
   ].filter(Boolean).join('\n'));
+
   lessons.forEach((l, i) => {
+    if (l.type === 'quiz') return; // skip quiz in course export too
     parts.push(buildLessonMarkdown(l, i));
     parts.push('\n\n---\n\n');
   });
@@ -1226,10 +1369,12 @@ function downloadBlob(filename, text, mime) {
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 200);
 }
 
-// ── Public actions ──
 function downloadLessonNotes() {
   const lesson = lessons[activeIndex];
-  if (!lesson) return;
+  if (!lesson || lesson.type === 'quiz') {
+    showToast('Quiz lessons cannot be downloaded', 'info');
+    return;
+  }
   const md = buildLessonMarkdown(lesson, activeIndex);
   const base = safeFilename(`${course.title}-lesson-${activeIndex + 1}-${lesson.title || 'notes'}`);
   downloadBlob(`${base}.md`, md);
@@ -1242,44 +1387,25 @@ function downloadCourseNotes() {
   const md = buildCourseMarkdown();
   const base = safeFilename(`${course.title}-full-notes`);
   downloadBlob(`${base}.md`, md);
-  showToast(`Full course notes downloaded (${lessons.length} lessons)`, 'success');
+  showToast(`Full course notes downloaded (.md)`, 'success');
   closeAllNotesMenus();
 }
 
-// ── PDF generation via jsPDF (real .pdf file, no print dialog) ──
 function buildPdfHtmlForLesson(lesson, index) {
   let inner = '';
-  if (lesson.type === 'quiz') {
-    const quiz = course.quiz || {};
-    const sorted = Object.entries(quiz.questions || {})
-      .map(([id, q]) => ({ id, ...q }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999));
-    if (sorted.length === 0) inner = '<p><em>Quiz not configured.</em></p>';
-    else {
-      inner = `<p><strong>Passing score:</strong> ${quiz.passingScore || 70}%</p><ol>`;
-      sorted.forEach(q => {
-        inner += `<li><strong>${escapeHtml(q.text || '')}</strong><ul>`;
-        Object.entries(q.choices || {})
-          .map(([k, v]) => ({ key: k, text: v }))
-          .sort((a, b) => a.key.localeCompare(b.key))
-          .forEach(c => { inner += `<li><strong>${c.key.toUpperCase()}.</strong> ${escapeHtml(c.text)}</li>`; });
-        inner += '</ul></li>';
-      });
-      inner += '</ol><p><em>Answer key not included in notes.</em></p>';
-    }
-  } else if (lesson.type === 'video' && lesson.videoUrl) {
+  if (lesson.type === 'video' && lesson.videoUrl) {
     inner = `<p><em>Video lesson: <a href="${escapeHtml(lesson.videoUrl)}">${escapeHtml(lesson.videoUrl)}</a></em></p>${lesson.content || ''}`;
   } else {
     inner = lesson.content || '<p><em>No content for this lesson yet.</em></p>';
   }
-
   return `<h2 style="font-size:1.15rem;margin:0 0 .5rem;">${escapeHtml(lesson.title || ('Lesson ' + (index + 1)))}</h2>${inner}`;
 }
 
 function buildPdfHtmlForCourse() {
-  return lessons.map((l, i) =>
-    `<div class="pdf-lesson">${buildPdfHtmlForLesson(l, i)}</div>`
-  ).join('');
+  return lessons
+    .map((l, i) => l.type === 'quiz' ? '' : `<div class="pdf-lesson">${buildPdfHtmlForLesson(l, i)}</div>`)
+    .filter(Boolean)
+    .join('');
 }
 
 async function generatePDF({ filename, title, subtitle, bodyHtml }) {
@@ -1290,7 +1416,6 @@ async function generatePDF({ filename, title, subtitle, bodyHtml }) {
   const { jsPDF } = window.jspdf;
   const target = document.getElementById('pdfRender');
 
-  // Fill the hidden render target with a styled document
   target.innerHTML = `
     <div style="font-family:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;color:#0f0f1e;">
       <header style="border-bottom:2px solid #ca8a04;padding-bottom:14px;margin-bottom:22px;">
@@ -1322,19 +1447,12 @@ async function generatePDF({ filename, title, subtitle, bodyHtml }) {
       </div>
     </div>`;
 
-  // Wait for fonts + a paint frame
-  if (document.fonts && document.fonts.ready) {
-    try { await document.fonts.ready; } catch (e) {}
-  }
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
   const canvas = await html2canvas(target, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff',
-    logging: false,
-    windowWidth: target.scrollWidth,
-    windowHeight: target.scrollHeight
+    scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false,
+    windowWidth: target.scrollWidth, windowHeight: target.scrollHeight
   });
 
   const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
@@ -1343,49 +1461,38 @@ async function generatePDF({ filename, title, subtitle, bodyHtml }) {
   const margin = 32;
   const usableW = pageW - margin * 2;
   const imgW = usableW;
-  const imgH = (canvas.height * imgW) / canvas.width;
-
-  // Slice the tall canvas into page-sized chunks
   const pxPerPt = canvas.width / imgW;
   const pageContentHpt = pageH - margin * 2;
   const pageContentHpx = pageContentHpt * pxPerPt;
 
-  let renderedPx = 0;
-  let pageIndex = 0;
-
+  let renderedPx = 0, pageIndex = 0;
   while (renderedPx < canvas.height) {
     const sliceHpx = Math.min(pageContentHpx, canvas.height - renderedPx);
-
-    // Cut this slice into its own canvas
     const slice = document.createElement('canvas');
     slice.width = canvas.width;
     slice.height = sliceHpx;
     const ctx = slice.getContext('2d');
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, slice.width, slice.height);
-    ctx.drawImage(
-      canvas,
-      0, renderedPx, canvas.width, sliceHpx,
-      0, 0, canvas.width, sliceHpx
-    );
+    ctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceHpx, 0, 0, canvas.width, sliceHpx);
 
     const sliceImg = slice.toDataURL('image/jpeg', 0.92);
     const sliceHpt = (sliceHpx * imgW) / canvas.width;
 
     if (pageIndex > 0) pdf.addPage();
     pdf.addImage(sliceImg, 'JPEG', margin, margin, imgW, sliceHpt, undefined, 'FAST');
-
-    renderedPx += sliceHpx;
-    pageIndex++;
+    renderedPx += sliceHpx; pageIndex++;
   }
-
   pdf.save(filename);
   target.innerHTML = '';
 }
 
 async function downloadLessonNotesPDF(btn) {
   const lesson = lessons[activeIndex];
-  if (!lesson) return;
+  if (!lesson || lesson.type === 'quiz') {
+    showToast('Quiz lessons cannot be downloaded', 'info');
+    return;
+  }
   setBtnLoading(btn, true);
   try {
     const title = lesson.title || `Lesson ${activeIndex + 1}`;
@@ -1398,9 +1505,7 @@ async function downloadLessonNotesPDF(btn) {
   } catch (e) {
     console.error('[pdf]', e);
     showToast('Could not generate PDF: ' + e.message, 'error');
-  } finally {
-    setBtnLoading(btn, false);
-  }
+  } finally { setBtnLoading(btn, false); }
 }
 
 async function downloadCourseNotesPDF(btn) {
@@ -1412,14 +1517,12 @@ async function downloadCourseNotesPDF(btn) {
     const bodyHtml = buildPdfHtmlForCourse();
     const filename = `${safeFilename(`${course.title}-full-notes`)}.pdf`;
     await generatePDF({ filename, title, subtitle, bodyHtml });
-    showToast(`Full course notes downloaded (PDF, ${lessons.length} lessons)`, 'success');
+    showToast(`Full course notes downloaded (PDF)`, 'success');
     closeAllNotesMenus();
   } catch (e) {
     console.error('[pdf]', e);
     showToast('Could not generate PDF: ' + e.message, 'error');
-  } finally {
-    setBtnLoading(btn, false);
-  }
+  } finally { setBtnLoading(btn, false); }
 }
 
 function setBtnLoading(btn, loading) {
@@ -1434,18 +1537,15 @@ function setBtnLoading(btn, loading) {
   }
 }
 
-// ── Menu helpers ──
 function toggleNotesMenu(btn) {
   const wrap = btn.closest('.notes-menu-wrap');
   const wasOpen = wrap.classList.contains('open');
   closeAllNotesMenus();
   if (!wasOpen) wrap.classList.add('open');
 }
-
 function closeAllNotesMenus() {
   document.querySelectorAll('.notes-menu-wrap.open').forEach(w => w.classList.remove('open'));
 }
-
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.notes-menu-wrap')) closeAllNotesMenus();
 });
