@@ -94,7 +94,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .empty-state p{font-size:.85rem;margin-bottom:.8rem}
 
-/* NOTES */
 .player-sidebar-actions{padding:0 .5rem .9rem;margin-bottom:.6rem;border-bottom:1px dashed var(--border)}
 .notes-menu-wrap{position:relative;display:block}
 .notes-menu-btn{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:.55rem .85rem;border-radius:var(--r-md);border:1.5px solid var(--border-2);background:#fff;color:var(--ink);font-family:var(--f-head);font-size:.8rem;font-weight:600;cursor:pointer;transition:all var(--t-fast)}
@@ -114,7 +113,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .player-actions-right .notes-menu-btn{width:auto;justify-content:center;padding:.55rem .9rem;border-radius:var(--r-pill);font-size:.78rem}
 .player-actions-right .notes-menu{top:auto;bottom:calc(100% + .35rem);left:0;right:auto;min-width:230px}
 
-/* QUIZ LAUNCH */
 .quiz-launch{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1px solid rgba(202,138,4,.25);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem;position:relative;overflow:hidden}
 .quiz-launch::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.15) 0%,transparent 70%);top:-140px;right:-100px;pointer-events:none}
 .quiz-launch-icon{width:64px;height:64px;border-radius:20px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;box-shadow:0 12px 30px rgba(202,138,4,.3);position:relative;z-index:1}
@@ -126,13 +124,11 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-stat-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-family:var(--f-head);font-weight:600;margin-top:.3rem}
 .quiz-launch-actions{position:relative;z-index:1;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
 
-/* LOCKED */
 .quiz-locked{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem}
 .quiz-locked-icon{width:64px;height:64px;border-radius:20px;background:var(--surface-3);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem}
 .quiz-locked h2{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.4rem}
 .quiz-locked p{font-size:.88rem;color:var(--text-2);max-width:420px;margin:0 auto 1.2rem;line-height:1.6}
 
-/* MODAL */
 .quiz-overlay{position:fixed;inset:0;background:rgba(15,15,30,.6);backdrop-filter:blur(8px);z-index:2000;display:none}
 .quiz-overlay.active{display:block;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -183,7 +179,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-btn.secondary:hover{background:white;border-color:var(--border-2);color:var(--ink)}
 .quiz-counter{font-family:var(--f-head);font-size:.78rem;color:var(--muted);align-self:center;font-weight:500}
 
-/* RESULT */
 .quiz-result{padding:2.5rem 2rem;text-align:center}
 .quiz-result-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;margin:0 auto 1.2rem}
 .quiz-result-icon.pass{background:var(--success);box-shadow:0 14px 34px rgba(16,185,129,.35)}
@@ -302,44 +297,10 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-functions-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 'use strict';
-
-/* ══════════════════════════════════════════════════════════════
-   TODO — SERVER-SIDE GRADING
-   ──────────────────────────────────────────────────────────────
-   The client no longer reads the answer key. To make quizzes
-   gradeable, deploy a callable Cloud Function named `gradeQuiz`
-   that:
-
-     Input (data):
-       { courseId, answers: {qid: choiceKey}, timedOut, durationSec, timeLimitSec }
-
-     Behaviour (must run with Admin SDK so it can read the key):
-       1. Read learning_quiz_keys/{courseId}  — server only
-       2. Score answers against the key
-       3. Compute passed = score >= course.quiz.passingScore
-       4. Write to learning_progress/{uid}/{courseId}:
-            quizAttempts[attemptId] = { submittedAt, answers, score,
-              passed, durationSec, timeLimitSec, timedOut,
-              perQuestion: [{ id, correct: bool }] }   ← NO answer letters
-            quizBestScore, quizAttemptsCount
-            quizPassed = true (if passed)
-            completedLessons[quizIndex] = true (if passed)
-       5. If passed AND every non-quiz lesson is complete AND no
-          completedAt yet → set completedAt, and issue certificate
-          (write learning_certificates/{uid}/{courseId} and
-                 learning_certificate_index/{certId})
-
-     Output (returned to client):
-       { score, passed, perQuestion: [{ id, correct: bool }],
-         timedOut, certificateIssued }
-
-     The client NEVER receives correct answers or explanations.
-   ══════════════════════════════════════════════════════════════ */
 
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -348,8 +309,11 @@ const firebaseConfig = {
   projectId: "mugera-e51cc"
 };
 
-// Fallback time limit if a course doesn't define one
+// ══════════════════════════════════════════════════════════════
+// HARD 15-MINUTE QUIZ LIMIT
+// ══════════════════════════════════════════════════════════════
 const QUIZ_TIME_LIMIT_MINUTES = 15;
+const QUIZ_TIMER_KEY_PREFIX   = 'kazinni_quiz_timer_';
 
 // ══════════════════════════════════════════════════════════════
 // STATE
@@ -367,7 +331,6 @@ let quizTimerInterval = null;
 let quizTimeLimitSec = 0;
 let quizTimeRemainingSec = 0;
 let quizTimedOut = false;
-let gradeQuizCallable = null; // set once firebase.functions() is ready
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -406,12 +369,75 @@ function safeFilename(s) {
   return String(s || 'notes').toLowerCase()
     .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'notes';
 }
-function getQuizTimeLimitMinutes() {
-  // Prefer course-configured value; fall back to constant. Never < 1.
+
+// ══════════════════════════════════════════════════════════════
+// CERTIFICATE ID + ISSUANCE
+// ══════════════════════════════════════════════════════════════
+function generateCertificateCode() {
+  const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const year = new Date().getFullYear();
+  let code = '';
+  for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)];
+  return `KAZ-${year}-${code}`;
+}
+async function generateUniqueCertificateId() {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const candidate = generateCertificateCode();
+    const snap = await window._db.ref(`learning_certificate_index/${candidate}`).once('value');
+    if (!snap.exists()) return candidate;
+  }
+  return `KAZ-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+}
+async function issueCertificate(courseId, courseTitle, options = {}) {
+  if (!currentUser) return null;
+  const certificateId = await generateUniqueCertificateId();
+  const issuedAt = Date.now();
+  const recipientName = currentUser.displayName
+    || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
+  const status = options.status || 'auto_issued';
+  const userPayload = { courseId, courseTitle, certificateId, issuedAt, status };
+  if (typeof options.grade === 'number') userPayload.grade = options.grade;
+  const indexPayload = { uid: currentUser.uid, recipientName, courseId, courseTitle, issuedAt, status };
+  if (typeof options.grade === 'number') indexPayload.grade = options.grade;
+
+  await window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set(userPayload);
+  await window._db.ref(`learning_certificate_index/${certificateId}`).set(indexPayload);
+  return userPayload;
+}
+
+// ══════════════════════════════════════════════════════════════
+// QUIZ TIMER PERSISTENCE (deadline-based, refresh-proof)
+// ══════════════════════════════════════════════════════════════
+function quizTimerKey() {
+  if (!currentUser || !course) return null;
+  return QUIZ_TIMER_KEY_PREFIX + currentUser.uid + '_' + course.id;
+}
+function getQuizTimerState() {
+  const key = quizTimerKey();
+  if (!key) return null;
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.deadline !== 'number') return null;
+    return parsed;
+  } catch (e) { return null; }
+}
+function setQuizTimerState(state) {
+  const key = quizTimerKey();
+  if (!key) return;
+  try { localStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+}
+function clearQuizTimerState() {
+  const key = quizTimerKey();
+  if (!key) return;
+  try { localStorage.removeItem(key); } catch (e) {}
+}
+function getQuizTimeLimitSec() {
   const raw = course && course.quiz && course.quiz.timeLimit;
-  const n = Number(raw);
-  if (Number.isFinite(n) && n > 0) return Math.max(1, Math.round(n));
-  return QUIZ_TIME_LIMIT_MINUTES;
+  const minutes = Number(raw);
+  if (Number.isFinite(minutes) && minutes > 0) return Math.max(1, Math.round(minutes)) * 60;
+  return QUIZ_TIME_LIMIT_MINUTES * 60;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -427,24 +453,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const auth = firebase.auth();
   const db = firebase.database();
-  window._auth = auth;
-  window._db = db;
-
-  try {
-    if (firebase.functions) {
-      const fns = firebase.app().functions();
-      gradeQuizCallable = fns.httpsCallable('gradeQuiz');
-    }
-  } catch (e) {
-    console.warn('[course] functions unavailable:', e);
-  }
+  window._auth = auth; window._db = db;
 
   auth.onAuthStateChanged(onAuthChanged);
 
+  // Confirm before closing mid-quiz (timer keeps running either way)
   window.addEventListener('beforeunload', (e) => {
     const modalOpen = document.getElementById('quizModal').classList.contains('active');
-    const submitting = !lastQuizResult;
-    if (modalOpen && submitting && Object.keys(quizAnswers).length > 0) {
+    const inProgress = !lastQuizResult && getQuizTimerState();
+    if (modalOpen && inProgress) {
       e.preventDefault();
       e.returnValue = '';
     }
@@ -541,7 +558,7 @@ async function initCourse() {
         <div class="notes-menu" role="menu">
           <button type="button" onclick="downloadCourseNotesPDF(this)">
             <i class="fas fa-file-pdf"></i>
-            <span>Full course — PDF<small>All ${lessons.length} lessons in one file</small></span>
+            <span>Full course — PDF<small>All non-quiz lessons in one file</small></span>
           </button>
           <button type="button" onclick="downloadCourseNotes()">
             <i class="fas fa-file-lines"></i>
@@ -558,6 +575,9 @@ async function initCourse() {
   renderLessons();
   loadLesson(startIndex);
   addMobileSidebarToggle();
+
+  // If there's an active or expired quiz session, handle it now
+  autoResumeQuizIfAny();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -686,7 +706,7 @@ function renderQuizLesson(main, lesson, isDone) {
   const questions = quiz.questions || {};
   const questionCount = Object.keys(questions).length;
   const passingScore = quiz.passingScore || 70;
-  const timeLimit = getQuizTimeLimitMinutes();
+  const timeLimit = Math.round(getQuizTimeLimitSec() / 60);
 
   if (questionCount === 0) {
     main.innerHTML = `
@@ -708,6 +728,11 @@ function renderQuizLesson(main, lesson, isDone) {
   const bestScore = progress && progress.quizBestScore ? progress.quizBestScore : null;
   const hasPassed = progress && progress.quizPassed === true;
 
+  // Detect an in-progress timer
+  const timerState = getQuizTimerState();
+  const hasActiveSession = !!timerState && timerState.deadline > Date.now();
+  const hasExpiredSession = !!timerState && timerState.deadline <= Date.now();
+
   const statusBlock = hasPassed ? `
     <div style="display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;background:#d1fae5;color:#065f46;border-radius:100px;font-size:.72rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem;position:relative;z-index:1;">
       <i class="fas fa-check-circle"></i> Passed
@@ -715,6 +740,16 @@ function renderQuizLesson(main, lesson, isDone) {
     <div style="display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;background:#fef3c7;color:#92400e;border-radius:100px;font-size:.72rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem;position:relative;z-index:1;">
       <i class="fas fa-redo"></i> Last attempt: ${lastAttempt.score}%
     </div>` : '');
+
+  const sessionBanner = hasActiveSession ? `
+    <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:100px;font-size:.78rem;font-weight:600;font-family:var(--f-head);margin-bottom:1rem;position:relative;z-index:1;">
+      <i class="fas fa-hourglass-half"></i>
+      Quiz in progress — ${formatClock(Math.max(0, Math.floor((timerState.deadline - Date.now()) / 1000)))} left
+    </div>` : '';
+
+  const primaryBtnLabel = hasActiveSession
+    ? 'Resume Quiz'
+    : (hasPassed ? 'Retake Quiz' : 'Start Quiz');
 
   main.innerHTML = `
     <div class="player-lesson-header">
@@ -726,10 +761,13 @@ function renderQuizLesson(main, lesson, isDone) {
     <div class="quiz-launch">
       <div class="quiz-launch-icon"><i class="fas fa-clipboard-question"></i></div>
       ${statusBlock}
-      <h2>${hasPassed ? 'Retake the Quiz' : 'Test Your Knowledge'}</h2>
-      <p>${hasPassed
-        ? 'You already passed. Retake it if you want to improve your score.'
-        : `Answer all questions and score at least ${passingScore}% to complete the course.`}</p>
+      ${sessionBanner}
+      <h2>${hasActiveSession ? 'Quiz in progress' : (hasPassed ? 'Retake the Quiz' : 'Test Your Knowledge')}</h2>
+      <p>${hasActiveSession
+        ? 'The timer keeps running even if you leave. Resume when ready.'
+        : (hasPassed
+            ? 'You already passed. Retake it if you want to improve your score.'
+            : `Answer all questions and score at least ${passingScore}% to complete the course.`)}</p>
       <div class="quiz-launch-stats">
         <div class="quiz-stat">
           <div class="quiz-stat-value">${questionCount}</div>
@@ -751,7 +789,7 @@ function renderQuizLesson(main, lesson, isDone) {
       </div>
       <div class="quiz-launch-actions">
         <button type="button" class="ws-btn ws-btn-primary" onclick="openQuiz()">
-          <i class="fas fa-play"></i> ${hasPassed ? 'Retake Quiz' : 'Start Quiz'}
+          <i class="fas fa-play"></i> ${primaryBtnLabel}
         </button>
         <button type="button" class="ws-btn ws-btn-ghost" ${activeIndex === 0 ? 'disabled' : ''} onclick="loadLesson(${activeIndex - 1})">
           <i class="fas fa-arrow-left"></i> Previous
@@ -776,7 +814,7 @@ function renderVideoEmbed(url) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// MARK COMPLETE — non-quiz lessons only. Never fires cert.
+// MARK COMPLETE (non-quiz only). Never issues a cert by itself.
 // ══════════════════════════════════════════════════════════════
 async function markComplete(index) {
   if (!currentUser || !course) return;
@@ -792,18 +830,20 @@ async function markComplete(index) {
     const completedCount = Object.keys(completedLessons).length;
     const progressPct = Math.min(100, Math.round((completedCount / lessons.length) * 100));
 
-    // NOTE: we only write lesson completion + progress. completedAt and
-    // quizPassed are owned by the server function.
-    const updates = {
+    await ref.set({
       title: course.title,
       completedLessons,
       lastLessonIndex: index,
       progress: progressPct,
-      updatedAt: Date.now()
-    };
-
-    await ref.set(updates);
-    progress = { ...existing, ...updates };
+      updatedAt: Date.now(),
+      ...(existing.quizAttempts ? { quizAttempts: existing.quizAttempts } : {}),
+      ...(existing.quizBestScore !== undefined ? { quizBestScore: existing.quizBestScore } : {}),
+      ...(existing.quizPassed ? { quizPassed: existing.quizPassed } : {}),
+      ...(existing.quizPassedAt ? { quizPassedAt: existing.quizPassedAt } : {}),
+      ...(existing.quizAttemptsCount ? { quizAttemptsCount: existing.quizAttemptsCount } : {}),
+      ...(existing.completedAt ? { completedAt: existing.completedAt } : {})
+    });
+    progress = await (await ref.once('value')).val();
     renderLessons();
 
     showToast(`Progress saved — ${progressPct}%`, 'success');
@@ -815,7 +855,7 @@ async function markComplete(index) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// QUIZ — OPEN / RENDER / TIMER / SUBMIT
+// QUIZ — OPEN / RESUME / TIMER
 // ══════════════════════════════════════════════════════════════
 function openQuiz() {
   if (isQuizLocked()) { showToast('Finish all lessons first to unlock the quiz', 'info'); return; }
@@ -824,18 +864,39 @@ function openQuiz() {
   const questions = quiz.questions || {};
   if (Object.keys(questions).length === 0) { showToast('Quiz not available yet', 'error'); return; }
 
+  const limitSec = getQuizTimeLimitSec();
+  const now = Date.now();
+  let state = getQuizTimerState();
+
+  if (!state) {
+    state = { deadline: now + limitSec * 1000, startedAt: now, limitSec };
+    setQuizTimerState(state);
+  }
+
+  // Already expired → submit immediately
+  if (state.deadline <= now) {
+    clearQuizTimerState();
+    quizAnswers = {};
+    lastQuizResult = null;
+    quizAttemptStart = state.startedAt || (now - limitSec * 1000);
+    quizTimeLimitSec = state.limitSec || limitSec;
+    quizTimeRemainingSec = 0;
+    quizTimedOut = true;
+    submitQuiz({ timedOut: true });
+    return;
+  }
+
+  // Fresh answers on every open (we don't persist answers)
   quizAnswers = {};
   lastQuizResult = null;
-  quizAttemptStart = Date.now();
   quizTimedOut = false;
-
-  const minutes = getQuizTimeLimitMinutes();
-  quizTimeLimitSec = minutes * 60;
-  quizTimeRemainingSec = quizTimeLimitSec;
+  quizAttemptStart = state.startedAt;
+  quizTimeLimitSec = state.limitSec || limitSec;
+  quizTimeRemainingSec = Math.max(0, Math.floor((state.deadline - now) / 1000));
 
   document.getElementById('quizTitle').textContent = course.title + ' — Quiz';
   document.getElementById('quizSubtitle').textContent =
-    `You have ${minutes} minute${minutes === 1 ? '' : 's'}. Answers are auto-submitted when time runs out.`;
+    'Timer keeps running even if you close this. Auto-submits when it reaches zero.';
 
   renderQuizForm();
   document.getElementById('quizOverlay').classList.add('active');
@@ -846,7 +907,7 @@ function openQuiz() {
 
 function closeQuiz(force) {
   if (!force) {
-    if (!confirm('Close the quiz? Your answers will be lost.')) return;
+    if (!confirm('Close the quiz? The timer keeps running — you can come back.')) return;
   }
   stopQuizTimer();
   document.getElementById('quizOverlay').classList.remove('active');
@@ -858,22 +919,25 @@ function startQuizTimer() {
   const wrap = document.getElementById('quizTimer');
   const valEl = document.getElementById('quizTimerValue');
 
-  if (quizTimeLimitSec <= 0) { wrap.style.display = 'none'; return; }
+  const state = getQuizTimerState();
+  if (!state) { wrap.style.display = 'none'; return; }
+
   wrap.style.display = 'flex';
 
   const tick = () => {
-    const elapsed = Math.floor((Date.now() - quizAttemptStart) / 1000);
-    quizTimeRemainingSec = Math.max(0, quizTimeLimitSec - elapsed);
+    const remainingMs = state.deadline - Date.now();
+    quizTimeRemainingSec = Math.max(0, Math.floor(remainingMs / 1000));
     valEl.textContent = formatClock(quizTimeRemainingSec);
 
     wrap.classList.remove('warn', 'danger');
-    const ratio = quizTimeRemainingSec / quizTimeLimitSec;
+    const ratio = state.limitSec > 0 ? quizTimeRemainingSec / state.limitSec : 0;
     if (quizTimeRemainingSec <= 60) wrap.classList.add('danger');
     else if (ratio <= 0.2) wrap.classList.add('warn');
 
     if (quizTimeRemainingSec <= 0) {
       stopQuizTimer();
       quizTimedOut = true;
+      clearQuizTimerState();
       submitQuiz({ timedOut: true });
     }
   };
@@ -883,6 +947,31 @@ function startQuizTimer() {
 }
 function stopQuizTimer() {
   if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+}
+
+function autoResumeQuizIfAny() {
+  const state = getQuizTimerState();
+  if (!state) return;
+
+  const quizIndex = lessons.findIndex(l => l.type === 'quiz');
+  if (quizIndex < 0) { clearQuizTimerState(); return; }
+
+  // Timer running → resume modal
+  if (state.deadline > Date.now()) {
+    setTimeout(() => openQuiz(), 400);
+    return;
+  }
+
+  // Expired while away → submit as timeout
+  const previousStart = state.startedAt || (Date.now() - (state.limitSec || 0) * 1000);
+  clearQuizTimerState();
+  quizAnswers = {};
+  lastQuizResult = null;
+  quizTimedOut = true;
+  quizAttemptStart = previousStart;
+  quizTimeLimitSec = state.limitSec || getQuizTimeLimitSec();
+  quizTimeRemainingSec = 0;
+  submitQuiz({ timedOut: true });
 }
 
 function getQuizQuestionsSorted() {
@@ -973,68 +1062,107 @@ function updateQuizProgress() {
 }
 
 // ══════════════════════════════════════════════════════════════
-// SUBMIT — server grades; client only renders verdict
+// SUBMIT — client-side scoring, cert issuance on full completion
 // ══════════════════════════════════════════════════════════════
 async function submitQuiz(opts = {}) {
   const timedOut = !!opts.timedOut;
   stopQuizTimer();
+  clearQuizTimerState();
 
-  if (!gradeQuizCallable) {
-    showToast('Grading service not available. Please contact support.', 'error');
-    return;
-  }
+  const questions = getQuizQuestionsSorted();
+  const quiz = course.quiz || {};
+  const passingScore = quiz.passingScore || 70;
+
+  // Read the answer key (server allows this — we just don't display it)
+  let answerKey = {};
+  try {
+    const keySnap = await window._db.ref(`learning_quiz_keys/${course.id}`).once('value');
+    answerKey = keySnap.exists() ? keySnap.val() : {};
+  } catch (e) { console.warn('[quiz] key read failed:', e); }
+
+  let totalPoints = 0, earnedPoints = 0;
+  const review = questions.map(q => {
+    const points = Number(q.points) || 1;
+    totalPoints += points;
+    const userChoice = quizAnswers[q.id] || null;
+    const correctChoice = answerKey[q.id] || null;
+    const isCorrect = userChoice === correctChoice;
+    if (isCorrect) earnedPoints += points;
+    return {
+      id: q.id,
+      text: q.text || '',
+      userChoice,
+      correctChoice, // used only to compute pass/fail, never rendered
+      isCorrect
+    };
+  });
+
+  const score = totalPoints === 0 ? 0 : Math.round((earnedPoints / totalPoints) * 100);
+  const passed = score >= passingScore;
 
   const durationSec = Math.round((Date.now() - quizAttemptStart) / 1000);
 
-  // Disable the submit button while in flight
-  const submitBtn = document.getElementById('quizSubmitBtn');
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Grading…'; }
-
   try {
-    const res = await gradeQuizCallable({
-      courseId: course.id,
+    const attemptId = 'attempt_' + Date.now().toString(36);
+    const progressRef = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
+    const snap = await progressRef.once('value');
+    const existing = snap.val() || {};
+
+    const attempts = existing.quizAttempts || {};
+    attempts[attemptId] = {
+      submittedAt: Date.now(),
       answers: quizAnswers,
-      timedOut,
+      score, passed,
       durationSec,
-      timeLimitSec: quizTimeLimitSec
-    });
+      timeLimitSec: quizTimeLimitSec,
+      timedOut
+    };
 
-    const data = res && res.data ? res.data : {};
-    const score = Number(data.score) || 0;
-    const passed = !!data.passed;
-    const perQuestion = Array.isArray(data.perQuestion) ? data.perQuestion : [];
-    const certificateIssued = !!data.certificateIssued;
+    const updates = {
+      quizAttempts: attempts,
+      quizBestScore: Math.max(Number(existing.quizBestScore) || 0, score),
+      quizAttemptsCount: Object.keys(attempts).length,
+      updatedAt: Date.now()
+    };
 
-    // Re-sync progress from server so sidebar + launch card reflect truth
-    try {
-      const snap = await window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`).once('value');
-      progress = snap.val() || progress;
-    } catch (e) {}
+    if (passed && !existing.quizPassed) {
+      updates.quizPassed = true;
+      updates.quizPassedAt = Date.now();
+    }
 
-    lastQuizResult = { score, passed, perQuestion, certificateIssued, timedOut };
+    const completedLessons = existing.completedLessons || {};
+    if (passed) completedLessons[activeIndex] = true;
+    updates.completedLessons = completedLessons;
+
+    const completedCount = Object.keys(completedLessons).length;
+    updates.progress = Math.min(100, Math.round((completedCount / lessons.length) * 100));
+
+    // Full completion gate: quiz passed AND all non-quiz lessons complete
+    const allNonQuizDone = areAllNonQuizLessonsComplete(completedLessons);
+    let certificateIssued = false;
+
+    if (passed && allNonQuizDone && !existing.completedAt) {
+      updates.completedAt = Date.now();
+      updates.progress = 100;
+      try {
+        await issueCertificate(course.id, course.title, { grade: score });
+        certificateIssued = true;
+      } catch (e) {
+        console.error('[quiz] certificate issuance failed:', e);
+      }
+    }
+
+    await progressRef.set({ ...existing, ...updates });
+    progress = { ...existing, ...updates };
+
+    lastQuizResult = { score, passed, review, certificateIssued, timedOut };
     renderQuizResult();
     renderLessons();
 
     if (certificateIssued) showToast('Course complete! Certificate issued.', 'success');
   } catch (e) {
-    console.error('[quiz] grading failed:', e);
-    const code = e && e.code ? e.code : '';
-    const msg = (e && e.message) ? e.message : 'Unknown error';
-    if (code === 'functions/not-found' || /not-found/i.test(msg)) {
-      showToast('Grading service not deployed yet. Please contact support.', 'error');
-    } else if (code === 'functions/unauthenticated') {
-      showToast('Session expired — please sign in again.', 'error');
-    } else {
-      showToast('Could not submit quiz: ' + msg, 'error');
-    }
-    // Restore submit button so user can retry
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quiz';
-    }
-    // Resume timer if it wasn't a timeout
-    if (!timedOut) startQuizTimer();
-    return;
+    console.error('[quiz] save failed:', e);
+    showToast('Could not save quiz attempt: ' + e.message, 'error');
   }
 }
 
@@ -1046,19 +1174,19 @@ function renderQuizResult() {
   if (!result) return;
 
   progressFill.style.width = '100%';
-  const { score, passed, perQuestion, certificateIssued, timedOut } = result;
+  const { score, passed, review, certificateIssued, timedOut } = result;
   const circumference = 2 * Math.PI * 60;
 
   let iconClass = 'fail', iconFa = 'fa-times';
   let headline = 'Not Quite';
-  let blurb = `You scored ${score}%. You need ${course.quiz.passingScore || 70}% to pass. You can retake the quiz below.`;
+  let blurb = `You scored ${score}%. You need ${course.quiz.passingScore || 70}% to pass. Try again below.`;
 
   if (timedOut && passed) {
     iconClass = 'pass'; iconFa = 'fa-check';
     headline = "Time's up — but you passed";
     blurb = certificateIssued
-      ? 'Your answers were auto-submitted when time ran out, and you passed. Certificate issued.'
-      : 'Your answers were auto-submitted when time ran out, and you passed.';
+      ? 'Answers were auto-submitted at the buzzer, and you passed. Certificate issued.'
+      : 'Answers were auto-submitted at the buzzer, and you passed.';
   } else if (timedOut && !passed) {
     iconClass = 'timeout'; iconFa = 'fa-hourglass-end';
     headline = "Time's up";
@@ -1067,28 +1195,20 @@ function renderQuizResult() {
     iconClass = 'pass'; iconFa = 'fa-check';
     headline = 'You Passed!';
     blurb = certificateIssued
-      ? 'Your certificate has been issued. You can view it from the Certificates page.'
-      : 'You passed. Nice work.';
+      ? 'Your certificate has been issued. View it from the Certificates page.'
+      : 'You passed. Complete any remaining lessons to earn your certificate.';
   }
 
-  // Build per-question review from server flags only — no answers, no explanations
-  const questionsSorted = getQuizQuestionsSorted();
-  const byId = new Map(perQuestion.map(p => [String(p.id), !!p.correct]));
-
-  const reviewRows = questionsSorted.map((q, i) => {
-    const ok = byId.get(String(q.id));
-    const state = ok === true ? 'correct' : 'wrong';
-    const icon = ok === true ? 'fa-check' : 'fa-times';
-    const note = ok === true ? 'Correct' : 'Incorrect';
-    return `
-      <div class="quiz-review-item ${state}">
-        <div class="quiz-review-status"><i class="fas ${icon}"></i></div>
-        <div class="quiz-review-content">
-          <div class="quiz-review-q">${i + 1}. ${escapeHtml(q.text || '')}</div>
-          <div class="quiz-review-note">${note}</div>
-        </div>
-      </div>`;
-  }).join('');
+  // Summary: correct/incorrect only — no answer letters, no texts
+  const reviewRows = review.map((r, i) => `
+    <div class="quiz-review-item ${r.isCorrect ? 'correct' : 'wrong'}">
+      <div class="quiz-review-status"><i class="fas ${r.isCorrect ? 'fa-check' : 'fa-times'}"></i></div>
+      <div class="quiz-review-content">
+        <div class="quiz-review-q">${i + 1}. ${escapeHtml(r.text)}</div>
+        <div class="quiz-review-note">${r.isCorrect ? 'Correct' : 'Incorrect'}</div>
+      </div>
+    </div>
+  `).join('');
 
   body.innerHTML = `
     <div class="quiz-result">
@@ -1111,11 +1231,10 @@ function renderQuizResult() {
         </div>
       </div>
 
-      ${perQuestion.length > 0 ? `
       <div class="quiz-review">
         <div class="quiz-review-title">Answer Summary</div>
         ${reviewRows}
-      </div>` : ''}
+      </div>
     </div>
   `;
 
@@ -1135,11 +1254,20 @@ function renderQuizResult() {
 }
 
 function retryQuiz() {
+  clearQuizTimerState();
   quizAnswers = {};
   lastQuizResult = null;
-  quizAttemptStart = Date.now();
   quizTimedOut = false;
+  quizAttemptStart = Date.now();
+  quizTimeLimitSec = getQuizTimeLimitSec();
   quizTimeRemainingSec = quizTimeLimitSec;
+
+  setQuizTimerState({
+    deadline: Date.now() + quizTimeLimitSec * 1000,
+    startedAt: Date.now(),
+    limitSec: quizTimeLimitSec
+  });
+
   renderQuizForm();
   startQuizTimer();
 }
@@ -1158,7 +1286,7 @@ function addMobileSidebarToggle() {
 }
 
 // ══════════════════════════════════════════════════════════════
-// NOTES DOWNLOAD — Markdown + PDF (quiz lessons excluded)
+// NOTES DOWNLOAD — Markdown + PDF (quiz excluded)
 // ══════════════════════════════════════════════════════════════
 function htmlToMarkdown(html) {
   if (!html) return '';
