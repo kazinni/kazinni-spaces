@@ -21,7 +21,7 @@ const coreReady = new Promise((resolve) => {
 });
 
 // ============================================================
-// HELPERS — same patterns as your other workspaces
+// HELPERS
 // ============================================================
 function showToast(msg, type = 'success') {
   const c = document.getElementById('toastContainer');
@@ -85,17 +85,11 @@ function slugify(s) {
 }
 
 function hasEntitlement(key) {
-  // Priority 1: admin — always has everything
   if (isAdmin) return true;
-
-  // Priority 2: explicit learning entitlement
   if (currentEntitlements && currentEntitlements[key] === true) return true;
-
-  // Priority 3: legacy — workspace permission covers it
   if (key === 'learning' && currentPerms.learning === true) return true;
   if (key === 'advancedCourses' && currentPerms.advancedCourses === true) return true;
   if (key === 'mentorship' && currentPerms.mentorship === true) return true;
-
   return false;
 }
 
@@ -106,7 +100,7 @@ function isLearningUnlocked() {
 }
 
 // ============================================================
-// FIREBASE BOOT — same pattern as your other workspaces
+// FIREBASE BOOT
 // ============================================================
 function bootFirebase() {
   if (typeof firebase === 'undefined') {
@@ -128,7 +122,6 @@ function bootFirebase() {
 }
 
 async function onAuthChanged(user) {
-  // Not signed in → send to workspace home (matches your SSO pattern)
   if (!user) {
     window.location.href = '../index.html';
     return;
@@ -137,14 +130,12 @@ async function onAuthChanged(user) {
   currentUser = user;
   const uid = user.uid;
 
-  // 1. Read user record from `users/{uid}` — same as every other workspace
   try {
     await window._db.ref(`users/${uid}`).once('value');
   } catch (e) {
     console.warn('users read failed:', e);
   }
 
-  // 2. Read workspace permissions — the SINGLE source of truth for access
   try {
     const snap = await window._db.ref(`workspacePermissions/${uid}`).once('value');
     currentPerms = snap.exists() ? (snap.val() || {}) : {};
@@ -152,7 +143,6 @@ async function onAuthChanged(user) {
     currentPerms = {};
   }
 
-  // 3. Read learning entitlements (parallel to workspacePermissions)
   try {
     const snap = await window._db.ref(`learning_entitlements/${uid}`).once('value');
     currentEntitlements = snap.exists() ? (snap.val() || {}) : {};
@@ -160,7 +150,6 @@ async function onAuthChanged(user) {
     currentEntitlements = {};
   }
 
-  // 4. Read admin flag — same check used throughout your rules
   try {
     const snap = await window._db.ref(`admins/${uid}`).once('value');
     isAdmin = snap.val() === true;
@@ -168,13 +157,10 @@ async function onAuthChanged(user) {
     isAdmin = false;
   }
 
-  // 5. Render account chip in header (same as other workspaces)
   renderAccountChip();
 
-  // 6. Fire the ready event — pages wait on this
   document.dispatchEvent(new CustomEvent('learning:ready'));
 
-  // 7. Setup realtime entitlement listener (admin can grant while page is open)
   const entRef = window._db.ref(`learning_entitlements/${uid}`);
   entRef.on('value', (snap) => {
     currentEntitlements = snap.exists() ? (snap.val() || {}) : {};
@@ -194,30 +180,6 @@ function renderAccountChip() {
     </a>
   `;
 }
-// ============================================================
-// CERTIFICATE ID GENERATION
-// ============================================================
-// Format: KAZ-YYYY-XXXXXX  (e.g., KAZ-2026-A7B3F9)
-// Ambiguous characters removed: 0/O, 1/I/L
-function generateCertificateCode() {
-  const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-  const year = new Date().getFullYear();
-  let code = '';
-  for (let i = 0; i < 6; i++) {
-    code += alphabet[Math.floor(Math.random() * alphabet.length)];
-  }
-  return `KAZ-${year}-${code}`;
-}
-
-async function generateUniqueCertificateId() {
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const candidate = generateCertificateCode();
-    const snap = await window._db.ref(`learning_certificate_index/${candidate}`).once('value');
-    if (!snap.exists()) return candidate;
-  }
-  // Fallback — statistically near-impossible
-  return `KAZ-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
-}
 
 // ============================================================
 // BOOT
@@ -229,57 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================
-// ISSUE CERTIFICATE
-// Writes two records:
-//   1. learning_certificates/{uid}/{courseId}      — user's private record
-//   2. learning_certificate_index/{certificateId}  — public verifiable entry
+// NOTE ON CERTIFICATES
+// ------------------------------------------------------------
+// Certificate generation and issuance are SERVER-SIDE ONLY.
+// The `gradeQuiz` Cloud Function:
+//   1. Reads the answer key (learning_quiz_keys/{courseId})
+//   2. Scores the submission
+//   3. If the course is complete AND the quiz is passed, writes:
+//        learning_certificates/{uid}/{courseId}
+//        learning_certificate_index/{certificateId}
+//   4. Returns { score, passed, perQuestion, certificateIssued }
+//
+// The client must NEVER:
+//   - generate a certificate ID
+//   - write to learning_certificates/*
+//   - write to learning_certificate_index/*
+//
+// The database rules already reject client writes to those paths.
+// If a certificate is missing for a completed course, the
+// certificate page's reconciliation flow (read-only on the client,
+// or a separate `reconcileCertificate` function) handles it.
 // ============================================================
-async function issueCertificate(courseId, courseTitle, options = {}) {
-  if (!currentUser) {
-    console.warn('[issueCertificate] No current user');
-    return null;
-  }
-
-  const status = options.status || 'auto_issued'; // auto_issued | quiz_passed | verified
-  const grade = typeof options.grade === 'number' ? options.grade : undefined;
-
-  const certificateId = await generateUniqueCertificateId();
-  const issuedAt = Date.now();
-  const recipientName = currentUser.displayName
-    || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
-
-  const userPayload = {
-    courseId,
-    courseTitle,
-    certificateId,
-    issuedAt,
-    status
-  };
-  if (typeof grade === 'number') userPayload.grade = grade;
-
-  const indexPayload = {
-    uid: currentUser.uid,
-    recipientName,
-    courseId,
-    courseTitle,
-    issuedAt,
-    status
-  };
-  if (typeof grade === 'number') indexPayload.grade = grade;
-
-  try {
-    await Promise.all([
-      window._db.ref(`learning_certificates/${currentUser.uid}/${courseId}`).set(userPayload),
-      window._db.ref(`learning_certificate_index/${certificateId}`).set(indexPayload)
-    ]);
-    console.log('[issueCertificate] Issued:', certificateId);
-    return userPayload;
-  } catch (e) {
-    console.error('[issueCertificate] Failed:', e);
-    throw e;
-  }
-}
-
-// Expose globally so course.html can call it without duplicating code
-window.issueCertificate = issueCertificate;
-window.generateUniqueCertificateId = generateUniqueCertificateId;
