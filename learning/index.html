@@ -19,142 +19,159 @@
   --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;
   --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
   --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
-  --header-h:60px;
+  --header-h:58px;
+  --gutter:clamp(1rem,2.6vw,2rem);
   --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
   --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
   --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
-  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
+  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-pill:100px;
   --t-fast:.15s cubic-bezier(.2,.8,.2,1);
-  --t-base:.25s cubic-bezier(.2,.8,.2,1);
-  --t-slow:.4s cubic-bezier(.2,.8,.2,1);
-  --shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08);
+  --t-base:.22s cubic-bezier(.2,.8,.2,1);
+  --shadow-card:0 8px 24px rgba(15,15,30,.06);
+  --shadow-pop:0 20px 48px rgba(15,15,30,.12);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden}
+body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.55;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden}
 :focus{outline:none}:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+button{font-family:inherit}
 
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes orb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(.95)}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 
-/* HEADER */
-.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
-.ws-header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem}
-.ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
-.ws-logo img{height:30px}
-.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:1.05rem;color:var(--ink);letter-spacing:-.4px;white-space:nowrap}
+/* ── HEADER (full-bleed) ─────────────────────────────── */
+.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.94);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.07);padding:0 var(--gutter);display:flex;align-items:center;gap:1rem}
+.ws-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
+.ws-logo img{height:26px}
+.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:.98rem;color:var(--ink);letter-spacing:-.4px;white-space:nowrap}
 .ws-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.ws-nav-links{display:flex;align-items:center;gap:1.4rem;margin-left:1rem}
-.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.85rem;font-weight:500;font-family:var(--f-head);transition:color var(--t-fast);padding:.4rem 0;white-space:nowrap}
+.ws-nav-links{display:flex;align-items:center;gap:1.2rem;margin-left:.5rem}
+.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.82rem;font-weight:500;font-family:var(--f-head);transition:color var(--t-fast);padding:.4rem 0;white-space:nowrap}
 .ws-nav-link:hover{color:var(--ink)}
 .ws-nav-link.active{color:var(--gold-dark);font-weight:600}
+
+/* header search */
+.hdr-search{position:relative;flex:1;max-width:440px;margin:0 .5rem}
+.hdr-search i{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.78rem;pointer-events:none}
+.hdr-search input{width:100%;padding:.5rem 2.4rem .5rem 2.1rem;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--surface-2);font-family:var(--f-head);font-size:.82rem;color:var(--ink);transition:all var(--t-fast)}
+.hdr-search input::placeholder{color:var(--muted)}
+.hdr-search input:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.1)}
+.hdr-search kbd{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-family:var(--f-head);font-size:.66rem;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:4px;padding:.1rem .35rem;pointer-events:none}
+.hdr-search.has-value kbd{display:none}
+.hdr-clear{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;border:none;background:var(--surface-3);color:var(--text-2);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.62rem}
+.hdr-clear:hover{background:var(--ink);color:#fff}
+.hdr-search.has-value .hdr-clear{display:flex}
+
 .ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
-.ws-btn{padding:.6rem 1.2rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.84rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-head);white-space:nowrap}
-.ws-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,.18);position:relative;overflow:hidden}
+.ws-btn{padding:.5rem 1rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.8rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.45rem;font-family:var(--f-head);white-space:nowrap}
+.ws-btn-primary{background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .ws-btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold-gradient);opacity:0;transition:opacity var(--t-base)}
 .ws-btn-primary>*{position:relative;z-index:1}
-.ws-btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(202,138,4,.3)}
 .ws-btn-primary:hover::before{opacity:1}
 .ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
 .ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.ws-btn-lg{padding:.85rem 1.75rem;font-size:.92rem}
-.ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
-.ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;font-family:var(--f-head)}
+.ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.25rem .75rem .25rem .25rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.78rem;font-weight:600;color:var(--ink);text-decoration:none}
+.ws-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;font-family:var(--f-head)}
 
-/* HERO */
-.learning-hero{position:relative;padding:4.5rem 2rem 3.5rem;text-align:center;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);overflow:hidden}
-.learning-hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.learning-hero-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3;will-change:transform}
-.learning-hero-bg .orb-1{width:420px;height:420px;background:#fde68a;top:-120px;left:-80px;animation:orb 24s ease-in-out infinite}
-.learning-hero-bg .orb-2{width:340px;height:340px;background:#fbbf24;bottom:-120px;right:-80px;opacity:.2;animation:orb 28s ease-in-out infinite;animation-delay:-8s}
-.hero-inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;background:#fff;border:1px solid rgba(202,138,4,.22);border-radius:var(--r-pill);font-size:.68rem;font-weight:700;color:var(--gold-dark);margin-bottom:1.4rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 12px rgba(202,138,4,.08)}
-.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
-.hero-inner h1{font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:700;line-height:1.08;margin-bottom:1.1rem;letter-spacing:-.04em;font-family:var(--f-display);color:var(--ink)}
-.hero-inner h1 .accent{background:var(--gold-gradient);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
-.hero-lede{font-size:1.05rem;color:var(--text-2);max-width:560px;margin:0 auto 1.8rem;line-height:1.65}
+/* ── PORTAL SHELL ───────────────────────────────────── */
+.portal-shell{display:flex;flex:1;min-height:0}
+.side-rail{width:240px;flex-shrink:0;border-right:1px solid rgba(15,15,30,.06);background:#fff;padding:1.25rem .85rem;position:sticky;top:var(--header-h);align-self:flex-start;height:calc(100vh - var(--header-h));overflow-y:auto}
+.side-rail h4{font-family:var(--f-head);font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;padding:0 .65rem;margin-bottom:.55rem}
+.rail-link{display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem;border-radius:var(--r-md);color:var(--text-2);text-decoration:none;font-family:var(--f-head);font-size:.82rem;font-weight:500;transition:all var(--t-fast);cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.rail-link:hover{background:var(--surface-2);color:var(--ink)}
+.rail-link.active{background:var(--gold-soft);color:var(--gold-dark);font-weight:600}
+.rail-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--cat-accent,var(--gold))}
+.rail-count{margin-left:auto;font-size:.7rem;color:var(--muted);font-weight:600}
+.rail-link.active .rail-count{color:var(--gold-dark)}
 
-/* LIBRARY */
-.library{padding:3rem 0 4rem;flex:1}
-.library-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
-.library-header{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
-.section-label{display:inline-block;padding:.3rem .8rem;background:var(--gold-soft);color:var(--gold-dark);border-radius:var(--r-pill);font-size:.66rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.6rem}
-.library-header h2{font-family:var(--f-display);font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:700;letter-spacing:-.03em;color:var(--ink);margin-bottom:.3rem}
-.library-header p{font-size:.9rem;color:var(--muted)}
+.portal-main{flex:1;min-width:0;display:flex;flex-direction:column}
 
-/* SEARCH */
-.search-wrap{position:relative;width:100%;max-width:340px}
-.search-wrap i.search-icon{position:absolute;left:.95rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem;pointer-events:none}
-.search-input{width:100%;padding:.7rem 2.4rem .7rem 2.4rem;border:1.5px solid var(--border);border-radius:var(--r-pill);background:#fff;font-family:var(--f-head);font-size:.85rem;color:var(--ink);transition:all var(--t-fast)}
-.search-input::placeholder{color:var(--muted)}
-.search-input:hover{border-color:var(--border-2)}
-.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.12)}
-.search-clear{position:absolute;right:.55rem;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;border:none;background:var(--surface-3);color:var(--text-2);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.7rem;transition:all var(--t-fast)}
-.search-clear:hover{background:var(--ink);color:#fff}
-.search-wrap.has-value .search-clear{display:flex}
+/* ── HERO (compact banner, left-aligned) ─────────────── */
+.learning-hero{padding:1.6rem var(--gutter) 1.4rem;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.hero-left{min-width:0}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;padding:.22rem .65rem;background:var(--gold-soft);border-radius:var(--r-pill);font-size:.62rem;font-weight:700;color:var(--gold-dark);margin-bottom:.5rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.9px}
+.hero-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+.hero-left h1{font-family:var(--f-display);font-size:clamp(1.4rem,2.1vw,1.85rem);font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.15;margin-bottom:.25rem}
+.hero-left h1 .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
+.hero-left p{font-size:.86rem;color:var(--text-2);max-width:640px}
+.hero-actions{display:flex;gap:.5rem;flex-shrink:0}
 
-/* CATEGORY SECTIONS */
-.category-sections{display:flex;flex-direction:column;gap:1.25rem}
-.category-section{border-radius:var(--r-xl);padding:1.75rem 1.75rem 1.9rem;border:1px solid var(--border);position:relative;overflow:hidden}
+/* ── LIBRARY ─────────────────────────────────────────── */
+.library{flex:1;padding:1.35rem var(--gutter) 2.5rem;min-width:0}
+.library-header{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.library-header h2{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center;gap:.6rem}
+.library-header h2 .count-pill{font-family:var(--f-head);font-size:.7rem;font-weight:700;color:var(--text-2);background:var(--surface-3);border-radius:var(--r-pill);padding:.15rem .55rem}
+.library-sub{font-size:.8rem;color:var(--muted);font-family:var(--f-head)}
+
+/* category sections */
+.category-sections{display:flex;flex-direction:column;gap:.85rem}
+.category-section{border-radius:var(--r-lg);padding:1.1rem 1.15rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden;scroll-margin-top:calc(var(--header-h) + 1rem)}
 .category-section.bg-a{background:#fff}
-.category-section.bg-b{background:linear-gradient(180deg,#fdfaf1 0%,#fff 100%)}
-.category-section::before{content:'';position:absolute;top:1.75rem;left:0;width:4px;height:32px;border-radius:0 4px 4px 0;background:var(--cat-accent,var(--gold))}
-.category-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1.25rem;padding-left:.85rem}
-.category-head h3{font-family:var(--f-display);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
-.category-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 .55rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2);font-family:var(--f-head);font-size:.7rem;font-weight:700}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.category-section.bg-b{background:linear-gradient(180deg,#fdfbf5 0%,#fff 100%)}
+.category-section::before{content:'';position:absolute;top:1.1rem;left:0;width:3px;height:24px;border-radius:0 3px 3px 0;background:var(--cat-accent,var(--gold))}
+.category-head{display:flex;align-items:center;gap:.55rem;margin-bottom:.9rem;padding-left:.6rem}
+.category-head h3{font-family:var(--f-display);font-size:1.02rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
+.category-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:19px;padding:0 .45rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2);font-family:var(--f-head);font-size:.66rem;font-weight:700}
+.category-jump{margin-left:auto;font-size:.7rem;font-family:var(--f-head);color:var(--muted);text-decoration:none;padding:.15rem .5rem;border-radius:var(--r-pill);transition:all var(--t-fast)}
+.category-jump:hover{color:var(--gold-dark);background:var(--gold-soft)}
 
-/* COURSE CARD */
-.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;position:relative;text-align:left;font-family:inherit;padding:0}
-.course-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(15,15,30,.08);border-color:rgba(202,138,4,.25)}
-.course-thumb{aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff}
-.course-thumb-icon{font-size:2.4rem;filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
-.course-body{padding:1.1rem 1.2rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
-.course-title{font-family:var(--f-head);font-size:1rem;font-weight:700;color:var(--ink);line-height:1.3}
-.course-desc{font-size:.8rem;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.course-meta{display:flex;align-items:center;gap:.8rem;font-size:.72rem;color:var(--muted);font-family:var(--f-head);margin-top:auto;padding-top:.5rem;flex-wrap:wrap}
-.course-meta i{font-size:.7rem}
-.course-progress{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.4rem}
+/* course grid */
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:.85rem}
+
+/* course card */
+.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;text-align:left;padding:0}
+.course-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.3)}
+.course-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;position:relative}
+.course-thumb-icon{font-size:1.9rem;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+.course-thumb::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,255,255,.22),transparent 60%)}
+.course-body{padding:.8rem .9rem .9rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.course-title{font-family:var(--f-head);font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.28}
+.course-desc{font-size:.74rem;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.course-meta{display:flex;align-items:center;gap:.65rem;font-size:.66rem;color:var(--muted);font-family:var(--f-head);margin-top:auto;padding-top:.45rem;flex-wrap:wrap}
+.course-meta i{font-size:.62rem}
+.course-progress{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.3rem}
 .course-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width var(--t-base)}
 
-/* STATES */
-.empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
-.empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
-.empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
-.empty-state p{font-size:.85rem}
-.skeleton{height:260px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+/* states */
+.empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg)}
+.empty-state i{font-size:1.9rem;color:var(--gold);opacity:.5;display:block;margin-bottom:.7rem}
+.empty-state h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
+.empty-state p{font-size:.8rem}
+.skeleton{height:220px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
 
-/* FOOTER */
-.learning-footer{background:var(--surface-2);border-top:1px solid rgba(15,15,30,.06);padding:2rem;margin-top:auto}
-.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
-.footer-brand{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.82rem;color:var(--ink);font-family:var(--f-head)}
+/* footer */
+.learning-footer{background:#fff;border-top:1px solid rgba(15,15,30,.06);padding:1rem var(--gutter);margin-top:auto}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:.45rem;font-weight:700;font-size:.78rem;color:var(--ink);font-family:var(--f-head)}
 .footer-brand i{color:var(--gold)}
-.footer-links{display:flex;gap:1.4rem;flex-wrap:wrap}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:.76rem;font-family:var(--f-head);font-weight:500;transition:color var(--t-fast)}
+.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:.74rem;font-family:var(--f-head);font-weight:500;transition:color var(--t-fast)}
 .footer-links a:hover{color:var(--gold-dark)}
-.footer-copy{color:var(--muted);font-size:.74rem;font-family:var(--f-head)}
+.footer-copy{color:var(--muted);font-size:.72rem;font-family:var(--f-head)}
 
-/* TOASTS */
-.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;box-shadow:0 20px 40px rgba(15,15,30,.22);display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .35s,transform .35s;animation:slideInRight .3s cubic-bezier(.2,.8,.2,1)}
+/* toasts */
+.toast-container{position:fixed;top:calc(var(--header-h) + 14px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.75rem 1rem;box-shadow:0 16px 36px rgba(15,15,30,.22);display:flex;align-items:center;gap:.6rem;font-family:var(--f-head);font-size:.82rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .3s,transform .3s;animation:slideInRight .28s cubic-bezier(.2,.8,.2,1)}
 .toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
 
-@media(max-width:900px){
+/* responsive */
+@media(max-width:1024px){
+  .side-rail{display:none}
+}
+@media(max-width:760px){
   .ws-nav-links{display:none}
-  .library-inner{padding:0 1.25rem}
-  .library{padding:2rem 0 3rem}
-  .learning-hero{padding:3rem 1.25rem 2.5rem}
-  .hero-inner h1{font-size:2rem}
-  .footer-inner{flex-direction:column;gap:.6rem;text-align:center}
+  .hdr-search{max-width:none;margin:0}
+  .learning-hero{padding:1.2rem var(--gutter) 1.1rem}
+  .hero-actions{width:100%}
+  .hero-actions .ws-btn{flex:1;justify-content:center}
+  .course-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
   .toast-container{right:12px;left:12px;align-items:stretch}
   .toast{max-width:none}
-  .search-wrap{max-width:none}
-  .category-section{padding:1.4rem 1.1rem 1.5rem}
 }
 </style>
 </head>
@@ -164,67 +181,69 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
 
 <header class="ws-header">
-  <div class="ws-header-inner">
-    <a href="../index.html" class="ws-logo" aria-label="Back to KazInni">
-      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
-      <span class="ws-logo-text">Kaz<span class="accent">Inni</span> <span style="font-weight:600;opacity:.5;font-size:.85rem;">Learning</span></span>
+  <a href="../index.html" class="ws-logo" aria-label="Back to KazInni">
+    <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+    <span class="ws-logo-text">Kaz<span class="accent">Inni</span> <span style="font-weight:600;opacity:.5;font-size:.82rem;">Learning</span></span>
+  </a>
+
+  <nav class="ws-nav-links" aria-label="Learning navigation">
+    <a href="index.html" class="ws-nav-link active">Library</a>
+    <a href="learning/certificate.html" class="ws-nav-link">Certificates</a>
+  </nav>
+
+  <div class="hdr-search" id="hdrSearch" role="search">
+    <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Search courses…"
+      aria-label="Search courses"
+      autocomplete="off"
+      spellcheck="false">
+    <kbd>/</kbd>
+    <button type="button" class="hdr-clear" id="searchClear" aria-label="Clear search">
+      <i class="fas fa-xmark" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="ws-header-right">
+    <a href="../index.html" class="ws-btn ws-btn-ghost">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Workspace</span>
     </a>
-    <nav class="ws-nav-links" aria-label="Learning navigation">
-      <a href="index.html" class="ws-nav-link active">Library</a>
-      <a href="learning/certificate.html" class="ws-nav-link">Certificates</a>
-    </nav>
-    <div class="ws-header-right">
-      <a href="../index.html" class="ws-btn ws-btn-ghost">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Workspace</span>
-      </a>
-      <div id="headerAccount"></div>
-    </div>
+    <div id="headerAccount"></div>
   </div>
 </header>
 
-<main id="main">
-  <section class="learning-hero">
-    <div class="learning-hero-bg" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-    </div>
-    <div class="hero-inner">
-      <span class="hero-eyebrow"><span class="dot"></span> KazInni Learning</span>
-      <h1>Learn skills that <span class="accent">pay you back</span></h1>
-      <p class="hero-lede">Practical, Kenya-focused courses built for the gig economy. Pick a track and start at your own pace.</p>
-      <div id="heroActions"></div>
-    </div>
-  </section>
+<main id="main" class="portal-shell">
 
-  <section class="library">
-    <div class="library-inner">
+  <aside class="side-rail" aria-label="Categories">
+    <h4>Categories</h4>
+    <div id="railList"></div>
+  </aside>
+
+  <div class="portal-main">
+
+    <section class="learning-hero">
+      <div class="hero-left">
+        <span class="hero-eyebrow"><span class="dot"></span> KazInni Learning Portal</span>
+        <h1>Learn skills that <span class="accent">pay you back</span></h1>
+        <p>Practical, Kenya-focused courses built for the gig economy. Browse by category and start at your own pace.</p>
+      </div>
+      <div class="hero-actions" id="heroActions"></div>
+    </section>
+
+    <section class="library">
       <div class="library-header">
-        <div>
-          <span class="section-label">Library</span>
-          <h2>Browse by category</h2>
-          <p id="librarySubtitle">Loading…</p>
-        </div>
-        <div class="search-wrap" id="searchWrap">
-          <i class="fas fa-magnifying-glass search-icon" aria-hidden="true"></i>
-          <input
-            type="search"
-            id="searchInput"
-            class="search-input"
-            placeholder="Search courses…"
-            aria-label="Search courses"
-            autocomplete="off"
-            spellcheck="false">
-          <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">
-            <i class="fas fa-xmark" aria-hidden="true"></i>
-          </button>
-        </div>
+        <h2>Browse by category <span class="count-pill" id="totalCount">0</span></h2>
+        <span class="library-sub" id="librarySubtitle">Loading…</span>
       </div>
       <div class="category-sections" id="categorySections">
         <div class="skeleton"></div>
         <div class="skeleton"></div>
       </div>
-    </div>
-  </section>
+    </section>
+
+  </div>
 </main>
 
 <footer class="learning-footer">
@@ -254,8 +273,6 @@ const firebaseConfig = {
   projectId: "mugera-e51cc"
 };
 
-// Real course categories — order here = render order.
-// `accent` drives the little colour bar next to each section title.
 const LEARNING_CATEGORIES = [
   { id: 'communication', label: 'Communication', accent: '#3b82f6' },
   { id: 'finance',       label: 'Finance',       accent: '#10b981' },
@@ -264,8 +281,6 @@ const LEARNING_CATEGORIES = [
   { id: 'business',      label: 'Business',      accent: '#ef4444' },
   { id: 'wellness',      label: 'Wellness',      accent: '#06b6d4' }
 ];
-
-// Fallback bucket for courses whose `category` isn't in the list above.
 const OTHER_CATEGORY = { id: '_other', label: 'Other', accent: '#6b7280' };
 
 // ══════════════════════════════════════════════════════════════
@@ -275,6 +290,7 @@ let currentUser = null;
 let allCourses = [];
 let progressMap = {};
 let searchQuery = '';
+let activeSectionId = null;
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -282,92 +298,73 @@ let searchQuery = '';
 function escapeHtml(text) {
   if (text === null || text === undefined) return '';
   return String(text)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
-
 function lighten(hex, percent) {
-  const num = parseInt(hex.replace('#', ''), 16);
+  const num = parseInt(hex.replace('#',''), 16);
   const amt = Math.round(2.55 * percent);
   const R = Math.min(255, (num >> 16) + amt);
   const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
   const B = Math.min(255, (num & 0x0000FF) + amt);
-  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+  return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
 }
-
 function getInitials(name) {
   if (!name) return 'U';
   const p = name.trim().split(/[\s._-]+/).filter(Boolean);
   if (p.length === 0) return 'U';
-  if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
-  return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+  if (p.length === 1) return p[0].slice(0,2).toUpperCase();
+  return (p[0][0] + p[p.length-1][0]).toUpperCase();
 }
-
-function showToast(msg, type = 'success') {
-  const container = document.getElementById('toastContainer');
-  if (!container) return;
-  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i><span></span>`;
-  toast.querySelector('span').textContent = msg;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.classList.add('leaving');
-    setTimeout(() => toast.remove(), 400);
-  }, 4000);
+function showToast(msg, type='success') {
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const icons = { success:'fa-check-circle', error:'fa-exclamation-circle', info:'fa-info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type]||icons.info}" aria-hidden="true"></i><span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(()=>{ t.classList.add('leaving'); setTimeout(()=>t.remove(),350); }, 4000);
 }
-
-function debounce(fn, ms = 180) {
-  let t;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn(...args), ms);
-  };
+function debounce(fn, ms=160) {
+  let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); };
 }
 
 // ══════════════════════════════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  const yearEl = document.getElementById('footerYear');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  const y = document.getElementById('footerYear');
+  if (y) y.textContent = new Date().getFullYear();
 
   if (typeof firebase === 'undefined') {
     showToast('Could not load library service', 'error');
     return;
   }
-
-  try {
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  } catch (e) { console.warn(e); }
+  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); }
+  catch(e){ console.warn(e); }
 
   const auth = firebase.auth();
   const db = firebase.database();
-  window._auth = auth;
-  window._db = db;
+  window._auth = auth; window._db = db;
 
   wireSearch();
+  wireKeyboard();
 
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>{});
   auth.onAuthStateChanged(onAuthChanged);
 });
 
 async function onAuthChanged(user) {
-  if (!user) {
-    window.location.href = '../index.html';
-    return;
-  }
-
+  if (!user) { window.location.href = '../index.html'; return; }
   currentUser = user;
   renderAccountChip(user);
 
   try {
     const snap = await window._db.ref(`learning_progress/${user.uid}`).once('value');
-    progressMap = snap.exists() ? (snap.val() || {}) : {};
-  } catch (e) {
-    progressMap = {};
-  }
+    progressMap = snap.exists() ? (snap.val()||{}) : {};
+  } catch { progressMap = {}; }
 
   renderHeroActions();
   await loadCourses();
@@ -384,12 +381,11 @@ function renderAccountChip(user) {
       <span>${escapeHtml(name)}</span>
     </a>`;
 }
-
 function renderHeroActions() {
   const el = document.getElementById('heroActions');
   if (!el) return;
   el.innerHTML = `
-    <a href="#library" class="ws-btn ws-btn-primary ws-btn-lg">
+    <a href="#libraryTop" class="ws-btn ws-btn-primary">
       <i class="fas fa-play" aria-hidden="true"></i> <span>Start learning</span>
     </a>`;
 }
@@ -400,54 +396,68 @@ function renderHeroActions() {
 function wireSearch() {
   const input = document.getElementById('searchInput');
   const clear = document.getElementById('searchClear');
-  const wrap  = document.getElementById('searchWrap');
+  const wrap  = document.getElementById('hdrSearch');
   if (!input || !wrap) return;
 
   const onInput = debounce((val) => {
     searchQuery = val;
     wrap.classList.toggle('has-value', val.length > 0);
     renderCourses();
-  }, 160);
+  }, 150);
 
   input.addEventListener('input', (e) => onInput(e.target.value.trim()));
+  input.addEventListener('search', (e) => onInput(e.target.value.trim()));
 
-  if (clear) {
-    clear.addEventListener('click', () => {
-      input.value = '';
-      searchQuery = '';
-      wrap.classList.remove('has-value');
-      renderCourses();
-      input.focus();
-    });
-  }
+  if (clear) clear.addEventListener('click', () => {
+    input.value = ''; searchQuery = '';
+    wrap.classList.remove('has-value');
+    renderCourses(); input.focus();
+  });
+
+  window._focusSearch = () => input.focus();
+  window._clearSearch = () => {
+    if (!searchQuery) return false;
+    input.value = ''; searchQuery = '';
+    wrap.classList.remove('has-value');
+    renderCourses();
+    return true;
+  };
+}
+
+function wireKeyboard() {
+  document.addEventListener('keydown', (e) => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+    if (e.key === '/' && !typing) {
+      e.preventDefault();
+      window._focusSearch && window._focusSearch();
+    } else if (e.key === 'Escape') {
+      window._clearSearch && window._clearSearch();
+    }
+  });
 }
 
 function courseMatchesQuery(course, q) {
   if (!q) return true;
   const needle = q.toLowerCase();
-  const haystack = [
-    course.title,
-    course.desc,
-    course.level,
-    course.instructor,
+  const hay = [
+    course.title, course.desc, course.level, course.instructor,
     Array.isArray(course.tags) ? course.tags.join(' ') : course.tags
   ].filter(Boolean).join(' ').toLowerCase();
-  return haystack.includes(needle);
+  return hay.includes(needle);
 }
 
 // ══════════════════════════════════════════════════════════════
-// COURSE LOADING
+// LOAD COURSES
 // ══════════════════════════════════════════════════════════════
 async function loadCourses() {
   try {
     const snap = await window._db.ref('learning_courses')
-      .orderByChild('published')
-      .equalTo(true)
-      .once('value');
+      .orderByChild('published').equalTo(true).once('value');
     const val = snap.val() || {};
     allCourses = Object.entries(val)
       .map(([id, c]) => ({ id, ...c }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999));
+      .sort((a,b) => (a.order||999) - (b.order||999));
   } catch (e) {
     console.warn('Could not load courses:', e);
     allCourses = [];
@@ -456,75 +466,101 @@ async function loadCourses() {
 }
 
 // ══════════════════════════════════════════════════════════════
-// RENDER — grouped by category
+// RENDER — category sections + left rail
 // ══════════════════════════════════════════════════════════════
 function renderCourses() {
   const host = document.getElementById('categorySections');
   const subtitle = document.getElementById('librarySubtitle');
+  const totalCount = document.getElementById('totalCount');
   if (!host) return;
 
-  // 1. Build the set of sections we know about
-  const knownIds = new Set(LEARNING_CATEGORIES.map(c => c.id));
+  const known = new Set(LEARNING_CATEGORIES.map(c=>c.id));
   const sections = LEARNING_CATEGORIES.map(c => ({ ...c, courses: [] }));
   const other = { ...OTHER_CATEGORY, courses: [] };
 
-  // 2. Bucket courses (after applying search)
-  const totalMatching = [];
+  const matching = [];
   for (const course of allCourses) {
     if (!courseMatchesQuery(course, searchQuery)) continue;
-    totalMatching.push(course);
-    const cat = course.category;
-    const target = knownIds.has(cat)
-      ? sections.find(s => s.id === cat)
+    matching.push(course);
+    const t = known.has(course.category)
+      ? sections.find(s => s.id === course.category)
       : other;
-    target.courses.push(course);
+    t.courses.push(course);
   }
 
-  // 3. Drop "Other" if empty; keep real categories even if empty
-  //    (they only show when they have courses, per your spec)
   const visible = sections.filter(s => s.courses.length > 0);
   if (other.courses.length > 0) visible.push(other);
 
-  // 4. Subtitle
+  // header counts + subtitle
+  if (totalCount) totalCount.textContent = matching.length;
   if (subtitle) {
     if (allCourses.length === 0) {
-      subtitle.textContent = 'No courses published yet — check back soon.';
+      subtitle.textContent = 'No courses published yet.';
     } else if (searchQuery) {
-      subtitle.textContent = `Showing ${totalMatching.length} of ${allCourses.length} course${allCourses.length === 1 ? '' : 's'} for “${searchQuery}”`;
+      subtitle.textContent = `Showing ${matching.length} of ${allCourses.length} · “${searchQuery}”`;
     } else {
-      subtitle.textContent = `${allCourses.length} course${allCourses.length === 1 ? '' : 's'} across ${visible.length} categor${visible.length === 1 ? 'y' : 'ies'}`;
+      subtitle.textContent = `${allCourses.length} course${allCourses.length===1?'':'s'} · ${visible.length} categor${visible.length===1?'y':'ies'}`;
     }
   }
 
-  // 5. Empty state
-  if (totalMatching.length === 0) {
+  // empty
+  if (matching.length === 0) {
     host.innerHTML = `
       <div class="empty-state">
-        <i class="fas ${searchQuery ? 'fa-magnifying-glass' : 'fa-graduation-cap'}" aria-hidden="true"></i>
-        <h3>${searchQuery ? 'No courses match your search' : 'No courses published yet'}</h3>
-        <p>${searchQuery ? 'Try a different keyword.' : 'Check back soon.'}</p>
+        <i class="fas ${searchQuery?'fa-magnifying-glass':'fa-graduation-cap'}" aria-hidden="true"></i>
+        <h3>${searchQuery?'No courses match your search':'No courses published yet'}</h3>
+        <p>${searchQuery?'Try a different keyword.':'Check back soon.'}</p>
       </div>`;
+    renderRail([]);
     return;
   }
 
-  // 6. Render sections — alternating backgrounds
+  // render sections
   host.innerHTML = visible.map((section, idx) => {
-    const bgClass = idx % 2 === 0 ? 'bg-a' : 'bg-b';
+    const bg = idx % 2 === 0 ? 'bg-a' : 'bg-b';
     return `
-      <section class="category-section ${bgClass}"
+      <section class="category-section ${bg}"
+               id="cat-${escapeHtml(section.id)}"
                style="--cat-accent:${escapeHtml(section.accent)};"
-               aria-labelledby="cat-${escapeHtml(section.id)}">
+               aria-labelledby="cat-h-${escapeHtml(section.id)}">
         <div class="category-head">
-          <h3 id="cat-${escapeHtml(section.id)}">${escapeHtml(section.label)}</h3>
-          <span class="category-count" aria-label="${section.courses.length} courses">
-            ${section.courses.length}
-          </span>
+          <h3 id="cat-h-${escapeHtml(section.id)}">${escapeHtml(section.label)}</h3>
+          <span class="category-count" aria-label="${section.courses.length} courses">${section.courses.length}</span>
+          <a class="category-jump" href="#cat-${escapeHtml(section.id)}" aria-label="Jump to ${escapeHtml(section.label)}">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="course-grid">
           ${section.courses.map(renderCourseCard).join('')}
         </div>
       </section>`;
   }).join('');
+
+  renderRail(visible);
+  observeSections(visible.map(s => `cat-${s.id}`));
+}
+
+function renderRail(visible) {
+  const rail = document.getElementById('railList');
+  if (!rail) return;
+  if (!visible.length) {
+    rail.innerHTML = `<div style="padding:.5rem .65rem;font-size:.76rem;color:var(--muted);font-family:var(--f-head)">No categories to show</div>`;
+    return;
+  }
+  rail.innerHTML = visible.map(s => `
+    <button type="button" class="rail-link"
+            data-target="cat-${escapeHtml(s.id)}"
+            style="--cat-accent:${escapeHtml(s.accent)};"
+            onclick="scrollToSection('cat-${escapeHtml(s.id)}')">
+      <span class="rail-dot" aria-hidden="true"></span>
+      <span>${escapeHtml(s.label)}</span>
+      <span class="rail-count">${s.courses.length}</span>
+    </button>`).join('');
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 function renderCourseCard(course) {
@@ -537,18 +573,18 @@ function renderCourseCard(course) {
   return `
     <button type="button" class="course-card"
             onclick="openCourse('${escapeHtml(course.id)}')"
-            aria-label="Open ${escapeHtml(course.title || 'course')}">
+            aria-label="Open ${escapeHtml(course.title||'course')}">
       <div class="course-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
         <i class="fas ${escapeHtml(icon)} course-thumb-icon" aria-hidden="true"></i>
       </div>
       <div class="course-body">
-        <div class="course-title">${escapeHtml(course.title || 'Untitled')}</div>
-        <div class="course-desc">${escapeHtml(course.desc || '')}</div>
+        <div class="course-title">${escapeHtml(course.title||'Untitled')}</div>
+        <div class="course-desc">${escapeHtml(course.desc||'')}</div>
         ${pct > 0 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
         <div class="course-meta">
-          <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level || '—')}</span>
-          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>
-          <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration || 0} min</span>
+          <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level||'—')}</span>
+          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount}</span>
+          <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration||0}m</span>
         </div>
       </div>
     </button>`;
@@ -556,6 +592,41 @@ function renderCourseCard(course) {
 
 function openCourse(id) {
   window.location.href = `learning/course.html?id=${encodeURIComponent(id)}`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SCROLL SPY — highlight active category in the side rail
+// ══════════════════════════════════════════════════════════════
+let _sectionObserver = null;
+function observeSections(ids) {
+  if (_sectionObserver) _sectionObserver.disconnect();
+  const links = document.querySelectorAll('.rail-link');
+  if (!ids.length) { links.forEach(l => l.classList.remove('active')); return; }
+
+  const map = new Map();
+  links.forEach(l => map.set(l.dataset.target, l));
+
+  _sectionObserver = new IntersectionObserver((entries) => {
+    // pick the entry with the largest intersection
+    let best = null;
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
+    }
+    if (best) {
+      const id = best.target.id;
+      links.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+      activeSectionId = id;
+    }
+  }, {
+    rootMargin: `-${58 + 12}px 0px -60% 0px`,
+    threshold: [0, .25, .5, .75, 1]
+  });
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) _sectionObserver.observe(el);
+  });
 }
 </script>
 </body>
