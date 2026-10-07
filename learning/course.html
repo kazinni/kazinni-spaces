@@ -53,7 +53,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 /* LAYOUT */
 .player-layout{display:grid;grid-template-columns:320px 1fr;flex:1;min-height:calc(100vh - var(--header-h))}
 .player-sidebar{background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:1.5rem 1rem}
-.player-course-info{margin-bottom:1.5rem;padding:0 .5rem}
+.player-course-info{margin-bottom:1rem;padding:0 .5rem}
 .player-course-info h2{font-family:var(--f-head);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;line-height:1.3}
 .player-course-info p{font-size:.78rem;color:var(--muted)}
 .player-lessons{display:flex;flex-direction:column;gap:.15rem}
@@ -92,6 +92,25 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .empty-state p{font-size:.85rem;margin-bottom:.8rem}
+
+/* ── NOTES DOWNLOAD ────────────────────────────────── */
+.notes-menu-wrap{position:relative;display:inline-block}
+.notes-menu-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .9rem;border-radius:var(--r-pill);border:1.5px solid var(--border-2);background:#fff;color:var(--ink);font-family:var(--f-head);font-size:.78rem;font-weight:600;cursor:pointer;transition:all var(--t-fast);white-space:nowrap}
+.notes-menu-btn:hover{border-color:var(--ink);background:var(--surface-2)}
+.notes-menu-btn i.chev{font-size:.6rem;opacity:.6;transition:transform var(--t-fast)}
+.notes-menu-wrap.open .notes-menu-btn i.chev{transform:rotate(180deg)}
+.notes-menu{position:absolute;bottom:calc(100% + .4rem);left:0;min-width:240px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:0 20px 44px rgba(15,15,30,.14);padding:.35rem;display:none;z-index:60}
+.notes-menu-wrap.open .notes-menu{display:block;animation:fadeUp .18s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.notes-menu button{display:flex;align-items:flex-start;gap:.6rem;width:100%;padding:.6rem .7rem;border:none;background:none;border-radius:var(--r-sm);font-family:var(--f-head);font-size:.8rem;font-weight:500;color:var(--text-2);cursor:pointer;text-align:left;transition:all var(--t-fast)}
+.notes-menu button:hover{background:var(--surface-2);color:var(--ink)}
+.notes-menu button:disabled{opacity:.5;cursor:wait}
+.notes-menu button i{width:14px;text-align:center;color:var(--gold-dark);font-size:.78rem;margin-top:2px;flex-shrink:0}
+.notes-menu button small{display:block;font-size:.66rem;color:var(--muted);font-weight:400;margin-top:.1rem}
+.player-sidebar-actions{margin:0 .5rem 1rem;display:flex;flex-direction:column;gap:.4rem}
+.player-sidebar-actions .notes-menu-wrap,
+.player-sidebar-actions .notes-menu-btn{width:100%;justify-content:center}
+.player-sidebar-actions .notes-menu{left:0;right:0;min-width:0}
 
 /* QUIZ LAUNCH CARD */
 .quiz-launch{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1px solid rgba(202,138,4,.25);border-radius:var(--r-lg);padding:2.2rem 2rem;text-align:center;margin-bottom:1.6rem;position:relative;overflow:hidden}
@@ -137,7 +156,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-btn.primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 30px rgba(202,138,4,.4)}
 .quiz-btn.primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .quiz-btn.secondary{background:transparent;color:var(--text-2);border:1.5px solid var(--border-2)}
-.quiz-btn.secondary:hover{background:white;border-color:var(--border-medium);color:var(--ink)}
+.quiz-btn.secondary:hover{background:white;border-color:var(--border-2);color:var(--ink)}
 .quiz-counter{font-family:var(--f-head);font-size:.78rem;color:var(--muted);align-self:center;font-weight:500}
 
 /* RESULT VIEW */
@@ -172,6 +191,15 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .quiz-review-row.answer i{color:var(--gold)}
 .quiz-review-explain{font-size:.78rem;color:var(--text-2);margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border);line-height:1.55;font-style:italic}
 
+/* Toasts */
+.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s;box-shadow:0 16px 36px rgba(15,15,30,.22)}
+.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
+.toast.leaving{opacity:0;transform:translateX(24px)}
+
+/* Hidden render target for PDF generation */
+#pdfRender{position:absolute;left:-9999px;top:0;width:794px;background:#fff;color:#0f0f1e;font-family:var(--f-body);padding:48px 56px;line-height:1.65;box-sizing:border-box}
+
 @media(max-width:900px){
   .player-layout{grid-template-columns:1fr}
   .player-sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:280px;max-width:84vw;transform:translateX(-100%);transition:transform var(--t-base);z-index:900;box-shadow:0 20px 60px rgba(15,15,30,.18)}
@@ -183,11 +211,8 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   .quiz-actions{flex-direction:column-reverse}
   .quiz-actions .quiz-btn{width:100%;justify-content:center}
   .quiz-counter{align-self:center}
+  .player-actions .notes-menu{left:auto;right:0}
 }
-.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
-.toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
-.toast.leaving{opacity:0;transform:translateX(24px)}
 </style>
 </head>
 <body>
@@ -240,9 +265,14 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   <div class="quiz-actions" id="quizActions"></div>
 </div>
 
+<!-- Hidden target used by PDF generator -->
+<div id="pdfRender" aria-hidden="true"></div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 'use strict';
 
@@ -296,15 +326,13 @@ function showToast(msg, type = 'success') {
 }
 
 // ══════════════════════════════════════════════════════════════
-// CERTIFICATE ID + ISSUANCE (inline — page is standalone)
+// CERTIFICATE ID + ISSUANCE
 // ══════════════════════════════════════════════════════════════
 function generateCertificateCode() {
   const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
   const year = new Date().getFullYear();
   let code = '';
-  for (let i = 0; i < 6; i++) {
-    code += alphabet[Math.floor(Math.random() * alphabet.length)];
-  }
+  for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)];
   return `KAZ-${year}-${code}`;
 }
 
@@ -341,13 +369,10 @@ async function issueCertificate(courseId, courseTitle, options = {}) {
 // BOOT
 // ══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[course] DOM ready');
-
   if (typeof firebase === 'undefined') {
     renderFatal('Firebase SDK failed to load', 'Check your internet connection.');
     return;
   }
-
   try {
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   } catch (e) {
@@ -376,10 +401,7 @@ function renderFatal(title, detail) {
 }
 
 async function onAuthChanged(user) {
-  if (!user) {
-    window.location.href = '../index.html';
-    return;
-  }
+  if (!user) { window.location.href = '../index.html'; return; }
   currentUser = user;
   renderAccountChip(user);
   await initCourse();
@@ -403,10 +425,7 @@ async function initCourse() {
   const params = new URLSearchParams(window.location.search);
   const courseId = params.get('id');
 
-  if (!courseId) {
-    renderFatal('No course specified', 'The URL is missing an ?id= parameter.');
-    return;
-  }
+  if (!courseId) { renderFatal('No course specified', 'The URL is missing an ?id= parameter.'); return; }
 
   try {
     const snap = await window._db.ref(`learning_courses/${courseId}`).once('value');
@@ -415,7 +434,6 @@ async function initCourse() {
       return;
     }
     course = { id: courseId, ...snap.val() };
-    console.log('[course] Loaded:', course.title);
   } catch (e) {
     renderFatal('Could not load course', e.message || 'Permission denied or network error.');
     return;
@@ -447,9 +465,34 @@ async function initCourse() {
     progress = null;
   }
 
-  document.getElementById('playerCourseInfo').innerHTML = `
+  const infoEl = document.getElementById('playerCourseInfo');
+  infoEl.innerHTML = `
     <h2>${escapeHtml(course.title || 'Untitled')}</h2>
     <p>${lessons.length} lesson${lessons.length === 1 ? '' : 's'} · ${course.duration || 0} min</p>`;
+
+  // Course-level notes download
+  if (!document.querySelector('.player-sidebar-actions')) {
+    const row = document.createElement('div');
+    row.className = 'player-sidebar-actions';
+    row.innerHTML = `
+      <div class="notes-menu-wrap">
+        <button type="button" class="notes-menu-btn" onclick="toggleNotesMenu(this)">
+          <i class="fas fa-download"></i> Download notes
+          <i class="fas fa-chevron-down chev"></i>
+        </button>
+        <div class="notes-menu" role="menu">
+          <button type="button" onclick="downloadCourseNotesPDF(this)">
+            <i class="fas fa-file-pdf"></i>
+            <span>Full course — PDF<small>All ${lessons.length} lessons in one file</small></span>
+          </button>
+          <button type="button" onclick="downloadCourseNotes()">
+            <i class="fas fa-file-lines"></i>
+            <span>Full course — Markdown<small>Editable .md text</small></span>
+          </button>
+        </div>
+      </div>`;
+    infoEl.after(row);
+  }
 
   const startIndex = (progress && typeof progress.lastLessonIndex === 'number' && progress.lastLessonIndex < lessons.length)
     ? progress.lastLessonIndex
@@ -492,21 +535,16 @@ function loadLesson(index) {
   const completed = (progress && progress.completedLessons) || {};
   const isDone = completed[index] === true || completed[String(index)] === true;
 
-  // === QUIZ LESSON ===
   if (lesson.type === 'quiz') {
     renderQuizLesson(main, lesson, isDone);
     if (window.innerWidth <= 900) document.body.classList.remove('sidebar-open');
     return;
   }
 
-  // === VIDEO LESSON ===
   let videoHtml = '';
   if (lesson.type === 'video') {
-    if (lesson.videoUrl) {
-      videoHtml = `<div class="player-video">${renderVideoEmbed(lesson.videoUrl)}</div>`;
-    } else {
-      videoHtml = `<div class="player-video"><div class="player-video-placeholder"><i class="fas fa-play-circle"></i><p>Video coming soon</p></div></div>`;
-    }
+    if (lesson.videoUrl) videoHtml = `<div class="player-video">${renderVideoEmbed(lesson.videoUrl)}</div>`;
+    else videoHtml = `<div class="player-video"><div class="player-video-placeholder"><i class="fas fa-play-circle"></i><p>Video coming soon</p></div></div>`;
   }
 
   const contentHtml = lesson.content ? `<div class="player-content">${lesson.content}</div>` : '';
@@ -530,6 +568,22 @@ function loadLesson(index) {
         <i class="fas fa-arrow-left"></i> Previous
       </button>
       <div class="player-actions-right">
+        <div class="notes-menu-wrap">
+          <button type="button" class="notes-menu-btn" onclick="toggleNotesMenu(this)">
+            <i class="fas fa-download"></i> Notes
+            <i class="fas fa-chevron-down chev"></i>
+          </button>
+          <div class="notes-menu" role="menu">
+            <button type="button" onclick="downloadLessonNotesPDF(this)">
+              <i class="fas fa-file-pdf"></i>
+              <span>PDF<small>Download this lesson</small></span>
+            </button>
+            <button type="button" onclick="downloadLessonNotes()">
+              <i class="fas fa-file-lines"></i>
+              <span>Markdown (.md)<small>Editable text notes</small></span>
+            </button>
+          </div>
+        </div>
         <button type="button" class="ws-btn ${isDone ? 'ws-btn-ghost' : 'ws-btn-primary'}"
                 onclick="markComplete(${index})">
           <i class="fas ${isDone ? 'fa-check' : 'fa-check-circle'}"></i>
@@ -565,7 +619,6 @@ function renderQuizLesson(main, lesson, isDone) {
     return;
   }
 
-  // Find the last attempt info
   const attempts = (progress && progress.quizAttempts) || {};
   const attemptList = Object.values(attempts).sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
   const lastAttempt = attemptList[0];
@@ -613,6 +666,22 @@ function renderQuizLesson(main, lesson, isDone) {
         <button type="button" class="ws-btn ws-btn-primary" onclick="openQuiz()">
           <i class="fas fa-play"></i> ${hasPassed ? 'Retake Quiz' : 'Start Quiz'}
         </button>
+        <div class="notes-menu-wrap">
+          <button type="button" class="notes-menu-btn" onclick="toggleNotesMenu(this)">
+            <i class="fas fa-download"></i> Notes
+            <i class="fas fa-chevron-down chev"></i>
+          </button>
+          <div class="notes-menu" role="menu">
+            <button type="button" onclick="downloadLessonNotesPDF(this)">
+              <i class="fas fa-file-pdf"></i>
+              <span>Quiz outline — PDF<small>Questions &amp; choices</small></span>
+            </button>
+            <button type="button" onclick="downloadLessonNotes()">
+              <i class="fas fa-file-lines"></i>
+              <span>Markdown (.md)</span>
+            </button>
+          </div>
+        </div>
         <button type="button" class="ws-btn ws-btn-ghost" ${activeIndex === 0 ? 'disabled' : ''} onclick="loadLesson(${activeIndex - 1})">
           <i class="fas fa-arrow-left"></i> Previous
         </button>
@@ -636,7 +705,7 @@ function renderVideoEmbed(url) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// MARK COMPLETE (non-quiz lessons)
+// MARK COMPLETE
 // ══════════════════════════════════════════════════════════════
 async function markComplete(index) {
   if (!currentUser || !course) return;
@@ -682,9 +751,7 @@ async function markComplete(index) {
     else if (certificateFailed) showToast('Work saved, but certificate failed. Reopen to retry.', 'error');
     else showToast(`Progress saved — ${progressPct}%`, 'success');
 
-    if (index < lessons.length - 1) {
-      setTimeout(() => loadLesson(index + 1), 500);
-    }
+    if (index < lessons.length - 1) setTimeout(() => loadLesson(index + 1), 500);
   } catch (e) {
     console.error('[markComplete]', e);
     showToast('Could not save progress: ' + e.message, 'error');
@@ -712,11 +779,7 @@ async function sendNotification(courseId, courseTitle, pct, completed) {
 function openQuiz() {
   const quiz = course.quiz || {};
   const questions = quiz.questions || {};
-
-  if (Object.keys(questions).length === 0) {
-    showToast('Quiz not available yet', 'error');
-    return;
-  }
+  if (Object.keys(questions).length === 0) { showToast('Quiz not available yet', 'error'); return; }
 
   quizAnswers = {};
   quizAttemptStart = Date.now();
@@ -740,29 +803,20 @@ function getQuizQuestionsSorted() {
   const quiz = course.quiz || {};
   const questions = quiz.questions || {};
   let list = Object.entries(questions).map(([id, q]) => ({ id, ...q }));
-
-  // Sort by `order` field
   list.sort((a, b) => (a.order || 999) - (b.order || 999));
-
-  // Optional shuffle
   if (quiz.shuffleQuestions === true) {
     for (let i = list.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [list[i], list[j]] = [list[j], list[i]];
     }
   }
-
   return list;
 }
 
 function getChoicesSorted(q) {
   const choices = q.choices || {};
   let entries = Object.entries(choices).map(([k, v]) => ({ key: k, text: v }));
-
-  // Sort alphabetically by key
   entries.sort((a, b) => a.key.localeCompare(b.key));
-
-  // Optional shuffle
   const quiz = course.quiz || {};
   if (quiz.shuffleChoices === true) {
     for (let i = entries.length - 1; i > 0; i--) {
@@ -770,7 +824,6 @@ function getChoicesSorted(q) {
       [entries[i], entries[j]] = [entries[j], entries[i]];
     }
   }
-
   return entries;
 }
 
@@ -816,12 +869,9 @@ function renderQuizForm() {
 
 function selectAnswer(qid, choice) {
   quizAnswers[qid] = choice;
-
-  // Update UI
   document.querySelectorAll(`.quiz-choice[data-qid="${qid}"]`).forEach(el => {
     el.classList.toggle('selected', el.dataset.choice === choice);
   });
-
   updateQuizProgress();
 }
 
@@ -832,10 +882,8 @@ function updateQuizProgress() {
   const pct = total === 0 ? 0 : Math.round((answered / total) * 100);
 
   document.getElementById('quizProgressFill').style.width = pct + '%';
-
   const counter = document.getElementById('quizCounter');
   if (counter) counter.textContent = `${answered} of ${total} answered`;
-
   const btn = document.getElementById('quizSubmitBtn');
   if (btn) btn.disabled = answered < total;
 }
@@ -845,9 +893,6 @@ async function submitQuiz() {
   const quiz = course.quiz || {};
   const passingScore = quiz.passingScore || 70;
 
-  // Load the answer key (admin-only read... but in dev, user reads it)
-  // Wait — the answer key is admin-only. So we can't score client-side.
-  // Solution: use a public mirror. For now, the client reads it — deploy rules later.
   let answerKey = {};
   try {
     const keySnap = await window._db.ref(`learning_quiz_keys/${course.id}`).once('value');
@@ -856,7 +901,6 @@ async function submitQuiz() {
     console.warn('[quiz] Could not read answer key:', e);
   }
 
-  // Score
   let correct = 0;
   let totalPoints = 0;
   let earnedPoints = 0;
@@ -864,16 +908,10 @@ async function submitQuiz() {
   const review = questions.map(q => {
     const points = Number(q.points) || 1;
     totalPoints += points;
-
     const userChoice = quizAnswers[q.id] || null;
     const correctChoice = answerKey[q.id] || null;
     const isCorrect = userChoice === correctChoice;
-
-    if (isCorrect) {
-      correct++;
-      earnedPoints += points;
-    }
-
+    if (isCorrect) { correct++; earnedPoints += points; }
     const choices = q.choices || {};
     return {
       id: q.id,
@@ -889,17 +927,14 @@ async function submitQuiz() {
 
   const score = totalPoints === 0 ? 0 : Math.round((earnedPoints / totalPoints) * 100);
   const passed = score >= passingScore;
-  const durationSec = Math.round((Date.now() - quizAttemptStart) / 1000);
 
-  // Log attempt
   try {
     const attemptId = 'attempt_' + Date.now().toString(36);
     const attemptPayload = {
       submittedAt: Date.now(),
       answers: quizAnswers,
-      score,
-      passed,
-      durationSec
+      score, passed,
+      durationSec: Math.round((Date.now() - quizAttemptStart) / 1000)
     };
 
     const progressRef = window._db.ref(`learning_progress/${currentUser.uid}/${course.id}`);
@@ -909,14 +944,13 @@ async function submitQuiz() {
     const attempts = existingProgress.quizAttempts || {};
     attempts[attemptId] = attemptPayload;
 
-    const attemptCount = Object.keys(attempts).length;
     const prevBest = existingProgress.quizBestScore || 0;
     const newBest = Math.max(prevBest, score);
 
     const updates = {
       quizAttempts: attempts,
       quizBestScore: newBest,
-      quizAttemptsCount: attemptCount,
+      quizAttemptsCount: Object.keys(attempts).length,
       updatedAt: Date.now()
     };
 
@@ -925,9 +959,7 @@ async function submitQuiz() {
       updates.quizPassedAt = Date.now();
     }
 
-    // If passed AND all other lessons are done AND not yet completed → mark complete & issue cert
     const completedLessons = existingProgress.completedLessons || {};
-    // Mark this quiz lesson as complete
     completedLessons[activeIndex] = true;
     updates.completedLessons = completedLessons;
 
@@ -938,7 +970,6 @@ async function submitQuiz() {
     updates.title = course.title;
 
     const allDone = completedCount >= lessons.length;
-
     let certificateIssued = false;
 
     if (passed && allDone && !existingProgress.completedAt) {
@@ -958,7 +989,6 @@ async function submitQuiz() {
     lastQuizResult = { score, passed, review, certificateIssued };
     renderQuizResult();
     renderLessons();
-
   } catch (e) {
     console.error('[quiz] Save failed:', e);
     showToast('Could not save quiz attempt: ' + e.message, 'error');
@@ -975,7 +1005,7 @@ function renderQuizResult() {
   progressFill.style.width = '100%';
 
   const { score, passed, review, certificateIssued } = result;
-  const circumference = 2 * Math.PI * 60; // r=60
+  const circumference = 2 * Math.PI * 60;
 
   body.innerHTML = `
     <div class="quiz-result">
@@ -1024,12 +1054,9 @@ function renderQuizResult() {
     </div>
   `;
 
-  // Animate the ring
   setTimeout(() => {
     const fill = body.querySelector('.quiz-score-ring .fill');
-    if (fill) {
-      fill.style.strokeDashoffset = String(circumference - (circumference * score / 100));
-    }
+    if (fill) fill.style.strokeDashoffset = String(circumference - (circumference * score / 100));
   }, 100);
 
   actions.innerHTML = `
@@ -1061,6 +1088,370 @@ function addMobileSidebarToggle() {
   btn.onclick = () => document.body.classList.toggle('sidebar-open');
   document.body.appendChild(btn);
 }
+
+// ══════════════════════════════════════════════════════════════
+// NOTES DOWNLOAD — Markdown + PDF
+// ══════════════════════════════════════════════════════════════
+
+/** HTML → Markdown (subset). */
+function htmlToMarkdown(html) {
+  if (!html) return '';
+  let s = String(html).replace(/\r\n?/g, '\n');
+
+  s = s.replace(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/gi,
+    (_, code) => '\n```\n' + decodeEntities(stripTags(code)).trim() + '\n```\n');
+  s = s.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi,
+    (_, code) => '\n```\n' + decodeEntities(stripTags(code)).trim() + '\n```\n');
+
+  s = s.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, t) => '\n# ' + inline(t).trim() + '\n');
+  s = s.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => '\n## ' + inline(t).trim() + '\n');
+  s = s.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => '\n### ' + inline(t).trim() + '\n');
+  s = s.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, t) => '\n#### ' + inline(t).trim() + '\n');
+  s = s.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, (_, t) => '\n##### ' + inline(t).trim() + '\n');
+  s = s.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, (_, t) => '\n###### ' + inline(t).trim() + '\n');
+
+  s = s.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, t) =>
+    '\n' + inline(t).trim().split('\n').map(l => '> ' + l).join('\n') + '\n');
+
+  s = s.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_, inner) => {
+    let i = 1;
+    return '\n' + inner.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => `${i++}. ${inline(t).trim()}\n`) + '\n';
+  });
+
+  s = s.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/gi, (_, inner) =>
+    '\n' + inner.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => `- ${inline(t).trim()}\n`) + '\n');
+
+  s = s.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, t) => '\n' + inline(t).trim() + '\n');
+  s = s.replace(/<br\s*\/?>/gi, '\n');
+  s = s.replace(/<hr\s*\/?>/gi, '\n---\n');
+
+  s = stripTags(s);
+  s = s.replace(/\n{3,}/g, '\n\n').trim();
+  return s;
+}
+
+function stripTags(s) { return String(s).replace(/<[^>]+>/g, ''); }
+
+function decodeEntities(s) {
+  return String(s)
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'").replace(/&hellip;/g, '…')
+    .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–');
+}
+
+function inline(s) {
+  s = String(s);
+  s = s.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '**$1**');
+  s = s.replace(/<b[^>]*>([\s\S]*?)<\/b>/gi, '**$1**');
+  s = s.replace(/<em[^>]*>([\s\S]*?)<\/em>/gi, '*$1*');
+  s = s.replace(/<i[^>]*>([\s\S]*?)<\/i>/gi, '*$1*');
+  s = s.replace(/<code[^>]*>([\s\S]*?)<\/code>/gi, '`$1`');
+  s = s.replace(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)');
+  s = stripTags(s);
+  return decodeEntities(s);
+}
+
+function safeFilename(s) {
+  return String(s || 'notes').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'notes';
+}
+
+// ── Markdown builders ──
+function buildLessonMarkdown(lesson, index) {
+  const courseTitle = course.title || 'Course';
+  const lessonTitle = lesson.title || `Lesson ${index + 1}`;
+  const header = [
+    `# ${lessonTitle}`, '',
+    `**Course:** ${courseTitle}`,
+    `**Lesson:** ${index + 1} of ${lessons.length}`,
+    lesson.duration ? `**Duration:** ${lesson.duration} min` : '',
+    `**Downloaded:** ${new Date().toLocaleString()}`, '',
+    '---', ''
+  ].filter(Boolean).join('\n');
+
+  let body = '';
+  if (lesson.type === 'video' && lesson.videoUrl) body += `> 🎥 **Video lesson** — ${lesson.videoUrl}\n\n`;
+  if (lesson.type === 'quiz') {
+    const quiz = course.quiz || {};
+    const sorted = Object.entries(quiz.questions || {})
+      .map(([id, q]) => ({ id, ...q }))
+      .sort((a, b) => (a.order || 999) - (b.order || 999));
+    if (sorted.length === 0) body += '_Quiz not configured._\n';
+    else {
+      body += `## Quiz — ${sorted.length} question${sorted.length === 1 ? '' : 's'}\n\n`;
+      body += `Passing score: **${quiz.passingScore || 70}%**\n\n`;
+      sorted.forEach((q, i) => {
+        body += `### ${i + 1}. ${(q.text || '').trim()}\n\n`;
+        Object.entries(q.choices || {})
+          .map(([k, v]) => ({ key: k, text: v }))
+          .sort((a, b) => a.key.localeCompare(b.key))
+          .forEach(c => { body += `- **${c.key.toUpperCase()}.** ${c.text}\n`; });
+        body += '\n';
+      });
+      body += '_Answer key not included in notes._\n';
+    }
+  } else if (lesson.content) body += htmlToMarkdown(lesson.content);
+  else if (!lesson.videoUrl) body += '_No content for this lesson yet._\n';
+
+  const footer = ['', '---', '', `_© ${new Date().getFullYear()} KazInni Learning — Teleio Savour._`].join('\n');
+  return header + '\n' + body + footer;
+}
+
+function buildCourseMarkdown() {
+  const parts = [];
+  parts.push([
+    `# ${course.title || 'Course'}`, '',
+    course.desc ? `> ${course.desc}\n` : '',
+    `- **Lessons:** ${lessons.length}`,
+    course.duration ? `- **Total duration:** ${course.duration} min` : '',
+    course.level ? `- **Level:** ${course.level}` : '',
+    course.category ? `- **Category:** ${course.category}` : '',
+    `- **Downloaded:** ${new Date().toLocaleString()}`, '',
+    '---', ''
+  ].filter(Boolean).join('\n'));
+  lessons.forEach((l, i) => {
+    parts.push(buildLessonMarkdown(l, i));
+    parts.push('\n\n---\n\n');
+  });
+  return parts.join('\n');
+}
+
+function downloadBlob(filename, text, mime) {
+  const blob = new Blob([text], { type: mime || 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 200);
+}
+
+// ── Public actions ──
+function downloadLessonNotes() {
+  const lesson = lessons[activeIndex];
+  if (!lesson) return;
+  const md = buildLessonMarkdown(lesson, activeIndex);
+  const base = safeFilename(`${course.title}-lesson-${activeIndex + 1}-${lesson.title || 'notes'}`);
+  downloadBlob(`${base}.md`, md);
+  showToast('Lesson notes downloaded (.md)', 'success');
+  closeAllNotesMenus();
+}
+
+function downloadCourseNotes() {
+  if (!course || lessons.length === 0) return;
+  const md = buildCourseMarkdown();
+  const base = safeFilename(`${course.title}-full-notes`);
+  downloadBlob(`${base}.md`, md);
+  showToast(`Full course notes downloaded (${lessons.length} lessons)`, 'success');
+  closeAllNotesMenus();
+}
+
+// ── PDF generation via jsPDF (real .pdf file, no print dialog) ──
+function buildPdfHtmlForLesson(lesson, index) {
+  let inner = '';
+  if (lesson.type === 'quiz') {
+    const quiz = course.quiz || {};
+    const sorted = Object.entries(quiz.questions || {})
+      .map(([id, q]) => ({ id, ...q }))
+      .sort((a, b) => (a.order || 999) - (b.order || 999));
+    if (sorted.length === 0) inner = '<p><em>Quiz not configured.</em></p>';
+    else {
+      inner = `<p><strong>Passing score:</strong> ${quiz.passingScore || 70}%</p><ol>`;
+      sorted.forEach(q => {
+        inner += `<li><strong>${escapeHtml(q.text || '')}</strong><ul>`;
+        Object.entries(q.choices || {})
+          .map(([k, v]) => ({ key: k, text: v }))
+          .sort((a, b) => a.key.localeCompare(b.key))
+          .forEach(c => { inner += `<li><strong>${c.key.toUpperCase()}.</strong> ${escapeHtml(c.text)}</li>`; });
+        inner += '</ul></li>';
+      });
+      inner += '</ol><p><em>Answer key not included in notes.</em></p>';
+    }
+  } else if (lesson.type === 'video' && lesson.videoUrl) {
+    inner = `<p><em>Video lesson: <a href="${escapeHtml(lesson.videoUrl)}">${escapeHtml(lesson.videoUrl)}</a></em></p>${lesson.content || ''}`;
+  } else {
+    inner = lesson.content || '<p><em>No content for this lesson yet.</em></p>';
+  }
+
+  return `<h2 style="font-size:1.15rem;margin:0 0 .5rem;">${escapeHtml(lesson.title || ('Lesson ' + (index + 1)))}</h2>${inner}`;
+}
+
+function buildPdfHtmlForCourse() {
+  return lessons.map((l, i) =>
+    `<div class="pdf-lesson">${buildPdfHtmlForLesson(l, i)}</div>`
+  ).join('');
+}
+
+async function generatePDF({ filename, title, subtitle, bodyHtml }) {
+  if (typeof window.jspdf === 'undefined' || typeof html2canvas === 'undefined') {
+    showToast('PDF library failed to load. Check your connection.', 'error');
+    return;
+  }
+  const { jsPDF } = window.jspdf;
+  const target = document.getElementById('pdfRender');
+
+  // Fill the hidden render target with a styled document
+  target.innerHTML = `
+    <div style="font-family:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;color:#0f0f1e;">
+      <header style="border-bottom:2px solid #ca8a04;padding-bottom:14px;margin-bottom:22px;">
+        <div style="font-family:'Clash Display','Cabinet Grotesk',sans-serif;font-weight:700;font-size:11px;color:#a16207;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">KazInni Learning</div>
+        <h1 style="font-family:'Clash Display','Cabinet Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin:0 0 6px;color:#0f0f1e;">${escapeHtml(title)}</h1>
+        <div style="font-size:12px;color:#6b7280;">${escapeHtml(subtitle)}</div>
+      </header>
+
+      <style>
+        #pdfRender h2{font-family:'Clash Display','Cabinet Grotesk',sans-serif;font-size:17px;margin:18px 0 8px;color:#0f0f1e;font-weight:700;}
+        #pdfRender h3{font-size:14px;margin:14px 0 6px;color:#0f0f1e;font-weight:700;}
+        #pdfRender p{margin:0 0 10px;font-size:13px;line-height:1.6;color:#2a2a3a;}
+        #pdfRender ul,#pdfRender ol{margin:0 0 10px 20px;padding:0;font-size:13px;line-height:1.6;color:#2a2a3a;}
+        #pdfRender li{margin-bottom:4px;}
+        #pdfRender code{background:#f4f3f1;padding:1px 5px;border-radius:4px;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+        #pdfRender pre{background:#f4f3f1;padding:12px;border-radius:8px;overflow:auto;font-size:12px;}
+        #pdfRender blockquote{border-left:3px solid #ca8a04;padding-left:12px;margin:10px 0;color:#6b7280;font-style:italic;}
+        #pdfRender a{color:#a16207;text-decoration:none;word-break:break-all;}
+        #pdfRender strong{color:#0f0f1e;}
+        #pdfRender .pdf-lesson{padding:18px 0;border-bottom:1px dashed #e9ecef;page-break-inside:avoid;}
+        #pdfRender .pdf-lesson:last-child{border-bottom:none;}
+        #pdfRender .pdf-footer{margin-top:24px;padding-top:14px;border-top:1px solid #e9ecef;font-size:11px;color:#6b7280;text-align:center;}
+      </style>
+
+      <main>${bodyHtml}</main>
+
+      <div class="pdf-footer">
+        © ${new Date().getFullYear()} KazInni Learning · Teleio Savour — Downloaded ${escapeHtml(new Date().toLocaleString())}
+      </div>
+    </div>`;
+
+  // Wait for fonts + a paint frame
+  if (document.fonts && document.fonts.ready) {
+    try { await document.fonts.ready; } catch (e) {}
+  }
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+  const canvas = await html2canvas(target, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    logging: false,
+    windowWidth: target.scrollWidth,
+    windowHeight: target.scrollHeight
+  });
+
+  const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 32;
+  const usableW = pageW - margin * 2;
+  const imgW = usableW;
+  const imgH = (canvas.height * imgW) / canvas.width;
+
+  // Slice the tall canvas into page-sized chunks
+  const pxPerPt = canvas.width / imgW;
+  const pageContentHpt = pageH - margin * 2;
+  const pageContentHpx = pageContentHpt * pxPerPt;
+
+  let renderedPx = 0;
+  let pageIndex = 0;
+
+  while (renderedPx < canvas.height) {
+    const sliceHpx = Math.min(pageContentHpx, canvas.height - renderedPx);
+
+    // Cut this slice into its own canvas
+    const slice = document.createElement('canvas');
+    slice.width = canvas.width;
+    slice.height = sliceHpx;
+    const ctx = slice.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, slice.width, slice.height);
+    ctx.drawImage(
+      canvas,
+      0, renderedPx, canvas.width, sliceHpx,
+      0, 0, canvas.width, sliceHpx
+    );
+
+    const sliceImg = slice.toDataURL('image/jpeg', 0.92);
+    const sliceHpt = (sliceHpx * imgW) / canvas.width;
+
+    if (pageIndex > 0) pdf.addPage();
+    pdf.addImage(sliceImg, 'JPEG', margin, margin, imgW, sliceHpt, undefined, 'FAST');
+
+    renderedPx += sliceHpx;
+    pageIndex++;
+  }
+
+  pdf.save(filename);
+  target.innerHTML = '';
+}
+
+async function downloadLessonNotesPDF(btn) {
+  const lesson = lessons[activeIndex];
+  if (!lesson) return;
+  setBtnLoading(btn, true);
+  try {
+    const title = lesson.title || `Lesson ${activeIndex + 1}`;
+    const subtitle = `${course.title || ''} — Lesson ${activeIndex + 1} of ${lessons.length}${lesson.duration ? ' · ' + lesson.duration + ' min' : ''}`;
+    const bodyHtml = buildPdfHtmlForLesson(lesson, activeIndex);
+    const filename = `${safeFilename(`${course.title}-lesson-${activeIndex + 1}-${lesson.title || 'notes'}`)}.pdf`;
+    await generatePDF({ filename, title, subtitle, bodyHtml });
+    showToast('Lesson notes downloaded (PDF)', 'success');
+    closeAllNotesMenus();
+  } catch (e) {
+    console.error('[pdf]', e);
+    showToast('Could not generate PDF: ' + e.message, 'error');
+  } finally {
+    setBtnLoading(btn, false);
+  }
+}
+
+async function downloadCourseNotesPDF(btn) {
+  if (!course || lessons.length === 0) return;
+  setBtnLoading(btn, true);
+  try {
+    const title = course.title || 'Course';
+    const subtitle = `${lessons.length} lessons${course.duration ? ' · ' + course.duration + ' min' : ''}${course.level ? ' · ' + course.level : ''}`;
+    const bodyHtml = buildPdfHtmlForCourse();
+    const filename = `${safeFilename(`${course.title}-full-notes`)}.pdf`;
+    await generatePDF({ filename, title, subtitle, bodyHtml });
+    showToast(`Full course notes downloaded (PDF, ${lessons.length} lessons)`, 'success');
+    closeAllNotesMenus();
+  } catch (e) {
+    console.error('[pdf]', e);
+    showToast('Could not generate PDF: ' + e.message, 'error');
+  } finally {
+    setBtnLoading(btn, false);
+  }
+}
+
+function setBtnLoading(btn, loading) {
+  if (!btn) return;
+  if (loading) {
+    btn.disabled = true;
+    btn.dataset.orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i><span>Generating…</span>';
+  } else {
+    btn.disabled = false;
+    if (btn.dataset.orig) { btn.innerHTML = btn.dataset.orig; delete btn.dataset.orig; }
+  }
+}
+
+// ── Menu helpers ──
+function toggleNotesMenu(btn) {
+  const wrap = btn.closest('.notes-menu-wrap');
+  const wasOpen = wrap.classList.contains('open');
+  closeAllNotesMenus();
+  if (!wasOpen) wrap.classList.add('open');
+}
+
+function closeAllNotesMenus() {
+  document.querySelectorAll('.notes-menu-wrap.open').forEach(w => w.classList.remove('open'));
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.notes-menu-wrap')) closeAllNotesMenus();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeAllNotesMenus();
+});
 </script>
 </body>
 </html>
