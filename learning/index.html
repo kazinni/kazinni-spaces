@@ -41,7 +41,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 @keyframes orb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(.95)}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 
-/* HEADER — matches the workspace shell */
+/* HEADER */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
@@ -79,17 +79,36 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .hero-lede{font-size:1.05rem;color:var(--text-2);max-width:560px;margin:0 auto 1.8rem;line-height:1.65}
 
 /* LIBRARY */
-.library{padding:3rem 2rem 4rem;flex:1}
-.library-inner{max-width:1200px;margin:0 auto}
+.library{padding:3rem 0 4rem;flex:1}
+.library-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
 .library-header{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
 .section-label{display:inline-block;padding:.3rem .8rem;background:var(--gold-soft);color:var(--gold-dark);border-radius:var(--r-pill);font-size:.66rem;font-weight:700;font-family:var(--f-head);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.6rem}
 .library-header h2{font-family:var(--f-display);font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:700;letter-spacing:-.03em;color:var(--ink);margin-bottom:.3rem}
 .library-header p{font-size:.9rem;color:var(--muted)}
-.filters{display:flex;gap:.5rem;flex-wrap:wrap}
-.filter-chip{padding:.45rem .9rem;border-radius:var(--r-pill);background:#fff;border:1px solid var(--border);font-family:var(--f-head);font-size:.78rem;font-weight:500;color:var(--text-2);cursor:pointer;transition:all var(--t-fast)}
-.filter-chip:hover{border-color:var(--border-2);color:var(--ink)}
-.filter-chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+
+/* SEARCH */
+.search-wrap{position:relative;width:100%;max-width:340px}
+.search-wrap i.search-icon{position:absolute;left:.95rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem;pointer-events:none}
+.search-input{width:100%;padding:.7rem 2.4rem .7rem 2.4rem;border:1.5px solid var(--border);border-radius:var(--r-pill);background:#fff;font-family:var(--f-head);font-size:.85rem;color:var(--ink);transition:all var(--t-fast)}
+.search-input::placeholder{color:var(--muted)}
+.search-input:hover{border-color:var(--border-2)}
+.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.12)}
+.search-clear{position:absolute;right:.55rem;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;border:none;background:var(--surface-3);color:var(--text-2);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.7rem;transition:all var(--t-fast)}
+.search-clear:hover{background:var(--ink);color:#fff}
+.search-wrap.has-value .search-clear{display:flex}
+
+/* CATEGORY SECTIONS */
+.category-sections{display:flex;flex-direction:column;gap:1.25rem}
+.category-section{border-radius:var(--r-xl);padding:1.75rem 1.75rem 1.9rem;border:1px solid var(--border);position:relative;overflow:hidden}
+.category-section.bg-a{background:#fff}
+.category-section.bg-b{background:linear-gradient(180deg,#fdfaf1 0%,#fff 100%)}
+.category-section::before{content:'';position:absolute;top:1.75rem;left:0;width:4px;height:32px;border-radius:0 4px 4px 0;background:var(--cat-accent,var(--gold))}
+.category-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1.25rem;padding-left:.85rem}
+.category-head h3{font-family:var(--f-display);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
+.category-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 .55rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2);font-family:var(--f-head);font-size:.7rem;font-weight:700}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+
+/* COURSE CARD */
 .course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;position:relative;text-align:left;font-family:inherit;padding:0}
 .course-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(15,15,30,.08);border-color:rgba(202,138,4,.25)}
 .course-thumb{aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff}
@@ -101,7 +120,9 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .course-meta i{font-size:.7rem}
 .course-progress{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.4rem}
 .course-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width var(--t-base)}
-.empty-state{grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
+
+/* STATES */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
 .empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
 .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
 .empty-state p{font-size:.85rem}
@@ -125,12 +146,15 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 
 @media(max-width:900px){
   .ws-nav-links{display:none}
-  .library{padding:2rem 1.25rem 3rem}
+  .library-inner{padding:0 1.25rem}
+  .library{padding:2rem 0 3rem}
   .learning-hero{padding:3rem 1.25rem 2.5rem}
   .hero-inner h1{font-size:2rem}
   .footer-inner{flex-direction:column;gap:.6rem;text-align:center}
   .toast-container{right:12px;left:12px;align-items:stretch}
   .toast{max-width:none}
+  .search-wrap{max-width:none}
+  .category-section{padding:1.4rem 1.1rem 1.5rem}
 }
 </style>
 </head>
@@ -177,13 +201,25 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
       <div class="library-header">
         <div>
           <span class="section-label">Library</span>
-          <h2>All courses</h2>
+          <h2>Browse by category</h2>
           <p id="librarySubtitle">Loading…</p>
         </div>
-        <div class="filters" id="filters"></div>
+        <div class="search-wrap" id="searchWrap">
+          <i class="fas fa-magnifying-glass search-icon" aria-hidden="true"></i>
+          <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search courses…"
+            aria-label="Search courses"
+            autocomplete="off"
+            spellcheck="false">
+          <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">
+            <i class="fas fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
-      <div class="course-grid" id="courseGrid">
-        <div class="skeleton"></div>
+      <div class="category-sections" id="categorySections">
         <div class="skeleton"></div>
         <div class="skeleton"></div>
       </div>
@@ -218,15 +254,19 @@ const firebaseConfig = {
   projectId: "mugera-e51cc"
 };
 
+// Real course categories — order here = render order.
+// `accent` drives the little colour bar next to each section title.
 const LEARNING_CATEGORIES = [
-  { id: 'all',           label: 'All' },
-  { id: 'communication', label: 'Communication' },
-  { id: 'finance',       label: 'Finance' },
-  { id: 'career',        label: 'Career' },
-  { id: 'tech',          label: 'Tech' },
-  { id: 'business',      label: 'Business' },
-  { id: 'wellness',      label: 'Wellness' }
+  { id: 'communication', label: 'Communication', accent: '#3b82f6' },
+  { id: 'finance',       label: 'Finance',       accent: '#10b981' },
+  { id: 'career',        label: 'Career',        accent: '#ca8a04' },
+  { id: 'tech',          label: 'Tech',          accent: '#8b5cf6' },
+  { id: 'business',      label: 'Business',      accent: '#ef4444' },
+  { id: 'wellness',      label: 'Wellness',      accent: '#06b6d4' }
 ];
+
+// Fallback bucket for courses whose `category` isn't in the list above.
+const OTHER_CATEGORY = { id: '_other', label: 'Other', accent: '#6b7280' };
 
 // ══════════════════════════════════════════════════════════════
 // STATE
@@ -234,7 +274,7 @@ const LEARNING_CATEGORIES = [
 let currentUser = null;
 let allCourses = [];
 let progressMap = {};
-let activeCategory = 'all';
+let searchQuery = '';
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -278,6 +318,14 @@ function showToast(msg, type = 'success') {
   }, 4000);
 }
 
+function debounce(fn, ms = 180) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
+}
+
 // ══════════════════════════════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════════════════════════════
@@ -299,6 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window._auth = auth;
   window._db = db;
 
+  wireSearch();
+
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
   auth.onAuthStateChanged(onAuthChanged);
 });
@@ -312,7 +362,6 @@ async function onAuthChanged(user) {
   currentUser = user;
   renderAccountChip(user);
 
-  // Load progress (silently — no perms needed, rules allow self read)
   try {
     const snap = await window._db.ref(`learning_progress/${user.uid}`).once('value');
     progressMap = snap.exists() ? (snap.val() || {}) : {};
@@ -321,7 +370,6 @@ async function onAuthChanged(user) {
   }
 
   renderHeroActions();
-  renderFilters();
   await loadCourses();
   renderCourses();
 }
@@ -337,9 +385,6 @@ function renderAccountChip(user) {
     </a>`;
 }
 
-// ══════════════════════════════════════════════════════════════
-// HERO + FILTERS
-// ══════════════════════════════════════════════════════════════
 function renderHeroActions() {
   const el = document.getElementById('heroActions');
   if (!el) return;
@@ -349,22 +394,45 @@ function renderHeroActions() {
     </a>`;
 }
 
-function renderFilters() {
-  const el = document.getElementById('filters');
-  if (!el) return;
-  el.innerHTML = LEARNING_CATEGORIES.map(c => `
-    <button type="button" class="filter-chip ${c.id === activeCategory ? 'active' : ''}"
-            data-cat="${escapeHtml(c.id)}"
-            onclick="setCategory('${escapeHtml(c.id)}')">
-      ${escapeHtml(c.label)}
-    </button>`).join('');
+// ══════════════════════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════════════════════
+function wireSearch() {
+  const input = document.getElementById('searchInput');
+  const clear = document.getElementById('searchClear');
+  const wrap  = document.getElementById('searchWrap');
+  if (!input || !wrap) return;
+
+  const onInput = debounce((val) => {
+    searchQuery = val;
+    wrap.classList.toggle('has-value', val.length > 0);
+    renderCourses();
+  }, 160);
+
+  input.addEventListener('input', (e) => onInput(e.target.value.trim()));
+
+  if (clear) {
+    clear.addEventListener('click', () => {
+      input.value = '';
+      searchQuery = '';
+      wrap.classList.remove('has-value');
+      renderCourses();
+      input.focus();
+    });
+  }
 }
 
-function setCategory(id) {
-  activeCategory = id;
-  document.querySelectorAll('.filter-chip').forEach(c =>
-    c.classList.toggle('active', c.dataset.cat === id));
-  renderCourses();
+function courseMatchesQuery(course, q) {
+  if (!q) return true;
+  const needle = q.toLowerCase();
+  const haystack = [
+    course.title,
+    course.desc,
+    course.level,
+    course.instructor,
+    Array.isArray(course.tags) ? course.tags.join(' ') : course.tags
+  ].filter(Boolean).join(' ').toLowerCase();
+  return haystack.includes(needle);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -372,7 +440,6 @@ function setCategory(id) {
 // ══════════════════════════════════════════════════════════════
 async function loadCourses() {
   try {
-    // Only fetch published courses — rules allow any signed-in user
     const snap = await window._db.ref('learning_courses')
       .orderByChild('published')
       .equalTo(true)
@@ -389,59 +456,102 @@ async function loadCourses() {
 }
 
 // ══════════════════════════════════════════════════════════════
-// RENDER COURSES
+// RENDER — grouped by category
 // ══════════════════════════════════════════════════════════════
 function renderCourses() {
-  const grid = document.getElementById('courseGrid');
+  const host = document.getElementById('categorySections');
   const subtitle = document.getElementById('librarySubtitle');
-  if (!grid) return;
+  if (!host) return;
 
-  const filtered = activeCategory === 'all'
-    ? allCourses
-    : allCourses.filter(c => c.category === activeCategory);
+  // 1. Build the set of sections we know about
+  const knownIds = new Set(LEARNING_CATEGORIES.map(c => c.id));
+  const sections = LEARNING_CATEGORIES.map(c => ({ ...c, courses: [] }));
+  const other = { ...OTHER_CATEGORY, courses: [] };
 
-  if (subtitle) {
-    subtitle.textContent = allCourses.length === 0
-      ? 'No courses published yet — check back soon.'
-      : `${allCourses.length} course${allCourses.length === 1 ? '' : 's'} available`;
+  // 2. Bucket courses (after applying search)
+  const totalMatching = [];
+  for (const course of allCourses) {
+    if (!courseMatchesQuery(course, searchQuery)) continue;
+    totalMatching.push(course);
+    const cat = course.category;
+    const target = knownIds.has(cat)
+      ? sections.find(s => s.id === cat)
+      : other;
+    target.courses.push(course);
   }
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `
+  // 3. Drop "Other" if empty; keep real categories even if empty
+  //    (they only show when they have courses, per your spec)
+  const visible = sections.filter(s => s.courses.length > 0);
+  if (other.courses.length > 0) visible.push(other);
+
+  // 4. Subtitle
+  if (subtitle) {
+    if (allCourses.length === 0) {
+      subtitle.textContent = 'No courses published yet — check back soon.';
+    } else if (searchQuery) {
+      subtitle.textContent = `Showing ${totalMatching.length} of ${allCourses.length} course${allCourses.length === 1 ? '' : 's'} for “${searchQuery}”`;
+    } else {
+      subtitle.textContent = `${allCourses.length} course${allCourses.length === 1 ? '' : 's'} across ${visible.length} categor${visible.length === 1 ? 'y' : 'ies'}`;
+    }
+  }
+
+  // 5. Empty state
+  if (totalMatching.length === 0) {
+    host.innerHTML = `
       <div class="empty-state">
-        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-        <h3>No courses in this category</h3>
-        <p>Try another filter or check back soon.</p>
+        <i class="fas ${searchQuery ? 'fa-magnifying-glass' : 'fa-graduation-cap'}" aria-hidden="true"></i>
+        <h3>${searchQuery ? 'No courses match your search' : 'No courses published yet'}</h3>
+        <p>${searchQuery ? 'Try a different keyword.' : 'Check back soon.'}</p>
       </div>`;
     return;
   }
 
-  grid.innerHTML = filtered.map(course => {
-    const lessonCount = course.lessons ? Object.keys(course.lessons).length : 0;
-    const prog = progressMap[course.id];
-    const pct = prog && prog.progress ? Number(prog.progress) : 0;
-    const color = course.color || '#ca8a04';
-    const icon = course.icon || 'fa-graduation-cap';
-
+  // 6. Render sections — alternating backgrounds
+  host.innerHTML = visible.map((section, idx) => {
+    const bgClass = idx % 2 === 0 ? 'bg-a' : 'bg-b';
     return `
-      <button type="button" class="course-card"
-              onclick="openCourse('${escapeHtml(course.id)}')"
-              aria-label="Open ${escapeHtml(course.title || 'course')}">
-        <div class="course-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
-          <i class="fas ${escapeHtml(icon)} course-thumb-icon" aria-hidden="true"></i>
+      <section class="category-section ${bgClass}"
+               style="--cat-accent:${escapeHtml(section.accent)};"
+               aria-labelledby="cat-${escapeHtml(section.id)}">
+        <div class="category-head">
+          <h3 id="cat-${escapeHtml(section.id)}">${escapeHtml(section.label)}</h3>
+          <span class="category-count" aria-label="${section.courses.length} courses">
+            ${section.courses.length}
+          </span>
         </div>
-        <div class="course-body">
-          <div class="course-title">${escapeHtml(course.title || 'Untitled')}</div>
-          <div class="course-desc">${escapeHtml(course.desc || '')}</div>
-          ${pct > 0 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
-          <div class="course-meta">
-            <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level || '—')}</span>
-            <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>
-            <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration || 0} min</span>
-          </div>
+        <div class="course-grid">
+          ${section.courses.map(renderCourseCard).join('')}
         </div>
-      </button>`;
+      </section>`;
   }).join('');
+}
+
+function renderCourseCard(course) {
+  const lessonCount = course.lessons ? Object.keys(course.lessons).length : 0;
+  const prog = progressMap[course.id];
+  const pct = prog && prog.progress ? Number(prog.progress) : 0;
+  const color = course.color || '#ca8a04';
+  const icon = course.icon || 'fa-graduation-cap';
+
+  return `
+    <button type="button" class="course-card"
+            onclick="openCourse('${escapeHtml(course.id)}')"
+            aria-label="Open ${escapeHtml(course.title || 'course')}">
+      <div class="course-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+        <i class="fas ${escapeHtml(icon)} course-thumb-icon" aria-hidden="true"></i>
+      </div>
+      <div class="course-body">
+        <div class="course-title">${escapeHtml(course.title || 'Untitled')}</div>
+        <div class="course-desc">${escapeHtml(course.desc || '')}</div>
+        ${pct > 0 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
+        <div class="course-meta">
+          <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level || '—')}</span>
+          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>
+          <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration || 0} min</span>
+        </div>
+      </div>
+    </button>`;
 }
 
 function openCourse(id) {
