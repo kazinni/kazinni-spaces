@@ -1780,6 +1780,10 @@ body.rail-open .rail-backdrop { display: block; }
         <i class="fas fa-user" aria-hidden="true"></i>
         <span class="rail-item-name">Account</span>
       </button>
+      <button type="button" class="rail-item" onclick="navigateTo('resources')" data-nav="resources">
+        <i class="fas fa-settings" aria-hidden="true"></i>
+        <span class="rail-item-name">Resources</span>
+      </button>
       <button type="button" class="rail-item" onclick="showToast('Help center coming soon', 'info')">
         <i class="fas fa-circle-question" aria-hidden="true"></i>
         <span class="rail-item-name">Help</span>
@@ -2766,7 +2770,7 @@ function renderLanding() {
           <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
-          <a href="mailto:operations@kazinni.com">Contact</a>
+          <a href="mailto:kazinni.teleioosavour@gmail.com">Contact</a>
         </nav>
         <div class="landing-footer-copy">© ${new Date().getFullYear()} Teleio Savour · Janta</div>
       </div>
@@ -3296,6 +3300,7 @@ function navigateTo(section) {
   else if (section === 'learning') window.location.href = 'learning/index.html';
   else if (section === 'wallet') window.location.href = 'wallet.html';
   else if (section === 'account') window.location.href = 'account.html';
+  else if (section === 'resources') window.location.href = 'resources.html';
 }
 
 /* ============================================================
