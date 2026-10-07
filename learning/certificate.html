@@ -43,7 +43,7 @@ button{font-family:inherit}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── HEADER (full-bleed) ─────────────────────────────── */
+/* HEADER */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.94);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.07);padding:0 var(--gutter);display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
 .ws-logo img{height:26px}
@@ -62,14 +62,12 @@ button{font-family:inherit}
 .ws-btn-primary:hover::before{opacity:1}
 .ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
 .ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.ws-btn:disabled{opacity:.5;cursor:not-allowed}
+.ws-btn:disabled{opacity:.55;cursor:wait}
 .ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.25rem .75rem .25rem .25rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.78rem;font-weight:600;color:var(--ink);text-decoration:none}
 .ws-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;font-family:var(--f-head)}
 
-/* ── PORTAL SHELL ───────────────────────────────────── */
+/* SHELL */
 .portal-shell{display:flex;flex:1;min-height:0}
-
-/* left stats rail */
 .side-rail{width:250px;flex-shrink:0;border-right:1px solid rgba(15,15,30,.06);background:#fff;padding:1.25rem .9rem;position:sticky;top:var(--header-h);align-self:flex-start;height:calc(100vh - var(--header-h));overflow-y:auto;display:flex;flex-direction:column;gap:1rem}
 .rail-block{padding:.85rem .85rem 1rem;border-radius:var(--r-lg);border:1px solid var(--border);background:linear-gradient(180deg,#fdfbf5 0%,#fff 100%)}
 .rail-block .rail-label{font-family:var(--f-head);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:.55rem;display:block}
@@ -78,7 +76,6 @@ button{font-family:inherit}
 .rail-stat .unit{font-family:var(--f-head);font-size:.72rem;color:var(--muted);font-weight:500}
 .rail-note{font-family:var(--f-head);font-size:.72rem;color:var(--text-2);margin-top:.4rem;line-height:1.4}
 .rail-note strong{color:var(--ink);font-weight:700}
-.rail-divider{height:1px;background:var(--border);margin:.55rem 0}
 .rail-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
 .rail-list li{display:flex;align-items:center;gap:.5rem;font-family:var(--f-head);font-size:.78rem;color:var(--text-2)}
 .rail-list li i{color:var(--gold);width:14px;text-align:center;font-size:.72rem}
@@ -86,10 +83,9 @@ button{font-family:inherit}
 .rail-cta{margin-top:auto;padding-top:.5rem}
 .rail-cta .ws-btn{width:100%;justify-content:center}
 
-/* main column */
 .portal-main{flex:1;min-width:0;display:flex;flex-direction:column}
 
-/* ── HERO (compact banner, left-aligned) ─────────────── */
+/* HERO */
 .cert-hero{padding:1.6rem var(--gutter) 1.4rem;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden}
 .cert-hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .cert-hero-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.25}
@@ -103,17 +99,16 @@ button{font-family:inherit}
 .hero-left p{font-size:.86rem;color:var(--text-2);max-width:640px;line-height:1.5}
 .hero-actions{position:relative;z-index:1;display:flex;gap:.5rem;flex-shrink:0}
 
-/* ── MAIN ────────────────────────────────────────────── */
+/* MAIN */
 .cert-main{flex:1;padding:1.35rem var(--gutter) 2.5rem;min-width:0}
 .cert-header{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
 .cert-header h2{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center;gap:.6rem}
 .cert-header h2 .count-pill{font-family:var(--f-head);font-size:.7rem;font-weight:700;color:var(--text-2);background:var(--surface-3);border-radius:var(--r-pill);padding:.15rem .55rem}
 .cert-sub{font-size:.8rem;color:var(--muted);font-family:var(--f-head)}
 
-/* grid */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:.9rem}
 
-/* card */
+/* CARD */
 .cert-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem 1.15rem 1.15rem;display:flex;flex-direction:column;gap:.85rem;transition:all var(--t-base);position:relative;overflow:hidden}
 .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-gradient);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .cert-card:hover::before{transform:scaleX(1)}
@@ -127,32 +122,28 @@ button{font-family:inherit}
 .cert-card-meta i{font-size:.66rem;opacity:.7}
 .cert-card-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.5}
 
-/* verified chip */
 .verified-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.15rem .5rem;border-radius:var(--r-pill);background:rgba(16,185,129,.1);color:#047857;font-family:var(--f-head);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .verified-chip i{font-size:.6rem}
 
-/* cert id */
 .cert-card-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--text-2);padding:.4rem .6rem;background:var(--surface-2);border-radius:6px;display:flex;align-items:center;gap:.5rem;border:1px solid var(--border);overflow:hidden;letter-spacing:.4px}
 .cert-card-id .label{font-family:var(--f-head);font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;flex-shrink:0}
 .cert-card-id .code{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);font-weight:600}
 
-/* actions */
 .cert-actions{display:grid;grid-template-columns:1fr auto;gap:.5rem;margin-top:auto;padding-top:.75rem;border-top:1px dashed var(--border)}
 .cert-actions .ws-btn{padding:.55rem 1rem;font-size:.78rem;justify-content:center}
 .cert-actions .ws-btn-primary{width:100%}
 .cert-actions .ws-btn.icon-only{padding:.55rem;width:auto;min-width:40px}
 
-/* empty state */
+/* EMPTY */
 .empty-state{padding:2.5rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);display:flex;align-items:flex-start;gap:1.1rem}
 .empty-state .empty-icon{width:52px;height:52px;border-radius:14px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
 .empty-state .empty-body h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;font-family:var(--f-head)}
 .empty-state .empty-body p{font-size:.82rem;line-height:1.5;margin-bottom:.85rem;max-width:520px}
 .empty-state .ws-btn{padding:.55rem 1.1rem;font-size:.8rem}
 
-/* skeleton */
 .skeleton{height:190px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
 
-/* footer */
+/* FOOTER */
 .learning-footer{background:#fff;border-top:1px solid rgba(15,15,30,.06);padding:1rem var(--gutter);margin-top:auto}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .footer-brand{display:flex;align-items:center;gap:.45rem;font-weight:700;font-size:.78rem;color:var(--ink);font-family:var(--f-head)}
@@ -162,7 +153,7 @@ button{font-family:inherit}
 .footer-links a:hover{color:var(--gold-dark)}
 .footer-copy{color:var(--muted);font-size:.72rem;font-family:var(--f-head)}
 
-/* toasts */
+/* TOASTS */
 .toast-container{position:fixed;top:calc(var(--header-h) + 14px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
 .toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.75rem 1rem;box-shadow:0 16px 36px rgba(15,15,30,.22);display:flex;align-items:center;gap:.6rem;font-family:var(--f-head);font-size:.82rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .3s,transform .3s;animation:slideInRight .28s cubic-bezier(.2,.8,.2,1)}
 .toast i{font-size:.9rem;flex-shrink:0}
@@ -171,10 +162,10 @@ button{font-family:inherit}
 .toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
 
-/* responsive */
-@media(max-width:1024px){
-  .side-rail{display:none}
-}
+/* Hidden render target used by html2canvas for PDF generation */
+#pdfRender{position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none;opacity:1}
+
+@media(max-width:1024px){.side-rail{display:none}}
 @media(max-width:760px){
   .ws-nav-links{display:none}
   .cert-hero{padding:1.2rem var(--gutter) 1.1rem}
@@ -251,7 +242,7 @@ button{font-family:inherit}
       <div class="hero-left">
         <span class="hero-eyebrow"><span class="dot"></span> Achievements</span>
         <h1>Your <span class="accent">certificates</span></h1>
-        <p>Every course you complete earns a shareable certificate. Download as PDF, print, or share it to your portfolio.</p>
+        <p>Every course you complete earns a shareable certificate. Download it as a PDF, or share it to your portfolio.</p>
       </div>
       <div class="hero-actions">
         <a href="index.html" class="ws-btn ws-btn-ghost">
@@ -287,9 +278,14 @@ button{font-family:inherit}
   </div>
 </footer>
 
+<!-- Hidden render target for html2canvas -->
+<div id="pdfRender" aria-hidden="true"></div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 'use strict';
 
@@ -330,20 +326,19 @@ function getInitials(name) {
 
 function getFullTime(ts) {
   if (!ts) return '—';
-  try {
-    return new Date(ts).toLocaleString('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric'
-    });
-  } catch (e) { return '—'; }
+  try { return new Date(ts).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+  catch (e) { return '—'; }
 }
 
 function getFullDate(ts) {
   if (!ts) return '—';
-  try {
-    return new Date(ts).toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    });
-  } catch (e) { return '—'; }
+  try { return new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+  catch (e) { return '—'; }
+}
+
+function safeFilename(s) {
+  return String(s || 'certificate').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'certificate';
 }
 
 function showToast(msg, type = 'success') {
@@ -355,10 +350,7 @@ function showToast(msg, type = 'success') {
   t.innerHTML = `<i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i><span></span>`;
   t.querySelector('span').textContent = msg;
   c.appendChild(t);
-  setTimeout(() => {
-    t.classList.add('leaving');
-    setTimeout(() => t.remove(), 400);
-  }, 4000);
+  setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -374,9 +366,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  try {
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  } catch (e) { console.warn(e); }
+  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); }
+  catch (e) { console.warn(e); }
 
   const auth = firebase.auth();
   const db = firebase.database();
@@ -388,10 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function onAuthChanged(user) {
-  if (!user) {
-    window.location.href = '../index.html';
-    return;
-  }
+  if (!user) { window.location.href = '../index.html'; return; }
 
   currentUser = user;
   renderAccountChip(user);
@@ -402,13 +390,8 @@ async function onAuthChanged(user) {
 
   await loadCertificates();
 
-  reconcileMissingCertificates().catch(e =>
-    console.warn('[certificate] reconcile failed:', e)
-  );
-
-  backfillMissingIndexEntries(certificatesCache).catch(e =>
-    console.warn('[certificate] backfill failed:', e)
-  );
+  reconcileMissingCertificates().catch(e => console.warn('[certificate] reconcile failed:', e));
+  backfillMissingIndexEntries(certificatesCache).catch(e => console.warn('[certificate] backfill failed:', e));
 }
 
 function renderAccountChip(user) {
@@ -423,15 +406,12 @@ function renderAccountChip(user) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// RECONCILE MISSING CERTIFICATES
+// RECONCILE + BACKFILL (unchanged)
 // ══════════════════════════════════════════════════════════════
 async function reconcileMissingCertificates() {
   if (!currentUser) return;
-
   const uid = currentUser.uid;
-  let progress = {};
-  let certs = {};
-
+  let progress = {}, certs = {};
   try {
     const [pSnap, cSnap] = await Promise.all([
       window._db.ref(`learning_progress/${uid}`).once('value'),
@@ -439,27 +419,17 @@ async function reconcileMissingCertificates() {
     ]);
     progress = pSnap.val() || {};
     certs = cSnap.val() || {};
-  } catch (e) {
-    console.warn('[reconcile] Could not load progress/certs:', e);
-    return;
-  }
+  } catch (e) { return; }
 
   const missing = [];
   for (const [courseId, p] of Object.entries(progress)) {
     if (!p || !p.completedAt) continue;
     if (certs[courseId]) continue;
-    missing.push({
-      courseId,
-      title: p.title || 'Course',
-      completedAt: p.completedAt
-    });
+    missing.push({ courseId, title: p.title || 'Course', completedAt: p.completedAt });
   }
-
   if (missing.length === 0) return;
-  console.log(`[reconcile] Found ${missing.length} completed course(s) missing certificates`);
 
   let anyIssued = false;
-
   for (const m of missing) {
     try {
       let courseTitle = m.title;
@@ -467,97 +437,56 @@ async function reconcileMissingCertificates() {
         const cSnap = await window._db.ref(`learning_courses/${m.courseId}`).once('value');
         const course = cSnap.val();
         if (course && course.title) courseTitle = course.title;
-      } catch (e) { /* fall back */ }
+      } catch (e) {}
 
       const certId = await generateUniqueCertificateId();
       const recipientName = currentUser.displayName
         || (currentUser.email ? currentUser.email.split('@')[0] : 'KazInni Learner');
-
       const issuedAt = m.completedAt || Date.now();
 
-      const userPayload = {
-        courseId: m.courseId,
-        courseTitle,
-        certificateId: certId,
-        issuedAt,
-        status: 'auto_issued',
-        reconciled: true
-      };
-
-      const indexPayload = {
-        uid,
-        recipientName,
-        courseId: m.courseId,
-        courseTitle,
-        issuedAt,
-        status: 'auto_issued'
-      };
-
-      await window._db.ref(`learning_certificates/${uid}/${m.courseId}`).set(userPayload);
-      await window._db.ref(`learning_certificate_index/${certId}`).set(indexPayload);
-
-      console.log(`[reconcile] ✅ Issued certificate for "${courseTitle}" — ${certId}`);
+      await window._db.ref(`learning_certificates/${uid}/${m.courseId}`).set({
+        courseId: m.courseId, courseTitle, certificateId: certId,
+        issuedAt, status: 'auto_issued', reconciled: true
+      });
+      await window._db.ref(`learning_certificate_index/${certId}`).set({
+        uid, recipientName, courseId: m.courseId, courseTitle, issuedAt, status: 'auto_issued'
+      });
       anyIssued = true;
-    } catch (e) {
-      console.warn(`[reconcile] ❌ Failed for ${m.courseId}:`, e.message);
-    }
+    } catch (e) { console.warn('[reconcile] failed:', e.message); }
   }
-
-  if (anyIssued) {
-    await loadCertificates();
-  }
+  if (anyIssued) await loadCertificates();
 }
 
 async function generateUniqueCertificateId() {
   const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
   const year = new Date().getFullYear();
-
   for (let attempt = 0; attempt < 5; attempt++) {
     let code = '';
-    for (let i = 0; i < 6; i++) {
-      code += alphabet[Math.floor(Math.random() * alphabet.length)];
-    }
+    for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)];
     const candidate = `KAZ-${year}-${code}`;
-    const snap = await window._db
-      .ref(`learning_certificate_index/${candidate}`)
-      .once('value');
+    const snap = await window._db.ref(`learning_certificate_index/${candidate}`).once('value');
     if (!snap.exists()) return candidate;
   }
   return `KAZ-${year}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
 }
 
-// ══════════════════════════════════════════════════════════════
-// BACKFILL VERIFICATION INDEX
-// ══════════════════════════════════════════════════════════════
 async function backfillMissingIndexEntries(certs) {
   if (!certs || certs.length === 0) return;
-
   const recipientName = getRecipientName();
-
   for (const cert of certs) {
     const certId = cert.certificateId;
     if (!certId) continue;
-
     try {
-      const snap = await window._db
-        .ref(`learning_certificate_index/${certId}`)
-        .once('value');
-
+      const snap = await window._db.ref(`learning_certificate_index/${certId}`).once('value');
       if (snap.exists()) continue;
-
       await window._db.ref(`learning_certificate_index/${certId}`).set({
-        uid: currentUser.uid,
-        recipientName: recipientName,
+        uid: currentUser.uid, recipientName,
         courseId: cert.courseId || cert.id,
         courseTitle: cert.courseTitle || 'Course',
         issuedAt: cert.issuedAt || Date.now(),
         status: cert.status || 'auto_issued'
       });
-
-      console.log('[certificate] Backfilled index entry:', certId);
-    } catch (e) {
-      console.warn('[certificate] Could not backfill', certId, e.message);
-    }
+    } catch (e) {}
   }
 }
 
@@ -568,22 +497,14 @@ async function loadCertificates() {
   const grid = document.getElementById('certGrid');
   if (!grid) return;
 
-  let certs = {};
-  let loadError = null;
-
+  let certs = {}, loadError = null;
   try {
     const snap = await window._db.ref(`learning_certificates/${currentUser.uid}`).once('value');
     certs = snap.val() || {};
-  } catch (e) {
-    loadError = e;
-  }
+  } catch (e) { loadError = e; }
 
   if (loadError) {
-    renderEmpty(
-      'Could not load certificates',
-      loadError.message || 'Please check your connection and try again.',
-      true
-    );
+    renderEmpty('Could not load certificates', loadError.message || 'Please check your connection and try again.', true);
     return;
   }
 
@@ -592,7 +513,6 @@ async function loadCertificates() {
     .sort((a, b) => (b.issuedAt || 0) - (a.issuedAt || 0));
 
   certificatesCache = list;
-
   updateRailStats(list);
 
   const countPill = document.getElementById('certCount');
@@ -628,9 +548,7 @@ async function loadCertificates() {
     return `
       <article class="cert-card">
         <div class="cert-card-top">
-          <div class="cert-badge" aria-hidden="true">
-            <i class="fas fa-certificate"></i>
-          </div>
+          <div class="cert-badge" aria-hidden="true"><i class="fas fa-certificate"></i></div>
           <div class="cert-card-info">
             <h3 class="cert-card-title">${escapeHtml(c.courseTitle || 'Course')}</h3>
             <div class="cert-card-meta">
@@ -650,8 +568,8 @@ async function loadCertificates() {
         </div>
 
         <div class="cert-actions">
-          <button type="button" class="ws-btn ws-btn-primary" onclick="downloadCert('${escapeHtml(c.id)}')">
-            <i class="fas fa-download" aria-hidden="true"></i> Download PDF
+          <button type="button" class="ws-btn ws-btn-primary" onclick="downloadCert(this, '${escapeHtml(c.id)}')">
+            <i class="fas fa-download" aria-hidden="true"></i> <span>Download PDF</span>
           </button>
           <button type="button" class="ws-btn ws-btn-ghost icon-only" onclick="shareCert('${escapeHtml(c.id)}')" aria-label="Share certificate" title="Share">
             <i class="fas fa-share-nodes" aria-hidden="true"></i>
@@ -665,13 +583,9 @@ async function loadCertificates() {
 function updateRailStats(list) {
   const total = list.length;
   const thisYear = new Date().getFullYear();
-  const yearCount = list.filter(c => {
-    const t = c.issuedAt ? new Date(c.issuedAt).getFullYear() : 0;
-    return t === thisYear;
-  }).length;
+  const yearCount = list.filter(c => c.issuedAt && new Date(c.issuedAt).getFullYear() === thisYear).length;
   const withIds = list.filter(c => c.certificateId).length;
   const mostRecent = list[0];
-
   const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
   setTxt('statTotal', total);
@@ -682,12 +596,8 @@ function updateRailStats(list) {
 
   const note = document.getElementById('statNote');
   if (note) {
-    if (total === 0) {
-      note.innerHTML = 'Complete a course to earn your first one.';
-    } else {
-      const latest = mostRecent ? escapeHtml(mostRecent.courseTitle || 'a course') : '';
-      note.innerHTML = `Latest: <strong>${latest}</strong>`;
-    }
+    if (total === 0) note.innerHTML = 'Complete a course to earn your first one.';
+    else note.innerHTML = `Latest: <strong>${escapeHtml(mostRecent.courseTitle || 'a course')}</strong>`;
   }
 }
 
@@ -710,14 +620,19 @@ function renderEmpty(title, detail, isError) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// CERTIFICATE PDF GENERATION (unchanged from before)
+// CERTIFICATE DOWNLOAD — real PDF (no print dialog)
 // ══════════════════════════════════════════════════════════════
 function getRecipientName() {
   if (!currentUser) return 'KazInni Learner';
   return currentUser.displayName || currentUser.email.split('@')[0] || 'KazInni Learner';
 }
 
-function generateCertificateHtml(opts) {
+/** Build the certificate markup that goes inside #pdfRender.
+ *  Size chosen so the landscape A4 aspect ratio is preserved:
+ *  A4 landscape = 297 x 210 mm → ratio 1.414:1
+ *  1400 x 990 px keeps that ratio while giving html2canvas plenty
+ *  of pixels to render crisp text. */
+function buildCertificateMarkup(opts) {
   const {
     recipientName = 'KazInni Learner',
     courseTitle = 'Course',
@@ -730,162 +645,225 @@ function generateCertificateHtml(opts) {
   const issued = getFullDate(issuedAt);
   const certId = certificateId || `KZ-${Date.now().toString(36).toUpperCase()}`;
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Certificate — ${escapeHtml(courseTitle)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  @page { size: A4 landscape; margin: 0; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 297mm;
-    height: 210mm;
-    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #faf9f7;
-    color: #0f0f1e;
-    overflow: hidden;
-  }
-  .cert {
-    width: 100%;
-    height: 100%;
-    padding: 12mm;
-    background:
-      radial-gradient(circle at 10% 10%, #fef3c7 0%, transparent 40%),
-      radial-gradient(circle at 90% 90%, #fef3c7 0%, transparent 40%),
-      #ffffff;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .frame {
-    width: 100%;
-    height: 100%;
-    border: 3px solid #ca8a04;
-    border-radius: 4mm;
-    padding: 14mm 18mm;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: #ffffff;
-  }
-  .frame::before {
-    content: '';
-    position: absolute;
-    inset: 3mm;
-    border: 1px solid #fbbf24;
-    border-radius: 2mm;
-    pointer-events: none;
-  }
-  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4mm; }
-  .brand { display: flex; align-items: center; gap: 4mm; font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 11pt; color: #0f0f1e; }
-  .brand-mark { width: 12mm; height: 12mm; border-radius: 3mm; background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%); display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 16pt; font-weight: 800; font-family: 'Clash Display', sans-serif; }
-  .brand-text .accent { background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .cert-id { font-family: 'Satoshi', sans-serif; font-size: 7pt; color: #6b7280; letter-spacing: 0.5px; text-align: right; }
-  .cert-id strong { display: block; font-size: 8pt; color: #0f0f1e; font-weight: 700; letter-spacing: 1px; margin-top: 1mm; font-family: 'Courier New', monospace; }
-  .body { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 2mm 0; }
-  .eyebrow { font-family: 'Satoshi', sans-serif; font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #a16207; margin-bottom: 3mm; }
-  .cert-title { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 38pt; line-height: 1; color: #0f0f1e; margin-bottom: 7mm; }
-  .presented-to { font-family: 'Satoshi', sans-serif; font-size: 9pt; color: #6b7280; margin-bottom: 3mm; letter-spacing: 1px; text-transform: uppercase; }
-  .recipient { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 28pt; color: #0f0f1e; margin-bottom: 5mm; position: relative; display: inline-block; padding: 0 6mm; }
-  .recipient::after { content: ''; position: absolute; left: 6mm; right: 6mm; bottom: -2mm; height: 1px; background: linear-gradient(90deg, transparent, #ca8a04, transparent); }
-  .completed { font-family: 'Satoshi', sans-serif; font-size: 9.5pt; color: #4a4a5e; margin-bottom: 3mm; line-height: 1.5; }
-  .course-name { font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 17pt; color: #0f0f1e; letter-spacing: -0.5px; margin-bottom: 4mm; max-width: 200mm; margin-left: auto; margin-right: auto; }
-  .category { display: inline-block; font-family: 'Satoshi', sans-serif; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 1.5mm 4mm; background: #fef3c7; color: #a16207; border-radius: 100px; }
-  .footer { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10mm; align-items: end; margin-top: 4mm; padding-top: 5mm; border-top: 1px dashed #e9ecef; }
-  .footer-col { text-align: center; }
-  .footer-col .value { font-family: 'Clash Display', sans-serif; font-size: 10pt; font-weight: 600; color: #0f0f1e; margin-bottom: 2mm; }
-  .footer-col .line { height: 1px; background: #0f0f1e; margin-bottom: 2mm; }
-  .footer-col .label { font-family: 'Satoshi', sans-serif; font-size: 7pt; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; }
-  .seal { width: 22mm; height: 22mm; border-radius: 50%; background: linear-gradient(135deg, #ca8a04 0%, #fbbf24 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ffffff; font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 7pt; text-align: center; line-height: 1.1; box-shadow: 0 2mm 6mm rgba(202,138,4,0.35); margin: 0 auto; padding: 3mm; }
-  .seal span { display: block; font-size: 5pt; font-weight: 500; opacity: 0.9; letter-spacing: 0.5px; margin-top: 1mm; }
-  @media print { body { print-color-adjust: exact; -webkit-print-color-adjust: exact; } }
-</style>
-</head>
-<body>
-  <div class="cert">
-    <div class="frame">
-      <div class="header">
-        <div class="brand">
-          <div class="brand-mark">K</div>
-          <div class="brand-text">Kaz<span class="accent">Inni</span> Learning</div>
+  return `
+    <div class="cert-root" style="
+      width:1400px;height:990px;box-sizing:border-box;padding:60px;
+      font-family:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+      color:#0f0f1e;background:
+        radial-gradient(circle at 10% 10%, #fef3c7 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, #fef3c7 0%, transparent 40%),
+        #ffffff;">
+      <div style="
+        width:100%;height:100%;border:5px solid #ca8a04;border-radius:22px;
+        padding:56px 72px;box-sizing:border-box;
+        display:flex;flex-direction:column;justify-content:space-between;
+        position:relative;background:#ffffff;">
+        <div style="position:absolute;inset:14px;border:1.5px solid #fbbf24;border-radius:14px;pointer-events:none;"></div>
+
+        <!-- header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="
+              width:54px;height:54px;border-radius:14px;
+              background:linear-gradient(135deg,#ca8a04 0%,#fbbf24 100%);
+              display:flex;align-items:center;justify-content:center;
+              color:#fff;font-size:28px;font-weight:800;
+              font-family:'Clash Display','Cabinet Grotesk',sans-serif;">K</div>
+            <div style="
+              font-family:'Clash Display','Cabinet Grotesk',sans-serif;
+              font-weight:700;font-size:20px;color:#0f0f1e;">
+              Kaz<span style="background:linear-gradient(135deg,#ca8a04 0%,#fbbf24 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">Inni</span> Learning
+            </div>
+          </div>
+          <div style="text-align:right;font-size:11px;color:#6b7280;letter-spacing:.5px;">
+            Certificate ID
+            <div style="
+              margin-top:6px;font-size:14px;font-weight:700;color:#0f0f1e;
+              letter-spacing:1.5px;font-family:'Courier New',monospace;">
+              ${escapeHtml(certId)}
+            </div>
+          </div>
         </div>
-        <div class="cert-id">
-          Certificate ID
-          <strong>${escapeHtml(certId)}</strong>
+
+        <!-- body -->
+        <div style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0;position:relative;z-index:1;">
+          <div style="
+            font-size:13px;font-weight:700;letter-spacing:5px;
+            text-transform:uppercase;color:#a16207;margin-bottom:14px;">
+            Certificate of Completion
+          </div>
+          <div style="
+            font-family:'Playfair Display',Georgia,serif;
+            font-style:italic;font-weight:400;
+            font-size:64px;line-height:1;color:#0f0f1e;margin-bottom:36px;">
+            Certificate
+          </div>
+          <div style="
+            font-size:13px;color:#6b7280;margin-bottom:14px;
+            letter-spacing:1.5px;text-transform:uppercase;">
+            This certificate is proudly presented to
+          </div>
+          <div style="
+            font-family:'Playfair Display',Georgia,serif;
+            font-weight:600;font-size:52px;color:#0f0f1e;
+            margin-bottom:26px;padding-bottom:10px;
+            display:inline-block;align-self:center;
+            border-bottom:1px solid #ca8a04;">
+            ${escapeHtml(recipientName)}
+          </div>
+          <div style="font-size:15px;color:#4a4a5e;margin-bottom:12px;line-height:1.5;">
+            for successfully completing the course
+          </div>
+          <div style="
+            font-family:'Clash Display','Cabinet Grotesk',sans-serif;
+            font-weight:700;font-size:32px;color:#0f0f1e;
+            letter-spacing:-0.5px;margin-bottom:18px;line-height:1.2;
+            max-width:1000px;align-self:center;">
+            ${escapeHtml(courseTitle)}
+          </div>
+          ${courseCategory ? `
+            <div style="display:inline-block;align-self:center;
+              font-size:12px;font-weight:700;letter-spacing:2px;
+              text-transform:uppercase;padding:8px 20px;
+              background:#fef3c7;color:#a16207;border-radius:100px;">
+              ${escapeHtml(courseCategory)}
+            </div>` : ''}
         </div>
+
+        <!-- footer -->
+        <div style="
+          display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px;
+          align-items:end;padding-top:24px;border-top:1px dashed #e9ecef;
+          position:relative;z-index:1;">
+          <div style="text-align:center;">
+            <div style="font-family:'Clash Display','Cabinet Grotesk',sans-serif;
+              font-size:15px;font-weight:600;color:#0f0f1e;margin-bottom:10px;">
+              ${escapeHtml(issued)}
+            </div>
+            <div style="height:1px;background:#0f0f1e;margin-bottom:8px;"></div>
+            <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1.5px;">
+              Date Issued
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div style="
+              width:80px;height:80px;border-radius:50%;margin:0 auto;
+              background:linear-gradient(135deg,#ca8a04 0%,#fbbf24 100%);
+              display:flex;flex-direction:column;align-items:center;justify-content:center;
+              color:#fff;font-family:'Clash Display','Cabinet Grotesk',sans-serif;
+              font-weight:700;font-size:11px;letter-spacing:.5px;
+              box-shadow:0 8px 24px rgba(202,138,4,.35);padding:12px;box-sizing:border-box;">
+              KAZINNI
+              <span style="font-size:8px;font-weight:500;opacity:.9;letter-spacing:1px;margin-top:3px;">VERIFIED</span>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Clash Display','Cabinet Grotesk',sans-serif;
+              font-size:15px;font-weight:600;color:#0f0f1e;margin-bottom:10px;">
+              ${escapeHtml(instructor)}
+            </div>
+            <div style="height:1px;background:#0f0f1e;margin-bottom:8px;"></div>
+            <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1.5px;">
+              Instructor
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="body">
-        <div class="eyebrow">Certificate of Completion</div>
-        <div class="cert-title">Certificate</div>
-        <div class="presented-to">This certificate is proudly presented to</div>
-        <div class="recipient">${escapeHtml(recipientName)}</div>
-        <div class="completed">for successfully completing the course</div>
-        <div class="course-name">${escapeHtml(courseTitle)}</div>
-        ${courseCategory ? `<div class="category">${escapeHtml(courseCategory)}</div>` : ''}
-      </div>
-      <div class="footer">
-        <div class="footer-col">
-          <div class="value">${escapeHtml(issued)}</div>
-          <div class="line"></div>
-          <div class="label">Date Issued</div>
-        </div>
-        <div class="footer-col">
-          <div class="seal">KAZINNI<span>VERIFIED</span></div>
-        </div>
-        <div class="footer-col">
-          <div class="value">${escapeHtml(instructor)}</div>
-          <div class="line"></div>
-          <div class="label">Instructor</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    document.fonts.ready.then(function() {
-      setTimeout(function() {
-        try { window.print(); } catch (e) { console.warn('Auto-print blocked:', e); }
-      }, 400);
-    });
-  <\/script>
-</body>
-</html>`;
+    </div>`;
 }
 
-function downloadCert(certId) {
-  const cert = certificatesCache.find(c => c.id === certId);
-  if (!cert) {
-    showToast('Certificate not found', 'error');
-    return;
+/** Render the hidden markup to a canvas and save as a real PDF. */
+async function generateCertificatePDF(opts) {
+  if (typeof window.jspdf === 'undefined' || typeof html2canvas === 'undefined') {
+    throw new Error('PDF library failed to load — check your connection.');
   }
 
-  const course = coursesCache[cert.courseId] || {};
-  const html = generateCertificateHtml({
-    recipientName: getRecipientName(),
-    courseTitle: cert.courseTitle || 'Course',
-    courseCategory: course.category || '',
-    certificateId: cert.certificateId || cert.id,
-    issuedAt: cert.issuedAt || Date.now(),
-    instructor: 'KazInni Learning'
+  const target = document.getElementById('pdfRender');
+  target.innerHTML = buildCertificateMarkup(opts);
+
+  // Give fonts time to load and the layout a paint frame
+  if (document.fonts && document.fonts.ready) {
+    try { await document.fonts.ready; } catch (e) {}
+  }
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+  const canvas = await html2canvas(target.firstElementChild, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    logging: false,
+    width: 1400,
+    height: 990,
+    windowWidth: 1400,
+    windowHeight: 990
   });
 
-  const win = window.open('', '_blank');
-  if (!win) {
-    showToast('Please allow pop-ups to download your certificate', 'error');
-    return;
-  }
-  win.document.open();
-  win.document.write(html);
-  win.document.close();
+  const { jsPDF } = window.jspdf;
+  // Landscape A4 = 297 x 210 mm → jsPDF uses points: 841.89 x 595.28
+  const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
 
-  showToast('Opening certificate — save as PDF in the print dialog', 'info');
+  // Fit the whole canvas with a small margin
+  const margin = 18;
+  const usableW = pageW - margin * 2;
+  const usableH = pageH - margin * 2;
+  const imgRatio = canvas.width / canvas.height;
+  const boxRatio = usableW / usableH;
+
+  let drawW, drawH;
+  if (imgRatio > boxRatio) { drawW = usableW; drawH = usableW / imgRatio; }
+  else { drawH = usableH; drawW = usableH * imgRatio; }
+
+  const x = (pageW - drawW) / 2;
+  const y = (pageH - drawH) / 2;
+
+  const imgData = canvas.toDataURL('image/jpeg', 0.95);
+  pdf.addImage(imgData, 'JPEG', x, y, drawW, drawH, undefined, 'FAST');
+
+  target.innerHTML = '';
+  return pdf;
 }
 
+async function downloadCert(btn, certId) {
+  const cert = certificatesCache.find(c => c.id === certId);
+  if (!cert) { showToast('Certificate not found', 'error'); return; }
+
+  const course = coursesCache[cert.courseId] || {};
+  const originalHTML = btn ? btn.innerHTML : null;
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> <span>Preparing…</span>';
+  }
+
+  try {
+    const pdf = await generateCertificatePDF({
+      recipientName: getRecipientName(),
+      courseTitle: cert.courseTitle || 'Course',
+      courseCategory: course.category || '',
+      certificateId: cert.certificateId || cert.id,
+      issuedAt: cert.issuedAt || Date.now(),
+      instructor: 'KazInni Learning'
+    });
+
+    const filename = `${safeFilename(cert.courseTitle || 'certificate')}-${safeFilename(cert.certificateId || cert.id)}.pdf`;
+    pdf.save(filename);
+    showToast('Certificate downloaded', 'success');
+  } catch (e) {
+    console.error('[cert] PDF failed:', e);
+    showToast('Could not generate PDF: ' + e.message, 'error');
+  } finally {
+    if (btn && originalHTML !== null) {
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// SHARE
+// ══════════════════════════════════════════════════════════════
 async function shareCert(certId) {
   const cert = certificatesCache.find(c => c.id === certId);
   if (!cert) return;
@@ -898,9 +876,7 @@ async function shareCert(certId) {
     try {
       await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
       return;
-    } catch (e) {
-      if (e && e.name === 'AbortError') return;
-    }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
   }
 
   try {
