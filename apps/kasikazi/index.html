@@ -637,7 +637,7 @@ body {
 
 <header class="site-header">
   <div class="header-container">
-    <a href="index.html" class="logo">
+    <a href="index" class="logo">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="Kasikazi">
       <div class="logo-text">
         <span class="kz">Kasikazi</span>
@@ -646,8 +646,8 @@ body {
     </a>
 
     <nav class="nav-links">
-      <a href="index.html" class="nav-link active"><i class="fas fa-bullhorn"></i> Open Board</a>
-      <a href="/board.html" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
+      <a href="index" class="nav-link active"><i class="fas fa-bullhorn"></i> Open Board</a>
+      <a href="board" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
       <a href="../../index.html" class="nav-link"><i class="fas fa-layer-group"></i> KazInni Suite</a>
     </nav>
 
@@ -664,8 +664,8 @@ body {
           <i class="fas fa-chevron-down"></i>
         </button>
         <div class="user-dropdown-menu" id="userDropdownMenu">
-          <a href="index.html" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
-          <a href="/board.html" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
+          <a href="index" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
+          <a href="board" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
           <a href="../../account.html" class="dropdown-item"><i class="fas fa-user"></i> My Account</a>
           <a href="../../account-settings.html" class="dropdown-item"><i class="fas fa-gear"></i> Settings</a>
           <div class="divider"></div>
@@ -699,7 +699,7 @@ body {
         <a href="#board" class="btn btn-primary btn-lg">
           <i class="fas fa-bullhorn"></i> Browse Open Tasks
         </a>
-        <a href="/board.html" class="btn btn-ghost btn-lg">
+        <a href="board" class="btn btn-ghost btn-lg">
           <i class="fas fa-list-check"></i> My Tasks
         </a>
       </div>
@@ -848,7 +848,7 @@ body {
   <div class="footer-content">
     <div class="footer-logo"><i class="fas fa-bullhorn"></i> Kasikazi · Open Board</div>
     <div class="footer-links">
-      <a href="/board.html">My Tasks</a>
+      <a href="board">My Tasks</a>
       <a href="../../index.html">KazInni Suite</a>
       <a href="mailto:operations@kazinni.com">Contact</a>
     </div>
@@ -1288,11 +1288,11 @@ window.viewTask = function(taskId) {
         <i class="fas fa-check-circle"></i>
         <div>
           <strong>You've claimed this task.</strong><br>
-          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="/board.html" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
+          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="board" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
         </div>
       </div>
       <div class="action-row">
-        <a href="/board.html" class="modal-btn brand">
+        <a href="board" class="modal-btn brand">
           <i class="fas fa-arrow-right"></i> Go to My Tasks
         </a>
         <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
@@ -1441,7 +1441,7 @@ window.claimTask = async function(taskId) {
 
     showToast('Task claimed! Redirecting…', 'success');
     closeDetailModal();
-    window.location.href = '/board.html';
+    window.location.href = 'board';
 
   } catch (err) {
     console.error('Claim error:', err);
