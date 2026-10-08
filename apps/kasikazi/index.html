@@ -65,7 +65,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* HEADER */
 .site-header {
   position: fixed; top: 0; width: 100%; height: var(--header-height);
   background: var(--nav-bg); backdrop-filter: blur(24px) saturate(180%);
@@ -189,14 +188,12 @@ body {
 .user-dropdown-menu .dropdown-item.danger:hover { background: #fef2f2; }
 .user-dropdown-menu .divider { border-top: 1px solid var(--border-light); margin: 0.35rem 0.4rem; }
 
-/* MAIN */
 .main-content {
   max-width: 1440px; margin: 0 auto;
   padding: calc(var(--header-height) + 2rem) 2.5rem 2rem;
   position: relative; z-index: 2;
 }
 
-/* HERO */
 .hero {
   display: grid; grid-template-columns: 1.1fr 0.9fr;
   gap: 5rem; align-items: center; padding: 2rem 0 4rem;
@@ -287,7 +284,6 @@ body {
 .vc-row .label { flex: 1; }
 .vc-row .time { color: var(--text-muted); font-size: 0.7rem; }
 
-/* NEW-TASKS BANNER */
 .new-tasks-banner {
   display: none;
   margin: 1rem 0;
@@ -313,7 +309,6 @@ body {
 }
 .new-tasks-banner .new-tasks-actions button:hover { background: var(--brand-gradient); color: white; border-color: transparent; }
 
-/* TRUST */
 .trust-strip {
   margin-top: 1rem; display: flex; align-items: center; gap: 2rem;
   padding: 1.5rem 2rem; background: rgba(255,255,255,0.6);
@@ -328,7 +323,6 @@ body {
 }
 .trust-item i { color: var(--brand); font-size: 0.85rem; }
 
-/* BOARD HEADER */
 .board-header {
   display: flex; align-items: flex-end; justify-content: space-between;
   margin: 3rem 0 1.5rem; gap: 1rem; flex-wrap: wrap;
@@ -341,7 +335,6 @@ body {
 .board-header-right { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-heading); }
 .board-header-right .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulseDot 2s infinite; }
 
-/* FILTERS BAR */
 .filters-bar {
   display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
   margin-bottom: 1rem;
@@ -372,7 +365,6 @@ body {
 .filter-select:focus { outline: none; border-color: var(--brand); }
 .filter-select:hover { border-color: var(--brand); }
 
-/* SUITE CHIPS */
 .ws-chips {
   display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.2rem;
   padding: 0.5rem; background: white;
@@ -392,7 +384,6 @@ body {
 .ws-chip .count { font-size: 0.6rem; padding: 1px 6px; border-radius: 10px; background: rgba(0,0,0,0.06); }
 .ws-chip.active .count { background: rgba(255,255,255,0.25); }
 
-/* TASK GRID */
 .task-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1rem; margin-bottom: 2rem;
@@ -456,7 +447,6 @@ body {
 }
 .task-card-slots.full { color: var(--warning); }
 
-/* EMPTY */
 .empty-data {
   text-align: center; padding: 3.5rem 1.5rem;
   color: var(--text-muted); background: white;
@@ -467,7 +457,6 @@ body {
 .empty-data h3 { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; }
 .empty-data p { font-size: 0.85rem; max-width: 440px; margin: 0 auto; }
 
-/* FOOTER */
 .site-footer {
   position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height);
   background: rgba(250,249,247,0.92); backdrop-filter: blur(20px);
@@ -484,7 +473,6 @@ body {
 .footer-links a:hover { color: var(--brand-dark); }
 .footer-text { color: var(--text-muted); font-size: 0.75rem; font-family: var(--font-heading); }
 
-/* MODAL */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(15,15,30,0.65);
   backdrop-filter: blur(12px); z-index: 2000; display: none;
@@ -579,7 +567,6 @@ body {
 .modal-btn.danger:hover { background: var(--danger); color: white; border-color: var(--danger); }
 .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-/* TOASTS */
 .toast-container { position: fixed; top: 90px; right: 24px; z-index: 4000; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
 .toast {
   background: var(--ink); color: white;
@@ -595,7 +582,6 @@ body {
 .toast.info i { color: #22d3ee; }
 .toast.warning i { color: #fbbf24; }
 
-/* RESPONSIVE */
 @media (max-width: 1100px) {
   .hero { grid-template-columns: 1fr; gap: 3rem; padding: 1rem 0 3rem; }
   .hero-visual { height: 420px; max-width: 640px; margin: 0 auto; width: 100%; }
@@ -649,7 +635,6 @@ body {
 
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-container">
     <a href="index.html" class="logo">
@@ -693,10 +678,8 @@ body {
   </div>
 </header>
 
-<!-- MAIN -->
 <main class="main-content" id="mainContent" style="display:none;">
 
-  <!-- HERO -->
   <section class="hero">
     <div>
       <div class="hero-badge">
@@ -799,7 +782,6 @@ body {
     </div>
   </section>
 
-  <!-- TRUST STRIP -->
   <section class="trust-strip">
     <div class="trust-item"><i class="fas fa-bullhorn"></i> Public to FlexiKazi taskers</div>
     <div class="trust-item"><i class="fas fa-shield-halved"></i> Suite-scoped access</div>
@@ -807,7 +789,6 @@ body {
     <div class="trust-item"><i class="fas fa-wallet"></i> 48-hour M-Pesa payouts</div>
   </section>
 
-  <!-- BOARD HEADER -->
   <div class="board-header" id="board">
     <div class="board-header-left">
       <h2>Open Task Board</h2>
@@ -819,7 +800,6 @@ body {
     </div>
   </div>
 
-  <!-- NEW TASKS BANNER -->
   <div class="new-tasks-banner" id="newTasksBanner">
     <span class="new-dot"></span>
     <span id="newTasksText">New tasks available</span>
@@ -829,7 +809,6 @@ body {
     </div>
   </div>
 
-  <!-- FILTERS -->
   <div class="filters-bar">
     <div class="filter-search">
       <i class="fas fa-magnifying-glass"></i>
@@ -843,10 +822,8 @@ body {
     </select>
   </div>
 
-  <!-- SUITE CHIPS -->
   <div class="ws-chips" id="wsChips"></div>
 
-  <!-- TASK GRID -->
   <div class="task-grid" id="taskGrid">
     <div class="empty-data">
       <i class="fas fa-circle-notch fa-spin"></i>
@@ -856,7 +833,6 @@ body {
   </div>
 </main>
 
-<!-- Access Denied -->
 <div class="main-content" id="accessDenied" style="display:none;">
   <div class="empty-data" style="margin-top:4rem;">
     <i class="fas fa-lock"></i>
@@ -868,7 +844,6 @@ body {
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-logo"><i class="fas fa-bullhorn"></i> Kasikazi · Open Board</div>
@@ -881,7 +856,6 @@ body {
   </div>
 </footer>
 
-<!-- TASK DETAIL MODAL -->
 <div class="modal-overlay" id="detailModalOverlay" onclick="closeDetailModal()"></div>
 <div class="modal" id="detailModal">
   <div class="modal-hero">
@@ -895,9 +869,6 @@ body {
 </div>
 
 <script>
-// ============================================================
-// FIREBASE
-// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
   authDomain: "mugera-e51cc.firebaseapp.com",
@@ -909,9 +880,6 @@ const database = firebase.database();
 const auth = firebase.auth();
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-// ============================================================
-// SUITE CONFIG
-// ============================================================
 const SUITE_CONFIG = {
   'brandinn':              { name: 'BrandInn',              icon: 'fa-building',       color: '#4f46e5', bgColor: '#eef2ff' },
   'brandinn-print':        { name: 'BrandInn Print',        icon: 'fa-print',          color: '#db2777', bgColor: '#fdf2f8' },
@@ -930,9 +898,6 @@ const SUITE_CONFIG = {
   'latter-logistics':      { name: 'Latter Logistics',      icon: 'fa-ship',           color: '#0891b2', bgColor: '#ecfeff' }
 };
 
-// ============================================================
-// STATE
-// ============================================================
 let currentUser = null;
 let taskerProfile = {};
 let userPermissions = {};
@@ -947,9 +912,6 @@ let lastSeenTimestamp = 0;
 let initialLoadComplete = false;
 const newTasksQueue = [];
 
-// ============================================================
-// UTILITIES
-// ============================================================
 function escapeHtml(s) {
   if (s === null || s === undefined) return '';
   return String(s)
@@ -991,9 +953,6 @@ function showToast(m, type = 'info') {
   }, 3500);
 }
 
-// ============================================================
-// AUTH
-// ============================================================
 auth.onAuthStateChanged(async (user) => {
   if (!user) { window.location.href = '../../index.html'; return; }
   currentUser = user;
@@ -1017,7 +976,6 @@ auth.onAuthStateChanged(async (user) => {
   document.getElementById('userAvatar').textContent = initials;
   document.getElementById('userEmail').textContent = user.email || '';
 
-  // Load last-seen timestamp for "new tasks" indicator
   try {
     const seenRef = database.ref(`kazinni_prefs/${user.uid}/kasikaziLastSeen`);
     const seenSnap = await seenRef.once('value');
@@ -1051,9 +1009,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ============================================================
-// LISTENER
-// ============================================================
 function attachListener() {
   if (taskListenerRef) taskListenerRef.off();
   taskListenerRef = database.ref('kasikazi_tasks');
@@ -1077,7 +1032,6 @@ function processTasks(data) {
     return claimedCount < slots;
   });
 
-  // Detect new tasks (posted after last seen)
   if (initialLoadComplete && lastSeenTimestamp > 0) {
     open.forEach(t => {
       if (t.postedAt && t.postedAt > lastSeenTimestamp) {
@@ -1096,16 +1050,12 @@ function processTasks(data) {
 
   if (!initialLoadComplete) {
     initialLoadComplete = true;
-    // Persist the current visit as the new "last seen" after a delay
     setTimeout(() => {
       database.ref(`kazinni_prefs/${currentUser.uid}/kasikaziLastSeen`).set(Date.now()).catch(() => {});
     }, 3000);
   }
 }
 
-// ============================================================
-// NEW TASKS BANNER
-// ============================================================
 function updateNewTasksBanner() {
   const banner = document.getElementById('newTasksBanner');
   const text = document.getElementById('newTasksText');
@@ -1125,9 +1075,6 @@ window.scrollToBoard = function() {
   document.getElementById('board').scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-// ============================================================
-// HERO UPDATE
-// ============================================================
 function updateHero() {
   const openCount = allOpenTasks.length;
   const totalSlots = allOpenTasks.reduce((sum, t) => {
@@ -1176,9 +1123,6 @@ function updateHero() {
   document.getElementById('boardCount').textContent = `${openCount} open task${openCount !== 1 ? 's' : ''}`;
 }
 
-// ============================================================
-// SUITE CHIPS
-// ============================================================
 function updateChips() {
   const chips = document.getElementById('wsChips');
   const mySuites = Object.keys(userPermissions).filter(k => userPermissions[k] === true && SUITE_CONFIG[k]);
@@ -1223,9 +1167,6 @@ window.onSortChange = function() {
   renderTasks();
 };
 
-// ============================================================
-// RENDER TASKS
-// ============================================================
 function renderTasks() {
   const grid = document.getElementById('taskGrid');
 
@@ -1240,7 +1181,6 @@ function renderTasks() {
     );
   }
 
-  // Sort
   const sorted = [...list];
   if (currentSort === 'newest') {
     sorted.sort((a, b) => (b.postedAt || 0) - (a.postedAt || 0));
@@ -1320,9 +1260,6 @@ function renderTasks() {
   }).join('');
 }
 
-// ============================================================
-// TASK DETAIL MODAL
-// ============================================================
 window.viewTask = function(taskId) {
   const t = allOpenTasks.find(x => x.id === taskId) || myClaims.find(x => x.id === taskId);
   if (!t) { showToast('Task not found', 'error'); return; }
@@ -1451,9 +1388,6 @@ window.closeDetailModal = function() {
   currentDetailTask = null;
 };
 
-// ============================================================
-// CLAIM TASK — ATOMIC TRANSACTION
-// ============================================================
 window.claimTask = async function(taskId) {
   const t = allOpenTasks.find(x => x.id === taskId);
   if (!t) { showToast('Task not found', 'error'); return; }
@@ -1465,19 +1399,13 @@ window.claimTask = async function(taskId) {
 
   try {
     const result = await database.ref(`kasikazi_tasks/${taskId}`).transaction(current => {
-      if (!current) return current; // task deleted — abort
+      if (!current) return current;
 
       const claimed = current.claimedBy || {};
-      if (claimed[currentUser.uid]) {
-        // Already claimed by me — no change
-        return;
-      }
+      if (claimed[currentUser.uid]) return;
 
       const slots = current.slots || 1;
-      if (Object.keys(claimed).length >= slots) {
-        // All slots full — abort
-        return;
-      }
+      if (Object.keys(claimed).length >= slots) return;
 
       claimed[currentUser.uid] = {
         name: taskerProfile.name || currentUser.email,
@@ -1499,7 +1427,6 @@ window.claimTask = async function(taskId) {
       return;
     }
 
-    // Audit log (fire-and-forget — never blocks the user)
     try {
       const logId = database.ref('admin_logs').push().key;
       database.ref(`admin_logs/${logId}`).set({
@@ -1512,14 +1439,9 @@ window.claimTask = async function(taskId) {
       }).catch(() => {});
     } catch (e) { /* silent */ }
 
-    showToast('Task claimed! View it on My Tasks.', 'success');
+    showToast('Task claimed! Redirecting…', 'success');
     closeDetailModal();
-
-    setTimeout(() => {
-      if (confirm('Task claimed successfully. Go to My Tasks now?')) {
-        window.location.href = '/board.html';
-      }
-    }, 800);
+    window.location.href = '/board.html';
 
   } catch (err) {
     console.error('Claim error:', err);
