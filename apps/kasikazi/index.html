@@ -662,7 +662,7 @@ body {
 
     <nav class="nav-links">
       <a href="index.html" class="nav-link active"><i class="fas fa-bullhorn"></i> Open Board</a>
-      <a href="/kasikazi/board.html" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
+      <a href="/board.html" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
       <a href="../../index.html" class="nav-link"><i class="fas fa-layer-group"></i> KazInni Suite</a>
     </nav>
 
@@ -680,7 +680,7 @@ body {
         </button>
         <div class="user-dropdown-menu" id="userDropdownMenu">
           <a href="index.html" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
-          <a href="/kasikazi/board.html" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
+          <a href="/board.html" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
           <a href="../../account.html" class="dropdown-item"><i class="fas fa-user"></i> My Account</a>
           <a href="../../account-settings.html" class="dropdown-item"><i class="fas fa-gear"></i> Settings</a>
           <div class="divider"></div>
@@ -716,7 +716,7 @@ body {
         <a href="#board" class="btn btn-primary btn-lg">
           <i class="fas fa-bullhorn"></i> Browse Open Tasks
         </a>
-        <a href="board.html" class="btn btn-ghost btn-lg">
+        <a href="/board.html" class="btn btn-ghost btn-lg">
           <i class="fas fa-list-check"></i> My Tasks
         </a>
       </div>
@@ -873,7 +873,7 @@ body {
   <div class="footer-content">
     <div class="footer-logo"><i class="fas fa-bullhorn"></i> Kasikazi · Open Board</div>
     <div class="footer-links">
-      <a href="/kasikazi/board.html">My Tasks</a>
+      <a href="/board.html">My Tasks</a>
       <a href="../../index.html">KazInni Suite</a>
       <a href="mailto:operations@kazinni.com">Contact</a>
     </div>
@@ -1351,11 +1351,11 @@ window.viewTask = function(taskId) {
         <i class="fas fa-check-circle"></i>
         <div>
           <strong>You've claimed this task.</strong><br>
-          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="/kasikazi/board.html" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
+          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="/board.html" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
         </div>
       </div>
       <div class="action-row">
-        <a href="/kasikazi/board.html" class="modal-btn brand">
+        <a href="/board.html" class="modal-btn brand">
           <i class="fas fa-arrow-right"></i> Go to My Tasks
         </a>
         <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
@@ -1517,7 +1517,7 @@ window.claimTask = async function(taskId) {
 
     setTimeout(() => {
       if (confirm('Task claimed successfully. Go to My Tasks now?')) {
-        window.location.href = '/kasikazi/board.html';
+        window.location.href = '/board.html';
       }
     }, 800);
 
