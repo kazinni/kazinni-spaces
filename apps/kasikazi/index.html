@@ -637,7 +637,7 @@ body {
 
 <header class="site-header">
   <div class="header-container">
-    <a href="index" class="logo">
+    <a href="/apps/kasikazi" class="logo">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="Kasikazi">
       <div class="logo-text">
         <span class="kz">Kasikazi</span>
@@ -646,9 +646,9 @@ body {
     </a>
 
     <nav class="nav-links">
-      <a href="index" class="nav-link active"><i class="fas fa-bullhorn"></i> Open Board</a>
-      <a href="board" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
-      <a href="../../index.html" class="nav-link"><i class="fas fa-layer-group"></i> KazInni Suite</a>
+      <a href="/apps/kasikazi" class="nav-link active"><i class="fas fa-bullhorn"></i> Open Board</a>
+      <a href="/apps/kasikazi/board" class="nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
+      <a href="/apps/index.html" class="nav-link"><i class="fas fa-layer-group"></i> KazInni Suite</a>
     </nav>
 
     <div style="display:flex;align-items:center;gap:1rem;">
@@ -664,10 +664,10 @@ body {
           <i class="fas fa-chevron-down"></i>
         </button>
         <div class="user-dropdown-menu" id="userDropdownMenu">
-          <a href="index" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
-          <a href="board" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
-          <a href="../../account.html" class="dropdown-item"><i class="fas fa-user"></i> My Account</a>
-          <a href="../../account-settings.html" class="dropdown-item"><i class="fas fa-gear"></i> Settings</a>
+          <a href="/apps/kasikazi" class="dropdown-item"><i class="fas fa-bullhorn"></i> Open Board</a>
+          <a href="/apps/kasikazi/board" class="dropdown-item"><i class="fas fa-list-check"></i> My Tasks</a>
+          <a href="/apps/account.html" class="dropdown-item"><i class="fas fa-user"></i> My Account</a>
+          <a href="/apps/account-settings.html" class="dropdown-item"><i class="fas fa-gear"></i> Settings</a>
           <div class="divider"></div>
           <button class="dropdown-item danger" onclick="handleSignOut()">
             <i class="fas fa-sign-out-alt"></i> Sign Out
@@ -699,7 +699,7 @@ body {
         <a href="#board" class="btn btn-primary btn-lg">
           <i class="fas fa-bullhorn"></i> Browse Open Tasks
         </a>
-        <a href="board" class="btn btn-ghost btn-lg">
+        <a href="/apps/kasikazi/board" class="btn btn-ghost btn-lg">
           <i class="fas fa-list-check"></i> My Tasks
         </a>
       </div>
@@ -838,7 +838,7 @@ body {
     <i class="fas fa-lock"></i>
     <h3 id="deniedTitle">Access Denied</h3>
     <p id="deniedMessage">You don't have access to the Kasikazi board.</p>
-    <a href="../../index.html" class="btn btn-brand" style="margin-top:1.5rem;">
+    <a href="/apps/index.html" class="btn btn-brand" style="margin-top:1.5rem;">
       <i class="fas fa-arrow-left"></i> Back to KazInni Suite
     </a>
   </div>
@@ -848,8 +848,8 @@ body {
   <div class="footer-content">
     <div class="footer-logo"><i class="fas fa-bullhorn"></i> Kasikazi · Open Board</div>
     <div class="footer-links">
-      <a href="board">My Tasks</a>
-      <a href="../../index.html">KazInni Suite</a>
+      <a href="/apps/kasikazi/board">My Tasks</a>
+      <a href="/apps/index.html">KazInni Suite</a>
       <a href="mailto:operations@kazinni.com">Contact</a>
     </div>
     <div class="footer-text">© 2026 Teleio Savour · Kasikazi</div>
@@ -954,17 +954,17 @@ function showToast(m, type = 'info') {
 }
 
 auth.onAuthStateChanged(async (user) => {
-  if (!user) { window.location.href = '../../index.html'; return; }
+  if (!user) { window.location.href = '/apps/index.html'; return; }
   currentUser = user;
 
   try {
     const snap = await database.ref(`taskers/${user.uid}`).once('value');
-    if (!snap.exists()) { window.location.href = '../../index.html'; return; }
+    if (!snap.exists()) { window.location.href = '/apps/index.html'; return; }
     taskerProfile = snap.val();
     if (taskerProfile.verified !== true && taskerProfile.status !== 'verified') {
-      window.location.href = '../../index.html'; return;
+      window.location.href = '/apps/index.html'; return;
     }
-  } catch (e) { window.location.href = '../../index.html'; return; }
+  } catch (e) { window.location.href = '/apps/index.html'; return; }
 
   try {
     const permSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
@@ -990,7 +990,7 @@ async function handleSignOut() {
   if (confirm('Sign out?')) {
     if (taskListenerRef) taskListenerRef.off();
     await auth.signOut();
-    window.location.href = '../../index.html';
+    window.location.href = '/apps/index.html';
   }
 }
 
@@ -1288,11 +1288,11 @@ window.viewTask = function(taskId) {
         <i class="fas fa-check-circle"></i>
         <div>
           <strong>You've claimed this task.</strong><br>
-          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="board" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
+          Current status: <strong>${escapeHtml(myStatus)}</strong>. Head to <a href="/apps/kasikazi/board" style="color:#0e7490;font-weight:700;text-decoration:underline;">My Tasks</a> to start work and submit.
         </div>
       </div>
       <div class="action-row">
-        <a href="board" class="modal-btn brand">
+        <a href="/apps/kasikazi/board" class="modal-btn brand">
           <i class="fas fa-arrow-right"></i> Go to My Tasks
         </a>
         <button class="modal-btn secondary" onclick="closeDetailModal()">Close</button>
@@ -1441,7 +1441,7 @@ window.claimTask = async function(taskId) {
 
     showToast('Task claimed! Redirecting…', 'success');
     closeDetailModal();
-    window.location.href = 'board';
+    window.location.href = '/apps/kasikazi/board';
 
   } catch (err) {
     console.error('Claim error:', err);
