@@ -145,7 +145,6 @@ body {
 }
 .ws-logo img { height: 30px; }
 
-/* JANTA WORDMARK — matches hero typography, only color differs */
 .ws-logo-text {
   font-family: var(--font-display);
   font-weight: 700;
@@ -253,16 +252,14 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-nav-item.open .ws-nav-dropdown { display: flex; }
 .ws-nav-item[data-nav="learning"] .ws-nav-dropdown { min-width: 420px; max-width: 520px; }
 
-/* Inner scroll region (so footer stays pinned) */
 .ws-nav-dd-scroll {
   overflow-y: auto;
   flex: 1;
   padding-bottom: 0.4rem;
 }
 
-/* Section group header — M365 style */
 .ws-nav-dd-group {
-  font-size: 0.6875rem;             /* 11px */
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -272,7 +269,6 @@ body.mode-workspace .ws-nav-links { display: none; }
 }
 .ws-nav-dd-group:first-child { padding-top: 0.25rem; }
 
-/* Individual M365-style menu item */
 .ws-nav-dd-item {
   display: flex; align-items: flex-start; gap: 0.85rem;
   padding: 0.7rem 0.9rem;
@@ -297,7 +293,7 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-nav-dd-title {
   font-family: 'Segoe UI', var(--font-heading);
   font-weight: 600;
-  font-size: 0.8125rem;              /* 13px */
+  font-size: 0.8125rem;
   color: var(--m365-text);
   margin-bottom: 0.15rem; line-height: 1.3;
   display: flex; align-items: center; gap: 0.4rem;
@@ -312,13 +308,12 @@ body.mode-workspace .ws-nav-links { display: none; }
   font-family: var(--font-heading);
 }
 .ws-nav-dd-desc {
-  font-size: 0.75rem;                /* 12px */
+  font-size: 0.75rem;
   color: var(--m365-text-muted);
   line-height: 1.35;
   font-family: 'Segoe UI', var(--font-body);
 }
 
-/* Footer bar */
 .ws-nav-dd-footer {
   border-top: 1px solid var(--m365-border);
   padding: 0.7rem 1.1rem;
@@ -430,6 +425,21 @@ body.mode-workspace .ws-nav-links { display: none; }
 }
 .ws-btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
 .ws-btn-lg { padding: 0.85rem 1.75rem; font-size: 0.92rem; }
+
+/* Janta Assistant CTA — gold-tinted, distinct from primary */
+.ws-btn-assistant {
+  background: white;
+  color: var(--gold-dark);
+  border: 1.5px solid rgba(202,138,4,0.35);
+  box-shadow: 0 4px 14px rgba(202,138,4,0.12);
+}
+.ws-btn-assistant:hover {
+  background: var(--gold-gradient);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(202,138,4,0.3);
+}
 
 /* ============================================================
    SHELL
@@ -596,9 +606,6 @@ body.mode-landing .ws-content {
   margin-bottom: 1.2rem; letter-spacing: -0.045em;
   font-family: var(--font-display); color: var(--ink);
 }
-
-/* HERO ACCENT — matches the header wordmark exactly (font, weight, gradient),
-   but stays italic to distinguish "Janta" from "Welcome to" */
 .hero h1 .accent {
   font-family: var(--font-display);
   font-weight: 700;
@@ -667,6 +674,94 @@ body.mode-landing .ws-content {
 .section-header-center p {
   font-size: 0.95rem; color: var(--text-muted);
   max-width: 520px; margin: 0 auto;
+}
+
+/* Assistant showcase section */
+.assistant-showcase {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.assistant-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  color: var(--ink); margin-bottom: 0.9rem;
+}
+.assistant-copy p {
+  font-size: 0.95rem; color: var(--text-secondary);
+  line-height: 1.65; margin-bottom: 1.6rem;
+  max-width: 480px;
+}
+.assistant-examples {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin-bottom: 1.8rem;
+  max-width: 480px;
+}
+.assistant-example {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  background: white;
+  border: 1px solid var(--m365-border);
+  border-radius: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+.assistant-example::before {
+  content: "›";
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.assistant-cta {
+  display: flex; gap: 0.7rem; flex-wrap: wrap;
+}
+.assistant-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 40%, #fbbf24 100%);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(202,138,4,0.2);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.assistant-bubble {
+  background: white;
+  border-radius: 12px;
+  padding: 0.85rem 1.05rem;
+  font-size: 0.85rem;
+  color: var(--ink);
+  box-shadow: var(--m365-shadow);
+  max-width: 85%;
+}
+.assistant-bubble.user {
+  align-self: flex-end;
+  background: var(--ink);
+  color: white;
+  border-radius: 12px 12px 2px 12px;
+}
+.assistant-bubble.janta {
+  align-self: flex-start;
+  border-radius: 12px 12px 12px 2px;
+}
+.assistant-bubble .bubble-source {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--gold-soft);
+  color: var(--gold-dark);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
 /* Preview grid */
@@ -1529,6 +1624,7 @@ body.mode-landing .ws-content {
   body.mode-workspace .rail-sub { display: none; }
   body.mode-workspace .rail-label { opacity: 0; height: 0; padding: 0; }
   .learning-hero { grid-template-columns: 1fr; gap: 2rem; }
+  .assistant-showcase { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 @media (max-width: 900px) {
@@ -1889,6 +1985,15 @@ const firebaseConfig = {
 };
 
 const APPS = {
+  'janta-assistant': {
+    name: 'Janta Assistant',
+    desc: 'Ask anything about work on KazInni — businesses, products, services, courses and resources.',
+    icon: 'fa-comments',
+    color: '#ca8a04',
+    link: 'https://jantaassistant.vercel.app/',
+    external: true,
+    alwaysVisible: true
+  },
   'flexikazi': {
     name: 'FlexiKazi',
     desc: 'Freelance task board — accept tasks, submit work, track earnings.',
@@ -2198,9 +2303,14 @@ function renderNavApps() {
   });
 
   const items = visible.map(app => {
-    const target = signedIn
-      ? `location.href='${escapeHtml(app.link)}'`
-      : `openAuthModal()`;
+    let target;
+    if (app.external) {
+      target = `window.open('${escapeHtml(app.link)}','_blank','noopener')`;
+    } else if (signedIn) {
+      target = `location.href='${escapeHtml(app.link)}'`;
+    } else {
+      target = `openAuthModal()`;
+    }
     return `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
         <div class="ws-nav-dd-icon" style="background:${escapeHtml(app.color)};">
@@ -2209,7 +2319,8 @@ function renderNavApps() {
         <div class="ws-nav-dd-body">
           <div class="ws-nav-dd-title">
             ${escapeHtml(app.name)}
-            ${!signedIn ? '<span class="badge-mini">Sign in</span>' : ''}
+            ${!signedIn && !app.external ? '<span class="badge-mini">Sign in</span>' : ''}
+            ${app.external ? '<span class="badge-mini">Live</span>' : ''}
           </div>
           <div class="ws-nav-dd-desc">${escapeHtml(app.desc)}</div>
         </div>
@@ -2548,11 +2659,16 @@ function renderDropdownApps() {
 
   if (apps.length === 0) return '';
 
-  return apps.map(app => `
-    <a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
+  return apps.map(app => {
+    if (app.external) {
+      return `<a href="${escapeHtml(app.link)}" target="_blank" rel="noopener" class="ud-item" role="menuitem">
+        <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
+      </a>`;
+    }
+    return `<a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
       <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
-    </a>
-  `).join('');
+    </a>`;
+  }).join('');
 }
 
 function toggleUserDropdown(e) {
@@ -2603,9 +2719,12 @@ function renderLanding() {
         <h1 id="heroTitle">Welcome to <span class="accent">Janta</span></h1>
         <p class="hero-lede">
           One login. Every workspace. Run your day from a single account across
-          every Janta workspace.
+          every Janta workspace — or ask the Janta Assistant about anything on KazInni.
         </p>
         <div class="hero-cta">
+          <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-btn ws-btn-assistant ws-btn-lg">
+            <i class="fas fa-comments" aria-hidden="true"></i> <span>Open Janta Assistant</span>
+          </a>
           <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
             <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to Janta</span>
           </button>
@@ -2622,7 +2741,49 @@ function renderLanding() {
       </div>
     </section>
 
-    <section class="section" id="apps" aria-labelledby="appsTitle">
+    <section class="section" id="assistant" aria-labelledby="assistantTitle">
+      <div class="section-inner">
+        <div class="assistant-showcase">
+          <div class="assistant-copy">
+            <span class="section-label">Janta Assistant</span>
+            <h2 id="assistantTitle">Everything you need to know about work, in one ask.</h2>
+            <p>
+              The Janta Assistant reads the KazInni directory — businesses, products,
+              services, courses, and resources — and answers in a single search.
+            </p>
+            <div class="assistant-examples">
+              <div class="assistant-example">beds under 25k</div>
+              <div class="assistant-example">courses on writing</div>
+              <div class="assistant-example">metal fabrication services</div>
+              <div class="assistant-example">what does Best Furniture offer</div>
+            </div>
+            <div class="assistant-cta">
+              <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-btn ws-btn-primary">
+                <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> <span>Open Janta Assistant</span>
+              </a>
+            </div>
+          </div>
+          <div class="assistant-visual" aria-hidden="true">
+            <div class="assistant-bubble user">beds under 25k</div>
+            <div class="assistant-bubble janta">
+              Found 3 beds under KSh 25,000 on KazInni.<br>
+              <strong>Cypress Bed 4×6 — KSh 22,500</strong><br>
+              Best Furniture Place · Ngong Road
+              <span class="bubble-source">Best Furniture Place</span>
+            </div>
+            <div class="assistant-bubble user">courses on writing</div>
+            <div class="assistant-bubble janta">
+              Found 2 courses matching writing.<br>
+              <strong>Client Communication 101</strong><br>
+              45 min · Beginner
+              <span class="bubble-source">Learning Library</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="apps" aria-labelledby="appsTitle">
       <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Explore</span>
@@ -2633,7 +2794,7 @@ function renderLanding() {
       </div>
     </section>
 
-    <section class="section alt" id="features" aria-labelledby="whyTitle">
+    <section class="section" id="features" aria-labelledby="whyTitle">
       <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Why Janta</span>
@@ -2665,7 +2826,7 @@ function renderLanding() {
       </div>
     </section>
 
-    <section class="section" id="learning" aria-labelledby="learnTitle">
+    <section class="section alt" id="learning" aria-labelledby="learnTitle">
       <div class="section-inner">
         <div class="learning-hero">
           <div class="learning-copy">
@@ -2724,7 +2885,7 @@ function renderLanding() {
       </div>
     </section>
 
-    <section class="section alt" id="activity" aria-labelledby="statsTitle">
+    <section class="section" id="activity" aria-labelledby="statsTitle">
       <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Live</span>
@@ -2767,6 +2928,7 @@ function renderLanding() {
       <div class="landing-footer-inner">
         <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> Janta</div>
         <nav class="landing-footer-links" aria-label="Footer navigation">
+          <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener">Janta Assistant</a>
           <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
@@ -2789,7 +2951,10 @@ function renderPreviewGrid() {
 
   grid.innerHTML = apps.map(app => {
     let target, cta;
-    if (app.signedInOnly) {
+    if (app.external) {
+      target = `window.open('${escapeHtml(app.link)}','_blank','noopener')`;
+      cta = 'Open assistant';
+    } else if (app.signedInOnly) {
       target = "openAuthModal()";
       cta = 'Sign in to open';
     } else {
@@ -2833,6 +2998,25 @@ function renderWorkspace() {
     <section class="ws-welcome">
       <h1>${getGreeting()}, ${escapeHtml(capitalized)}</h1>
       <p>Here's what's happening across your Janta workspace today.</p>
+    </section>
+
+    <section class="ws-section" aria-labelledby="assistantDashTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="assistantDashTitle">
+          <i class="fas fa-comments" aria-hidden="true"></i> Janta Assistant
+        </h2>
+        <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-section-action">Open →</a>
+      </div>
+      <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="learning-dash">
+        <div class="learning-dash-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+        <div class="learning-dash-body">
+          <div class="learning-dash-title">Ask anything about work on KazInni</div>
+          <div class="learning-dash-desc">Businesses, products, services, courses and resources — one search away.</div>
+        </div>
+        <span class="learning-dash-cta">
+          <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open
+        </span>
+      </a>
     </section>
 
     <section class="ws-section" aria-labelledby="recentWorkTitle">
@@ -2908,15 +3092,28 @@ function renderWorkspaceApps() {
     return;
   }
 
-  tiles.innerHTML = apps.map(app => `
-    <a href="${escapeHtml(app.link)}" class="ws-app-tile">
-      <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
-        <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-      </div>
-      <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
-      <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
-    </a>
-  `).join('');
+  tiles.innerHTML = apps.map(app => {
+    if (app.external) {
+      return `
+        <a href="${escapeHtml(app.link)}" target="_blank" rel="noopener" class="ws-app-tile">
+          <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+          </div>
+          <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
+          <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
+        </a>
+      `;
+    }
+    return `
+      <a href="${escapeHtml(app.link)}" class="ws-app-tile">
+        <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+        </div>
+        <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
+        <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
+      </a>
+    `;
+  }).join('');
 }
 
 function renderRailApps() {
@@ -2938,6 +3135,10 @@ function renderRailApps() {
   apps.forEach(app => {
     const el = document.createElement('a');
     el.href = app.link;
+    if (app.external) {
+      el.target = '_blank';
+      el.rel = 'noopener';
+    }
     el.className = 'rail-sub-item';
     el.innerHTML = `
       <span class="rail-sub-dot" style="background:${escapeHtml(app.color)};" aria-hidden="true"></span>
@@ -3340,7 +3541,7 @@ function renderLauncher() {
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   const visible = apps.filter(app => {
-    if (!signedIn) return app.alwaysVisible === true;
+    if (!signedIn) return app.alwaysVisible === true || app.external === true;
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
@@ -3351,17 +3552,20 @@ function renderLauncher() {
   if (visible.length === 0) {
     grid.innerHTML = `<div class="lp-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
   } else {
-    grid.innerHTML = visible.map(app => `
-      <a href="${escapeHtml(app.link)}" class="lp-app">
-        <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
-          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-        </div>
-        <div>
-          <div class="lp-app-name">${escapeHtml(app.name)}</div>
-          <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
-        </div>
-      </a>
-    `).join('');
+    grid.innerHTML = visible.map(app => {
+      const attrs = app.external ? ' target="_blank" rel="noopener"' : '';
+      return `
+        <a href="${escapeHtml(app.link)}"${attrs} class="lp-app">
+          <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
+            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="lp-app-name">${escapeHtml(app.name)}</div>
+            <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
+          </div>
+        </a>
+      `;
+    }).join('');
   }
 
   if (!statusEl || !footerTextEl || !footerLinkEl) return;
