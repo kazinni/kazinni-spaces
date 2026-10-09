@@ -1990,8 +1990,7 @@ const APPS = {
     desc: 'Ask anything about work on KazInni — businesses, products, services, courses and resources.',
     icon: 'fa-comments',
     color: '#ca8a04',
-    link: 'https://jantaassistant.vercel.app/',
-    external: true,
+    link: 'assistant.html',
     alwaysVisible: true
   },
   'flexikazi': {
@@ -2303,14 +2302,9 @@ function renderNavApps() {
   });
 
   const items = visible.map(app => {
-    let target;
-    if (app.external) {
-      target = `window.open('${escapeHtml(app.link)}','_blank','noopener')`;
-    } else if (signedIn) {
-      target = `location.href='${escapeHtml(app.link)}'`;
-    } else {
-      target = `openAuthModal()`;
-    }
+    const target = signedIn
+      ? `location.href='${escapeHtml(app.link)}'`
+      : `location.href='${escapeHtml(app.link)}'`;
     return `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
         <div class="ws-nav-dd-icon" style="background:${escapeHtml(app.color)};">
@@ -2319,8 +2313,8 @@ function renderNavApps() {
         <div class="ws-nav-dd-body">
           <div class="ws-nav-dd-title">
             ${escapeHtml(app.name)}
-            ${!signedIn && !app.external ? '<span class="badge-mini">Sign in</span>' : ''}
-            ${app.external ? '<span class="badge-mini">Live</span>' : ''}
+            ${!signedIn && !app.alwaysVisible ? '<span class="badge-mini">Sign in</span>' : ''}
+            ${app.key === 'janta-assistant' ? '<span class="badge-mini">Live</span>' : ''}
           </div>
           <div class="ws-nav-dd-desc">${escapeHtml(app.desc)}</div>
         </div>
@@ -2659,16 +2653,11 @@ function renderDropdownApps() {
 
   if (apps.length === 0) return '';
 
-  return apps.map(app => {
-    if (app.external) {
-      return `<a href="${escapeHtml(app.link)}" target="_blank" rel="noopener" class="ud-item" role="menuitem">
-        <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
-      </a>`;
-    }
-    return `<a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
+  return apps.map(app => `
+    <a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
       <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
-    </a>`;
-  }).join('');
+    </a>
+  `).join('');
 }
 
 function toggleUserDropdown(e) {
@@ -2722,7 +2711,7 @@ function renderLanding() {
           every Janta workspace — or ask the Janta Assistant about anything on KazInni.
         </p>
         <div class="hero-cta">
-          <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-btn ws-btn-assistant ws-btn-lg">
+          <a href="assistant.html" class="ws-btn ws-btn-assistant ws-btn-lg">
             <i class="fas fa-comments" aria-hidden="true"></i> <span>Open Janta Assistant</span>
           </a>
           <button type="button" class="ws-btn ws-btn-primary ws-btn-lg" onclick="openAuthModal()">
@@ -2758,8 +2747,8 @@ function renderLanding() {
               <div class="assistant-example">what does Best Furniture offer</div>
             </div>
             <div class="assistant-cta">
-              <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-btn ws-btn-primary">
-                <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> <span>Open Janta Assistant</span>
+              <a href="assistant.html" class="ws-btn ws-btn-primary">
+                <i class="fas fa-arrow-right" aria-hidden="true"></i> <span>Open Janta Assistant</span>
               </a>
             </div>
           </div>
@@ -2928,7 +2917,7 @@ function renderLanding() {
       <div class="landing-footer-inner">
         <div class="landing-footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> Janta</div>
         <nav class="landing-footer-links" aria-label="Footer navigation">
-          <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener">Janta Assistant</a>
+          <a href="assistant.html">Janta Assistant</a>
           <button type="button" onclick="showToast('Coming soon', 'info')">Privacy</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Terms</button>
           <button type="button" onclick="showToast('Coming soon', 'info')">Help</button>
@@ -2951,8 +2940,8 @@ function renderPreviewGrid() {
 
   grid.innerHTML = apps.map(app => {
     let target, cta;
-    if (app.external) {
-      target = `window.open('${escapeHtml(app.link)}','_blank','noopener')`;
+    if (app.key === 'janta-assistant') {
+      target = "location.href='assistant.html'";
       cta = 'Open assistant';
     } else if (app.signedInOnly) {
       target = "openAuthModal()";
@@ -3005,16 +2994,16 @@ function renderWorkspace() {
         <h2 class="ws-section-title" id="assistantDashTitle">
           <i class="fas fa-comments" aria-hidden="true"></i> Janta Assistant
         </h2>
-        <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="ws-section-action">Open →</a>
+        <a href="assistant.html" class="ws-section-action">Open →</a>
       </div>
-      <a href="https://jantaassistant.vercel.app/" target="_blank" rel="noopener" class="learning-dash">
+      <a href="assistant.html" class="learning-dash">
         <div class="learning-dash-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
         <div class="learning-dash-body">
           <div class="learning-dash-title">Ask anything about work on KazInni</div>
           <div class="learning-dash-desc">Businesses, products, services, courses and resources — one search away.</div>
         </div>
         <span class="learning-dash-cta">
-          <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open
+          <i class="fas fa-arrow-right" aria-hidden="true"></i> Open
         </span>
       </a>
     </section>
@@ -3092,28 +3081,15 @@ function renderWorkspaceApps() {
     return;
   }
 
-  tiles.innerHTML = apps.map(app => {
-    if (app.external) {
-      return `
-        <a href="${escapeHtml(app.link)}" target="_blank" rel="noopener" class="ws-app-tile">
-          <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
-            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-          </div>
-          <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
-          <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
-        </a>
-      `;
-    }
-    return `
-      <a href="${escapeHtml(app.link)}" class="ws-app-tile">
-        <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
-          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-        </div>
-        <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
-        <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
-      </a>
-    `;
-  }).join('');
+  tiles.innerHTML = apps.map(app => `
+    <a href="${escapeHtml(app.link)}" class="ws-app-tile">
+      <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
+        <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+      </div>
+      <div class="ws-app-tile-name">${escapeHtml(app.name)}</div>
+      <div class="ws-app-tile-desc">${escapeHtml(app.desc)}</div>
+    </a>
+  `).join('');
 }
 
 function renderRailApps() {
@@ -3135,10 +3111,6 @@ function renderRailApps() {
   apps.forEach(app => {
     const el = document.createElement('a');
     el.href = app.link;
-    if (app.external) {
-      el.target = '_blank';
-      el.rel = 'noopener';
-    }
     el.className = 'rail-sub-item';
     el.innerHTML = `
       <span class="rail-sub-dot" style="background:${escapeHtml(app.color)};" aria-hidden="true"></span>
@@ -3541,7 +3513,7 @@ function renderLauncher() {
   const apps = Object.keys(APPS).map(k => ({ key: k, ...APPS[k] }));
 
   const visible = apps.filter(app => {
-    if (!signedIn) return app.alwaysVisible === true || app.external === true;
+    if (!signedIn) return app.alwaysVisible === true;
     if (app.alwaysVisible) return true;
     if (app.permission && currentPerms[app.permission] === true) return true;
     if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
@@ -3552,20 +3524,17 @@ function renderLauncher() {
   if (visible.length === 0) {
     grid.innerHTML = `<div class="lp-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
   } else {
-    grid.innerHTML = visible.map(app => {
-      const attrs = app.external ? ' target="_blank" rel="noopener"' : '';
-      return `
-        <a href="${escapeHtml(app.link)}"${attrs} class="lp-app">
-          <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
-            <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
-          </div>
-          <div>
-            <div class="lp-app-name">${escapeHtml(app.name)}</div>
-            <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
-          </div>
-        </a>
-      `;
-    }).join('');
+    grid.innerHTML = visible.map(app => `
+      <a href="${escapeHtml(app.link)}" class="lp-app">
+        <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
+          <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
+        </div>
+        <div>
+          <div class="lp-app-name">${escapeHtml(app.name)}</div>
+          <div class="lp-app-desc">${escapeHtml(app.desc)}</div>
+        </div>
+      </a>
+    `).join('');
   }
 
   if (!statusEl || !footerTextEl || !footerLinkEl) return;
