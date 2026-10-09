@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ca8a04">
+<title>Janta Assistant — work directory for KazInni</title>
+<link rel="icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #faf9f7;
+    --bg-softer: #f4f3f1;
+    --line: #edebe9;
+    --line-2: #e1dfdb;
+    --text: #1a1a1e;
+    --text-soft: #4a4a5e;
+    --text-muted: #8a8a94;
+    --accent: #ca8a04;
+    --accent-soft: #fef3c7;
+    --ink: #0f0f1e;
+    --danger: #b91c1c;
+    --success: #10b981;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    --sans: 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --serif: 'Clash Display', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- HEADER ---------- */
+  header {
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .back-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .back-link:hover { background: var(--bg-softer); color: var(--ink); }
+  .brand {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .brand .accent {
+    background: linear-gradient(135deg, #ca8a04, #fbbf24);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  #userEmail { font-family: var(--mono); }
+  #userAvatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ca8a04, #fbbf24);
+    color: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+  }
+  .signin-link {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .signin-link:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  /* ---------- CHAT ---------- */
+  .chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 20px 20px;
+  }
+  .chat-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .turn { display: flex; flex-direction: column; gap: 8px; }
+  .turn-user { align-items: flex-end; }
+  .turn-user .bubble {
+    background: var(--ink);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 16px 16px 4px 16px;
+    max-width: 80%;
+    font-size: 0.95rem;
+  }
+  .turn-janta { align-items: flex-start; }
+  .turn-janta .bubble {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    padding: 16px 20px;
+    border-radius: 16px 16px 16px 4px;
+    width: 100%;
+    font-size: 0.94rem;
+  }
+
+  .opener { color: var(--text-soft); }
+  .opener strong { color: var(--text); }
+  .opener .hint {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .opener .hint code {
+    background: var(--bg-softer);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--text-soft);
+  }
+
+  .group { margin-top: 14px; }
+  .group:first-child { margin-top: 0; }
+  .group-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .item:last-child { border-bottom: none; padding-bottom: 0; }
+  .item-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+  .item-price {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .item-desc {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  .item-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .item-meta span + span::before { content: " · "; margin: 0 4px; }
+  .item-features {
+    font-size: 0.83rem;
+    color: var(--text-soft);
+    margin: 6px 0;
+    padding-left: 16px;
+  }
+  .item-features li { margin-bottom: 2px; }
+
+  .no-results {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  .summary {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+  }
+
+  /* ---------- INPUT ---------- */
+  .input-wrap {
+    border-top: 1px solid var(--line);
+    padding: 16px 20px 20px;
+    background: white;
+  }
+  .input-row {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    border: 1px solid var(--line-2);
+    border-radius: 14px;
+    padding: 10px 12px 10px 16px;
+    background: var(--bg-soft);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .input-row:focus-within {
+    border-color: var(--accent);
+    background: white;
+  }
+  textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    resize: none;
+    max-height: 140px;
+    line-height: 1.5;
+    padding: 4px 0;
+  }
+  textarea::placeholder { color: var(--text-muted); }
+  .send {
+    background: var(--ink);
+    border: none;
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .send:hover:not(:disabled) { background: var(--accent); }
+  .send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .loading { display: flex; gap: 4px; align-items: center; padding: 6px 0; }
+  .loading span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--text-muted);
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+  .loading span:nth-child(2) { animation-delay: 0.2s; }
+  .loading span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.3; }
+    40% { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="index.html" class="back-link" aria-label="Back to Janta">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <div class="brand">janta <span class="accent">assistant</span></div>
+  </div>
+  <div class="header-right">
+    <span id="userEmail"></span>
+    <div id="userAvatar" aria-hidden="true"></div>
+    <a href="index.html" class="signin-link" id="signinLink" style="display:none;">Sign in</a>
+  </div>
+</header>
+
+<div class="chat" id="chat">
+  <div class="chat-inner" id="chatInner"></div>
+</div>
+
+<div class="input-wrap">
+  <div class="input-row">
+    <textarea
+      id="query"
+      rows="1"
+      placeholder="Ask about work on KazInni, or say hi..."
+      autocomplete="off"
+      spellcheck="false"
+    ></textarea>
+    <button class="send" id="send" disabled aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<script>
+/* ==========================================================
+   FIREBASE — same project, same session as index.html
+   ========================================================== */
+firebase.initializeApp({
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+});
+
+const auth = firebase.auth();
+const db = firebase.database();
+
+let currentUser = null;
+const cache = {};
+
+/* ==========================================================
+   DOM
+   ========================================================== */
+const queryEl = document.getElementById('query');
+const sendBtn = document.getElementById('send');
+const chatEl = document.getElementById('chat');
+const chatInner = document.getElementById('chatInner');
+const userEmailEl = document.getElementById('userEmail');
+const userAvatarEl = document.getElementById('userAvatar');
+const signinLink = document.getElementById('signinLink');
+
+/* ==========================================================
+   AUTH STATE — inherits from index.html automatically
+   ========================================================== */
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+
+  if (user) {
+    // Signed in — show name and avatar
+    userEmailEl.textContent = user.email || '';
+    signinLink.style.display = 'none';
+
+    const name = (user.displayName || user.email || 'U').split(/[@\s._-]/)[0];
+    userAvatarEl.textContent = name.slice(0, 1).toUpperCase();
+    userAvatarEl.style.display = 'flex';
+  } else {
+    // Guest — show sign-in link
+    userEmailEl.textContent = 'guest';
+    userAvatarEl.style.display = 'none';
+    signinLink.style.display = 'inline-block';
+  }
+
+  // Always greet on load and on auth change
+  openConversation();
+});
+
+/* ==========================================================
+   GREETING
+   ========================================================== */
+function partOfDay() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  if (h < 21) return 'Good evening';
+  return 'Good night';
+}
+
+function firstName() {
+  if (!currentUser) return '';
+  const raw = currentUser.displayName || currentUser.email || '';
+  const first = raw.split(/[@\s._-]/)[0] || '';
+  return first ? first.charAt(0).toUpperCase() + first.slice(1) : '';
+}
+
+function openConversation() {
+  const hi = partOfDay();
+  const name = firstName();
+
+  chatInner.innerHTML = '';
+  const { body } = appendJanta();
+
+  if (currentUser) {
+    body.innerHTML = `
+      <div class="opener">
+        <strong>${esc(hi)}${name ? ', ' + esc(name) : ''}.</strong><br>
+        I'm the Janta Assistant. Ask me about work on KazInni — businesses, products, services, courses, or resources.
+        <span class="hint">
+          Try <code>beds under 25k</code>, <code>courses on writing</code>, or <code>metal fabrication services</code>.
+        </span>
+      </div>
+    `;
+  } else {
+    body.innerHTML = `
+      <div class="opener">
+        <strong>${esc(hi)}.</strong><br>
+        I'm the Janta Assistant. Ask me about work on KazInni — businesses, products, services, courses, or resources.
+        <span class="hint">
+          You're browsing as a guest. <a href="index.html" style="color:var(--accent);font-weight:600;">Sign in</a> to unlock more.
+        </span>
+      </div>
+    `;
+  }
+}
+
+/* ==========================================================
+   CONVERSATIONAL INTENTS
+   ========================================================== */
+const CONVERSATION_RULES = [
+  {
+    id: 'greeting',
+    patterns: [
+      /^(hi|hey|hello|yo|hiya|howdy|sup|habari|niaje|sasa|mambo|jambo)\b/i,
+      /\bhi\s+(janta|assistant)\b/i,
+      /\bhey\s+(janta|assistant)\b/i,
+      /\bhello\s+(janta|assistant)\b/i,
+      /^(janta|assistant)$/i,
+      /^(good\s+(morning|afternoon|evening|night))\b/i
+    ],
+    reply: () => {
+      const name = firstName();
+      return `${partOfDay()}${name ? ', ' + name : ''}. What do you want to know about work on KazInni?`;
+    }
+  },
+  {
+    id: 'howareyou',
+    patterns: [/how\s+are\s+you/i, /how'?s\s+it\s+going/i, /umeamkaje/i, /habari\s+yako/i],
+    reply: () => {
+      const name = firstName();
+      return `I'm running well${name ? ', ' + name : ''}. Ready to help you find anything on KazInni — businesses, products, services, courses, or resources.`;
+    }
+  },
+  {
+    id: 'whoareyou',
+    patterns: [
+      /who\s+are\s+you/i,
+      /what\s+are\s+you/i,
+      /what\s+is\s+janta/i,
+      /what\s+can\s+you\s+do/i,
+      /what\s+do\s+you\s+do/i,
+      /tell\s+me\s+about\s+(yourself|janta)/i
+    ],
+    reply: () =>
+      `I'm the Janta Assistant — a work directory for KazInni. I read from the platform's database: businesses, their products and services, learning courses, and resources. Ask me anything about work on KazInni.`
+  },
+  {
+    id: 'help',
+    patterns: [/^help$/i, /^help\s+me$/i, /how\s+do\s+i\s+use\s+(you|janta|the assistant)/i],
+    reply: () =>
+      `Just ask in your own words. For example:<br><br>
+       › beds under 25k<br>
+       › courses on writing<br>
+       › metal fabrication services<br>
+       › what does Best Furniture offer<br><br>
+       I'll search the KazInni directory and show you the details.`
+  },
+  {
+    id: 'thanks',
+    patterns: [
+      /^(thanks|thank\s+you|thx|asante|asante\s+sana)\b/i,
+      /\bthanks\s+(janta|assistant)\b/i
+    ],
+    reply: () => {
+      const name = firstName();
+      return `You're welcome${name ? ', ' + name : ''}. Anything else you need from the directory?`;
+    }
+  },
+  {
+    id: 'bye',
+    patterns: [
+      /^(bye|goodbye|see\s+you|later|kwaheri|tutaonana)\b/i,
+      /\bbye\s+(janta|assistant)\b/i
+    ],
+    reply: () => {
+      const name = firstName();
+      return `Kwaheri${name ? ', ' + name : ''}. Come back any time.`;
+    }
+  }
+];
+
+function detectConversation(q) {
+  const text = q.trim();
+  for (const rule of CONVERSATION_RULES) {
+    for (const pattern of rule.patterns) {
+      if (pattern.test(text)) return rule;
+    }
+  }
+  return null;
+}
+
+/* ==========================================================
+   INPUT HANDLING
+   ========================================================== */
+queryEl.addEventListener('input', () => {
+  queryEl.style.height = 'auto';
+  queryEl.style.height = Math.min(queryEl.scrollHeight, 140) + 'px';
+  sendBtn.disabled = !queryEl.value.trim();
+});
+
+queryEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (queryEl.value.trim()) runQuery();
+  }
+});
+
+sendBtn.addEventListener('click', runQuery);
+
+/* ==========================================================
+   MAIN HANDLER
+   ========================================================== */
+async function runQuery() {
+  const q = queryEl.value.trim();
+  if (!q) return;
+
+  queryEl.value = '';
+  queryEl.style.height = 'auto';
+  sendBtn.disabled = true;
+
+  appendUser(q);
+
+  const { body } = appendJanta();
+  body.innerHTML = '<div class="loading"><span></span><span></span><span></span></div>';
+
+  const conv = detectConversation(q);
+  if (conv) {
+    body.innerHTML = `<div class="opener">${conv.reply()}</div>`;
+    chatEl.scrollTop = chatEl.scrollHeight;
+    return;
+  }
+
+  try {
+    const tokens = tokenize(q);
+    const priceCap = extractPriceCap(q);
+
+    const [businesses, courses, resources] = await Promise.all([
+      getBusinesses(),
+      getCourses(),
+      getResources()
+    ]);
+
+    const results = {
+      businesses: [],
+      courses: [],
+      products: [],
+      services: [],
+      resources: []
+    };
+
+    for (const b of businesses) {
+      const text = [
+        b.businessName, b.name, b.tagline, b.category, b.industry,
+        b.description, b.area, b.road
+      ].filter(Boolean).join(' ');
+      const s = score(text, tokens);
+      if (s > 0) results.businesses.push({ item: b, score: s });
+    }
+
+    for (const b of businesses) {
+      const pd = b.pageData || {};
+      const bizName = b.businessName || b.name || b.slug;
+      const phone = b.phone || pd.contact?.phone || '';
+      const address = b.address || pd.contact?.address || '';
+
+      for (const p of (pd.products || [])) {
+        const text = [p.name, p.title, p.desc, p.description, p.category]
+          .filter(Boolean).join(' ');
+        const s = score(text, tokens);
+        const price = Number(p.price) || 0;
+        if (s > 0 && (!priceCap || price <= priceCap)) {
+          results.products.push({
+            item: p, score: s + (priceCap ? 2 : 0), bizName, phone, address
+          });
+        }
+      }
+
+      for (const sv of (pd.services || [])) {
+        const text = [sv.title, sv.desc, sv.tag, (sv.features || []).join(' ')]
+          .filter(Boolean).join(' ');
+        const s = score(text, tokens);
+        const price = Number(String(sv.price || '').replace(/[^\d]/g, '')) || 0;
+        if (s > 0 && (!priceCap || price === 0 || price <= priceCap)) {
+          results.services.push({ item: sv, score: s, bizName, phone, address });
+        }
+      }
+    }
+
+    for (const c of courses) {
+      const text = [c.title, c.desc, c.longDesc, c.category, c.level]
+        .filter(Boolean).join(' ');
+      const s = score(text, tokens);
+      if (s > 0) results.courses.push({ item: c, score: s });
+    }
+
+    for (const r of resources) {
+      const text = [r.title, r.description, r.workspace].filter(Boolean).join(' ');
+      const s = score(text, tokens);
+      if (s > 0) results.resources.push({ item: r, score: s });
+    }
+
+    for (const k of Object.keys(results)) {
+      results[k].sort((a, b) => b.score - a.score);
+      results[k] = results[k].slice(0, 8);
+    }
+
+    body.innerHTML = renderResults(results, priceCap);
+  } catch (err) {
+    console.error(err);
+    body.innerHTML = '<span class="no-results">Something went wrong. Try again.</span>';
+  }
+
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+/* ==========================================================
+   SEARCH UTILITIES
+   ========================================================== */
+const STOP_WORDS = new Set([
+  'a','an','the','is','are','was','were','be','being','been',
+  'of','in','on','at','to','for','with','by','from','about',
+  'and','or','but','if','so','as','than','then','that','this',
+  'these','those','it','its','i','you','we','they','he','she',
+  'me','my','our','your','their','his','her','them','us',
+  'do','does','did','have','has','had','can','could','will',
+  'would','should','may','might','must','what','which','who',
+  'whom','whose','where','when','why','how','any','some','all',
+  'no','not','only','just','show','find','give','tell','me',
+  'please','need','want','looking','look','see','get'
+]);
+
+function tokenize(q) {
+  return q.toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w && !STOP_WORDS.has(w));
+}
+
+function extractPriceCap(q) {
+  const m = q.match(/(?:under|below|less than|<)\s*(?:ksh|kes)?\s*([\d,]+)\s*(k)?/i);
+  if (!m) return null;
+  let n = parseInt(m[1].replace(/,/g, ''), 10);
+  if (m[2]) n *= 1000;
+  return isNaN(n) ? null : n;
+}
+
+function score(text, tokens) {
+  if (!text) return 0;
+  const lower = String(text).toLowerCase();
+  let s = 0;
+  for (const t of tokens) {
+    if (lower.includes(t)) {
+      const re = new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+      s += re.test(lower) ? 3 : 1;
+    }
+  }
+  return s;
+}
+
+/* ==========================================================
+   DATA LOADERS (cached per session)
+   ========================================================== */
+async function getBusinesses() {
+  if (cache.businesses) return cache.businesses;
+  const snap = await db.ref('brandinn_subdomains').once('value');
+  const val = snap.val() || {};
+  cache.businesses = Object.entries(val)
+    .map(([slug, b]) => ({ slug, ...b }))
+    .filter(b => b.status === 'active' || b.businessName);
+  return cache.businesses;
+}
+
+async function getCourses() {
+  if (cache.courses) return cache.courses;
+  const snap = await db.ref('learning_courses').once('value');
+  const val = snap.val() || {};
+  cache.courses = Object.entries(val)
+    .map(([id, c]) => ({ id, ...c }))
+    .filter(c => c.published === true);
+  return cache.courses;
+}
+
+async function getResources() {
+  if (cache.resources) return cache.resources;
+  const snap = await db.ref('resources').once('value');
+  const val = snap.val() || {};
+  const out = [];
+  for (const [section, items] of Object.entries(val)) {
+    if (!items || typeof items !== 'object') continue;
+    for (const [id, r] of Object.entries(items)) {
+      if (!r || typeof r !== 'object') continue;
+      out.push({ id, section, ...r });
+    }
+  }
+  cache.resources = out;
+  return out;
+}
+
+/* ==========================================================
+   RENDERING
+   ========================================================== */
+function appendUser(text) {
+  const el = document.createElement('div');
+  el.className = 'turn turn-user';
+  el.innerHTML = '<div class="bubble"></div>';
+  el.querySelector('.bubble').textContent = text;
+  chatInner.appendChild(el);
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+function appendJanta() {
+  const el = document.createElement('div');
+  el.className = 'turn turn-janta';
+  el.innerHTML = '<div class="bubble"><div class="body"></div></div>';
+  chatInner.appendChild(el);
+  chatEl.scrollTop = chatEl.scrollHeight;
+  return { el, body: el.querySelector('.body') };
+}
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderResults(results, priceCap) {
+  const total =
+    results.businesses.length +
+    results.courses.length +
+    results.products.length +
+    results.services.length +
+    results.resources.length;
+
+  if (total === 0) {
+    return '<span class="no-results">Nothing on KazInni matches that.</span>';
+  }
+
+  const cap = priceCap ? ` under KSh ${priceCap.toLocaleString()}` : '';
+  const parts = [];
+  parts.push(`<div class="summary">Found ${total} match${total === 1 ? '' : 'es'}${cap} on KazInni.</div>`);
+
+  if (results.businesses.length) {
+    parts.push(`<div class="group">
+      <div class="group-label">Businesses</div>
+      ${results.businesses.map(r => renderBusiness(r.item)).join('')}
+    </div>`);
+  }
+  if (results.products.length) {
+    parts.push(`<div class="group">
+      <div class="group-label">Products</div>
+      ${results.products.map(r => renderProduct(r)).join('')}
+    </div>`);
+  }
+  if (results.services.length) {
+    parts.push(`<div class="group">
+      <div class="group-label">Services</div>
+      ${results.services.map(r => renderService(r)).join('')}
+    </div>`);
+  }
+  if (results.courses.length) {
+    parts.push(`<div class="group">
+      <div class="group-label">Courses</div>
+      ${results.courses.map(r => renderCourse(r.item)).join('')}
+    </div>`);
+  }
+  if (results.resources.length) {
+    parts.push(`<div class="group">
+      <div class="group-label">Resources</div>
+      ${results.resources.map(r => renderResource(r.item)).join('')}
+    </div>`);
+  }
+
+  return parts.join('');
+}
+
+function renderBusiness(b) {
+  const pd = b.pageData || {};
+  const name = b.businessName || b.name || b.slug;
+  const tagline = pd.business?.tagline || b.tagline || '';
+  const category = pd.business?.category || b.category || b.industry || '';
+  const address = pd.contact?.address || b.address || '';
+  const phone = pd.contact?.phone || b.phone || '';
+  const email = pd.contact?.email || b.email || '';
+  const desc = pd.business?.description || b.description || '';
+  const services = (pd.services || []).map(s => s.title).filter(Boolean);
+
+  return `<div class="item">
+    <div class="item-name">${esc(name)}</div>
+    ${category ? `<div class="item-price">${esc(category)}</div>` : ''}
+    ${tagline ? `<div class="item-desc">${esc(tagline)}</div>` : ''}
+    ${desc ? `<div class="item-desc">${esc(desc)}</div>` : ''}
+    ${services.length ? `<ul class="item-features">${services.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
+    <div class="item-meta">
+      ${address ? `<span>${esc(address)}</span>` : ''}
+      ${phone ? `<span>${esc(phone)}</span>` : ''}
+      ${email ? `<span>${esc(email)}</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderProduct(r) {
+  const p = r.item;
+  const name = p.name || p.title || 'Unnamed product';
+  const price = Number(p.price);
+  const desc = p.desc || p.description || '';
+  const cat = p.category || '';
+  return `<div class="item">
+    <div class="item-name">${esc(name)}</div>
+    ${price ? `<div class="item-price">KSh ${price.toLocaleString()}</div>` : ''}
+    ${desc ? `<div class="item-desc">${esc(desc.slice(0, 400))}${desc.length > 400 ? '…' : ''}</div>` : ''}
+    <div class="item-meta">
+      ${cat ? `<span>${esc(cat)}</span>` : ''}
+      <span>${esc(r.bizName)}</span>
+      ${r.phone ? `<span>${esc(r.phone)}</span>` : ''}
+      ${r.address ? `<span>${esc(r.address)}</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderService(r) {
+  const s = r.item;
+  const title = s.title || 'Service';
+  const price = s.price ? String(s.price) : '';
+  const desc = s.desc || '';
+  const features = s.features || [];
+  return `<div class="item">
+    <div class="item-name">${esc(title)}</div>
+    ${price ? `<div class="item-price">${esc(price)}</div>` : ''}
+    ${desc ? `<div class="item-desc">${esc(desc)}</div>` : ''}
+    ${features.length ? `<ul class="item-features">${features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
+    <div class="item-meta">
+      <span>${esc(r.bizName)}</span>
+      ${r.phone ? `<span>${esc(r.phone)}</span>` : ''}
+      ${r.address ? `<span>${esc(r.address)}</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderCourse(c) {
+  const title = c.title || 'Course';
+  const cat = c.category || '';
+  const level = c.level || '';
+  const duration = c.duration ? `${c.duration} min` : '';
+  const desc = c.longDesc || c.desc || '';
+  const lessonCount = Object.keys(c.lessons || {}).length;
+  return `<div class="item">
+    <div class="item-name">${esc(title)}</div>
+    ${desc ? `<div class="item-desc">${esc(desc.slice(0, 400))}${desc.length > 400 ? '…' : ''}</div>` : ''}
+    <div class="item-meta">
+      ${cat ? `<span>${esc(cat)}</span>` : ''}
+      ${level ? `<span>${esc(level)}</span>` : ''}
+      ${duration ? `<span>${esc(duration)}</span>` : ''}
+      ${lessonCount ? `<span>${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>` : ''}
+      ${c.free ? `<span>Free</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderResource(r) {
+  const title = r.title || 'Resource';
+  const desc = r.description || '';
+  const workspace = r.workspace || r.section || '';
+  return `<div class="item">
+    <div class="item-name">${esc(title)}</div>
+    ${desc ? `<div class="item-desc">${esc(desc)}</div>` : ''}
+    <div class="item-meta">
+      ${workspace ? `<span>${esc(workspace)}</span>` : ''}
+    </div>
+  </div>`;
+}
+</script>
+
+</body>
+</html>
