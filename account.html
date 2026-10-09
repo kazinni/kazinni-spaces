@@ -41,6 +41,7 @@
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
       --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
+      --shadow-gold: 0 20px 50px rgba(202, 138, 4, 0.22);
       --nav-bg: rgba(255, 255, 255, 0.9);
       --header-height: 64px;
       --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
@@ -235,7 +236,11 @@
       font-family: var(--font-heading);
       display: flex; align-items: center; gap: 6px;
     }
-    .tab-btn.active { background: var(--gold-gradient); color: white; box-shadow: 0 4px 12px rgba(202,138,4,0.25); }
+    .tab-btn.active {
+      background: var(--gold-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(202,138,4,0.25);
+    }
     .tab-btn i { font-size: 0.8rem; }
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeUp 0.35s ease; }
@@ -384,13 +389,9 @@
       border-radius: 20px;
       padding: 2rem;
       margin-bottom: 1.5rem;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      position: relative; overflow: hidden;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 2rem; flex-wrap: wrap;
       color: white;
     }
     .payslip-summary::before {
@@ -427,39 +428,25 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .payslip-summary-period {
-      font-size: 0.85rem; color: rgba(255,255,255,0.6);
-    }
-    .payslip-summary-right {
-      position: relative; z-index: 1;
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-    }
+    .payslip-summary-period { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+    .payslip-summary-right { position: relative; z-index: 1; display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .payslip-action {
       padding: 0.75rem 1.4rem;
-      border-radius: 100px;
-      border: none; cursor: pointer;
+      border-radius: 100px; border: none; cursor: pointer;
       font-family: var(--font-heading);
       font-weight: 600; font-size: 0.82rem;
       display: inline-flex; align-items: center; gap: 0.5rem;
-      transition: all 0.25s;
-      text-decoration: none;
+      transition: all 0.25s; text-decoration: none;
     }
     .payslip-action.primary {
       background: var(--gold-gradient); color: white;
       box-shadow: 0 8px 24px rgba(202,138,4,0.35);
     }
     .payslip-action.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(202,138,4,0.45); }
-    .payslip-action.ghost {
-      background: rgba(255,255,255,0.08); color: white;
-      border: 1.5px solid rgba(255,255,255,0.2);
-    }
-    .payslip-action.ghost:hover { background: rgba(255,255,255,0.15); }
-
+    .payslip-action.primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     .payslip-card {
-      background: white;
-      border: 1px solid var(--border-light);
-      border-radius: 20px;
-      overflow: hidden;
+      background: white; border: 1px solid var(--border-light);
+      border-radius: 20px; overflow: hidden;
     }
     .payslip-head {
       padding: 1.2rem 1.6rem;
@@ -485,7 +472,6 @@
       cursor: pointer;
     }
     .payslip-body { padding: 1.4rem 1.6rem 1.6rem; }
-
     .payslip-line {
       display: flex; justify-content: space-between;
       padding: 0.65rem 0;
@@ -493,42 +479,28 @@
       font-size: 0.88rem;
     }
     .payslip-line:last-child { border-bottom: none; }
-    .payslip-line-label {
-      color: var(--text-secondary);
-      font-family: var(--font-heading);
-    }
-    .payslip-line-value {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      color: var(--text-primary);
-    }
+    .payslip-line-label { color: var(--text-secondary); font-family: var(--font-heading); }
+    .payslip-line-value { font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); }
     .payslip-line.section-header {
       border-bottom: 1px solid var(--border-light);
-      padding-top: 1.2rem;
-      padding-bottom: 0.5rem;
+      padding-top: 1.2rem; padding-bottom: 0.5rem;
     }
     .payslip-line.section-header .payslip-line-label {
-      font-weight: 700;
-      color: var(--text-primary);
-      font-size: 0.75rem;
-      text-transform: uppercase;
+      font-weight: 700; color: var(--text-primary);
+      font-size: 0.75rem; text-transform: uppercase;
       letter-spacing: 0.6px;
     }
     .payslip-line.total {
-      padding-top: 0.9rem;
-      padding-bottom: 0.9rem;
+      padding-top: 0.9rem; padding-bottom: 0.9rem;
       border-top: 2px solid var(--border-light);
       border-bottom: none;
       margin-top: 0.5rem;
     }
     .payslip-line.total .payslip-line-label {
-      font-weight: 700;
-      color: var(--text-primary);
-      font-size: 0.95rem;
+      font-weight: 700; color: var(--text-primary); font-size: 0.95rem;
     }
     .payslip-line.total .payslip-line-value {
-      font-size: 1.1rem;
-      font-family: var(--font-display);
+      font-size: 1.1rem; font-family: var(--font-display);
       letter-spacing: -0.02em;
     }
     .payslip-line.total.net .payslip-line-value { color: var(--success); }
@@ -550,14 +522,10 @@
       border: 1px solid var(--border-light);
       border-radius: 18px;
       padding: 1.4rem 1.5rem;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
       transition: all 0.25s;
     }
-    .leave-balance-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
+    .leave-balance-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .leave-balance-card::before {
       content: '';
       position: absolute;
@@ -572,37 +540,25 @@
       width: 40px; height: 40px;
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
+      font-size: 0.95rem; margin-bottom: 1rem;
     }
     .leave-balance-value {
       font-family: var(--font-display);
-      font-size: 1.9rem;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 0.3rem;
+      font-size: 1.9rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.03em;
+      line-height: 1; margin-bottom: 0.3rem;
     }
     .leave-balance-value .unit {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-left: 0.3rem;
+      font-size: 0.8rem; color: var(--text-muted);
+      font-weight: 600; margin-left: 0.3rem;
     }
     .leave-balance-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-family: var(--font-heading);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 0.72rem; color: var(--text-muted);
+      font-family: var(--font-heading); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
 
-    .leave-actions {
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
+    .leave-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
     .btn-primary {
       padding: 0.75rem 1.5rem;
       background: var(--ink); color: white;
@@ -615,11 +571,9 @@
       position: relative; overflow: hidden;
     }
     .btn-primary::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: var(--gold-gradient);
-      opacity: 0;
-      transition: opacity 0.3s;
+      opacity: 0; transition: opacity 0.3s;
     }
     .btn-primary > * { position: relative; z-index: 1; }
     .btn-primary:hover { box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
@@ -645,19 +599,16 @@
       width: 40px; height: 40px;
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem;
-      color: white; flex-shrink: 0;
+      font-size: 0.9rem; color: white; flex-shrink: 0;
     }
     .leave-row-body { flex: 1; min-width: 0; }
     .leave-row-title {
       font-family: var(--font-heading);
       font-weight: 600; font-size: 0.9rem;
-      color: var(--text-primary);
-      margin-bottom: 0.15rem;
+      color: var(--text-primary); margin-bottom: 0.15rem;
     }
     .leave-row-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      font-size: 0.75rem; color: var(--text-muted);
       display: flex; gap: 0.7rem; flex-wrap: wrap;
       font-family: var(--font-heading);
     }
@@ -673,10 +624,8 @@
     .leave-status {
       font-size: 0.6rem; font-weight: 700;
       font-family: var(--font-heading);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0.2rem 0.6rem;
-      border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 0.2rem 0.6rem; border-radius: 100px;
     }
     .leave-status.pending { background: #fef3c7; color: #92400e; }
     .leave-status.approved { background: #d1fae5; color: #065f46; }
@@ -702,32 +651,21 @@
       padding: 1.2rem 1.3rem;
       transition: all 0.2s;
     }
-    .attendance-stat:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
+    .attendance-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .attendance-stat-value {
       font-family: var(--font-display);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 0.4rem;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.03em;
+      line-height: 1; margin-bottom: 0.4rem;
     }
     .attendance-stat-value .unit {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-left: 0.2rem;
+      font-size: 0.72rem; color: var(--text-muted);
+      font-weight: 600; margin-left: 0.2rem;
     }
     .attendance-stat-label {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      font-family: var(--font-heading);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 0.7rem; color: var(--text-muted);
+      font-family: var(--font-heading); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
 
     .clock-card {
@@ -743,49 +681,34 @@
     .clock-card-left { position: relative; z-index: 1; }
     .clock-card-status {
       font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      opacity: 0.85;
-      margin-bottom: 0.4rem;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      opacity: 0.85; margin-bottom: 0.4rem;
       font-family: var(--font-heading);
     }
     .clock-card-time {
       font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 0.3rem;
+      font-size: 2rem; font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.3rem;
     }
-    .clock-card-label {
-      font-size: 0.82rem;
-      opacity: 0.85;
-    }
+    .clock-card-label { font-size: 0.82rem; opacity: 0.85; }
     .clock-card-right { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .clock-btn {
       padding: 0.85rem 1.6rem;
-      border-radius: 100px;
-      border: none; cursor: pointer;
+      border-radius: 100px; border: none; cursor: pointer;
       font-family: var(--font-heading);
       font-weight: 700; font-size: 0.85rem;
       display: inline-flex; align-items: center; gap: 0.5rem;
       transition: all 0.25s;
-      background: white;
-      color: var(--gold-dark);
+      background: white; color: var(--gold-dark);
       box-shadow: 0 6px 18px rgba(0,0,0,0.1);
     }
     .clock-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.15); }
-    .clock-btn.clock-out {
-      background: var(--ink);
-      color: white;
-    }
+    .clock-btn.clock-out { background: var(--ink); color: white; }
     .clock-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .attendance-log {
-      background: white;
-      border: 1px solid var(--border-light);
-      border-radius: 20px;
-      overflow: hidden;
+      background: white; border: 1px solid var(--border-light);
+      border-radius: 20px; overflow: hidden;
     }
     .attendance-log-row {
       display: flex; align-items: center; gap: 1rem;
@@ -798,24 +721,19 @@
     .attendance-log-row:hover { background: #faf9f7; }
     .attendance-day {
       font-family: var(--font-heading);
-      font-weight: 600;
-      color: var(--text-primary);
+      font-weight: 600; color: var(--text-primary);
       min-width: 100px;
     }
     .attendance-times {
-      flex: 1;
-      display: flex; gap: 1.5rem;
+      flex: 1; display: flex; gap: 1.5rem;
       color: var(--text-secondary);
-      font-family: var(--font-heading);
-      font-size: 0.82rem;
+      font-family: var(--font-heading); font-size: 0.82rem;
     }
     .attendance-times span { display: inline-flex; align-items: center; gap: 0.35rem; }
     .attendance-times i { color: var(--text-muted); font-size: 0.7rem; }
     .attendance-hours {
       font-family: var(--font-display);
-      font-weight: 700;
-      color: var(--ink);
-      font-size: 0.95rem;
+      font-weight: 700; color: var(--ink); font-size: 0.95rem;
     }
 
     /* ============================================================
@@ -827,18 +745,13 @@
       color: var(--text-muted);
     }
     .empty-state i {
-      font-size: 2.4rem;
-      margin-bottom: 0.8rem;
-      color: var(--gold);
-      opacity: 0.4;
-      display: block;
+      font-size: 2.4rem; margin-bottom: 0.8rem;
+      color: var(--gold); opacity: 0.4; display: block;
     }
     .empty-state h3 {
       font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text-primary);
-      margin-bottom: 0.3rem;
+      font-weight: 700; font-size: 1rem;
+      color: var(--text-primary); margin-bottom: 0.3rem;
     }
     .empty-state p {
       font-size: 0.85rem;
@@ -863,19 +776,15 @@
       background: white; border-radius: 24px;
       padding: 2.2rem 2rem 2rem;
       max-width: 480px; width: calc(100% - 2rem);
-      z-index: 2001;
-      box-shadow: 0 40px 80px rgba(15,15,30,0.3);
-      display: none;
-      max-height: 90vh;
-      overflow-y: auto;
+      z-index: 2001; box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+      display: none; max-height: 90vh; overflow-y: auto;
     }
     .modal.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
     .modal-close {
       position: absolute; top: 1rem; right: 1.2rem;
       background: none; border: none; font-size: 1rem;
       cursor: pointer; color: var(--text-muted);
-      width: 32px; height: 32px;
-      border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
@@ -885,41 +794,34 @@
       width: 60px; height: 60px; border-radius: 18px;
       background: var(--gold-gradient); color: white;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      margin: 0 auto 1rem;
+      font-size: 1.5rem; margin: 0 auto 1rem;
       box-shadow: 0 12px 30px rgba(202,138,4,0.28);
     }
     .modal-header h3 {
       font-family: var(--font-display);
       font-size: 1.4rem; font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--ink);
+      letter-spacing: -0.025em; color: var(--ink);
       margin-bottom: 0.3rem;
     }
     .modal-header p { color: var(--text-muted); font-size: 0.85rem; }
 
     .form-group { margin-bottom: 1rem; }
     .form-label {
-      display: block;
-      font-size: 0.75rem; font-weight: 600;
+      display: block; font-size: 0.75rem; font-weight: 600;
       font-family: var(--font-heading);
       color: var(--text-secondary);
       margin-bottom: 0.4rem;
     }
     .form-control {
-      width: 100%;
-      padding: 0.85rem 1.1rem;
+      width: 100%; padding: 0.85rem 1.1rem;
       border: 1.5px solid var(--border-light);
-      border-radius: 12px;
-      font-size: 0.9rem;
+      border-radius: 12px; font-size: 0.9rem;
       font-family: var(--font-body);
       transition: all 0.2s;
-      background: #faf9f7;
-      color: var(--text-primary);
+      background: #faf9f7; color: var(--text-primary);
     }
     .form-control:focus {
-      outline: none;
-      border-color: var(--gold);
+      outline: none; border-color: var(--gold);
       background: white;
       box-shadow: 0 0 0 4px rgba(202,138,4,0.08);
     }
@@ -927,8 +829,7 @@
     @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
 
     .modal-btn {
-      width: 100%;
-      padding: 0.9rem;
+      width: 100%; padding: 0.9rem;
       background: var(--ink); color: white;
       border: none; border-radius: 100px;
       font-weight: 600; cursor: pointer;
@@ -939,28 +840,23 @@
       position: relative; overflow: hidden;
     }
     .modal-btn::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: var(--gold-gradient);
-      opacity: 0;
-      transition: opacity 0.3s;
+      opacity: 0; transition: opacity 0.3s;
     }
     .modal-btn > * { position: relative; z-index: 1; }
     .modal-btn:hover { box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
     .modal-btn:hover::before { opacity: 1; }
     .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
     .modal-btn.secondary {
-      background: transparent;
-      color: var(--text-secondary);
+      background: transparent; color: var(--text-secondary);
       border: 1.5px solid var(--border-light);
       margin-top: 0.6rem;
     }
     .modal-btn.secondary::before { display: none; }
     .modal-btn.secondary:hover {
-      background: #faf9f7;
-      border-color: var(--border-medium);
-      color: var(--text-primary);
-      box-shadow: none;
+      background: #faf9f7; border-color: var(--border-medium);
+      color: var(--text-primary); box-shadow: none;
     }
 
     /* ============================================================
@@ -973,9 +869,7 @@
       border-radius: 12px;
       box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
       border: 1px solid var(--border-light);
-      overflow: hidden;
-      display: none;
-      z-index: 1001;
+      overflow: hidden; display: none; z-index: 1001;
       animation: fadeUp 0.2s ease;
     }
     .user-dropdown.active { display: block; }
@@ -988,8 +882,7 @@
     .ud-header-info { min-width: 0; flex: 1; }
     .ud-header-name {
       font-weight: 700; font-size: 0.92rem;
-      color: var(--ink);
-      font-family: var(--font-heading);
+      color: var(--ink); font-family: var(--font-heading);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .ud-header-email {
@@ -999,22 +892,15 @@
     .ud-body { padding: 0.5rem; }
     .ud-item {
       display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.6rem 0.9rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.15s;
+      padding: 0.6rem 0.9rem; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s;
       border: none; background: none; width: 100%;
-      text-align: left;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-family: var(--font-body);
-      font-weight: 500;
+      text-align: left; font-size: 0.85rem;
+      color: var(--text-secondary); text-decoration: none;
+      font-family: var(--font-body); font-weight: 500;
     }
     .ud-item i {
-      width: 18px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      width: 18px; font-size: 0.85rem; color: var(--text-muted);
       transition: color 0.15s;
     }
     .ud-item:hover { background: #faf9f7; color: var(--ink); }
@@ -1026,13 +912,9 @@
     .ud-item.danger:hover { background: #fef2f2; }
     .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
     .ud-section-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text-muted);
-      padding: 0.5rem 0.9rem 0.3rem;
-      font-family: var(--font-heading);
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted);
+      padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
     }
 
     /* ============================================================
@@ -1045,14 +927,12 @@
     }
     .toast {
       background: var(--ink); color: white;
-      border-radius: 12px;
-      padding: 0.85rem 1.15rem;
+      border-radius: 12px; padding: 0.85rem 1.15rem;
       box-shadow: 0 20px 40px rgba(15,15,30,0.22);
       display: flex; align-items: center; gap: 0.65rem;
       font-family: var(--font-heading); font-size: 0.85rem;
       animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      max-width: 360px;
-      font-weight: 500;
+      max-width: 360px; font-weight: 500;
       pointer-events: auto;
     }
     .toast i { font-size: 0.95rem; }
@@ -1151,7 +1031,7 @@
       <p id="accountSubtitle">Manage your profile, payslips, leave and attendance.</p>
     </div>
 
-    <!-- Profile header card -->
+    <!-- Profile header -->
     <div class="profile-card">
       <div class="profile-avatar-wrap">
         <div class="profile-avatar" id="profileAvatar">--</div>
@@ -1159,7 +1039,6 @@
           <i class="fas fa-camera"></i>
         </button>
       </div>
-
       <div class="profile-info">
         <div class="profile-name">
           <span id="profileName">Loading…</span>
@@ -1169,7 +1048,7 @@
       </div>
     </div>
 
-    <!-- Tabs -->
+    <!-- Tab nav -->
     <div class="tab-nav" role="tablist">
       <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')" role="tab">
         <i class="fas fa-user"></i> Overview
@@ -1191,6 +1070,7 @@
     <div class="tab-content active" id="tab-overview">
       <div class="account-grid">
 
+        <!-- Contact info -->
         <div class="account-section">
           <div class="section-head">
             <div class="section-head-left">
@@ -1213,39 +1093,41 @@
               <div class="info-value" id="infoPhone">—</div>
             </div>
             <div class="info-row">
-              <div class="info-label">Department</div>
-              <div class="info-value" id="infoDepartment">—</div>
+              <div class="info-label">Zone</div>
+              <div class="info-value" id="infoZone">—</div>
             </div>
           </div>
         </div>
 
+        <!-- Work info -->
         <div class="account-section">
           <div class="section-head">
             <div class="section-head-left">
               <div class="section-icon"><i class="fas fa-briefcase"></i></div>
-              <h2>Employment</h2>
+              <h2>Work info</h2>
             </div>
           </div>
           <div class="section-body">
-            <div class="info-row">
-              <div class="info-label">Staff ID</div>
-              <div class="info-value" id="infoStaffId">—</div>
-            </div>
             <div class="info-row">
               <div class="info-label">Role</div>
               <div class="info-value" id="infoRole">—</div>
             </div>
             <div class="info-row">
-              <div class="info-label">Started</div>
-              <div class="info-value" id="infoStartDate">—</div>
+              <div class="info-label">Category</div>
+              <div class="info-value" id="infoCategory">—</div>
             </div>
             <div class="info-row">
-              <div class="info-label">Reports to</div>
-              <div class="info-value" id="infoReportsTo">—</div>
+              <div class="info-label">Skills</div>
+              <div class="info-value" id="infoSkills">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Bio</div>
+              <div class="info-value" id="infoBio">—</div>
             </div>
           </div>
         </div>
 
+        <!-- Security -->
         <div class="account-section">
           <div class="section-head">
             <div class="section-head-left">
@@ -1254,25 +1136,69 @@
             </div>
           </div>
           <div class="section-body">
+            <a class="quick-link" onclick="location.href='account-settings.html'">
+              <div class="quick-link-icon"><i class="fas fa-gear"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Account settings</div>
+                <div class="quick-link-desc">Password, language, theme & notifications</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
+            <a class="quick-link" onclick="location.href='security.html'">
+              <div class="quick-link-icon"><i class="fas fa-lock"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Security & privacy</div>
+                <div class="quick-link-desc">Two-factor auth, sessions & devices</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
             <a class="quick-link" onclick="sendPasswordReset()">
               <div class="quick-link-icon"><i class="fas fa-key"></i></div>
               <div class="quick-link-body">
                 <div class="quick-link-title">Change password</div>
-                <div class="quick-link-desc">Send a reset link to your email</div>
-              </div>
-              <i class="fas fa-chevron-right quick-link-arrow"></i>
-            </a>
-            <a class="quick-link" onclick="showToast('Session management coming soon', 'info')">
-              <div class="quick-link-icon"><i class="fas fa-lock"></i></div>
-              <div class="quick-link-body">
-                <div class="quick-link-title">Security & privacy</div>
-                <div class="quick-link-desc">Two-factor auth, sessions, devices</div>
+                <div class="quick-link-desc">Send a password reset link to your email</div>
               </div>
               <i class="fas fa-chevron-right quick-link-arrow"></i>
             </a>
           </div>
         </div>
 
+        <!-- Workspaces -->
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-layer-group"></i></div>
+              <h2>Workspaces</h2>
+            </div>
+          </div>
+          <div class="section-body" id="workspacesBody">
+            <div class="info-row">
+              <div class="info-label" style="min-width:auto;">
+                <span class="skeleton" style="display:inline-block;width:140px;height:0.9rem;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apps -->
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-grip"></i></div>
+              <h2>Your apps</h2>
+            </div>
+            <button class="edit-link" onclick="location.href='index.html'">Open launcher</button>
+          </div>
+          <div class="section-body" id="appsBody">
+            <div class="info-row">
+              <div class="info-label" style="min-width:auto;">
+                <span class="skeleton" style="display:inline-block;width:160px;height:0.9rem;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support -->
         <div class="account-section">
           <div class="section-head">
             <div class="section-head-left">
@@ -1284,7 +1210,7 @@
             <a class="quick-link" href="mailto:operations@kazinni.com">
               <div class="quick-link-icon"><i class="fas fa-envelope"></i></div>
               <div class="quick-link-body">
-                <div class="quick-link-title">Contact HR</div>
+                <div class="quick-link-title">Contact support</div>
                 <div class="quick-link-desc">operations@kazinni.com</div>
               </div>
               <i class="fas fa-chevron-right quick-link-arrow"></i>
@@ -1292,8 +1218,8 @@
             <a class="quick-link" onclick="showToast('Help center coming soon', 'info')">
               <div class="quick-link-icon"><i class="fas fa-book"></i></div>
               <div class="quick-link-body">
-                <div class="quick-link-title">Staff handbook</div>
-                <div class="quick-link-desc">Policies, procedures, guides</div>
+                <div class="quick-link-title">Help center</div>
+                <div class="quick-link-desc">Guides, FAQs and tutorials</div>
               </div>
               <i class="fas fa-chevron-right quick-link-arrow"></i>
             </a>
@@ -1326,7 +1252,7 @@
          ============================================================ -->
     <div class="tab-content" id="tab-payslips">
 
-      <div class="payslip-summary" id="payslipSummary">
+      <div class="payslip-summary">
         <div class="payslip-summary-left">
           <div class="payslip-summary-label">
             <i class="fas fa-file-invoice-dollar"></i>
@@ -1408,7 +1334,7 @@
         <div class="clock-card-left">
           <div class="clock-card-status" id="clockStatus">Not clocked in</div>
           <div class="clock-card-time" id="clockTime">--:--</div>
-          <div class="clock-card-label" id="clockLabel">Today · --</div>
+          <div class="clock-card-label" id="clockLabel">Today</div>
         </div>
         <div class="clock-card-right">
           <button class="clock-btn" id="clockBtn" onclick="handleClockToggle()">
@@ -1461,7 +1387,7 @@
   <div class="account-layout" id="notSignedIn" style="display:none;">
     <div class="account-title">
       <h1>My account</h1>
-      <p>Sign in to view your account and HR records.</p>
+      <p>Sign in to view your account details.</p>
     </div>
     <div class="account-section" style="text-align:center; padding: 3rem 2rem;">
       <div style="width:72px;height:72px;border-radius:20px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.2rem;">
@@ -1471,7 +1397,7 @@
         You're not signed in
       </h2>
       <p style="color:var(--text-muted);font-size:0.92rem;max-width:420px;margin:0 auto 1.6rem;line-height:1.6;">
-        Sign in with your KazInni staff account to view your profile, payslips, leave and attendance.
+        Sign in with your KazInni account to view your profile and manage your account.
       </p>
       <button class="btn-danger" style="background:var(--ink);color:white;border-color:var(--ink);" onclick="location.href='index.html'">
         <i class="fas fa-arrow-right-to-bracket"></i> Go to sign in
@@ -1488,7 +1414,7 @@
     <div class="modal-header">
       <div class="modal-icon"><i class="fas fa-umbrella-beach"></i></div>
       <h3>Apply for leave</h3>
-      <p>Submit a request — your manager will be notified</p>
+      <p>Submit a request — HR will review it</p>
     </div>
     <form id="leaveForm" onsubmit="submitLeave(event)">
       <div class="form-group">
@@ -1534,19 +1460,62 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.database();
+    const database = firebase.database();
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    // ============================================================
+    // WORKSPACE LABELS (same as before)
+    // ============================================================
+    const WORKSPACE_LABELS = {
+      brandinn: 'BrandInn',
+      'brandinn-print': 'BrandInn Print',
+      dsog: 'DSOG Fashion',
+      'fusion-foods': 'Fusion Foods',
+      'mugs-n-dines': 'Mugs n Dines',
+      heritage: 'Heritage Ads',
+      'heritage-marketplace': 'Heritage Marketplace',
+      'heritage-interiors': 'Heritage Interiors',
+      'digital-services': 'E-Huduma',
+      'pick-up': 'Pick-Up Deliveries',
+      'pick-me': 'Pick-Me Rides',
+      workfit: 'WorkFit',
+      epitome: 'Epitome Reviews',
+      'latter-logistics': 'Latter Logistics',
+      ekazi: 'FlexiKazi',
+      kasikazi: 'Kasikazi'
+    };
+
+    const APPS = {
+      'flexikazi': {
+        name: 'FlexiKazi',
+        icon: 'fa-list-check',
+        color: '#059669',
+        link: 'apps/flexikazi/',
+        permission: 'ekazi',
+        alwaysVisible: true
+      },
+      'kasikazi': {
+        name: 'Kasikazi',
+        icon: 'fa-compass',
+        color: '#0891b2',
+        link: 'apps/kasikazi/',
+        permission: 'kasikazi',
+        fallbackPermission: 'ekazi',
+        alwaysVisible: false
+      }
+    };
 
     // ============================================================
     // STATE
     // ============================================================
     let currentUser = null;
-    let currentStaff = null;
-    let payslips = [];       // sorted newest first
-    let leaveBalances = {};  // { annual: 21, sick: 14, compassionate: 5 }
-    let leaveRequests = [];  // sorted newest first
-    let attendance = [];     // sorted newest first
-    let todayClock = null;   // { clockIn, clockOut } for today
+    let currentTasker = null;
+    let currentPerms = {};
+    let payslips = [];
+    let leaveBalances = {};
+    let leaveRequests = [];
+    let attendance = [];
+    let todayClock = null;
     let liveListeners = [];
 
     const LEAVE_TYPES = {
@@ -1560,22 +1529,29 @@
     // ============================================================
     // UTILITIES
     // ============================================================
-    function escapeHtml(s) {
-      if (s === null || s === undefined) return '';
-      const d = document.createElement('div');
-      d.textContent = String(s);
-      return d.innerHTML;
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return '';
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
     }
-    function showToast(msg, type = 'info') {
+    function hexAlpha(hex, alpha) {
+      const num = parseInt(hex.replace('#',''), 16);
+      const R = (num >> 16) & 255;
+      const G = (num >> 8) & 255;
+      const B = num & 255;
+      return `rgba(${R}, ${G}, ${B}, ${alpha})`;
+    }
+    function showToast(msg, type = 'success') {
       const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
-      const t = document.createElement('div');
-      t.className = `toast ${type}`;
-      t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> <span>${escapeHtml(msg)}</span>`;
-      document.getElementById('toastContainer').appendChild(t);
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> <span>${escapeHtml(msg)}</span>`;
+      document.getElementById('toastContainer').appendChild(toast);
       setTimeout(() => {
-        t.style.opacity = '0';
-        t.style.transition = '0.35s';
-        setTimeout(() => t.remove(), 350);
+        toast.style.opacity = '0';
+        toast.style.transition = '0.35s';
+        setTimeout(() => toast.remove(), 350);
       }, 4000);
     }
     function formatMoney(n) {
@@ -1602,41 +1578,56 @@
       return Math.round((b - a) / (1000 * 60 * 60 * 24)) + 1;
     }
     function hoursBetween(t1, t2) {
-      const a = new Date(t1); const b = new Date(t2);
-      return (b - a) / (1000 * 60 * 60);
+      return (new Date(t2) - new Date(t1)) / (1000 * 60 * 60);
     }
 
     // ============================================================
-    // AUTH
+    // AUTH FLOW
     // ============================================================
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
+        currentUser = null;
+        currentTasker = null;
+        currentPerms = {};
         showSignedOut();
         return;
       }
-      currentUser = user;
 
-      // Verify staff record
       try {
-        const snap = await db.ref(`staff/${user.uid}`).once('value');
-        if (!snap.exists()) {
-          document.getElementById('accountLayout').style.display = 'none';
-          document.getElementById('notSignedIn').style.display = 'block';
+        const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
+        if (!taskerSnap.exists()) {
+          await auth.signOut();
+          showToast('This account is not registered on KazInni.', 'error');
           return;
         }
-        currentStaff = snap.val();
+        currentTasker = taskerSnap.val();
+        if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
+          await auth.signOut();
+          showToast('Your KazInni account is pending verification.', 'error');
+          return;
+        }
       } catch (e) {
-        console.error('Staff lookup failed:', e);
+        console.error('Tasker verification failed:', e);
+        await auth.signOut();
+        showToast('Could not verify your KazInni account.', 'error');
         return;
       }
 
-      showSignedIn();
-      await loadAll();
+      try {
+        const permsSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
+        currentPerms = permsSnap.exists() ? permsSnap.val() : {};
+      } catch (e) {
+        currentPerms = {};
+      }
+
+      currentUser = user;
+      renderSignedIn();
+      await loadHrmsData();
       attachLiveListeners();
     });
 
     // ============================================================
-    // RENDER: Signed out / Signed in
+    // RENDERING
     // ============================================================
     function showSignedOut() {
       document.getElementById('accountLayout').style.display = 'none';
@@ -1648,24 +1639,29 @@
       `;
     }
 
-    function showSignedIn() {
+    function renderSignedIn() {
       document.getElementById('accountLayout').style.display = 'block';
       document.getElementById('notSignedIn').style.display = 'none';
       renderHeaderAvatar();
       renderProfileCard();
-      renderOverview();
+      renderContactInfo();
+      renderWorkInfo();
+      renderWorkspaces();
+      renderApps();
     }
 
     function renderHeaderAvatar() {
-      const name = currentStaff.name || currentUser.email.split('@')[0];
-      const initials = getInitials(name);
-      const email = currentUser.email || '';
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || 'User';
+      const initials = getInitials(displayName);
+      const email = user.email || '';
 
       document.getElementById('headerAuthContainer').innerHTML = `
         <div class="user-dropdown-wrap" id="userMenuWrap">
           <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
             <div class="m365-avatar">${escapeHtml(initials)}</div>
-            <span class="m365-avatar-name">${escapeHtml(name)}</span>
+            <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
             <i class="fas fa-chevron-down"></i>
           </button>
 
@@ -1673,7 +1669,7 @@
             <div class="ud-header">
               <div class="m365-avatar">${escapeHtml(initials)}</div>
               <div class="ud-header-info">
-                <div class="ud-header-name">${escapeHtml(name)}</div>
+                <div class="ud-header-name">${escapeHtml(displayName)}</div>
                 <div class="ud-header-email">${escapeHtml(email)}</div>
               </div>
             </div>
@@ -1692,8 +1688,19 @@
                 <i class="fas fa-clock"></i> Attendance
               </a>
               <div class="ud-divider"></div>
-              <a class="ud-item" onclick="sendPasswordReset()">
-                <i class="fas fa-key"></i> Change password
+              <a class="ud-item" href="account-settings.html">
+                <i class="fas fa-gear"></i> Account settings
+              </a>
+              <a class="ud-item" href="security.html">
+                <i class="fas fa-shield-halved"></i> Security & privacy
+              </a>
+              <div class="ud-divider"></div>
+              <div class="ud-section-label">Apps</div>
+              <a href="apps/flexikazi/" class="ud-item">
+                <i class="fas fa-list-check"></i> FlexiKazi
+              </a>
+              <a href="apps/kasikazi/" class="ud-item">
+                <i class="fas fa-compass"></i> Kasikazi
               </a>
               <div class="ud-divider"></div>
               <button class="ud-item danger" onclick="handleSignOut()">
@@ -1706,58 +1713,162 @@
     }
 
     function renderProfileCard() {
-      const staff = currentStaff;
-      const name = staff.name || currentUser.email.split('@')[0];
-      const initials = getInitials(name);
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || 'User';
+      const initials = getInitials(displayName);
 
       const avatarEl = document.getElementById('profileAvatar');
-      if (staff.photoURL || currentUser.photoURL) {
-        avatarEl.innerHTML = `<img src="${escapeHtml(staff.photoURL || currentUser.photoURL)}" alt="">`;
+      if (tasker.photoURL || user.photoURL) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(tasker.photoURL || user.photoURL)}" alt="">`;
       } else {
         avatarEl.textContent = initials;
       }
 
-      document.getElementById('profileName').textContent = name;
-      document.getElementById('profileEmail').textContent = currentUser.email || '—';
+      document.getElementById('profileName').textContent = displayName;
+      document.getElementById('profileEmail').textContent = user.email || '—';
 
+      const metaEl = document.getElementById('profileMeta');
       const badges = [];
-      badges.push(`<span class="profile-badge verified"><i class="fas fa-circle-check"></i> Staff</span>`);
-      if (staff.department) {
-        badges.push(`<span class="profile-badge gold"><i class="fas fa-building"></i> ${escapeHtml(staff.department)}</span>`);
+
+      if (tasker.verified === true || tasker.status === 'verified') {
+        badges.push(`<span class="profile-badge verified"><i class="fas fa-circle-check"></i> Verified</span>`);
+      } else {
+        badges.push(`<span class="profile-badge neutral"><i class="fas fa-clock"></i> Pending</span>`);
       }
-      if (staff.role) {
-        badges.push(`<span class="profile-badge neutral"><i class="fas fa-briefcase"></i> ${escapeHtml(staff.role)}</span>`);
+
+      if (tasker.category) {
+        badges.push(`<span class="profile-badge gold"><i class="fas fa-briefcase"></i> ${escapeHtml(tasker.category)}</span>`);
       }
-      document.getElementById('profileMeta').innerHTML = badges.join('');
+
+      if (tasker.zone) {
+        badges.push(`<span class="profile-badge neutral"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(tasker.zone)}</span>`);
+      }
+
+      metaEl.innerHTML = badges.join('');
     }
 
-    function renderOverview() {
-      const staff = currentStaff;
-      const name = staff.name || currentUser.email.split('@')[0];
+    function renderContactInfo() {
+      const user = currentUser;
+      const tasker = currentTasker;
+      const displayName = tasker.name || user.email.split('@')[0] || '—';
 
-      document.getElementById('infoName').textContent = name;
-      document.getElementById('infoEmail').textContent = currentUser.email || '—';
+      document.getElementById('infoName').textContent = displayName;
+      document.getElementById('infoEmail').textContent = user.email || '—';
 
+      const phone = tasker.phone || tasker.payoutPhone;
       const phoneEl = document.getElementById('infoPhone');
-      if (staff.phone) {
-        phoneEl.textContent = staff.phone;
+      if (phone) {
+        phoneEl.textContent = phone;
+        phoneEl.classList.remove('muted');
       } else {
         phoneEl.textContent = 'Add a phone number';
         phoneEl.classList.add('muted');
       }
 
-      const deptEl = document.getElementById('infoDepartment');
-      if (staff.department) {
-        deptEl.textContent = staff.department;
+      const zoneEl = document.getElementById('infoZone');
+      if (tasker.zone) {
+        zoneEl.textContent = tasker.zone;
+        zoneEl.classList.remove('muted');
       } else {
-        deptEl.textContent = 'Not set';
-        deptEl.classList.add('muted');
+        zoneEl.textContent = 'Not set';
+        zoneEl.classList.add('muted');
+      }
+    }
+
+    function renderWorkInfo() {
+      const tasker = currentTasker;
+
+      document.getElementById('infoRole').textContent =
+        tasker.status === 'verified' ? 'Verified KazInni member' : 'KazInni member';
+
+      const catEl = document.getElementById('infoCategory');
+      if (tasker.category) {
+        catEl.textContent = tasker.category;
+        catEl.classList.remove('muted');
+      } else {
+        catEl.textContent = 'Not set';
+        catEl.classList.add('muted');
       }
 
-      document.getElementById('infoStaffId').textContent = staff.staffId || '—';
-      document.getElementById('infoRole').textContent = staff.role || '—';
-      document.getElementById('infoStartDate').textContent = formatDate(staff.startDate);
-      document.getElementById('infoReportsTo').textContent = staff.reportsTo || '—';
+      const skillsEl = document.getElementById('infoSkills');
+      if (Array.isArray(tasker.skills) && tasker.skills.length > 0) {
+        skillsEl.textContent = tasker.skills.join(', ');
+        skillsEl.classList.remove('muted');
+      } else if (typeof tasker.skills === 'string' && tasker.skills) {
+        skillsEl.textContent = tasker.skills;
+        skillsEl.classList.remove('muted');
+      } else {
+        skillsEl.textContent = 'No skills listed';
+        skillsEl.classList.add('muted');
+      }
+
+      const bioEl = document.getElementById('infoBio');
+      if (tasker.bio) {
+        bioEl.textContent = tasker.bio;
+        bioEl.classList.remove('muted');
+      } else {
+        bioEl.textContent = 'No bio yet';
+        bioEl.classList.add('muted');
+      }
+    }
+
+    function renderWorkspaces() {
+      const body = document.getElementById('workspacesBody');
+      const keys = Object.keys(currentPerms).filter(k => currentPerms[k] === true && WORKSPACE_LABELS[k]);
+
+      if (keys.length === 0) {
+        body.innerHTML = `
+          <div class="info-row">
+            <div class="info-value muted">No workspaces granted yet. Contact your KazInni administrator.</div>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = keys.map(k => `
+        <div class="info-row">
+          <div class="info-label">
+            <i class="fas fa-check-circle" style="color:var(--success);font-size:0.75rem;margin-right:0.3rem;"></i>
+            ${escapeHtml(WORKSPACE_LABELS[k])}
+          </div>
+          <div class="info-value" style="text-align:right;color:var(--success);font-size:0.8rem;font-weight:600;">Active</div>
+        </div>
+      `).join('');
+    }
+
+    function renderApps() {
+      const body = document.getElementById('appsBody');
+      const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
+
+      const visible = apps.filter(app => {
+        if (app.alwaysVisible) return true;
+        if (currentPerms[app.permission] === true) return true;
+        if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
+        return false;
+      });
+
+      if (visible.length === 0) {
+        body.innerHTML = `
+          <div class="info-row">
+            <div class="info-value muted">No apps available. Contact your KazInni administrator.</div>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = visible.map(app => `
+        <a class="quick-link" href="${app.link}">
+          <div class="quick-link-icon" style="background:${hexAlpha(app.color, 0.12)};color:${app.color};">
+            <i class="fas ${app.icon}"></i>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">${escapeHtml(app.name)}</div>
+            <div class="quick-link-desc">Open app</div>
+          </div>
+          <i class="fas fa-chevron-right quick-link-arrow"></i>
+        </a>
+      `).join('');
     }
 
     // ============================================================
@@ -1766,15 +1877,13 @@
     window.switchTab = function(tab) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
-
-      // Scroll to top of content
       document.querySelector('.account-layout')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     // ============================================================
-    // LOAD ALL DATA
+    // HRMS DATA
     // ============================================================
-    async function loadAll() {
+    async function loadHrmsData() {
       await Promise.all([
         loadPayslips(),
         loadLeaveBalance(),
@@ -1788,11 +1897,11 @@
 
     async function loadPayslips() {
       try {
-        const snap = await db.ref(`staff_payslips/${currentUser.uid}`).once('value');
+        const snap = await database.ref(`staff_payslips/${currentUser.uid}`).once('value');
         const val = snap.val() || {};
         payslips = Object.entries(val)
           .map(([period, data]) => ({ period, ...data }))
-          .sort((a, b) => b.period.localeCompare(a.period));
+          .sort((a, b) => String(b.period).localeCompare(String(a.period)));
       } catch (e) {
         console.warn('Payslips load error:', e);
         payslips = [];
@@ -1801,7 +1910,7 @@
 
     async function loadLeaveBalance() {
       try {
-        const snap = await db.ref(`staff_leave_balance/${currentUser.uid}`).once('value');
+        const snap = await database.ref(`staff_leave_balance/${currentUser.uid}`).once('value');
         leaveBalances = snap.val() || { annual: 21, sick: 14, compassionate: 5 };
       } catch (e) {
         leaveBalances = { annual: 21, sick: 14, compassionate: 5 };
@@ -1810,7 +1919,7 @@
 
     async function loadLeaveRequests() {
       try {
-        const snap = await db.ref(`staff_leave_requests/${currentUser.uid}`).once('value');
+        const snap = await database.ref(`staff_leave_requests/${currentUser.uid}`).once('value');
         const val = snap.val() || {};
         leaveRequests = Object.entries(val)
           .map(([id, r]) => ({ id, ...r }))
@@ -1822,13 +1931,12 @@
 
     async function loadAttendance() {
       try {
-        const snap = await db.ref(`staff_attendance/${currentUser.uid}`).once('value');
+        const snap = await database.ref(`staff_attendance/${currentUser.uid}`).once('value');
         const val = snap.val() || {};
         attendance = Object.entries(val)
           .map(([date, data]) => ({ date, ...data }))
-          .sort((a, b) => b.date.localeCompare(a.date));
+          .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-        // Find today's record
         const today = new Date().toISOString().slice(0, 10);
         todayClock = attendance.find(a => a.date === today) || null;
       } catch (e) {
@@ -1838,7 +1946,7 @@
     }
 
     // ============================================================
-    // TAB: PAYSLIPS
+    // PAYSLIPS TAB
     // ============================================================
     function renderPayslipsTab() {
       const select = document.getElementById('payslipPeriodSelect');
@@ -1860,14 +1968,14 @@
         return;
       }
 
-      // Populate select
-      select.innerHTML = payslips.map(p => `<option value="${escapeHtml(p.period)}">${escapeHtml(p.label || p.period)}</option>`).join('');
+      select.innerHTML = payslips.map(p =>
+        `<option value="${escapeHtml(p.period)}">${escapeHtml(p.label || p.period)}</option>`
+      ).join('');
 
-      // Latest summary
       const latest = payslips[0];
       netEl.textContent = formatMoney(latest.net);
       periodEl.textContent = latest.label || latest.period;
-      downloadBtn.disabled = false;
+      downloadBtn.disabled = !latest.pdfUrl;
 
       renderPayslipDetail();
     }
@@ -1921,7 +2029,7 @@
           <span class="payslip-line-value">− KES ${formatMoney(p.nssf)}</span>
         </div>` : ''}
         ${p.shif ? `<div class="payslip-line deduction">
-          <span class="payslip-line-label">SHIF (NHIF)</span>
+          <span class="payslip-line-label">SHIF</span>
           <span class="payslip-line-value">− KES ${formatMoney(p.shif)}</span>
         </div>` : ''}
         ${p.paye ? `<div class="payslip-line deduction">
@@ -1951,7 +2059,7 @@
     window.downloadLatestPayslip = function() {
       const period = document.getElementById('payslipPeriodSelect').value;
       const p = payslips.find(x => x.period === period);
-      if (!p) { showToast('No payslip to download', 'error'); return; }
+      if (!p) { showToast('No payslip selected', 'error'); return; }
       if (p.pdfUrl) {
         window.open(p.pdfUrl, '_blank', 'noopener');
       } else {
@@ -1960,7 +2068,7 @@
     };
 
     // ============================================================
-    // TAB: LEAVE
+    // LEAVE TAB
     // ============================================================
     function renderLeaveTab() {
       const grid = document.getElementById('leaveBalanceGrid');
@@ -1971,7 +2079,7 @@
         const balance = leaveBalances[t] ?? 0;
         return `
           <div class="leave-balance-card">
-            <div class="leave-balance-icon" style="background:${meta.color}15;color:${meta.color};">
+            <div class="leave-balance-icon" style="background:${hexAlpha(meta.color, 0.12)};color:${meta.color};">
               <i class="fas ${meta.icon}"></i>
             </div>
             <div class="leave-balance-value">${balance}<span class="unit">days</span></div>
@@ -2013,7 +2121,7 @@
               <div class="leave-row-title">${escapeHtml(meta.label)}</div>
               <div class="leave-row-meta">
                 <span><i class="fas fa-calendar"></i> ${escapeHtml(formatDateShort(r.startDate))} → ${escapeHtml(formatDateShort(r.endDate))}</span>
-                ${r.reason ? `<span><i class="fas fa-comment"></i> ${escapeHtml(r.reason.slice(0, 40))}${r.reason.length > 40 ? '…' : ''}</span>` : ''}
+                ${r.reason ? `<span><i class="fas fa-comment"></i> ${escapeHtml(String(r.reason).slice(0, 40))}${String(r.reason).length > 40 ? '…' : ''}</span>` : ''}
               </div>
             </div>
             <div class="leave-row-right">
@@ -2057,8 +2165,8 @@
       btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Submitting…';
 
       try {
-        const id = db.ref(`staff_leave_requests/${currentUser.uid}`).push().key;
-        await db.ref(`staff_leave_requests/${currentUser.uid}/${id}`).set({
+        const id = database.ref(`staff_leave_requests/${currentUser.uid}`).push().key;
+        await database.ref(`staff_leave_requests/${currentUser.uid}/${id}`).set({
           id,
           type,
           startDate,
@@ -2067,9 +2175,8 @@
           reason,
           status: 'pending',
           requestedAt: Date.now(),
-          staffName: currentStaff.name || '',
-          staffEmail: currentUser.email || '',
-          department: currentStaff.department || ''
+          staffName: currentTasker.name || '',
+          staffEmail: currentUser.email || ''
         });
 
         showToast('Leave request submitted', 'success');
@@ -2086,7 +2193,7 @@
     };
 
     // ============================================================
-    // TAB: ATTENDANCE
+    // ATTENDANCE TAB
     // ============================================================
     function renderAttendanceTab() {
       renderClockCard();
@@ -2099,7 +2206,6 @@
       const statusEl = document.getElementById('clockStatus');
       const labelEl = document.getElementById('clockLabel');
       const btn = document.getElementById('clockBtn');
-      const btnText = document.getElementById('clockBtnText');
 
       const now = new Date();
       timeEl.textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
@@ -2108,17 +2214,19 @@
       if (!todayClock || !todayClock.clockIn) {
         statusEl.textContent = 'Not clocked in';
         btn.classList.remove('clock-out');
-        btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> <span id="clockBtnText">Clock in</span>';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> <span>Clock in</span>';
       } else if (!todayClock.clockOut) {
         const clockInTime = new Date(todayClock.clockIn).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         statusEl.textContent = `Clocked in at ${clockInTime}`;
         btn.classList.add('clock-out');
-        btn.innerHTML = '<i class="fas fa-right-from-bracket"></i> <span id="clockBtnText">Clock out</span>';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-right-from-bracket"></i> <span>Clock out</span>';
       } else {
         const hrs = hoursBetween(todayClock.clockIn, todayClock.clockOut).toFixed(1);
         statusEl.textContent = 'Done for today';
-        btn.disabled = true;
         btn.classList.remove('clock-out');
+        btn.disabled = true;
         btn.innerHTML = `<i class="fas fa-check"></i> <span>${hrs} hrs logged</span>`;
       }
     }
@@ -2135,7 +2243,6 @@
       monthRecords.forEach(r => {
         if (r.clockIn && r.clockOut) {
           totalHours += hoursBetween(r.clockIn, r.clockOut);
-          // Late if clocked in after 9:15 AM
           const inTime = new Date(r.clockIn);
           if (inTime.getHours() > 9 || (inTime.getHours() === 9 && inTime.getMinutes() > 15)) {
             late++;
@@ -2197,16 +2304,14 @@
         const nowIso = new Date().toISOString();
 
         if (!todayClock || !todayClock.clockIn) {
-          // Clock in
-          await db.ref(`staff_attendance/${currentUser.uid}/${today}`).set({
+          await database.ref(`staff_attendance/${currentUser.uid}/${today}`).set({
             date: today,
             clockIn: nowIso,
             clockOut: null
           });
           showToast('Clocked in successfully', 'success');
         } else if (!todayClock.clockOut) {
-          // Clock out
-          await db.ref(`staff_attendance/${currentUser.uid}/${today}`).update({
+          await database.ref(`staff_attendance/${currentUser.uid}/${today}`).update({
             clockOut: nowIso
           });
           showToast('Clocked out. Have a good day!', 'success');
@@ -2222,7 +2327,7 @@
       }
     };
 
-    // Live clock update
+    // Live clock (updates every 30s)
     setInterval(() => {
       if (document.getElementById('tab-attendance')?.classList.contains('active')) {
         const timeEl = document.getElementById('clockTime');
@@ -2238,13 +2343,13 @@
     function attachLiveListeners() {
       const uid = currentUser.uid;
 
-      const payslipRef = db.ref(`staff_payslips/${uid}`);
+      const payslipRef = database.ref(`staff_payslips/${uid}`);
       payslipRef.on('value', () => { loadPayslips().then(renderPayslipsTab); });
 
-      const leaveRef = db.ref(`staff_leave_requests/${uid}`);
+      const leaveRef = database.ref(`staff_leave_requests/${uid}`);
       leaveRef.on('value', () => { loadLeaveRequests().then(renderLeaveHistory); });
 
-      const attRef = db.ref(`staff_attendance/${uid}`);
+      const attRef = database.ref(`staff_attendance/${uid}`);
       attRef.on('value', () => { loadAttendance().then(renderAttendanceTab); });
 
       liveListeners.push(payslipRef, leaveRef, attRef);
@@ -2253,14 +2358,14 @@
     // ============================================================
     // USER MENU
     // ============================================================
-    window.toggleUserDropdown = function(e) {
+    function toggleUserDropdown(e) {
       if (e) e.stopPropagation();
       const menu = document.getElementById('userDropdown');
       const btn = document.getElementById('userMenuBtn');
       if (!menu) return;
       menu.classList.toggle('active');
       if (btn) btn.classList.toggle('active');
-    };
+    }
 
     function closeUserDropdown() {
       const menu = document.getElementById('userDropdown');
@@ -2284,7 +2389,7 @@
     // ============================================================
     // ACTIONS
     // ============================================================
-    window.handleSignOut = async function() {
+    async function handleSignOut() {
       try {
         liveListeners.forEach(ref => { try { ref.off(); } catch (e) {} });
         await auth.signOut();
@@ -2294,9 +2399,9 @@
         console.error('Sign out error:', err);
         showToast('Error signing out', 'error');
       }
-    };
+    }
 
-    window.sendPasswordReset = async function() {
+    async function sendPasswordReset() {
       if (!currentUser || !currentUser.email) return;
       try {
         await auth.sendPasswordResetEmail(currentUser.email);
@@ -2305,9 +2410,8 @@
         console.error('Reset error:', err);
         showToast('Could not send reset link. Try again later.', 'error');
       }
-    };
+    }
 
-    // Cleanup
     window.addEventListener('beforeunload', () => {
       liveListeners.forEach(ref => { try { ref.off(); } catch (e) {} });
     });
