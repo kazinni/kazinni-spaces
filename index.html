@@ -1742,10 +1742,6 @@ body.rail-open .rail-backdrop { display: block; }
               <div class="ws-nav-dd-icon" style="background:#d13438;">
                 <i class="fas fa-mobile-screen" aria-hidden="true"></i>
               </div>
-              <div class="ws-nav-dd-body">
-                <div class="ws-nav-dd-title">Instant M-Pesa Payouts</div>
-                <div class="ws-nav-dd-desc">Request payouts from your wallet and receive them straight to M-Pesa.</div>
-              </div>
             </button>
           </div>
           <div class="ws-nav-dd-footer">
@@ -1867,10 +1863,6 @@ body.rail-open .rail-backdrop { display: block; }
       <button type="button" class="rail-item" onclick="navigateTo('learning')" data-nav="learning" id="railLearning">
         <i class="fas fa-graduation-cap" aria-hidden="true"></i>
         <span class="rail-item-name">Learning</span>
-      </button>
-      <button type="button" class="rail-item" onclick="navigateTo('wallet')" data-nav="wallet">
-        <i class="fas fa-wallet" aria-hidden="true"></i>
-        <span class="rail-item-name">Wallet</span>
       </button>
       <button type="button" class="rail-item" onclick="navigateTo('account')" data-nav="account">
         <i class="fas fa-user" aria-hidden="true"></i>
@@ -2031,16 +2023,6 @@ const APPS = {
     permission: 'zindua',
     fallbackPermission: 'ekazi',
     alwaysVisible: false
-  },
-  'wallet': {
-    name: 'Wallet',
-    desc: 'Balances, payouts, and M-Pesa transaction history.',
-    icon: 'fa-wallet',
-    color: '#7c3aed',
-    link: 'wallet.html',
-    permission: null,
-    alwaysVisible: false,
-    signedInOnly: true
   },
   'learning': {
     name: 'Learning',
@@ -2625,7 +2607,6 @@ function renderAccountButton() {
           <div class="ud-section-label">Account</div>
           <a href="account.html" class="ud-item" role="menuitem"><i class="fas fa-user" aria-hidden="true"></i> My account</a>
           <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Settings</a>
-          <a href="wallet.html" class="ud-item" role="menuitem"><i class="fas fa-wallet" aria-hidden="true"></i> Wallet</a>
           <div class="ud-divider"></div>
           <div class="ud-section-label">Workspace</div>
           ${renderDropdownApps()}
@@ -2805,11 +2786,6 @@ function renderLanding() {
             <div class="why-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
             <h3>Learning built-in</h3>
             <p>Upskill on client communication, M-Pesa security, portfolio craft and more.</p>
-          </div>
-          <div class="why-item">
-            <div class="why-icon"><i class="fas fa-mobile-screen" aria-hidden="true"></i></div>
-            <h3>Instant M-Pesa</h3>
-            <p>Request payouts from your wallet and receive them straight to M-Pesa.</p>
           </div>
         </div>
       </div>
@@ -3471,7 +3447,6 @@ function navigateTo(section) {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   else if (section === 'learning') window.location.href = 'learning/index.html';
-  else if (section === 'wallet') window.location.href = 'wallet.html';
   else if (section === 'account') window.location.href = 'account.html';
   else if (section === 'resources') window.location.href = 'resources.html';
 }
