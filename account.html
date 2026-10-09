@@ -29,7 +29,9 @@
       --ink-3: #2d2d4a;
       --success: #10b981;
       --danger: #ef4444;
+      --warning: #f59e0b;
       --info: #3b82f6;
+      --purple: #8b5cf6;
       --text-primary: #0f0f1e;
       --text-secondary: #4a4a5e;
       --text-muted: #6b7280;
@@ -39,7 +41,6 @@
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.06);
       --shadow-xl: 0 20px 40px -8px rgba(0,0,0,0.1);
-      --shadow-gold: 0 20px 50px rgba(202, 138, 4, 0.22);
       --nav-bg: rgba(255, 255, 255, 0.9);
       --header-height: 64px;
       --font-display: 'Clash Display', 'Cabinet Grotesk', sans-serif;
@@ -59,7 +60,7 @@
     }
 
     /* ============================================================
-       TOP NAV (same as suite.html)
+       TOP NAV
        ============================================================ */
     .m365-nav {
       position: sticky; top: 0; z-index: 1000;
@@ -139,9 +140,7 @@
       padding: 2.5rem 2rem 5rem;
     }
 
-    .account-title {
-      margin-bottom: 2rem;
-    }
+    .account-title { margin-bottom: 2rem; }
     .account-title h1 {
       font-family: var(--font-display);
       font-size: 2.1rem; font-weight: 700;
@@ -149,11 +148,9 @@
       color: var(--ink);
       margin-bottom: 0.3rem;
     }
-    .account-title p {
-      color: var(--text-muted); font-size: 0.95rem;
-    }
+    .account-title p { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* Profile header card */
+    /* Profile header */
     .profile-card {
       background: white;
       border: 1px solid var(--border-light);
@@ -169,9 +166,7 @@
       background: radial-gradient(circle, rgba(202,138,4,0.08) 0%, transparent 65%);
       top: -180px; right: -120px; pointer-events: none;
     }
-    .profile-avatar-wrap {
-      position: relative; flex-shrink: 0;
-    }
+    .profile-avatar-wrap { position: relative; flex-shrink: 0; }
     .profile-avatar {
       width: 108px; height: 108px; border-radius: 50%;
       background: var(--gold-gradient);
@@ -221,15 +216,39 @@
     .profile-badge.gold { background: var(--gold-soft); color: var(--gold-dark); }
     .profile-badge.neutral { background: #f3f4f6; color: #4b5563; }
 
-    /* Sections grid */
+    /* ============================================================
+       TABS
+       ============================================================ */
+    .tab-nav {
+      display: flex; gap: 0.3rem; margin-bottom: 1.5rem;
+      background: white; border: 1px solid var(--border-light);
+      border-radius: 100px; padding: 4px;
+      width: fit-content; max-width: 100%;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 0.6rem 1.2rem; border-radius: 100px; border: none;
+      background: transparent; color: var(--text-muted);
+      cursor: pointer; font-weight: 600; font-size: 0.82rem;
+      white-space: nowrap; transition: all 0.25s;
+      font-family: var(--font-heading);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tab-btn.active { background: var(--gold-gradient); color: white; box-shadow: 0 4px 12px rgba(202,138,4,0.25); }
+    .tab-btn i { font-size: 0.8rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeUp 0.35s ease; }
+
+    /* ============================================================
+       OVERVIEW GRID
+       ============================================================ */
     .account-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
-    @media (max-width: 900px) {
-      .account-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .account-grid { grid-template-columns: 1fr; } }
 
     .account-section {
       background: white;
@@ -247,9 +266,7 @@
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--border-light);
     }
-    .section-head-left {
-      display: flex; align-items: center; gap: 0.75rem;
-    }
+    .section-head-left { display: flex; align-items: center; gap: 0.75rem; }
     .section-icon {
       width: 36px; height: 36px; border-radius: 10px;
       background: var(--gold-soft); color: var(--gold-dark);
@@ -269,7 +286,6 @@
       background: none; border: none;
     }
     .section-head .edit-link:hover { color: var(--gold); }
-
     .section-body { padding: 0.5rem 1.6rem 1.4rem; }
 
     .info-row {
@@ -292,7 +308,6 @@
     }
     .info-value.muted { color: var(--text-muted); font-style: italic; }
 
-    /* Quick links list */
     .quick-link {
       display: flex; align-items: center; gap: 1rem;
       padding: 1rem 0;
@@ -321,15 +336,13 @@
       color: var(--ink); transition: color 0.2s;
       margin-bottom: 0.1rem;
     }
-    .quick-link-desc {
-      font-size: 0.78rem; color: var(--text-muted);
-    }
+    .quick-link-desc { font-size: 0.78rem; color: var(--text-muted); }
     .quick-link-arrow {
       color: var(--text-muted); font-size: 0.8rem;
       transition: all 0.2s;
     }
 
-    /* Danger zone */
+    /* Danger */
     .danger-section {
       grid-column: 1 / -1;
       background: white;
@@ -338,13 +351,8 @@
       overflow: hidden;
       margin-top: 1.5rem;
     }
-    .danger-section .section-head {
-      background: #fef2f2;
-      border-bottom-color: #fecaca;
-    }
-    .danger-section .section-icon {
-      background: #fee2e2; color: #991b1b;
-    }
+    .danger-section .section-head { background: #fef2f2; border-bottom-color: #fecaca; }
+    .danger-section .section-icon { background: #fee2e2; color: #991b1b; }
     .danger-body {
       padding: 1.4rem 1.6rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -366,8 +374,593 @@
       display: inline-flex; align-items: center; gap: 0.5rem;
       white-space: nowrap;
     }
-    .btn-danger:hover {
-      background: #ef4444; color: white; border-color: #ef4444;
+    .btn-danger:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+    /* ============================================================
+       PAYSLIP TAB
+       ============================================================ */
+    .payslip-summary {
+      background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      color: white;
+    }
+    .payslip-summary::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(202,138,4,0.35) 0%, transparent 60%);
+      top: -180px; right: -140px;
+      pointer-events: none;
+    }
+    .payslip-summary-left { position: relative; z-index: 1; }
+    .payslip-summary-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-heading);
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 0.8rem;
+    }
+    .payslip-summary-label i { color: var(--gold-light); }
+    .payslip-summary-value {
+      display: flex; align-items: baseline; gap: 0.5rem;
+      font-family: var(--font-display);
+      margin-bottom: 0.5rem;
+    }
+    .payslip-summary-value .currency {
+      font-size: 1.2rem; color: rgba(255,255,255,0.5); font-weight: 600;
+    }
+    .payslip-summary-value .amount {
+      font-size: 2.6rem; font-weight: 700;
+      letter-spacing: -0.03em;
+      background: var(--gold-gradient);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .payslip-summary-period {
+      font-size: 0.85rem; color: rgba(255,255,255,0.6);
+    }
+    .payslip-summary-right {
+      position: relative; z-index: 1;
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .payslip-action {
+      padding: 0.75rem 1.4rem;
+      border-radius: 100px;
+      border: none; cursor: pointer;
+      font-family: var(--font-heading);
+      font-weight: 600; font-size: 0.82rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .payslip-action.primary {
+      background: var(--gold-gradient); color: white;
+      box-shadow: 0 8px 24px rgba(202,138,4,0.35);
+    }
+    .payslip-action.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(202,138,4,0.45); }
+    .payslip-action.ghost {
+      background: rgba(255,255,255,0.08); color: white;
+      border: 1.5px solid rgba(255,255,255,0.2);
+    }
+    .payslip-action.ghost:hover { background: rgba(255,255,255,0.15); }
+
+    .payslip-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .payslip-head {
+      padding: 1.2rem 1.6rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.6rem;
+    }
+    .payslip-head h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--ink);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .payslip-head h3 i { color: var(--gold); }
+    .payslip-period-select {
+      font-family: var(--font-heading);
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      background: #faf9f7;
+      cursor: pointer;
+    }
+    .payslip-body { padding: 1.4rem 1.6rem 1.6rem; }
+
+    .payslip-line {
+      display: flex; justify-content: space-between;
+      padding: 0.65rem 0;
+      border-bottom: 1px dashed #f0f0f0;
+      font-size: 0.88rem;
+    }
+    .payslip-line:last-child { border-bottom: none; }
+    .payslip-line-label {
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+    }
+    .payslip-line-value {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .payslip-line.section-header {
+      border-bottom: 1px solid var(--border-light);
+      padding-top: 1.2rem;
+      padding-bottom: 0.5rem;
+    }
+    .payslip-line.section-header .payslip-line-label {
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .payslip-line.total {
+      padding-top: 0.9rem;
+      padding-bottom: 0.9rem;
+      border-top: 2px solid var(--border-light);
+      border-bottom: none;
+      margin-top: 0.5rem;
+    }
+    .payslip-line.total .payslip-line-label {
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+    .payslip-line.total .payslip-line-value {
+      font-size: 1.1rem;
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+    }
+    .payslip-line.total.net .payslip-line-value { color: var(--success); }
+    .payslip-line.deduction .payslip-line-value { color: var(--danger); }
+
+    /* ============================================================
+       LEAVE TAB
+       ============================================================ */
+    .leave-balance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 720px) { .leave-balance-grid { grid-template-columns: 1fr; } }
+
+    .leave-balance-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 18px;
+      padding: 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .leave-balance-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .leave-balance-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--gold-gradient);
+      transform: scaleY(0);
+      transition: transform 0.3s;
+      border-radius: 0 4px 4px 0;
+    }
+    .leave-balance-card:hover::before { transform: scaleY(1); }
+    .leave-balance-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .leave-balance-value {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .leave-balance-value .unit {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-left: 0.3rem;
+    }
+    .leave-balance-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .leave-actions {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      background: var(--ink); color: white;
+      border: none; border-radius: 100px;
+      font-family: var(--font-heading);
+      font-weight: 600; font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-gradient);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-primary > * { position: relative; z-index: 1; }
+    .btn-primary:hover { box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .leave-history-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .leave-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.6rem;
+      border-bottom: 1px solid #f3f4f6;
+      transition: background 0.2s;
+    }
+    .leave-row:last-child { border-bottom: none; }
+    .leave-row:hover { background: #faf9f7; }
+    .leave-row-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      color: white; flex-shrink: 0;
+    }
+    .leave-row-body { flex: 1; min-width: 0; }
+    .leave-row-title {
+      font-family: var(--font-heading);
+      font-weight: 600; font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+    }
+    .leave-row-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex; gap: 0.7rem; flex-wrap: wrap;
+      font-family: var(--font-heading);
+    }
+    .leave-row-right {
+      text-align: right; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;
+    }
+    .leave-days {
+      font-family: var(--font-display);
+      font-weight: 700; font-size: 1rem;
+      color: var(--text-primary);
+    }
+    .leave-status {
+      font-size: 0.6rem; font-weight: 700;
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+    .leave-status.pending { background: #fef3c7; color: #92400e; }
+    .leave-status.approved { background: #d1fae5; color: #065f46; }
+    .leave-status.rejected { background: #fee2e2; color: #991b1b; }
+    .leave-status.cancelled { background: #f3f4f6; color: #4b5563; }
+
+    /* ============================================================
+       ATTENDANCE TAB
+       ============================================================ */
+    .attendance-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) { .attendance-summary { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .attendance-summary { grid-template-columns: 1fr; } }
+
+    .attendance-stat {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.2rem 1.3rem;
+      transition: all 0.2s;
+    }
+    .attendance-stat:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .attendance-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .attendance-stat-value .unit {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-left: 0.2rem;
+    }
+    .attendance-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .clock-card {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+      box-shadow: 0 12px 32px rgba(202,138,4,0.2);
+    }
+    .clock-card-left { position: relative; z-index: 1; }
+    .clock-card-status {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      opacity: 0.85;
+      margin-bottom: 0.4rem;
+      font-family: var(--font-heading);
+    }
+    .clock-card-time {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .clock-card-label {
+      font-size: 0.82rem;
+      opacity: 0.85;
+    }
+    .clock-card-right { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .clock-btn {
+      padding: 0.85rem 1.6rem;
+      border-radius: 100px;
+      border: none; cursor: pointer;
+      font-family: var(--font-heading);
+      font-weight: 700; font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.25s;
+      background: white;
+      color: var(--gold-dark);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    .clock-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.15); }
+    .clock-btn.clock-out {
+      background: var(--ink);
+      color: white;
+    }
+    .clock-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .attendance-log {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .attendance-log-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.85rem 1.6rem;
+      border-bottom: 1px solid #f3f4f6;
+      transition: background 0.2s;
+      font-size: 0.85rem;
+    }
+    .attendance-log-row:last-child { border-bottom: none; }
+    .attendance-log-row:hover { background: #faf9f7; }
+    .attendance-day {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 100px;
+    }
+    .attendance-times {
+      flex: 1;
+      display: flex; gap: 1.5rem;
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+    }
+    .attendance-times span { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .attendance-times i { color: var(--text-muted); font-size: 0.7rem; }
+    .attendance-hours {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       EMPTY STATE
+       ============================================================ */
+    .empty-state {
+      text-align: center;
+      padding: 3.5rem 2rem;
+      color: var(--text-muted);
+    }
+    .empty-state i {
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--gold);
+      opacity: 0.4;
+      display: block;
+    }
+    .empty-state h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .empty-state p {
+      font-size: 0.85rem;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       MODAL
+       ============================================================ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,15,30,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000; display: none;
+    }
+    .modal-overlay.active { display: block; animation: fadeUp 0.25s ease; }
+    .modal {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: white; border-radius: 24px;
+      padding: 2.2rem 2rem 2rem;
+      max-width: 480px; width: calc(100% - 2rem);
+      z-index: 2001;
+      box-shadow: 0 40px 80px rgba(15,15,30,0.3);
+      display: none;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; font-size: 1rem;
+      cursor: pointer; color: var(--text-muted);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { color: var(--ink); background: rgba(15,15,30,0.05); }
+    .modal-header { text-align: center; margin-bottom: 1.6rem; }
+    .modal-icon {
+      width: 60px; height: 60px; border-radius: 18px;
+      background: var(--gold-gradient); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 1rem;
+      box-shadow: 0 12px 30px rgba(202,138,4,0.28);
+    }
+    .modal-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .modal-header p { color: var(--text-muted); font-size: 0.85rem; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-label {
+      display: block;
+      font-size: 0.75rem; font-weight: 600;
+      font-family: var(--font-heading);
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+      background: #faf9f7;
+      color: var(--text-primary);
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(202,138,4,0.08);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+    .modal-btn {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--ink); color: white;
+      border: none; border-radius: 100px;
+      font-weight: 600; cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      position: relative; overflow: hidden;
+    }
+    .modal-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-gradient);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .modal-btn > * { position: relative; z-index: 1; }
+    .modal-btn:hover { box-shadow: 0 12px 30px rgba(202,138,4,0.28); }
+    .modal-btn:hover::before { opacity: 1; }
+    .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+    .modal-btn.secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-light);
+      margin-top: 0.6rem;
+    }
+    .modal-btn.secondary::before { display: none; }
+    .modal-btn.secondary:hover {
+      background: #faf9f7;
+      border-color: var(--border-medium);
+      color: var(--text-primary);
+      box-shadow: none;
     }
 
     /* ============================================================
@@ -380,7 +973,9 @@
       border-radius: 12px;
       box-shadow: 0 24px 60px rgba(15,15,30,0.18), 0 4px 12px rgba(15,15,30,0.08);
       border: 1px solid var(--border-light);
-      overflow: hidden; display: none; z-index: 1001;
+      overflow: hidden;
+      display: none;
+      z-index: 1001;
       animation: fadeUp 0.2s ease;
     }
     .user-dropdown.active { display: block; }
@@ -393,7 +988,8 @@
     .ud-header-info { min-width: 0; flex: 1; }
     .ud-header-name {
       font-weight: 700; font-size: 0.92rem;
-      color: var(--ink); font-family: var(--font-heading);
+      color: var(--ink);
+      font-family: var(--font-heading);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .ud-header-email {
@@ -403,15 +999,22 @@
     .ud-body { padding: 0.5rem; }
     .ud-item {
       display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.6rem 0.9rem; border-radius: 8px;
-      cursor: pointer; transition: background 0.15s;
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
       border: none; background: none; width: 100%;
-      text-align: left; font-size: 0.85rem;
-      color: var(--text-secondary); text-decoration: none;
-      font-family: var(--font-body); font-weight: 500;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-weight: 500;
     }
     .ud-item i {
-      width: 18px; font-size: 0.85rem; color: var(--text-muted);
+      width: 18px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
       transition: color 0.15s;
     }
     .ud-item:hover { background: #faf9f7; color: var(--ink); }
@@ -423,9 +1026,13 @@
     .ud-item.danger:hover { background: #fef2f2; }
     .ud-divider { border-top: 1px solid var(--border-light); margin: 0.4rem 0.6rem; }
     .ud-section-label {
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.8px; color: var(--text-muted);
-      padding: 0.5rem 0.9rem 0.3rem; font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      padding: 0.5rem 0.9rem 0.3rem;
+      font-family: var(--font-heading);
     }
 
     /* ============================================================
@@ -438,12 +1045,14 @@
     }
     .toast {
       background: var(--ink); color: white;
-      border-radius: 12px; padding: 0.85rem 1.15rem;
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
       box-shadow: 0 20px 40px rgba(15,15,30,0.22);
       display: flex; align-items: center; gap: 0.65rem;
       font-family: var(--font-heading); font-size: 0.85rem;
       animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      max-width: 360px; font-weight: 500;
+      max-width: 360px;
+      font-weight: 500;
       pointer-events: auto;
     }
     .toast i { font-size: 0.95rem; }
@@ -463,17 +1072,15 @@
       to { opacity: 1; transform: translateX(0); }
     }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    /* Loading skeleton */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
     .skeleton {
       background: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
       background-size: 200% 100%;
       animation: shimmer 1.6s ease-in-out infinite;
       border-radius: 8px;
-    }
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
     }
 
     /* ============================================================
@@ -483,13 +1090,22 @@
       .m365-nav { padding: 0 1rem; }
       .m365-avatar-name { display: none; }
       .account-layout { padding: 1.5rem 1rem 4rem; }
-      .profile-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 1.6rem 1.4rem; }
+      .profile-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.2rem;
+        padding: 1.6rem 1.4rem;
+      }
       .profile-info .profile-name { justify-content: center; }
       .profile-info .profile-meta { justify-content: center; }
       .info-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .info-label { min-width: 0; }
       .danger-body { flex-direction: column; align-items: stretch; }
       .user-dropdown { width: 280px; right: -8px; }
+      .payslip-summary { padding: 1.6rem 1.5rem; }
+      .payslip-summary-value .amount { font-size: 2rem; }
+      .clock-card { padding: 1.4rem 1.4rem; }
+      .clock-card-time { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -516,8 +1132,6 @@
         <button class="m365-icon-btn" title="Notifications" onclick="showToast('No new notifications', 'info')">
           <i class="far fa-bell"></i>
         </button>
-
-        <!-- Auth container -->
         <div id="headerAuthContainer">
           <button class="m365-icon-btn" title="Loading…" disabled>
             <i class="fas fa-circle-notch" style="animation:spin 1s linear infinite;"></i>
@@ -531,9 +1145,10 @@
        MAIN CONTENT
        ============================================================ -->
   <main class="account-layout" id="accountLayout" style="display:none;">
+
     <div class="account-title">
       <h1>My account</h1>
-      <p id="accountSubtitle">Manage your profile, security and preferences.</p>
+      <p id="accountSubtitle">Manage your profile, payslips, leave and attendance.</p>
     </div>
 
     <!-- Profile header card -->
@@ -550,207 +1165,304 @@
           <span id="profileName">Loading…</span>
         </div>
         <div class="profile-email" id="profileEmail">—</div>
-        <div class="profile-meta" id="profileMeta">
-          <!-- Badges injected here -->
+        <div class="profile-meta" id="profileMeta"></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')" role="tab">
+        <i class="fas fa-user"></i> Overview
+      </button>
+      <button class="tab-btn" data-tab="payslips" onclick="switchTab('payslips')" role="tab">
+        <i class="fas fa-file-invoice-dollar"></i> Payslips
+      </button>
+      <button class="tab-btn" data-tab="leave" onclick="switchTab('leave')" role="tab">
+        <i class="fas fa-umbrella-beach"></i> Leave
+      </button>
+      <button class="tab-btn" data-tab="attendance" onclick="switchTab('attendance')" role="tab">
+        <i class="fas fa-clock"></i> Attendance
+      </button>
+    </div>
+
+    <!-- ============================================================
+         TAB: OVERVIEW
+         ============================================================ -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="account-grid">
+
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-address-card"></i></div>
+              <h2>Contact info</h2>
+            </div>
+            <button class="edit-link" onclick="showToast('Edit coming soon', 'info')">Edit</button>
+          </div>
+          <div class="section-body">
+            <div class="info-row">
+              <div class="info-label">Full name</div>
+              <div class="info-value" id="infoName">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Email</div>
+              <div class="info-value" id="infoEmail">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Phone</div>
+              <div class="info-value" id="infoPhone">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Department</div>
+              <div class="info-value" id="infoDepartment">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-briefcase"></i></div>
+              <h2>Employment</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="info-row">
+              <div class="info-label">Staff ID</div>
+              <div class="info-value" id="infoStaffId">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Role</div>
+              <div class="info-value" id="infoRole">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Started</div>
+              <div class="info-value" id="infoStartDate">—</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Reports to</div>
+              <div class="info-value" id="infoReportsTo">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-shield-halved"></i></div>
+              <h2>Account & security</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <a class="quick-link" onclick="sendPasswordReset()">
+              <div class="quick-link-icon"><i class="fas fa-key"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Change password</div>
+                <div class="quick-link-desc">Send a reset link to your email</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
+            <a class="quick-link" onclick="showToast('Session management coming soon', 'info')">
+              <div class="quick-link-icon"><i class="fas fa-lock"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Security & privacy</div>
+                <div class="quick-link-desc">Two-factor auth, sessions, devices</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="account-section">
+          <div class="section-head">
+            <div class="section-head-left">
+              <div class="section-icon"><i class="fas fa-circle-question"></i></div>
+              <h2>Help & support</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <a class="quick-link" href="mailto:operations@kazinni.com">
+              <div class="quick-link-icon"><i class="fas fa-envelope"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Contact HR</div>
+                <div class="quick-link-desc">operations@kazinni.com</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
+            <a class="quick-link" onclick="showToast('Help center coming soon', 'info')">
+              <div class="quick-link-icon"><i class="fas fa-book"></i></div>
+              <div class="quick-link-body">
+                <div class="quick-link-title">Staff handbook</div>
+                <div class="quick-link-desc">Policies, procedures, guides</div>
+              </div>
+              <i class="fas fa-chevron-right quick-link-arrow"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="danger-section">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <h2>Sign out of your account</h2>
+          </div>
+        </div>
+        <div class="danger-body">
+          <p>
+            Signing out will end your session on this device. You can sign back in anytime
+            with your KazInni credentials.
+          </p>
+          <button class="btn-danger" onclick="handleSignOut()">
+            <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Sections grid -->
-    <div class="account-grid">
+    <!-- ============================================================
+         TAB: PAYSLIPS
+         ============================================================ -->
+    <div class="tab-content" id="tab-payslips">
 
-      <!-- Contact info -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-address-card"></i></div>
-            <h2>Contact info</h2>
+      <div class="payslip-summary" id="payslipSummary">
+        <div class="payslip-summary-left">
+          <div class="payslip-summary-label">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Latest Payslip</span>
           </div>
-          <button class="edit-link" onclick="showToast('Edit coming soon', 'info')">Edit</button>
+          <div class="payslip-summary-value">
+            <span class="currency">KES</span>
+            <span class="amount" id="payslipNetAmount">—</span>
+          </div>
+          <div class="payslip-summary-period" id="payslipPeriod">No payslips yet</div>
         </div>
-        <div class="section-body">
-          <div class="info-row">
-            <div class="info-label">Full name</div>
-            <div class="info-value" id="infoName">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Email</div>
-            <div class="info-value" id="infoEmail">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Phone</div>
-            <div class="info-value" id="infoPhone">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Zone</div>
-            <div class="info-value" id="infoZone">—</div>
-          </div>
+        <div class="payslip-summary-right">
+          <button class="payslip-action primary" id="downloadPayslipBtn" onclick="downloadLatestPayslip()" disabled>
+            <i class="fas fa-download"></i> Download PDF
+          </button>
         </div>
       </div>
 
-      <!-- Work info -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-briefcase"></i></div>
-            <h2>Work info</h2>
-          </div>
+      <div class="payslip-card">
+        <div class="payslip-head">
+          <h3><i class="fas fa-file-lines"></i> Breakdown</h3>
+          <select class="payslip-period-select" id="payslipPeriodSelect" onchange="renderPayslipDetail()">
+            <option value="">— No payslips available —</option>
+          </select>
         </div>
-        <div class="section-body">
-          <div class="info-row">
-            <div class="info-label">Role</div>
-            <div class="info-value" id="infoRole">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Category</div>
-            <div class="info-value" id="infoCategory">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Skills</div>
-            <div class="info-value" id="infoSkills">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Bio</div>
-            <div class="info-value" id="infoBio">—</div>
+        <div class="payslip-body" id="payslipBody">
+          <div class="empty-state">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <h3>Loading payslips…</h3>
           </div>
         </div>
       </div>
-
-      <!-- Account & security -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-shield-halved"></i></div>
-            <h2>Account & security</h2>
-          </div>
-        </div>
-        <div class="section-body">
-          <a class="quick-link" onclick="location.href='account-settings.html'">
-            <div class="quick-link-icon"><i class="fas fa-gear"></i></div>
-            <div class="quick-link-body">
-              <div class="quick-link-title">Account settings</div>
-              <div class="quick-link-desc">Password, language, theme & notifications</div>
-            </div>
-            <i class="fas fa-chevron-right quick-link-arrow"></i>
-          </a>
-          <a class="quick-link" onclick="location.href='security.html'">
-            <div class="quick-link-icon"><i class="fas fa-lock"></i></div>
-            <div class="quick-link-body">
-              <div class="quick-link-title">Security & privacy</div>
-              <div class="quick-link-desc">Two-factor auth, sessions & devices</div>
-            </div>
-            <i class="fas fa-chevron-right quick-link-arrow"></i>
-          </a>
-          <a class="quick-link" onclick="sendPasswordReset()">
-            <div class="quick-link-icon"><i class="fas fa-key"></i></div>
-            <div class="quick-link-body">
-              <div class="quick-link-title">Change password</div>
-              <div class="quick-link-desc">Send a password reset link to your email</div>
-            </div>
-            <i class="fas fa-chevron-right quick-link-arrow"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Workspaces -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-layer-group"></i></div>
-            <h2>Workspaces</h2>
-          </div>
-        </div>
-        <div class="section-body" id="workspacesBody">
-          <div class="info-row">
-            <div class="info-label" style="min-width:auto;">
-              <span class="skeleton" style="display:inline-block;width:140px;height:0.9rem;"></span>
-            </div>
-          </div>
-          <div class="info-row">
-            <div class="info-label" style="min-width:auto;">
-              <span class="skeleton" style="display:inline-block;width:120px;height:0.9rem;"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Apps quick links -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-grip"></i></div>
-            <h2>Your apps</h2>
-          </div>
-          <button class="edit-link" onclick="location.href='index.html'">Open launcher</button>
-        </div>
-        <div class="section-body" id="appsBody">
-          <div class="info-row">
-            <div class="info-label" style="min-width:auto;">
-              <span class="skeleton" style="display:inline-block;width:160px;height:0.9rem;"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Support -->
-      <div class="account-section">
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon"><i class="fas fa-circle-question"></i></div>
-            <h2>Help & support</h2>
-          </div>
-        </div>
-        <div class="section-body">
-          <a class="quick-link" href="mailto:operations@kazinni.com">
-            <div class="quick-link-icon"><i class="fas fa-envelope"></i></div>
-            <div class="quick-link-body">
-              <div class="quick-link-title">Contact support</div>
-              <div class="quick-link-desc">operations@kazinni.com</div>
-            </div>
-            <i class="fas fa-chevron-right quick-link-arrow"></i>
-          </a>
-          <a class="quick-link" onclick="showToast('Help center coming soon', 'info')">
-            <div class="quick-link-icon"><i class="fas fa-book"></i></div>
-            <div class="quick-link-body">
-              <div class="quick-link-title">Help center</div>
-              <div class="quick-link-desc">Guides, FAQs and tutorials</div>
-            </div>
-            <i class="fas fa-chevron-right quick-link-arrow"></i>
-          </a>
-        </div>
-      </div>
-
     </div>
 
-    <!-- Danger zone -->
-    <div class="danger-section">
-      <div class="section-head">
-        <div class="section-head-left">
-          <div class="section-icon"><i class="fas fa-triangle-exclamation"></i></div>
-          <h2>Sign out of your account</h2>
+    <!-- ============================================================
+         TAB: LEAVE
+         ============================================================ -->
+    <div class="tab-content" id="tab-leave">
+
+      <div class="leave-balance-grid" id="leaveBalanceGrid">
+        <div class="leave-balance-card">
+          <div class="leave-balance-icon" style="background:#dbeafe;color:#1e40af;">
+            <i class="fas fa-circle-notch fa-spin"></i>
+          </div>
+          <div class="leave-balance-value"><span class="skeleton" style="display:inline-block;width:60px;height:1.9rem;"></span></div>
+          <div class="leave-balance-label">Loading…</div>
         </div>
       </div>
-      <div class="danger-body">
-        <p>
-          Signing out will end your session on this device. You can sign back in anytime
-          with your KazInni credentials.
-        </p>
-        <button class="btn-danger" onclick="handleSignOut()">
-          <i class="fas fa-arrow-right-from-bracket"></i> Sign out
+
+      <div class="leave-actions">
+        <button class="btn-primary" onclick="openLeaveModal()">
+          <i class="fas fa-plus"></i> Apply for leave
         </button>
       </div>
+
+      <div class="leave-history-card">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-clock-rotate-left"></i></div>
+            <h2>Leave requests</h2>
+          </div>
+          <span class="edit-link" id="leaveHistoryCount">—</span>
+        </div>
+        <div id="leaveHistoryBody">
+          <div class="empty-state">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <h3>Loading…</h3>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- ============================================================
+         TAB: ATTENDANCE
+         ============================================================ -->
+    <div class="tab-content" id="tab-attendance">
+
+      <div class="clock-card">
+        <div class="clock-card-left">
+          <div class="clock-card-status" id="clockStatus">Not clocked in</div>
+          <div class="clock-card-time" id="clockTime">--:--</div>
+          <div class="clock-card-label" id="clockLabel">Today · --</div>
+        </div>
+        <div class="clock-card-right">
+          <button class="clock-btn" id="clockBtn" onclick="handleClockToggle()">
+            <i class="fas fa-right-to-bracket"></i> <span id="clockBtnText">Clock in</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="attendance-summary">
+        <div class="attendance-stat">
+          <div class="attendance-stat-value" id="attDays">0<span class="unit">days</span></div>
+          <div class="attendance-stat-label">Days this month</div>
+        </div>
+        <div class="attendance-stat">
+          <div class="attendance-stat-value" id="attHours">0<span class="unit">hrs</span></div>
+          <div class="attendance-stat-label">Hours this month</div>
+        </div>
+        <div class="attendance-stat">
+          <div class="attendance-stat-value" id="attAvg">0<span class="unit">hrs</span></div>
+          <div class="attendance-stat-label">Average per day</div>
+        </div>
+        <div class="attendance-stat">
+          <div class="attendance-stat-value" id="attLate">0</div>
+          <div class="attendance-stat-label">Late arrivals</div>
+        </div>
+      </div>
+
+      <div class="attendance-log">
+        <div class="section-head">
+          <div class="section-head-left">
+            <div class="section-icon"><i class="fas fa-calendar-day"></i></div>
+            <h2>Recent attendance</h2>
+          </div>
+          <span class="edit-link" id="attendanceCount">—</span>
+        </div>
+        <div id="attendanceLogBody">
+          <div class="empty-state">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <h3>Loading…</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ============================================================
-       NOT SIGNED IN STATE
+       NOT SIGNED IN
        ============================================================ -->
   <div class="account-layout" id="notSignedIn" style="display:none;">
     <div class="account-title">
       <h1>My account</h1>
-      <p>Sign in to view your account details.</p>
+      <p>Sign in to view your account and HR records.</p>
     </div>
-
     <div class="account-section" style="text-align:center; padding: 3rem 2rem;">
       <div style="width:72px;height:72px;border-radius:20px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.2rem;">
         <i class="fas fa-user-lock"></i>
@@ -759,12 +1471,55 @@
         You're not signed in
       </h2>
       <p style="color:var(--text-muted);font-size:0.92rem;max-width:420px;margin:0 auto 1.6rem;line-height:1.6;">
-        Sign in with your KazInni account to view your profile and manage your account.
+        Sign in with your KazInni staff account to view your profile, payslips, leave and attendance.
       </p>
       <button class="btn-danger" style="background:var(--ink);color:white;border-color:var(--ink);" onclick="location.href='index.html'">
         <i class="fas fa-arrow-right-to-bracket"></i> Go to sign in
       </button>
     </div>
+  </div>
+
+  <!-- ============================================================
+       LEAVE MODAL
+       ============================================================ -->
+  <div class="modal-overlay" id="leaveModalOverlay" onclick="closeLeaveModal()"></div>
+  <div class="modal" id="leaveModal">
+    <button class="modal-close" onclick="closeLeaveModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-header">
+      <div class="modal-icon"><i class="fas fa-umbrella-beach"></i></div>
+      <h3>Apply for leave</h3>
+      <p>Submit a request — your manager will be notified</p>
+    </div>
+    <form id="leaveForm" onsubmit="submitLeave(event)">
+      <div class="form-group">
+        <label class="form-label">Leave type</label>
+        <select class="form-control" id="leaveType" required>
+          <option value="annual">Annual leave</option>
+          <option value="sick">Sick leave</option>
+          <option value="compassionate">Compassionate leave</option>
+          <option value="maternity">Maternity / Paternity</option>
+          <option value="unpaid">Unpaid leave</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Start date</label>
+          <input type="date" class="form-control" id="leaveStart" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">End date</label>
+          <input type="date" class="form-control" id="leaveEnd" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason (optional)</label>
+        <textarea class="form-control" id="leaveReason" rows="3" placeholder="Brief reason for your request" style="resize:vertical;font-family:var(--font-body);"></textarea>
+      </div>
+      <button type="submit" class="modal-btn" id="leaveSubmitBtn">
+        <i class="fas fa-paper-plane"></i> Submit request
+      </button>
+      <button type="button" class="modal-btn secondary" onclick="closeLeaveModal()">Cancel</button>
+    </form>
   </div>
 
   <script>
@@ -779,193 +1534,167 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const database = firebase.database();
+    const db = firebase.database();
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-    // ============================================================
-    // APP CONFIG (same as suite.html — used to render "Your apps")
-    // ============================================================
-    const APPS = {
-      'flexikazi': {
-        name: 'FlexiKazi',
-        icon: 'fa-list-check',
-        color: '#059669',
-        link: 'apps/flexikazi/',
-        permission: 'ekazi',
-        alwaysVisible: true
-      },
-      'kasikazi': {
-        name: 'Kasikazi',
-        icon: 'fa-compass',
-        color: '#0891b2',
-        link: 'apps/kasikazi/',
-        permission: 'kasikazi',
-        fallbackPermission: 'ekazi',
-        alwaysVisible: false
-      }
-    };
-
-    const WORKSPACE_LABELS = {
-      brandinn: 'BrandInn',
-      'brandinn-print': 'BrandInn Print',
-      dsog: 'DSOG Fashion',
-      'fusion-foods': 'Fusion Foods',
-      'mugs-n-dines': 'Mugs n Dines',
-      heritage: 'Heritage Ads',
-      'heritage-marketplace': 'Heritage Marketplace',
-      'heritage-interiors': 'Heritage Interiors',
-      'digital-services': 'E-Huduma',
-      'pick-up': 'Pick-Up Deliveries',
-      'pick-me': 'Pick-Me Rides',
-      workfit: 'WorkFit',
-      epitome: 'Epitome Reviews',
-      'latter-logistics': 'Latter Logistics',
-      ekazi: 'FlexiKazi',
-      kaskazi: 'Kasikazi'
-    };
 
     // ============================================================
     // STATE
     // ============================================================
     let currentUser = null;
-    let currentTasker = null;
-    let currentPerms = {};
+    let currentStaff = null;
+    let payslips = [];       // sorted newest first
+    let leaveBalances = {};  // { annual: 21, sick: 14, compassionate: 5 }
+    let leaveRequests = [];  // sorted newest first
+    let attendance = [];     // sorted newest first
+    let todayClock = null;   // { clockIn, clockOut } for today
+    let liveListeners = [];
+
+    const LEAVE_TYPES = {
+      annual:        { label: 'Annual leave',        color: '#3b82f6', icon: 'fa-sun' },
+      sick:          { label: 'Sick leave',          color: '#ef4444', icon: 'fa-briefcase-medical' },
+      compassionate: { label: 'Compassionate',       color: '#8b5cf6', icon: 'fa-heart' },
+      maternity:     { label: 'Maternity/Paternity', color: '#ec4899', icon: 'fa-baby' },
+      unpaid:        { label: 'Unpaid leave',        color: '#6b7280', icon: 'fa-ban' }
+    };
 
     // ============================================================
-    // TOAST
+    // UTILITIES
     // ============================================================
-    function showToast(msg, type = 'success') {
+    function escapeHtml(s) {
+      if (s === null || s === undefined) return '';
+      const d = document.createElement('div');
+      d.textContent = String(s);
+      return d.innerHTML;
+    }
+    function showToast(msg, type = 'info') {
       const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      toast.innerHTML = `<i class="fas ${icons[type]}"></i> <span>${escapeHtml(msg)}</span>`;
-      document.getElementById('toastContainer').appendChild(toast);
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> <span>${escapeHtml(msg)}</span>`;
+      document.getElementById('toastContainer').appendChild(t);
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = '0.35s';
-        setTimeout(() => toast.remove(), 350);
+        t.style.opacity = '0';
+        t.style.transition = '0.35s';
+        setTimeout(() => t.remove(), 350);
       }, 4000);
+    }
+    function formatMoney(n) {
+      return Number(n || 0).toLocaleString();
+    }
+    function formatDate(iso) {
+      if (!iso) return '—';
+      try {
+        return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch (e) { return iso; }
+    }
+    function formatDateShort(iso) {
+      if (!iso) return '—';
+      try {
+        return new Date(iso).toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
+      } catch (e) { return iso; }
+    }
+    function getInitials(name) {
+      if (!name) return 'U';
+      return name.split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+    }
+    function daysBetween(startIso, endIso) {
+      const a = new Date(startIso); const b = new Date(endIso);
+      return Math.round((b - a) / (1000 * 60 * 60 * 24)) + 1;
+    }
+    function hoursBetween(t1, t2) {
+      const a = new Date(t1); const b = new Date(t2);
+      return (b - a) / (1000 * 60 * 60);
     }
 
     // ============================================================
-    // AUTH FLOW
+    // AUTH
     // ============================================================
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        currentUser = null;
-        currentTasker = null;
-        currentPerms = {};
         showSignedOut();
         return;
       }
+      currentUser = user;
 
-      // Verify tasker
+      // Verify staff record
       try {
-        const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
-        if (!taskerSnap.exists()) {
-          await auth.signOut();
-          showToast('This account is not registered on KazInni.', 'error');
+        const snap = await db.ref(`staff/${user.uid}`).once('value');
+        if (!snap.exists()) {
+          document.getElementById('accountLayout').style.display = 'none';
+          document.getElementById('notSignedIn').style.display = 'block';
           return;
         }
-        currentTasker = taskerSnap.val();
-        if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
-          await auth.signOut();
-          showToast('Your KazInni account is pending verification.', 'error');
-          return;
-        }
+        currentStaff = snap.val();
       } catch (e) {
-        console.error('Tasker verification failed:', e);
-        await auth.signOut();
-        showToast('Could not verify your KazInni account.', 'error');
+        console.error('Staff lookup failed:', e);
         return;
       }
 
-      // Load permissions
-      try {
-        const permsSnap = await database.ref(`workspacePermissions/${user.uid}`).once('value');
-        currentPerms = permsSnap.exists() ? permsSnap.val() : {};
-      } catch (e) {
-        currentPerms = {};
-      }
-
-      currentUser = user;
-      renderSignedIn();
+      showSignedIn();
+      await loadAll();
+      attachLiveListeners();
     });
 
     // ============================================================
-    // RENDERING
+    // RENDER: Signed out / Signed in
     // ============================================================
     function showSignedOut() {
       document.getElementById('accountLayout').style.display = 'none';
       document.getElementById('notSignedIn').style.display = 'block';
-
-      const container = document.getElementById('headerAuthContainer');
-      container.innerHTML = `
+      document.getElementById('headerAuthContainer').innerHTML = `
         <button class="btn-danger" style="background:var(--ink);color:white;border-color:var(--ink);padding:0.55rem 1.2rem;font-size:0.82rem;" onclick="location.href='index.html'">
           <i class="fas fa-arrow-right-to-bracket"></i> Sign in
         </button>
       `;
     }
 
-    function renderSignedIn() {
+    function showSignedIn() {
       document.getElementById('accountLayout').style.display = 'block';
       document.getElementById('notSignedIn').style.display = 'none';
-
       renderHeaderAvatar();
       renderProfileCard();
-      renderContactInfo();
-      renderWorkInfo();
-      renderWorkspaces();
-      renderApps();
+      renderOverview();
     }
 
     function renderHeaderAvatar() {
-      const user = currentUser;
-      const tasker = currentTasker;
-      const displayName = tasker.name || user.email.split('@')[0] || 'User';
-      const initials = displayName
-        .split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
-      const email = user.email || '';
+      const name = currentStaff.name || currentUser.email.split('@')[0];
+      const initials = getInitials(name);
+      const email = currentUser.email || '';
 
-      const container = document.getElementById('headerAuthContainer');
-      container.innerHTML = `
+      document.getElementById('headerAuthContainer').innerHTML = `
         <div class="user-dropdown-wrap" id="userMenuWrap">
           <button class="m365-avatar-btn" id="userMenuBtn" onclick="toggleUserDropdown(event)">
-            <div class="m365-avatar">${initials}</div>
-            <span class="m365-avatar-name">${escapeHtml(displayName)}</span>
+            <div class="m365-avatar">${escapeHtml(initials)}</div>
+            <span class="m365-avatar-name">${escapeHtml(name)}</span>
             <i class="fas fa-chevron-down"></i>
           </button>
 
           <div class="user-dropdown" id="userDropdown">
             <div class="ud-header">
-              <div class="m365-avatar">${initials}</div>
+              <div class="m365-avatar">${escapeHtml(initials)}</div>
               <div class="ud-header-info">
-                <div class="ud-header-name">${escapeHtml(displayName)}</div>
+                <div class="ud-header-name">${escapeHtml(name)}</div>
                 <div class="ud-header-email">${escapeHtml(email)}</div>
               </div>
             </div>
-
             <div class="ud-body">
               <div class="ud-section-label">Account</div>
-              <a href="account.html" class="ud-item active">
-                <i class="fas fa-user"></i> My account
+              <a class="ud-item active" onclick="switchTab('overview')">
+                <i class="fas fa-user"></i> Overview
               </a>
-              <a href="account-settings.html" class="ud-item">
-                <i class="fas fa-gear"></i> Account settings
+              <a class="ud-item" onclick="switchTab('payslips')">
+                <i class="fas fa-file-invoice-dollar"></i> Payslips
               </a>
-              <a href="security.html" class="ud-item">
-                <i class="fas fa-shield-halved"></i> Security & privacy
+              <a class="ud-item" onclick="switchTab('leave')">
+                <i class="fas fa-umbrella-beach"></i> Leave
               </a>
-
+              <a class="ud-item" onclick="switchTab('attendance')">
+                <i class="fas fa-clock"></i> Attendance
+              </a>
               <div class="ud-divider"></div>
-              <div class="ud-section-label">Apps</div>
-              <a href="apps/flexikazi/" class="ud-item">
-                <i class="fas fa-list-check"></i> FlexiKazi
+              <a class="ud-item" onclick="sendPasswordReset()">
+                <i class="fas fa-key"></i> Change password
               </a>
-              <a href="apps/kasikazi/" class="ud-item">
-                <i class="fas fa-compass"></i> Kasikazi
-              </a>
-
               <div class="ud-divider"></div>
               <button class="ud-item danger" onclick="handleSignOut()">
                 <i class="fas fa-arrow-right-from-bracket"></i> Sign out
@@ -977,172 +1706,561 @@
     }
 
     function renderProfileCard() {
-      const user = currentUser;
-      const tasker = currentTasker;
-      const displayName = tasker.name || user.email.split('@')[0] || 'User';
-      const initials = displayName
-        .split(/[\s._-]/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+      const staff = currentStaff;
+      const name = staff.name || currentUser.email.split('@')[0];
+      const initials = getInitials(name);
 
       const avatarEl = document.getElementById('profileAvatar');
-      if (tasker.photoURL || user.photoURL) {
-        avatarEl.innerHTML = `<img src="${escapeHtml(tasker.photoURL || user.photoURL)}" alt="">`;
+      if (staff.photoURL || currentUser.photoURL) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(staff.photoURL || currentUser.photoURL)}" alt="">`;
       } else {
         avatarEl.textContent = initials;
       }
 
-      document.getElementById('profileName').textContent = displayName;
-      document.getElementById('profileEmail').textContent = user.email || '—';
+      document.getElementById('profileName').textContent = name;
+      document.getElementById('profileEmail').textContent = currentUser.email || '—';
 
-      // Meta badges
-      const metaEl = document.getElementById('profileMeta');
       const badges = [];
-
-      if (tasker.verified === true || tasker.status === 'verified') {
-        badges.push(`<span class="profile-badge verified"><i class="fas fa-circle-check"></i> Verified</span>`);
-      } else {
-        badges.push(`<span class="profile-badge neutral"><i class="fas fa-clock"></i> Pending</span>`);
+      badges.push(`<span class="profile-badge verified"><i class="fas fa-circle-check"></i> Staff</span>`);
+      if (staff.department) {
+        badges.push(`<span class="profile-badge gold"><i class="fas fa-building"></i> ${escapeHtml(staff.department)}</span>`);
       }
-
-      if (tasker.category) {
-        badges.push(`<span class="profile-badge gold"><i class="fas fa-briefcase"></i> ${escapeHtml(tasker.category)}</span>`);
+      if (staff.role) {
+        badges.push(`<span class="profile-badge neutral"><i class="fas fa-briefcase"></i> ${escapeHtml(staff.role)}</span>`);
       }
-
-      if (tasker.zone) {
-        badges.push(`<span class="profile-badge neutral"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(tasker.zone)}</span>`);
-      }
-
-      metaEl.innerHTML = badges.join('');
+      document.getElementById('profileMeta').innerHTML = badges.join('');
     }
 
-    function renderContactInfo() {
-      const user = currentUser;
-      const tasker = currentTasker;
-      const displayName = tasker.name || user.email.split('@')[0] || '—';
+    function renderOverview() {
+      const staff = currentStaff;
+      const name = staff.name || currentUser.email.split('@')[0];
 
-      document.getElementById('infoName').textContent = displayName;
-      document.getElementById('infoEmail').textContent = user.email || '—';
+      document.getElementById('infoName').textContent = name;
+      document.getElementById('infoEmail').textContent = currentUser.email || '—';
 
-      const phone = tasker.phone || tasker.payoutPhone;
       const phoneEl = document.getElementById('infoPhone');
-      if (phone) {
-        phoneEl.textContent = phone;
+      if (staff.phone) {
+        phoneEl.textContent = staff.phone;
       } else {
         phoneEl.textContent = 'Add a phone number';
         phoneEl.classList.add('muted');
       }
 
-      const zone = tasker.zone;
-      const zoneEl = document.getElementById('infoZone');
-      if (zone) {
-        zoneEl.textContent = zone;
+      const deptEl = document.getElementById('infoDepartment');
+      if (staff.department) {
+        deptEl.textContent = staff.department;
       } else {
-        zoneEl.textContent = 'Not set';
-        zoneEl.classList.add('muted');
+        deptEl.textContent = 'Not set';
+        deptEl.classList.add('muted');
+      }
+
+      document.getElementById('infoStaffId').textContent = staff.staffId || '—';
+      document.getElementById('infoRole').textContent = staff.role || '—';
+      document.getElementById('infoStartDate').textContent = formatDate(staff.startDate);
+      document.getElementById('infoReportsTo').textContent = staff.reportsTo || '—';
+    }
+
+    // ============================================================
+    // TABS
+    // ============================================================
+    window.switchTab = function(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
+
+      // Scroll to top of content
+      document.querySelector('.account-layout')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // ============================================================
+    // LOAD ALL DATA
+    // ============================================================
+    async function loadAll() {
+      await Promise.all([
+        loadPayslips(),
+        loadLeaveBalance(),
+        loadLeaveRequests(),
+        loadAttendance()
+      ]);
+      renderPayslipsTab();
+      renderLeaveTab();
+      renderAttendanceTab();
+    }
+
+    async function loadPayslips() {
+      try {
+        const snap = await db.ref(`staff_payslips/${currentUser.uid}`).once('value');
+        const val = snap.val() || {};
+        payslips = Object.entries(val)
+          .map(([period, data]) => ({ period, ...data }))
+          .sort((a, b) => b.period.localeCompare(a.period));
+      } catch (e) {
+        console.warn('Payslips load error:', e);
+        payslips = [];
       }
     }
 
-    function renderWorkInfo() {
-      const tasker = currentTasker;
-
-      document.getElementById('infoRole').textContent =
-        tasker.status === 'verified' ? 'Verified KazInni member' : 'KazInni member';
-
-      const catEl = document.getElementById('infoCategory');
-      if (tasker.category) {
-        catEl.textContent = tasker.category;
-      } else {
-        catEl.textContent = 'Not set';
-        catEl.classList.add('muted');
-      }
-
-      const skillsEl = document.getElementById('infoSkills');
-      if (Array.isArray(tasker.skills) && tasker.skills.length > 0) {
-        skillsEl.textContent = tasker.skills.join(', ');
-      } else if (typeof tasker.skills === 'string' && tasker.skills) {
-        skillsEl.textContent = tasker.skills;
-      } else {
-        skillsEl.textContent = 'No skills listed';
-        skillsEl.classList.add('muted');
-      }
-
-      const bioEl = document.getElementById('infoBio');
-      if (tasker.bio) {
-        bioEl.textContent = tasker.bio;
-      } else {
-        bioEl.textContent = 'No bio yet';
-        bioEl.classList.add('muted');
+    async function loadLeaveBalance() {
+      try {
+        const snap = await db.ref(`staff_leave_balance/${currentUser.uid}`).once('value');
+        leaveBalances = snap.val() || { annual: 21, sick: 14, compassionate: 5 };
+      } catch (e) {
+        leaveBalances = { annual: 21, sick: 14, compassionate: 5 };
       }
     }
 
-    function renderWorkspaces() {
-      const body = document.getElementById('workspacesBody');
-      const keys = Object.keys(currentPerms).filter(k => currentPerms[k] === true && WORKSPACE_LABELS[k]);
+    async function loadLeaveRequests() {
+      try {
+        const snap = await db.ref(`staff_leave_requests/${currentUser.uid}`).once('value');
+        const val = snap.val() || {};
+        leaveRequests = Object.entries(val)
+          .map(([id, r]) => ({ id, ...r }))
+          .sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
+      } catch (e) {
+        leaveRequests = [];
+      }
+    }
 
-      if (keys.length === 0) {
-        body.innerHTML = `
-          <div class="info-row">
-            <div class="info-value muted">No workspaces granted yet. Contact your KazInni administrator.</div>
-          </div>
-        `;
+    async function loadAttendance() {
+      try {
+        const snap = await db.ref(`staff_attendance/${currentUser.uid}`).once('value');
+        const val = snap.val() || {};
+        attendance = Object.entries(val)
+          .map(([date, data]) => ({ date, ...data }))
+          .sort((a, b) => b.date.localeCompare(a.date));
+
+        // Find today's record
+        const today = new Date().toISOString().slice(0, 10);
+        todayClock = attendance.find(a => a.date === today) || null;
+      } catch (e) {
+        attendance = [];
+        todayClock = null;
+      }
+    }
+
+    // ============================================================
+    // TAB: PAYSLIPS
+    // ============================================================
+    function renderPayslipsTab() {
+      const select = document.getElementById('payslipPeriodSelect');
+      const netEl = document.getElementById('payslipNetAmount');
+      const periodEl = document.getElementById('payslipPeriod');
+      const downloadBtn = document.getElementById('downloadPayslipBtn');
+
+      if (payslips.length === 0) {
+        select.innerHTML = `<option value="">— No payslips available —</option>`;
+        netEl.textContent = '—';
+        periodEl.textContent = 'No payslips yet';
+        downloadBtn.disabled = true;
+        document.getElementById('payslipBody').innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-file-invoice"></i>
+            <h3>No payslips yet</h3>
+            <p>Your payslips will appear here once HR issues them.</p>
+          </div>`;
         return;
       }
 
-      body.innerHTML = keys.map(k => `
-        <div class="info-row">
-          <div class="info-label">
-            <i class="fas fa-check-circle" style="color:var(--success);font-size:0.75rem;margin-right:0.3rem;"></i>
-            ${escapeHtml(WORKSPACE_LABELS[k])}
-          </div>
-          <div class="info-value" style="text-align:right;color:var(--success);font-size:0.8rem;font-weight:600;">Active</div>
-        </div>
-      `).join('');
+      // Populate select
+      select.innerHTML = payslips.map(p => `<option value="${escapeHtml(p.period)}">${escapeHtml(p.label || p.period)}</option>`).join('');
+
+      // Latest summary
+      const latest = payslips[0];
+      netEl.textContent = formatMoney(latest.net);
+      periodEl.textContent = latest.label || latest.period;
+      downloadBtn.disabled = false;
+
+      renderPayslipDetail();
     }
 
-    function renderApps() {
-      const body = document.getElementById('appsBody');
-      const apps = Object.keys(APPS).map(key => ({ key, ...APPS[key] }));
+    window.renderPayslipDetail = function() {
+      const period = document.getElementById('payslipPeriodSelect').value;
+      const p = payslips.find(x => x.period === period);
+      const body = document.getElementById('payslipBody');
 
-      const visible = apps.filter(app => {
-        if (app.alwaysVisible) return true;
-        if (currentPerms[app.permission] === true) return true;
-        if (app.fallbackPermission && currentPerms[app.fallbackPermission] === true) return true;
-        return false;
+      if (!p) {
+        body.innerHTML = `<div class="empty-state"><i class="fas fa-file-invoice"></i><h3>Select a payslip</h3></div>`;
+        return;
+      }
+
+      const gross = (p.basic || 0) + (p.houseAllowance || 0) + (p.transportAllowance || 0) + (p.otherAllowances || 0);
+      const deductions = (p.nssf || 0) + (p.shif || 0) + (p.paye || 0) + (p.otherDeductions || 0);
+      const net = p.net || (gross - deductions);
+
+      body.innerHTML = `
+        <div class="payslip-line section-header">
+          <span class="payslip-line-label">Earnings</span>
+          <span class="payslip-line-value"></span>
+        </div>
+        <div class="payslip-line">
+          <span class="payslip-line-label">Basic salary</span>
+          <span class="payslip-line-value">KES ${formatMoney(p.basic)}</span>
+        </div>
+        ${p.houseAllowance ? `<div class="payslip-line">
+          <span class="payslip-line-label">House allowance</span>
+          <span class="payslip-line-value">KES ${formatMoney(p.houseAllowance)}</span>
+        </div>` : ''}
+        ${p.transportAllowance ? `<div class="payslip-line">
+          <span class="payslip-line-label">Transport allowance</span>
+          <span class="payslip-line-value">KES ${formatMoney(p.transportAllowance)}</span>
+        </div>` : ''}
+        ${p.otherAllowances ? `<div class="payslip-line">
+          <span class="payslip-line-label">Other allowances</span>
+          <span class="payslip-line-value">KES ${formatMoney(p.otherAllowances)}</span>
+        </div>` : ''}
+        <div class="payslip-line total">
+          <span class="payslip-line-label">Gross pay</span>
+          <span class="payslip-line-value">KES ${formatMoney(gross)}</span>
+        </div>
+
+        <div class="payslip-line section-header">
+          <span class="payslip-line-label">Deductions</span>
+          <span class="payslip-line-value"></span>
+        </div>
+        ${p.nssf ? `<div class="payslip-line deduction">
+          <span class="payslip-line-label">NSSF</span>
+          <span class="payslip-line-value">− KES ${formatMoney(p.nssf)}</span>
+        </div>` : ''}
+        ${p.shif ? `<div class="payslip-line deduction">
+          <span class="payslip-line-label">SHIF (NHIF)</span>
+          <span class="payslip-line-value">− KES ${formatMoney(p.shif)}</span>
+        </div>` : ''}
+        ${p.paye ? `<div class="payslip-line deduction">
+          <span class="payslip-line-label">PAYE</span>
+          <span class="payslip-line-value">− KES ${formatMoney(p.paye)}</span>
+        </div>` : ''}
+        ${p.otherDeductions ? `<div class="payslip-line deduction">
+          <span class="payslip-line-label">Other deductions</span>
+          <span class="payslip-line-value">− KES ${formatMoney(p.otherDeductions)}</span>
+        </div>` : ''}
+        <div class="payslip-line total deduction">
+          <span class="payslip-line-label">Total deductions</span>
+          <span class="payslip-line-value">− KES ${formatMoney(deductions)}</span>
+        </div>
+
+        <div class="payslip-line total net">
+          <span class="payslip-line-label">Net pay</span>
+          <span class="payslip-line-value">KES ${formatMoney(net)}</span>
+        </div>
+
+        ${p.paidAt ? `<div style="margin-top:1rem; font-size:0.78rem; color:var(--text-muted); text-align:center; font-family:var(--font-heading);">
+          <i class="fas fa-circle-check" style="color:var(--success);"></i> Paid on ${escapeHtml(formatDate(p.paidAt))}
+        </div>` : ''}
+      `;
+    };
+
+    window.downloadLatestPayslip = function() {
+      const period = document.getElementById('payslipPeriodSelect').value;
+      const p = payslips.find(x => x.period === period);
+      if (!p) { showToast('No payslip to download', 'error'); return; }
+      if (p.pdfUrl) {
+        window.open(p.pdfUrl, '_blank', 'noopener');
+      } else {
+        showToast('PDF not yet available. Contact HR.', 'info');
+      }
+    };
+
+    // ============================================================
+    // TAB: LEAVE
+    // ============================================================
+    function renderLeaveTab() {
+      const grid = document.getElementById('leaveBalanceGrid');
+      const types = ['annual', 'sick', 'compassionate'];
+
+      grid.innerHTML = types.map(t => {
+        const meta = LEAVE_TYPES[t];
+        const balance = leaveBalances[t] ?? 0;
+        return `
+          <div class="leave-balance-card">
+            <div class="leave-balance-icon" style="background:${meta.color}15;color:${meta.color};">
+              <i class="fas ${meta.icon}"></i>
+            </div>
+            <div class="leave-balance-value">${balance}<span class="unit">days</span></div>
+            <div class="leave-balance-label">${escapeHtml(meta.label)}</div>
+          </div>
+        `;
+      }).join('');
+
+      renderLeaveHistory();
+    }
+
+    function renderLeaveHistory() {
+      const body = document.getElementById('leaveHistoryBody');
+      const countEl = document.getElementById('leaveHistoryCount');
+
+      if (leaveRequests.length === 0) {
+        countEl.textContent = 'No requests yet';
+        body.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-umbrella-beach"></i>
+            <h3>No leave requests yet</h3>
+            <p>Click <strong>Apply for leave</strong> to submit your first request.</p>
+          </div>`;
+        return;
+      }
+
+      countEl.textContent = `${leaveRequests.length} request${leaveRequests.length !== 1 ? 's' : ''}`;
+
+      body.innerHTML = leaveRequests.map(r => {
+        const meta = LEAVE_TYPES[r.type] || LEAVE_TYPES.annual;
+        const days = r.days || daysBetween(r.startDate, r.endDate);
+        const status = (r.status || 'pending').toLowerCase();
+        return `
+          <div class="leave-row">
+            <div class="leave-row-icon" style="background:${meta.color};">
+              <i class="fas ${meta.icon}"></i>
+            </div>
+            <div class="leave-row-body">
+              <div class="leave-row-title">${escapeHtml(meta.label)}</div>
+              <div class="leave-row-meta">
+                <span><i class="fas fa-calendar"></i> ${escapeHtml(formatDateShort(r.startDate))} → ${escapeHtml(formatDateShort(r.endDate))}</span>
+                ${r.reason ? `<span><i class="fas fa-comment"></i> ${escapeHtml(r.reason.slice(0, 40))}${r.reason.length > 40 ? '…' : ''}</span>` : ''}
+              </div>
+            </div>
+            <div class="leave-row-right">
+              <div class="leave-days">${days} day${days !== 1 ? 's' : ''}</div>
+              <span class="leave-status ${status}">${escapeHtml(status)}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.openLeaveModal = function() {
+      const today = new Date().toISOString().slice(0, 10);
+      document.getElementById('leaveStart').value = today;
+      document.getElementById('leaveEnd').value = today;
+      document.getElementById('leaveReason').value = '';
+      document.getElementById('leaveModal').classList.add('active');
+      document.getElementById('leaveModalOverlay').classList.add('active');
+    };
+
+    window.closeLeaveModal = function() {
+      document.getElementById('leaveModal').classList.remove('active');
+      document.getElementById('leaveModalOverlay').classList.remove('active');
+    };
+
+    window.submitLeave = async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('leaveSubmitBtn');
+      const type = document.getElementById('leaveType').value;
+      const startDate = document.getElementById('leaveStart').value;
+      const endDate = document.getElementById('leaveEnd').value;
+      const reason = document.getElementById('leaveReason').value.trim();
+
+      if (!startDate || !endDate) { showToast('Please select start and end dates', 'error'); return; }
+      if (new Date(endDate) < new Date(startDate)) { showToast('End date must be after start date', 'error'); return; }
+
+      const days = daysBetween(startDate, endDate);
+      if (days > 60) { showToast('Leave cannot exceed 60 days', 'error'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Submitting…';
+
+      try {
+        const id = db.ref(`staff_leave_requests/${currentUser.uid}`).push().key;
+        await db.ref(`staff_leave_requests/${currentUser.uid}/${id}`).set({
+          id,
+          type,
+          startDate,
+          endDate,
+          days,
+          reason,
+          status: 'pending',
+          requestedAt: Date.now(),
+          staffName: currentStaff.name || '',
+          staffEmail: currentUser.email || '',
+          department: currentStaff.department || ''
+        });
+
+        showToast('Leave request submitted', 'success');
+        closeLeaveModal();
+        await loadLeaveRequests();
+        renderLeaveHistory();
+      } catch (err) {
+        console.error('Leave submit error:', err);
+        showToast('Could not submit: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit request';
+      }
+    };
+
+    // ============================================================
+    // TAB: ATTENDANCE
+    // ============================================================
+    function renderAttendanceTab() {
+      renderClockCard();
+      renderAttendanceStats();
+      renderAttendanceLog();
+    }
+
+    function renderClockCard() {
+      const timeEl = document.getElementById('clockTime');
+      const statusEl = document.getElementById('clockStatus');
+      const labelEl = document.getElementById('clockLabel');
+      const btn = document.getElementById('clockBtn');
+      const btnText = document.getElementById('clockBtnText');
+
+      const now = new Date();
+      timeEl.textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      labelEl.textContent = `Today · ${now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}`;
+
+      if (!todayClock || !todayClock.clockIn) {
+        statusEl.textContent = 'Not clocked in';
+        btn.classList.remove('clock-out');
+        btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> <span id="clockBtnText">Clock in</span>';
+      } else if (!todayClock.clockOut) {
+        const clockInTime = new Date(todayClock.clockIn).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        statusEl.textContent = `Clocked in at ${clockInTime}`;
+        btn.classList.add('clock-out');
+        btn.innerHTML = '<i class="fas fa-right-from-bracket"></i> <span id="clockBtnText">Clock out</span>';
+      } else {
+        const hrs = hoursBetween(todayClock.clockIn, todayClock.clockOut).toFixed(1);
+        statusEl.textContent = 'Done for today';
+        btn.disabled = true;
+        btn.classList.remove('clock-out');
+        btn.innerHTML = `<i class="fas fa-check"></i> <span>${hrs} hrs logged</span>`;
+      }
+    }
+
+    function renderAttendanceStats() {
+      const now = new Date();
+      const thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+      const monthRecords = attendance.filter(a => a.date && a.date.startsWith(thisMonth));
+      const days = monthRecords.length;
+
+      let totalHours = 0;
+      let late = 0;
+      monthRecords.forEach(r => {
+        if (r.clockIn && r.clockOut) {
+          totalHours += hoursBetween(r.clockIn, r.clockOut);
+          // Late if clocked in after 9:15 AM
+          const inTime = new Date(r.clockIn);
+          if (inTime.getHours() > 9 || (inTime.getHours() === 9 && inTime.getMinutes() > 15)) {
+            late++;
+          }
+        }
       });
 
-      if (visible.length === 0) {
+      document.getElementById('attDays').innerHTML = `${days}<span class="unit">days</span>`;
+      document.getElementById('attHours').innerHTML = `${totalHours.toFixed(1)}<span class="unit">hrs</span>`;
+      document.getElementById('attAvg').innerHTML = days > 0
+        ? `${(totalHours / days).toFixed(1)}<span class="unit">hrs</span>`
+        : `0<span class="unit">hrs</span>`;
+      document.getElementById('attLate').textContent = late;
+    }
+
+    function renderAttendanceLog() {
+      const body = document.getElementById('attendanceLogBody');
+      const countEl = document.getElementById('attendanceCount');
+
+      const recent = attendance.slice(0, 14);
+
+      if (recent.length === 0) {
+        countEl.textContent = 'No records';
         body.innerHTML = `
-          <div class="info-row">
-            <div class="info-value muted">No apps available. Contact your KazInni administrator.</div>
-          </div>
-        `;
+          <div class="empty-state">
+            <i class="fas fa-calendar"></i>
+            <h3>No attendance records yet</h3>
+            <p>Clock in above to start recording your hours.</p>
+          </div>`;
         return;
       }
 
-      body.innerHTML = visible.map(app => `
-        <a class="quick-link" href="${app.link}">
-          <div class="quick-link-icon" style="background:${hexAlpha(app.color, 0.12)};color:${app.color};">
-            <i class="fas ${app.icon}"></i>
+      countEl.textContent = `Last ${recent.length} day${recent.length !== 1 ? 's' : ''}`;
+
+      body.innerHTML = recent.map(r => {
+        const inTime = r.clockIn ? new Date(r.clockIn).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '—';
+        const outTime = r.clockOut ? new Date(r.clockOut).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '—';
+        const hrs = r.clockIn && r.clockOut ? hoursBetween(r.clockIn, r.clockOut).toFixed(1) : '—';
+        const dayLabel = new Date(r.date).toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
+        return `
+          <div class="attendance-log-row">
+            <div class="attendance-day">${escapeHtml(dayLabel)}</div>
+            <div class="attendance-times">
+              <span><i class="fas fa-right-to-bracket"></i> ${inTime}</span>
+              <span><i class="fas fa-right-from-bracket"></i> ${outTime}</span>
+            </div>
+            <div class="attendance-hours">${hrs} hrs</div>
           </div>
-          <div class="quick-link-body">
-            <div class="quick-link-title">${escapeHtml(app.name)}</div>
-            <div class="quick-link-desc">Open app</div>
-          </div>
-          <i class="fas fa-chevron-right quick-link-arrow"></i>
-        </a>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    window.handleClockToggle = async function() {
+      const btn = document.getElementById('clockBtn');
+      btn.disabled = true;
+
+      try {
+        const today = new Date().toISOString().slice(0, 10);
+        const nowIso = new Date().toISOString();
+
+        if (!todayClock || !todayClock.clockIn) {
+          // Clock in
+          await db.ref(`staff_attendance/${currentUser.uid}/${today}`).set({
+            date: today,
+            clockIn: nowIso,
+            clockOut: null
+          });
+          showToast('Clocked in successfully', 'success');
+        } else if (!todayClock.clockOut) {
+          // Clock out
+          await db.ref(`staff_attendance/${currentUser.uid}/${today}`).update({
+            clockOut: nowIso
+          });
+          showToast('Clocked out. Have a good day!', 'success');
+        }
+
+        await loadAttendance();
+        renderAttendanceTab();
+      } catch (err) {
+        console.error('Clock error:', err);
+        showToast('Could not record attendance: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    // Live clock update
+    setInterval(() => {
+      if (document.getElementById('tab-attendance')?.classList.contains('active')) {
+        const timeEl = document.getElementById('clockTime');
+        if (timeEl) {
+          timeEl.textContent = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        }
+      }
+    }, 30000);
+
+    // ============================================================
+    // LIVE LISTENERS
+    // ============================================================
+    function attachLiveListeners() {
+      const uid = currentUser.uid;
+
+      const payslipRef = db.ref(`staff_payslips/${uid}`);
+      payslipRef.on('value', () => { loadPayslips().then(renderPayslipsTab); });
+
+      const leaveRef = db.ref(`staff_leave_requests/${uid}`);
+      leaveRef.on('value', () => { loadLeaveRequests().then(renderLeaveHistory); });
+
+      const attRef = db.ref(`staff_attendance/${uid}`);
+      attRef.on('value', () => { loadAttendance().then(renderAttendanceTab); });
+
+      liveListeners.push(payslipRef, leaveRef, attRef);
     }
 
     // ============================================================
     // USER MENU
     // ============================================================
-    function toggleUserDropdown(e) {
+    window.toggleUserDropdown = function(e) {
       if (e) e.stopPropagation();
       const menu = document.getElementById('userDropdown');
       const btn = document.getElementById('userMenuBtn');
       if (!menu) return;
       menu.classList.toggle('active');
       if (btn) btn.classList.toggle('active');
-    }
+    };
 
     function closeUserDropdown() {
       const menu = document.getElementById('userDropdown');
@@ -1153,20 +2271,22 @@
 
     document.addEventListener('click', function(e) {
       const wrap = document.getElementById('userMenuWrap');
-      if (wrap && !wrap.contains(e.target)) {
-        closeUserDropdown();
-      }
+      if (wrap && !wrap.contains(e.target)) closeUserDropdown();
     });
 
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeUserDropdown();
+      if (e.key === 'Escape') {
+        closeUserDropdown();
+        closeLeaveModal();
+      }
     });
 
     // ============================================================
     // ACTIONS
     // ============================================================
-    async function handleSignOut() {
+    window.handleSignOut = async function() {
       try {
+        liveListeners.forEach(ref => { try { ref.off(); } catch (e) {} });
         await auth.signOut();
         showToast('Signed out successfully', 'info');
         setTimeout(() => { window.location.href = 'index.html'; }, 500);
@@ -1174,9 +2294,9 @@
         console.error('Sign out error:', err);
         showToast('Error signing out', 'error');
       }
-    }
+    };
 
-    async function sendPasswordReset() {
+    window.sendPasswordReset = async function() {
       if (!currentUser || !currentUser.email) return;
       try {
         await auth.sendPasswordResetEmail(currentUser.email);
@@ -1185,25 +2305,12 @@
         console.error('Reset error:', err);
         showToast('Could not send reset link. Try again later.', 'error');
       }
-    }
+    };
 
-    // ============================================================
-    // UTILS
-    // ============================================================
-    function escapeHtml(text) {
-      if (text === null || text === undefined) return '';
-      const div = document.createElement('div');
-      div.textContent = String(text);
-      return div.innerHTML;
-    }
-
-    function hexAlpha(hex, alpha) {
-      const num = parseInt(hex.replace('#',''), 16);
-      const R = (num >> 16) & 255;
-      const G = (num >> 8) & 255;
-      const B = num & 255;
-      return `rgba(${R}, ${G}, ${B}, ${alpha})`;
-    }
+    // Cleanup
+    window.addEventListener('beforeunload', () => {
+      liveListeners.forEach(ref => { try { ref.off(); } catch (e) {} });
+    });
   </script>
 </body>
 </html>
