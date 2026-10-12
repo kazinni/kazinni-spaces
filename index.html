@@ -18,7 +18,7 @@
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   TOKENS  (unchanged)
+   TOKENS
    ============================================================ */
 :root {
   --gold: #ca8a04;
@@ -1112,67 +1112,102 @@ body.mode-landing .ws-content {
 }
 .progress-canvas-wrap canvas { max-width: 100%; max-height: 100%; }
 
-/* ---------- Workspaces grid ---------- */
-.workspace-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 0.9rem;
-}
-.workspace-tile {
+/* ---------- Today's schedule (read-only) ---------- */
+.schedule-list {
   background: white;
   border: 1px solid var(--m365-border);
-  border-radius: 6px;
-  padding: 1.05rem 1.1rem 1rem;
-  text-decoration: none; color: inherit;
-  transition: all var(--t-fast);
-  display: flex; flex-direction: column; gap: 0.65rem;
-  position: relative; overflow: hidden;
+  border-radius: 8px;
+  overflow: hidden;
 }
-.workspace-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--m365-shadow);
-  border-color: rgba(202,138,4,0.25);
+.schedule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.95rem;
+  padding: 0.9rem 1.15rem;
+  border-bottom: 1px solid var(--m365-border);
+  cursor: default;
+  user-select: text;
 }
-.workspace-tile-top {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 0.6rem;
+.schedule-item:last-child { border-bottom: none; }
+.schedule-item.past { opacity: 0.55; }
+.schedule-item.current {
+  background: linear-gradient(90deg, rgba(202,138,4,0.06), rgba(202,138,4,0.02));
+  position: relative;
 }
-.workspace-tile-icon {
-  width: 34px; height: 34px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 0.85rem; flex-shrink: 0;
+.schedule-item.current::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--gold-gradient);
 }
-.workspace-tile-role {
+.schedule-time {
   font-family: var(--font-heading);
-  font-size: 0.62rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.6px;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-pill);
-  background: var(--gold-soft); color: var(--gold-dark);
-  white-space: nowrap;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+  min-width: 78px;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
 }
-.workspace-tile-name {
+.schedule-time .schedule-period {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.schedule-item.current .schedule-time { color: var(--gold-dark); }
+.schedule-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  margin-top: 0.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(202,138,4,0.12);
+}
+.schedule-body { flex: 1; min-width: 0; }
+.schedule-title {
   font-family: var(--font-heading);
-  font-size: 0.92rem; font-weight: 600;
-  color: var(--ink); line-height: 1.3;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 0.15rem;
 }
-.workspace-tile-desc {
-  font-size: 0.75rem; color: var(--text-muted);
+.schedule-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
   line-height: 1.45;
-  overflow: hidden; text-overflow: ellipsis;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;
 }
-.workspace-tile-foot {
-  margin-top: auto;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--m365-border);
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: var(--font-heading);
-  font-size: 0.72rem; color: var(--text-muted);
-}
-.workspace-tile-open {
-  color: var(--gold-dark); font-weight: 700;
+.schedule-tag {
   display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+.schedule-tag .tag-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+}
+.schedule-tag.live {
+  background: rgba(16,185,129,0.12);
+  color: #065f46;
+}
+.schedule-tag.live .tag-dot { background: var(--success); animation: pulseDot 2s infinite; }
+.schedule-empty {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-family: var(--font-heading);
+}
+.schedule-empty i {
+  font-size: 1.6rem; color: var(--gold);
+  opacity: 0.4; display: block; margin-bottom: 0.5rem;
 }
 
 .ws-app-tiles {
@@ -1724,7 +1759,7 @@ body.mode-landing .ws-content {
   .hero h1 { font-size: 1.9rem; }
   .ws-modal { padding: 1.6rem 1.4rem 1.4rem; }
   .lp-grid { grid-template-columns: 1fr; }
-  .workspace-grid { grid-template-columns: 1fr; }
+  .schedule-time { min-width: 62px; font-size: 0.72rem; }
 }
 
 .rail-backdrop {
@@ -1846,13 +1881,13 @@ body.rail-open .rail-backdrop { display: block; }
                 <div class="ws-nav-dd-desc">A live ticker of what's happening across Janta.</div>
               </div>
             </button>
-            <div class="ws-nav-dd-group">Boards</div>
+            <div class="ws-nav-dd-group">Workspace Hub</div>
             <button type="button" class="ws-nav-dd-item" onclick="openLauncher(event)">
               <div class="ws-nav-dd-icon" style="background:#0891b2;">
                 <i class="fas fa-layer-group" aria-hidden="true"></i>
               </div>
               <div class="ws-nav-dd-body">
-                <div class="ws-nav-dd-title">Workspace Hub</div>
+                <div class="ws-nav-dd-title">App Launcher</div>
                 <div class="ws-nav-dd-desc">Browse every workspace your account can access.</div>
               </div>
             </button>
@@ -1925,7 +1960,7 @@ body.rail-open .rail-backdrop { display: block; }
         <span class="rail-item-name">Account</span>
       </button>
       <button type="button" class="rail-item" onclick="navigateTo('resources')" data-nav="resources">
-        <i class="fas fa-cogwheel" aria-hidden="true"></i>
+        <i class="fas fa-book-open" aria-hidden="true"></i>
         <span class="rail-item-name">Resources</span>
       </button>
       <button type="button" class="rail-item" onclick="showToast('Help center coming soon', 'info')">
@@ -2024,7 +2059,7 @@ body.rail-open .rail-backdrop { display: block; }
 'use strict';
 
 /* ============================================================
-   CONFIG  (unchanged)
+   CONFIG
    ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -2118,15 +2153,14 @@ const COURSE_CATEGORY_ORDER = [
   'communication', 'productivity', 'career', 'finance', 'civic', 'tech', 'design', 'business', 'other'
 ];
 
-/* Workspace display metadata — purely presentational, no Firebase impact. */
+/* Workspace display metadata — used for chips, schedules and workspace footprint. */
 const WORKSPACE_META = {
   brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work for client businesses.' },
   'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders, banners, business cards and stickers.' },
-  'brandinn-print-orders':{ name: 'BrandInn Print Orders', icon: 'fa-print',       color: '#b45309', desc: 'Print order tracking.' },
   dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
   'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
-  'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods for restaurants and stores.' },
-  heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and marketplace listings.' },
+  'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods supply.' },
+  heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and listings.' },
   'heritage-marketplace': { name: 'Heritage Marketplace',  icon: 'fa-store',       color: '#0891b2', desc: 'Listings and marketplace orders.' },
   'heritage-interiors':   { name: 'Heritage Interiors',    icon: 'fa-couch',       color: '#0e7490', desc: 'Furniture, interiors and custom builds.' },
   workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs, memberships and events.' },
@@ -2150,9 +2184,9 @@ const CONFIG = {
   notifStorageKey: 'kazinni_notif_lastseen',
   maxNotifications: 20,
   recentActivityMax: 6,
-  workspaceTilesMax: 8,
   maxCoursesInDropdown: 8,
-  activityWindowDays: 14
+  activityWindowDays: 14,
+  scheduleMax: 8
 };
 
 /* ============================================================
@@ -2165,6 +2199,7 @@ let currentEntitlements = {};
 let currentAssignments = {};
 let notifications = [];
 let personalActivity = [];
+let scheduleItems = [];
 let notifRefs = [];
 let courseListeners = [];
 let navCourses = [];
@@ -2252,10 +2287,11 @@ function getInitials(name) {
 
 function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 
-function toTitleCase(s) {
-  return String(s || '')
-    .replace(/[-_]+/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
+function formatTime12(h, m) {
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hh = h % 12 || 12;
+  const mm = String(m).padStart(2, '0');
+  return { label: `${hh}:${mm}`, period: ampm };
 }
 
 /* ============================================================
@@ -2583,7 +2619,7 @@ async function handleAuthStateChanged(user) {
   if (!user) {
     currentUser = null; currentTasker = null;
     currentPerms = {}; currentEntitlements = {}; currentAssignments = {};
-    notifications = []; personalActivity = [];
+    notifications = []; personalActivity = []; scheduleItems = [];
     destroyCharts();
     detachNotifListeners();
     switchMode('landing');
@@ -3035,7 +3071,7 @@ function renderPreviewGrid() {
 }
 
 /* ============================================================
-   WORKSPACE  (dashboard: progress + workspaces + notifications)
+   WORKSPACE  (dashboard: progress + today's schedule + notifications)
    ============================================================ */
 function renderWorkspace() {
   const content = document.getElementById('wsContent');
@@ -3098,17 +3134,18 @@ function renderWorkspace() {
       </div>
     </section>
 
-    <section class="ws-section" aria-labelledby="workspacesTitle">
+    <section class="ws-section" id="scheduleSection" aria-labelledby="scheduleTitle">
       <div class="ws-section-header">
-        <h2 class="ws-section-title" id="workspacesTitle">
-          <i class="fas fa-layer-group" aria-hidden="true"></i> Your workspaces
+        <h2 class="ws-section-title" id="scheduleTitle">
+          <i class="fas fa-calendar-day" aria-hidden="true"></i> Today's schedule
         </h2>
-        <button type="button" class="ws-section-action" onclick="openLauncher(event)">Open launcher →</button>
+        <span class="ws-section-action" style="cursor:default;" id="scheduleDateLabel">—</span>
       </div>
-      <div class="workspace-grid" id="workspaceTiles">
-        <div class="ws-skeleton"></div>
-        <div class="ws-skeleton"></div>
-        <div class="ws-skeleton"></div>
+      <div class="schedule-list" id="scheduleList">
+        <div class="schedule-empty">
+          <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i>
+          <div>Loading schedule…</div>
+        </div>
       </div>
     </section>
 
@@ -3150,7 +3187,7 @@ function renderWorkspace() {
 
   renderWorkspaceApps();
   renderLearningDash();
-  renderWorkspaceTiles();
+  updateScheduleDateLabel();
   loadWorkspaceData();
 }
 
@@ -3252,78 +3289,124 @@ function buildWorkspaceChips() {
   }).join('');
 }
 
-function renderWorkspaceTiles() {
-  const container = document.getElementById('workspaceTiles');
+/* ============================================================
+   TODAY'S SCHEDULE  (read-only, derived from workspaces the user belongs to)
+   ============================================================ */
+
+/* Templates are pure presentation — a workspace's normal daily rhythm.
+   They do NOT read or write any new Firebase paths. */
+const WORKSPACE_SCHEDULE_TEMPLATES = {
+  'workfit':              [{ h: 6,  m: 0,  title: 'Morning training session',  desc: 'Club activity — check in and log your attendance.' }],
+  'mugs-n-dines':         [{ h: 11, m: 30, title: 'Kitchen prep & lunch service', desc: 'Coordinate with the kitchen on today\'s menu.' }],
+  'fusion-foods':         [{ h: 7,  m: 0,  title: 'Fresh produce intake',       desc: 'Confirm incoming stock from suppliers.' }],
+  'brandinn':             [{ h: 10, m: 0,  title: 'Client design review',       desc: 'Check pending project milestones.' }],
+  'brandinn-print':       [{ h: 9,  m: 0,  title: 'Print queue check',          desc: 'Review today\'s print orders and dispatch.' }],
+  'dsog':                 [{ h: 14, m: 0,  title: 'Franchise stock check',      desc: 'Confirm inventory levels across franchisees.' }],
+  'dsog-fashion':         [{ h: 14, m: 0,  title: 'Franchise stock check',      desc: 'Confirm inventory levels across franchisees.' }],
+  'heritage':             [{ h: 11, m: 0,  title: 'Advertising slot review',    desc: 'Confirm active marketplace listings.' }],
+  'heritage-marketplace': [{ h: 11, m: 0,  title: 'Marketplace listings review',desc: 'Confirm active listings.' }],
+  'heritage-interiors':   [{ h: 13, m: 0,  title: 'Interior project check-in',  desc: 'Review custom build milestones.' }],
+  'epitome':              [{ h: 15, m: 0,  title: 'Listings & reviews sweep',   desc: 'Confirm cars and houses listings.' }],
+  'digital-services':     [{ h: 9,  m: 30, title: 'Applications queue',          desc: 'Process pending client applications.' }],
+  'latter-logistics':     [{ h: 8,  m: 0,  title: 'Route planning',              desc: 'Confirm today\'s shipments and customs.' }],
+  'pick-up':              [{ h: 8,  m: 30, title: 'Delivery round planning',     desc: 'Confirm same-day and scheduled deliveries.' }],
+  'pick-me':              [{ h: 7,  m: 30, title: 'Rides & trips check',         desc: 'Confirm scheduled trips for today.' }]
+};
+
+function updateScheduleDateLabel() {
+  const el = document.getElementById('scheduleDateLabel');
+  if (!el) return;
+  el.textContent = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', month: 'short', day: 'numeric'
+  });
+}
+
+function buildTodaySchedule() {
+  const now = new Date();
+  const todayDow = now.getDay(); // 0 = Sunday
+  const items = [];
+
+  const ownedKeys = Object.keys(currentPerms || {})
+    .filter(k => currentPerms[k] === true && k !== 'learning');
+
+  ownedKeys.forEach(slug => {
+    const template = WORKSPACE_SCHEDULE_TEMPLATES[slug];
+    if (!template) return;
+    const meta = WORKSPACE_META[slug] || { name: slug, color: '#ca8a04', icon: 'fa-cube' };
+    template.forEach(entry => {
+      // Weekend soft-skip for workday-only workspaces (keeps Sunday quiet)
+      if (todayDow === 0 && ['brandinn', 'brandinn-print', 'digital-services', 'epitome', 'heritage', 'heritage-marketplace', 'heritage-interiors'].includes(slug)) return;
+      if (todayDow === 6 && ['digital-services', 'heritage', 'heritage-marketplace'].includes(slug)) return;
+      const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), entry.h, entry.m, 0, 0);
+      const end = new Date(start.getTime() + 60 * 60 * 1000);
+      items.push({
+        slug,
+        title: entry.title,
+        desc: entry.desc,
+        start,
+        end,
+        workspaceName: meta.name,
+        color: meta.color,
+        icon: meta.icon
+      });
+    });
+  });
+
+  items.sort((a, b) => a.start - b.start);
+  return items.slice(0, CONFIG.scheduleMax);
+}
+
+function renderSchedule() {
+  const container = document.getElementById('scheduleList');
   if (!container) return;
 
-  const keys = Object.keys(currentPerms || {})
-    .filter(k => currentPerms[k] === true && k !== 'learning')
-    .sort((a, b) => {
-      const an = (WORKSPACE_META[a] && WORKSPACE_META[a].name) || a;
-      const bn = (WORKSPACE_META[b] && WORKSPACE_META[b].name) || b;
-      return an.localeCompare(bn);
-    });
+  updateScheduleDateLabel();
 
-  if (keys.length === 0) {
+  scheduleItems = buildTodaySchedule();
+
+  if (scheduleItems.length === 0) {
     container.innerHTML = `
-      <div class="ws-feed-empty" style="grid-column:1/-1;">
-        <i class="fas fa-layer-group" aria-hidden="true"></i>
-        <div>No workspaces yet</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">An admin will grant access to your first workspace.</div>
+      <div class="schedule-empty">
+        <i class="fas fa-mug-hot" aria-hidden="true"></i>
+        <div>Nothing scheduled for today</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Enjoy a calm day across your workspaces.</div>
       </div>
     `;
     return;
   }
 
-  const visible = keys.slice(0, CONFIG.workspaceTilesMax);
-  container.innerHTML = visible.map(k => {
-    const meta = WORKSPACE_META[k] || { name: toTitleCase(k), icon: 'fa-cube', color: '#ca8a04', desc: 'Workspace' };
-    const role = (currentAssignments && currentAssignments[k] && currentAssignments[k].role) || '';
-    const link = guessWorkspaceLink(k);
+  const now = Date.now();
+
+  container.innerHTML = scheduleItems.map(item => {
+    const startMs = item.start.getTime();
+    const endMs = item.end.getTime();
+    const isPast = now > endMs;
+    const isCurrent = now >= startMs && now <= endMs;
+    const startFmt = formatTime12(item.start.getHours(), item.start.getMinutes());
+    const endFmt = formatTime12(item.end.getHours(), item.end.getMinutes());
+    const cls = `schedule-item${isPast ? ' past' : ''}${isCurrent ? ' current' : ''}`;
     return `
-      <a href="${escapeHtml(link)}" class="workspace-tile">
-        <div class="workspace-tile-top">
-          <div class="workspace-tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(meta.color)}, ${escapeHtml(lighten(meta.color, 18))});">
-            <i class="fas ${escapeHtml(meta.icon)}" aria-hidden="true"></i>
+      <div class="${cls}" role="listitem" aria-label="${escapeHtml(item.title)} at ${escapeHtml(startFmt.label)} ${escapeHtml(startFmt.period)}">
+        <div class="schedule-time">
+          ${escapeHtml(startFmt.label)}
+          <span class="schedule-period">${escapeHtml(startFmt.period)}</span>
+        </div>
+        <div class="schedule-dot" style="background:${escapeHtml(item.color)};" aria-hidden="true"></div>
+        <div class="schedule-body">
+          <div class="schedule-title">${escapeHtml(item.title)}</div>
+          <div class="schedule-desc">
+            <span class="schedule-tag">
+              <span class="tag-dot" style="background:${escapeHtml(item.color)};" aria-hidden="true"></span>
+              ${escapeHtml(item.workspaceName)}
+            </span>
+            <span>${escapeHtml(item.desc)}</span>
+            ${isCurrent ? '<span class="schedule-tag live"><span class="tag-dot"></span> Now</span>' : ''}
+            <span style="color:var(--text-muted);font-size:0.7rem;">· until ${escapeHtml(endFmt.label)} ${escapeHtml(endFmt.period)}</span>
           </div>
-          ${role ? `<span class="workspace-tile-role">${escapeHtml(role)}</span>` : ''}
         </div>
-        <div class="workspace-tile-name">${escapeHtml(meta.name)}</div>
-        <div class="workspace-tile-desc">${escapeHtml(meta.desc)}</div>
-        <div class="workspace-tile-foot">
-          <span>${escapeHtml(role ? 'Your role: ' + role : 'Member')}</span>
-          <span class="workspace-tile-open">
-            Open <i class="fas fa-arrow-right" aria-hidden="true"></i>
-          </span>
-        </div>
-      </a>
+      </div>
     `;
   }).join('');
-}
-
-function guessWorkspaceLink(slug) {
-  const map = {
-    brandinn: 'apps/brandinn/',
-    'brandinn-print': 'apps/brandinn-print/',
-    dsog: 'apps/dsog-fashion/',
-    'dsog-fashion': 'apps/dsog-fashion/',
-    'fusion-foods': 'apps/fusion-foods/',
-    heritage: 'apps/heritage/',
-    'heritage-marketplace': 'apps/heritage/',
-    'heritage-interiors': 'apps/heritage-interiors/',
-    workfit: 'apps/workfit/',
-    epitome: 'apps/epitome/',
-    'digital-services': 'apps/digital-services/',
-    'mugs-n-dines': 'apps/mugs-n-dines/',
-    'latter-logistics': 'apps/latter-logistics/',
-    'pick-up': 'apps/pick-up/',
-    'pick-me': 'apps/pick-me/',
-    ekazi: 'apps/flexikazi/',
-    kasikazi: 'apps/kasikazi/',
-    craftikazi: 'apps/craftikazi/',
-    zindua: 'apps/zindua-hub/'
-  };
-  return map[slug] || 'account.html';
 }
 
 /* ============================================================
@@ -3374,7 +3457,7 @@ async function loadWorkspaceData() {
       ts: n.timestamp
     }));
 
-  renderWorkspaceTiles();
+  renderSchedule();
   renderProgressCharts(learningProgress, certificates, ents);
   renderFeed(personalActivity);
 }
@@ -3406,8 +3489,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
     barValues.push(0);
   }
 
-  const certificatesCount = Object.keys(certificates || {}).length;
-
   /* Activity line: bucket notifications by day over the window */
   const days = CONFIG.activityWindowDays;
   const dayBuckets = {};
@@ -3429,12 +3510,12 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   });
   const lineValues = Object.keys(dayBuckets).map(k => dayBuckets[k]);
 
-  /* Workspace footprint bars: count = number of workspaces per app group */
+  /* Workspace footprint bars */
   const wsLabels = [];
   const wsValues = [];
   Object.keys(currentPerms || {}).forEach(k => {
     if (currentPerms[k] !== true || k === 'learning') return;
-    const meta = WORKSPACE_META[k] || { name: toTitleCase(k) };
+    const meta = WORKSPACE_META[k] || { name: k };
     wsLabels.push(meta.name);
     wsValues.push(1);
   });
@@ -3492,7 +3573,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   Chart.defaults.font.size = 11;
   Chart.defaults.color = textMuted;
 
-  /* Donut: learning completion */
   const donutCtx = document.getElementById('chartLearning');
   if (donutCtx) {
     activeCharts.push(new Chart(donutCtx, {
@@ -3507,9 +3587,7 @@ function renderProgressCharts(learningProgress, certificates, ents) {
         }]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '68%',
+        responsive: true, maintainAspectRatio: false, cutout: '68%',
         plugins: {
           legend: { position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, padding: 12 } },
           tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 }
@@ -3518,7 +3596,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
     }));
   }
 
-  /* Horizontal bars: course progress */
   const coursesCtx = document.getElementById('chartCourses');
   if (coursesCtx) {
     activeCharts.push(new Chart(coursesCtx, {
@@ -3534,9 +3611,7 @@ function renderProgressCharts(learningProgress, certificates, ents) {
         }]
       },
       options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
         scales: {
           x: { beginAtZero: true, max: 100, grid: { color: borderCol, drawBorder: false }, ticks: { callback: v => v + '%' } },
           y: { grid: { display: false } }
@@ -3549,7 +3624,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
     }));
   }
 
-  /* Line: activity over time */
   const activityCtx = document.getElementById('chartActivity');
   if (activityCtx) {
     activeCharts.push(new Chart(activityCtx, {
@@ -3570,21 +3644,16 @@ function renderProgressCharts(learningProgress, certificates, ents) {
         }]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
         scales: {
           x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 6 } },
           y: { beginAtZero: true, grid: { color: borderCol, drawBorder: false }, ticks: { precision: 0 } }
         },
-        plugins: {
-          legend: { display: false },
-          tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 }
-        }
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } }
       }
     }));
   }
 
-  /* Bar: workspace footprint */
   const wsCtx = document.getElementById('chartWorkspaces');
   if (wsCtx) {
     activeCharts.push(new Chart(wsCtx, {
@@ -3600,8 +3669,7 @@ function renderProgressCharts(learningProgress, certificates, ents) {
         }]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
         scales: {
           x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 6 } },
           y: { beginAtZero: true, grid: { color: borderCol, drawBorder: false }, ticks: { precision: 0 } }
@@ -3786,7 +3854,6 @@ function attachNotifListeners() {
         .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
         .slice(0, CONFIG.maxNotifications);
       renderNotifications();
-      /* Keep the dashboard feed fresh too */
       personalActivity = notifications
         .filter(n => n.timestamp)
         .slice(0, CONFIG.recentActivityMax)
@@ -4085,7 +4152,6 @@ async function buildTicker() {
   if (!track) return;
   if (!currentUser) { buildPublicTicker(); return; }
 
-  /* Personal ticker from your own notifications */
   if (personalActivity.length === 0) {
     track.innerHTML = `
       <span class="ps-ticker-item">
