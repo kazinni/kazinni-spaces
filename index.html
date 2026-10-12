@@ -18,7 +18,7 @@
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   TOKENS
+   TOKENS  (unchanged)
    ============================================================ */
 :root {
   --gold: #ca8a04;
@@ -45,7 +45,6 @@
   --surface-2: #faf9f7;
   --surface-3: #f4f3f1;
 
-  /* M365-style neutrals */
   --m365-hover: #f3f2f1;
   --m365-pressed: #edebe9;
   --m365-border: #edebe9;
@@ -426,7 +425,6 @@ body.mode-workspace .ws-nav-links { display: none; }
 .ws-btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: white; }
 .ws-btn-lg { padding: 0.85rem 1.75rem; font-size: 0.92rem; }
 
-/* Janta Assistant CTA — gold-tinted, distinct from primary */
 .ws-btn-assistant {
   background: white;
   color: var(--gold-dark);
@@ -676,7 +674,6 @@ body.mode-landing .ws-content {
   max-width: 520px; margin: 0 auto;
 }
 
-/* Assistant showcase section */
 .assistant-showcase {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -764,7 +761,6 @@ body.mode-landing .ws-content {
   text-transform: uppercase;
 }
 
-/* Preview grid */
 .preview-grid {
   display: flex;
   flex-wrap: wrap;
@@ -821,7 +817,6 @@ body.mode-landing .ws-content {
   margin-top: auto;
 }
 
-/* Why grid */
 .why-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.4rem;
@@ -843,7 +838,6 @@ body.mode-landing .ws-content {
 }
 .why-item p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 
-/* Learning section */
 .learning-hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -919,7 +913,6 @@ body.mode-landing .ws-content {
   background: var(--gold-gradient);
 }
 
-/* Stats */
 .ps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
 .ps-tile {
   background: white; border: 1px solid var(--m365-border);
@@ -990,7 +983,6 @@ body.mode-landing .ws-content {
 .ps-ticker-item i { font-size: 0.7rem; color: var(--gold); }
 .ps-ticker-item strong { color: var(--ink); font-weight: 700; }
 
-/* Footer */
 .landing-footer {
   background: var(--surface-2);
   border-top: 1px solid var(--m365-border);
@@ -1028,6 +1020,22 @@ body.mode-landing .ws-content {
   color: var(--ink); margin-bottom: 0.3rem;
 }
 .ws-welcome p { font-size: 0.88rem; color: var(--text-muted); }
+.ws-welcome-chips {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.7rem;
+}
+.ws-chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  background: white;
+  border: 1px solid var(--m365-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--text-secondary);
+}
+.ws-chip .chip-dot {
+  width: 7px; height: 7px; border-radius: 2px;
+}
 
 .ws-section { margin-bottom: 1.8rem; }
 .ws-section-header {
@@ -1050,12 +1058,67 @@ body.mode-landing .ws-content {
 }
 .ws-section-action:hover { color: var(--gold); }
 
-.completed-grid {
+/* ---------- Progress charts grid ---------- */
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.progress-card {
+  background: white;
+  border: 1px solid var(--m365-border);
+  border-radius: 8px;
+  padding: 1.15rem 1.25rem 1.1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--t-base);
+  display: flex; flex-direction: column;
+  min-height: 260px;
+}
+.progress-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold-gradient);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-slow);
+}
+.progress-card:hover::before { transform: scaleX(1); }
+.progress-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--m365-shadow);
+  border-color: rgba(202,138,4,0.25);
+}
+.progress-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.6rem; gap: 0.7rem;
+}
+.progress-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.progress-card-title i { color: var(--gold); font-size: 0.8rem; }
+.progress-card-meta {
+  font-family: var(--font-heading);
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--text-muted);
+}
+.progress-canvas-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 170px;
+  display: flex; align-items: center; justify-content: center;
+}
+.progress-canvas-wrap canvas { max-width: 100%; max-height: 100%; }
+
+/* ---------- Workspaces grid ---------- */
+.workspace-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 0.9rem;
 }
-.completed-tile {
+.workspace-tile {
   background: white;
   border: 1px solid var(--m365-border);
   border-radius: 6px;
@@ -1065,47 +1128,41 @@ body.mode-landing .ws-content {
   display: flex; flex-direction: column; gap: 0.65rem;
   position: relative; overflow: hidden;
 }
-.completed-tile:hover {
+.workspace-tile:hover {
   transform: translateY(-2px);
   box-shadow: var(--m365-shadow);
   border-color: rgba(202,138,4,0.25);
 }
-.completed-tile-top {
+.workspace-tile-top {
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: 0.6rem;
 }
-.completed-tile-icon {
+.workspace-tile-icon {
   width: 34px; height: 34px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 0.85rem; flex-shrink: 0;
 }
-.completed-tile-status {
+.workspace-tile-role {
   font-family: var(--font-heading);
   font-size: 0.62rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.6px;
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-pill);
-  background: #d1fae5; color: #065f46;
+  background: var(--gold-soft); color: var(--gold-dark);
   white-space: nowrap;
 }
-.completed-tile-status.review { background: #dbeafe; color: #1e40af; }
-.completed-tile-status.revision { background: #fef3c7; color: #92400e; }
-.completed-tile-title {
+.workspace-tile-name {
   font-family: var(--font-heading);
   font-size: 0.92rem; font-weight: 600;
   color: var(--ink); line-height: 1.3;
+}
+.workspace-tile-desc {
+  font-size: 0.75rem; color: var(--text-muted);
+  line-height: 1.45;
   overflow: hidden; text-overflow: ellipsis;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
-.completed-tile-meta {
-  font-size: 0.75rem; color: var(--text-muted);
-  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
-}
-.completed-tile-meta .dot-sep {
-  width: 3px; height: 3px; border-radius: 50%;
-  background: var(--text-muted); opacity: 0.5;
-}
-.completed-tile-foot {
+.workspace-tile-foot {
   margin-top: auto;
   padding-top: 0.6rem;
   border-top: 1px solid var(--m365-border);
@@ -1113,14 +1170,7 @@ body.mode-landing .ws-content {
   font-family: var(--font-heading);
   font-size: 0.72rem; color: var(--text-muted);
 }
-.completed-tile-source {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-weight: 600;
-}
-.completed-tile-source .src-dot {
-  width: 8px; height: 8px; border-radius: 2px;
-}
-.completed-tile-cta {
+.workspace-tile-open {
   color: var(--gold-dark); font-weight: 700;
   display: inline-flex; align-items: center; gap: 0.3rem;
 }
@@ -1273,6 +1323,7 @@ body.mode-landing .ws-content {
   background-size: 200% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
+.ws-skeleton.tall { height: 260px; }
 
 /* ============================================================
    PANELS
@@ -1534,7 +1585,7 @@ body.mode-landing .ws-content {
 .auth-note i { color: var(--gold); }
 
 /* ============================================================
-   USER DROPDOWN (M365 style)
+   USER DROPDOWN
    ============================================================ */
 .ws-account-wrap { position: relative; }
 .user-dropdown {
@@ -1625,6 +1676,7 @@ body.mode-landing .ws-content {
   body.mode-workspace .rail-label { opacity: 0; height: 0; padding: 0; }
   .learning-hero { grid-template-columns: 1fr; gap: 2rem; }
   .assistant-showcase { grid-template-columns: 1fr; gap: 2rem; }
+  .progress-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 900px) {
@@ -1672,7 +1724,7 @@ body.mode-landing .ws-content {
   .hero h1 { font-size: 1.9rem; }
   .ws-modal { padding: 1.6rem 1.4rem 1.4rem; }
   .lp-grid { grid-template-columns: 1fr; }
-  .completed-grid { grid-template-columns: 1fr; }
+  .workspace-grid { grid-template-columns: 1fr; }
 }
 
 .rail-backdrop {
@@ -1726,7 +1778,7 @@ body.rail-open .rail-backdrop { display: block; }
               </div>
               <div class="ws-nav-dd-body">
                 <div class="ws-nav-dd-title">Verified Accounts</div>
-                <div class="ws-nav-dd-desc">Admins approve every tasker before they can access apps or claim work.</div>
+                <div class="ws-nav-dd-desc">Admins approve every account before it can access workspaces.</div>
               </div>
             </button>
             <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('learning')">
@@ -1738,9 +1790,13 @@ body.rail-open .rail-backdrop { display: block; }
                 <div class="ws-nav-dd-desc">Upskill on client communication, M-Pesa security, portfolio craft and more.</div>
               </div>
             </button>
-            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('features')">
+            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
               <div class="ws-nav-dd-icon" style="background:#d13438;">
-                <i class="fas fa-mobile-screen" aria-hidden="true"></i>
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+              </div>
+              <div class="ws-nav-dd-body">
+                <div class="ws-nav-dd-title">Progress Analytics</div>
+                <div class="ws-nav-dd-desc">Personal dashboards that show how you're progressing across workspaces.</div>
               </div>
             </button>
           </div>
@@ -1778,7 +1834,7 @@ body.rail-open .rail-backdrop { display: block; }
               </div>
               <div class="ws-nav-dd-body">
                 <div class="ws-nav-dd-title">Platform Stats</div>
-                <div class="ws-nav-dd-desc">Live numbers — taskers, completed tasks, workspaces.</div>
+                <div class="ws-nav-dd-desc">Live numbers — workspaces, modules, and members.</div>
               </div>
             </button>
             <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('activity')">
@@ -1791,13 +1847,13 @@ body.rail-open .rail-backdrop { display: block; }
               </div>
             </button>
             <div class="ws-nav-dd-group">Boards</div>
-            <button type="button" class="ws-nav-dd-item" onclick="scrollToSection('apps')">
+            <button type="button" class="ws-nav-dd-item" onclick="openLauncher(event)">
               <div class="ws-nav-dd-icon" style="background:#0891b2;">
                 <i class="fas fa-layer-group" aria-hidden="true"></i>
               </div>
               <div class="ws-nav-dd-body">
-                <div class="ws-nav-dd-title">Task Boards</div>
-                <div class="ws-nav-dd-desc">Browse FlexiKazi, Kasikazi, CraftiKazi and Zindua Hub.</div>
+                <div class="ws-nav-dd-title">Workspace Hub</div>
+                <div class="ws-nav-dd-desc">Browse every workspace your account can access.</div>
               </div>
             </button>
           </div>
@@ -1841,9 +1897,9 @@ body.rail-open .rail-backdrop { display: block; }
         <i class="fas fa-house" aria-hidden="true"></i>
         <span class="rail-item-name">Home</span>
       </button>
-      <button type="button" class="rail-item" onclick="navigateTo('recent')" data-nav="recent">
-        <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
-        <span class="rail-item-name">Recent</span>
+      <button type="button" class="rail-item" onclick="navigateTo('progress')" data-nav="progress">
+        <i class="fas fa-chart-pie" aria-hidden="true"></i>
+        <span class="rail-item-name">Progress</span>
       </button>
       <button type="button" class="rail-item" onclick="navigateTo('activity')" data-nav="activity">
         <i class="fas fa-wave-square" aria-hidden="true"></i>
@@ -1960,6 +2016,7 @@ body.rail-open .rail-backdrop { display: block; }
   </p>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js" defer></script>
@@ -1967,7 +2024,7 @@ body.rail-open .rail-backdrop { display: block; }
 'use strict';
 
 /* ============================================================
-   CONFIG
+   CONFIG  (unchanged)
    ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -1987,7 +2044,7 @@ const APPS = {
   },
   'flexikazi': {
     name: 'FlexiKazi',
-    desc: 'Freelance task board — accept tasks, submit work, track earnings.',
+    desc: 'Task board — accept tasks, submit work, track progress.',
     icon: 'fa-list-check',
     color: '#059669',
     link: 'apps/flexikazi/',
@@ -2026,7 +2083,7 @@ const APPS = {
   },
   'learning': {
     name: 'Learning',
-    desc: 'Practical courses, certificates and mentorship for the Kenyan gig economy.',
+    desc: 'Practical courses, certificates and mentorship for the modern workspace.',
     icon: 'fa-graduation-cap',
     color: '#f59e0b',
     link: 'learning/index.html',
@@ -2061,6 +2118,31 @@ const COURSE_CATEGORY_ORDER = [
   'communication', 'productivity', 'career', 'finance', 'civic', 'tech', 'design', 'business', 'other'
 ];
 
+/* Workspace display metadata — purely presentational, no Firebase impact. */
+const WORKSPACE_META = {
+  brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work for client businesses.' },
+  'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders, banners, business cards and stickers.' },
+  'brandinn-print-orders':{ name: 'BrandInn Print Orders', icon: 'fa-print',       color: '#b45309', desc: 'Print order tracking.' },
+  dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
+  'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
+  'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods for restaurants and stores.' },
+  heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and marketplace listings.' },
+  'heritage-marketplace': { name: 'Heritage Marketplace',  icon: 'fa-store',       color: '#0891b2', desc: 'Listings and marketplace orders.' },
+  'heritage-interiors':   { name: 'Heritage Interiors',    icon: 'fa-couch',       color: '#0e7490', desc: 'Furniture, interiors and custom builds.' },
+  workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs, memberships and events.' },
+  epitome:                { name: 'Epitome Reviews',       icon: 'fa-car',         color: '#3b82f6', desc: 'Cars, homes and reviews.' },
+  'digital-services':     { name: 'Digital Services',      icon: 'fa-laptop-code', color: '#1e40af', desc: 'Government and online service applications.' },
+  'mugs-n-dines':         { name: 'Mugs n Dines',          icon: 'fa-utensils',    color: '#f59e0b', desc: 'Restaurant and catering operations.' },
+  'latter-logistics':     { name: 'Latter Logistics',      icon: 'fa-truck-fast',  color: '#475569', desc: 'Intercounty and cross-border logistics.' },
+  'pick-up':              { name: 'Pick Up',               icon: 'fa-box',         color: '#059669', desc: 'Same-day and scheduled deliveries.' },
+  'pick-me':              { name: 'Pick Me',               icon: 'fa-taxi',        color: '#eab308', desc: 'Rides and scheduled trips.' },
+  ekazi:                  { name: 'FlexiKazi',             icon: 'fa-list-check',  color: '#059669', desc: 'Task board.' },
+  kasikazi:               { name: 'Kasikazi',              icon: 'fa-bullhorn',    color: '#0891b2', desc: 'Public task board.' },
+  craftikazi:             { name: 'CraftiKazi',            icon: 'fa-hammer',      color: '#b45309', desc: 'Craft-work marketplace.' },
+  zindua:                 { name: 'Zindua Hub',            icon: 'fa-rocket',      color: '#4f46e5', desc: 'Tech-task marketplace.' },
+  learning:               { name: 'Learning',              icon: 'fa-graduation-cap', color: '#f59e0b', desc: 'Courses, certificates and mentorship.' }
+};
+
 const CONFIG = {
   notifLimit: 50,
   tickerRefreshMs: 60000,
@@ -2068,8 +2150,9 @@ const CONFIG = {
   notifStorageKey: 'kazinni_notif_lastseen',
   maxNotifications: 20,
   recentActivityMax: 6,
-  completedTilesMax: 6,
-  maxCoursesInDropdown: 8
+  workspaceTilesMax: 8,
+  maxCoursesInDropdown: 8,
+  activityWindowDays: 14
 };
 
 /* ============================================================
@@ -2079,14 +2162,15 @@ let currentUser = null;
 let currentTasker = null;
 let currentPerms = {};
 let currentEntitlements = {};
+let currentAssignments = {};
 let notifications = [];
-let recentActivity = [];
-let completedTiles = [];
+let personalActivity = [];
 let notifRefs = [];
 let courseListeners = [];
 let navCourses = [];
 let appInitialized = false;
 let lastFocusedBeforeModal = null;
+let activeCharts = [];
 
 /* ============================================================
    UTILS
@@ -2168,8 +2252,10 @@ function getInitials(name) {
 
 function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 
-function hasLearningAccess() {
-  return currentPerms && currentPerms.learning === true;
+function toTitleCase(s) {
+  return String(s || '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
 /* ============================================================
@@ -2266,7 +2352,6 @@ function scrollToSection(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ---------- Render Apps dropdown (M365 style) ---------- */
 function renderNavApps() {
   const container = document.getElementById('ddApps');
   if (!container) return;
@@ -2284,9 +2369,7 @@ function renderNavApps() {
   });
 
   const items = visible.map(app => {
-    const target = signedIn
-      ? `location.href='${escapeHtml(app.link)}'`
-      : `location.href='${escapeHtml(app.link)}'`;
+    const target = `location.href='${escapeHtml(app.link)}'`;
     return `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
         <div class="ws-nav-dd-icon" style="background:${escapeHtml(app.color)};">
@@ -2310,7 +2393,7 @@ function renderNavApps() {
 
   container.innerHTML = `
     <div class="ws-nav-dd-scroll">
-      <div class="ws-nav-dd-group">Task Boards</div>
+      <div class="ws-nav-dd-group">Workspace apps</div>
       ${items}
     </div>
     <div class="ws-nav-dd-footer">
@@ -2320,7 +2403,6 @@ function renderNavApps() {
   `;
 }
 
-/* ---------- Render Learning dropdown with live courses (M365 style) ---------- */
 function renderNavLearning() {
   const container = document.getElementById('ddLearning');
   if (!container) return;
@@ -2420,7 +2502,6 @@ function renderNavLearning() {
   container.innerHTML = html;
 }
 
-/* ---------- Load courses from Firebase ---------- */
 function loadNavCourses() {
   const db = window._db;
   if (!db) {
@@ -2441,11 +2522,7 @@ function loadNavCourses() {
         .filter(c => c.published === true || c.publishedAt)
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 
-      if (list.length > 0) {
-        navCourses = list;
-      } else {
-        navCourses = FALLBACK_COURSES;
-      }
+      navCourses = list.length > 0 ? list : FALLBACK_COURSES;
       renderNavLearning();
     };
     ref.on('value', cb, (err) => {
@@ -2505,8 +2582,9 @@ async function handleAuthStateChanged(user) {
 
   if (!user) {
     currentUser = null; currentTasker = null;
-    currentPerms = {}; currentEntitlements = {};
-    notifications = []; recentActivity = []; completedTiles = [];
+    currentPerms = {}; currentEntitlements = {}; currentAssignments = {};
+    notifications = []; personalActivity = [];
+    destroyCharts();
     detachNotifListeners();
     switchMode('landing');
     renderLanding();
@@ -2529,6 +2607,11 @@ async function handleAuthStateChanged(user) {
     const entSnap = await db.ref(`learning_entitlements/${user.uid}`).once('value');
     currentEntitlements = entSnap.exists() ? (entSnap.val() || {}) : {};
   } catch (e) { currentEntitlements = {}; }
+
+  try {
+    const assignSnap = await db.ref(`user_assignments/${user.uid}`).once('value');
+    currentAssignments = assignSnap.exists() ? (assignSnap.val() || {}) : {};
+  } catch (e) { currentAssignments = {}; }
 
   if (currentPerms.ekazi === true) {
     try {
@@ -2662,6 +2745,7 @@ function closeUserDropdown() {
 async function handleSignOut() {
   try {
     detachNotifListeners();
+    destroyCharts();
     if (window._auth) await window._auth.signOut();
     showToast('Signed out successfully', 'info');
   } catch (err) { showToast('Error signing out', 'error'); }
@@ -2699,7 +2783,7 @@ function renderLanding() {
             <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> <span>Sign in to Janta</span>
           </button>
           <button type="button" class="ws-btn ws-btn-ghost ws-btn-lg" onclick="openLauncher(event)">
-            <i class="fas fa-grip" aria-hidden="true"></i> <span>Preview apps</span>
+            <i class="fas fa-grip" aria-hidden="true"></i> <span>Preview workspaces</span>
           </button>
         </div>
         <div class="hero-strip">
@@ -2757,8 +2841,8 @@ function renderLanding() {
       <div class="section-inner">
         <div class="section-header-center">
           <span class="section-label">Explore</span>
-          <h2 id="appsTitle">Preview the apps</h2>
-          <p>Sign in once and every Janta app opens without another password.</p>
+          <h2 id="appsTitle">Preview the workspaces</h2>
+          <p>Sign in once and every Janta workspace opens without another password.</p>
         </div>
         <div class="preview-grid" id="previewGrid"></div>
       </div>
@@ -2769,7 +2853,7 @@ function renderLanding() {
         <div class="section-header-center">
           <span class="section-label">Why Janta</span>
           <h2 id="whyTitle">Built for how you actually work</h2>
-          <p>Every detail optimised for Kenyan taskers, clients, and teams.</p>
+          <p>Every detail optimised for modern teams and the workspace they share.</p>
         </div>
         <div class="why-grid">
           <div class="why-item">
@@ -2780,12 +2864,17 @@ function renderLanding() {
           <div class="why-item">
             <div class="why-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
             <h3>Verified accounts</h3>
-            <p>Admins approve every tasker before they can access apps or claim work.</p>
+            <p>Admins approve every account before it can access apps or claim work.</p>
           </div>
           <div class="why-item">
             <div class="why-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
             <h3>Learning built-in</h3>
             <p>Upskill on client communication, M-Pesa security, portfolio craft and more.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+            <h3>Progress analytics</h3>
+            <p>See how your activity compounds across every workspace you belong to.</p>
           </div>
         </div>
       </div>
@@ -2795,8 +2884,8 @@ function renderLanding() {
       <div class="section-inner">
         <div class="learning-hero">
           <div class="learning-copy">
-            <span class="section-label">Learn · Earn · Grow</span>
-            <h2 id="learnTitle">Short courses built for the Kenyan gig economy</h2>
+            <span class="section-label">Learn · Grow · Lead</span>
+            <h2 id="learnTitle">Short courses built for the modern workspace</h2>
             <p>Practical lessons you can apply the same day — from client communication to M-Pesa security and portfolio building.</p>
             <div class="learning-features">
               <div class="learning-feature">
@@ -2861,17 +2950,17 @@ function renderLanding() {
           <div class="ps-tile">
             <div class="ps-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
             <div class="ps-value loading" id="psTaskers">—</div>
-            <div class="ps-label">Active Taskers</div>
-          </div>
-          <div class="ps-tile">
-            <div class="ps-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
-            <div class="ps-value loading" id="psCompleted">—</div>
-            <div class="ps-label">Tasks Completed</div>
+            <div class="ps-label">Verified Members</div>
           </div>
           <div class="ps-tile">
             <div class="ps-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
             <div class="ps-value loading" id="psWorkspaces">—</div>
             <div class="ps-label">Live Workspaces</div>
+          </div>
+          <div class="ps-tile">
+            <div class="ps-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+            <div class="ps-value loading" id="psCourses">—</div>
+            <div class="ps-label">Learning Modules</div>
           </div>
           <div class="ps-tile clock-tile">
             <div class="ps-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
@@ -2946,7 +3035,7 @@ function renderPreviewGrid() {
 }
 
 /* ============================================================
-   WORKSPACE
+   WORKSPACE  (dashboard: progress + workspaces + notifications)
    ============================================================ */
 function renderWorkspace() {
   const content = document.getElementById('wsContent');
@@ -2959,10 +3048,20 @@ function renderWorkspace() {
   const firstName = displayName.split(/[\s._-]/)[0];
   const capitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
+  const workspaceCount = countWorkspaces();
+  const workspaceChips = buildWorkspaceChips();
+
   content.innerHTML = `
     <section class="ws-welcome">
       <h1>${getGreeting()}, ${escapeHtml(capitalized)}</h1>
-      <p>Here's what's happening across your Janta workspace today.</p>
+      <p>Here's how your workspace is progressing today.</p>
+      <div class="ws-welcome-chips">
+        <span class="ws-chip">
+          <i class="fas fa-layer-group" aria-hidden="true"></i>
+          ${escapeHtml(pluralize(workspaceCount, 'workspace'))}
+        </span>
+        ${workspaceChips}
+      </div>
     </section>
 
     <section class="ws-section" aria-labelledby="assistantDashTitle">
@@ -2984,14 +3083,29 @@ function renderWorkspace() {
       </a>
     </section>
 
-    <section class="ws-section" aria-labelledby="recentWorkTitle">
+    <section class="ws-section" id="progressSection" aria-labelledby="progressTitle">
       <div class="ws-section-header">
-        <h2 class="ws-section-title" id="recentWorkTitle">
-          <i class="fas fa-circle-check" aria-hidden="true"></i> Recently completed
+        <h2 class="ws-section-title" id="progressTitle">
+          <i class="fas fa-chart-pie" aria-hidden="true"></i> Your progress
         </h2>
-        <a href="apps/flexikazi/" class="ws-section-action">View all →</a>
+        <button type="button" class="ws-section-action" onclick="loadWorkspaceData()">Refresh →</button>
       </div>
-      <div class="completed-grid" id="completedTiles">
+      <div class="progress-grid" id="progressGrid">
+        <div class="progress-card"><div class="ws-skeleton tall"></div></div>
+        <div class="progress-card"><div class="ws-skeleton tall"></div></div>
+        <div class="progress-card"><div class="ws-skeleton tall"></div></div>
+        <div class="progress-card"><div class="ws-skeleton tall"></div></div>
+      </div>
+    </section>
+
+    <section class="ws-section" aria-labelledby="workspacesTitle">
+      <div class="ws-section-header">
+        <h2 class="ws-section-title" id="workspacesTitle">
+          <i class="fas fa-layer-group" aria-hidden="true"></i> Your workspaces
+        </h2>
+        <button type="button" class="ws-section-action" onclick="openLauncher(event)">Open launcher →</button>
+      </div>
+      <div class="workspace-grid" id="workspaceTiles">
         <div class="ws-skeleton"></div>
         <div class="ws-skeleton"></div>
         <div class="ws-skeleton"></div>
@@ -3021,7 +3135,7 @@ function renderWorkspace() {
     <section class="ws-section" aria-labelledby="recentTitle">
       <div class="ws-section-header">
         <h2 class="ws-section-title" id="recentTitle">
-          <i class="fas fa-wave-square" aria-hidden="true"></i> Recent activity
+          <i class="fas fa-wave-square" aria-hidden="true"></i> Recent notifications
         </h2>
         <button type="button" class="ws-section-action" onclick="loadWorkspaceData()">Refresh →</button>
       </div>
@@ -3036,6 +3150,7 @@ function renderWorkspace() {
 
   renderWorkspaceApps();
   renderLearningDash();
+  renderWorkspaceTiles();
   loadWorkspaceData();
 }
 
@@ -3114,286 +3229,71 @@ function renderLearningDash() {
   `;
 }
 
-/* ============================================================
-   WORKSPACE DATA
-   ============================================================ */
-async function loadWorkspaceData() {
-  if (!currentUser) return;
-  const db = window._db;
-  if (!db) return;
-
-  const uid = currentUser.uid;
-  const email = (currentUser.email || '').toLowerCase();
-
-  const activities = [];
-  const completed = [];
-
-  if (currentPerms.ekazi === true) {
-    try {
-      const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
-      const tasks = snap.val() || {};
-      const list = Object.entries(tasks).map(([id, t]) => ({ id, ...t }));
-
-      list.forEach(t => {
-        const s = (t.status || '').toLowerCase();
-        const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
-        if (!ts) return;
-
-        if (s === 'approved' || s === 'completed') {
-          completed.push({
-            id: 'f_' + t.id,
-            title: t.title || 'Untitled task',
-            category: t.category || 'General',
-            client: t.clientName || 'Janta',
-            status: 'completed',
-            statusLabel: 'Completed',
-            ts,
-            source: 'FlexiKazi',
-            sourceColor: APPS.flexikazi.color,
-            link: 'apps/flexikazi/'
-          });
-          activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Task approved', desc: t.title || 'Task', ts });
-        } else if (s === 'revision') {
-          completed.push({
-            id: 'f_' + t.id,
-            title: t.title || 'Untitled task',
-            category: t.category || 'General',
-            client: t.clientName || 'Janta',
-            status: 'revision',
-            statusLabel: 'Revision',
-            ts,
-            source: 'FlexiKazi',
-            sourceColor: APPS.flexikazi.color,
-            link: 'apps/flexikazi/'
-          });
-          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Revision requested', desc: t.title || 'Task', ts });
-        } else if (s === 'review' || s === 'submitted') {
-          activities.push({ icon: 'fa-clock', type: 'info', title: 'Submission under review', desc: t.title || 'Task', ts });
-        } else if (s === 'assigned' || s === 'new') {
-          activities.push({ icon: 'fa-list-check', type: 'gold', title: 'New task assigned', desc: t.title || 'Task', ts });
-        }
-      });
-    } catch (e) { console.warn('FlexiKazi data:', e); }
-  }
-
-  if (currentPerms.kasikazi === true || currentPerms.ekazi === true) {
-    try {
-      const snap = await db.ref('kasikazi_tasks').once('value');
-      const tasks = snap.val() || {};
-      Object.entries(tasks).forEach(([id, t]) => {
-        const c = t.claimedBy && t.claimedBy[uid];
-        if (!c) return;
-        const s = (c.status || 'claimed').toLowerCase();
-        const ts = c.reviewedAt || c.submittedAt || c.claimedAt || 0;
-        if (!ts) return;
-
-        if (s === 'approved') {
-          completed.push({
-            id: 'k_' + id,
-            title: t.title || 'Untitled task',
-            category: t.category || 'General',
-            client: t.clientName || 'Janta',
-            status: 'completed',
-            statusLabel: 'Completed',
-            ts,
-            source: 'Kasikazi',
-            sourceColor: APPS.kasikazi.color,
-            link: 'apps/kasikazi/'
-          });
-          activities.push({ icon: 'fa-circle-check', type: 'success', title: 'Kasikazi task approved', desc: t.title || 'Task', ts });
-        } else if (s === 'revision') {
-          completed.push({
-            id: 'k_' + id,
-            title: t.title || 'Untitled task',
-            category: t.category || 'General',
-            client: t.clientName || 'Janta',
-            status: 'revision',
-            statusLabel: 'Revision',
-            ts,
-            source: 'Kasikazi',
-            sourceColor: APPS.kasikazi.color,
-            link: 'apps/kasikazi/'
-          });
-          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Kasikazi revision', desc: t.title || 'Task', ts });
-        } else if (s === 'submitted') {
-          activities.push({ icon: 'fa-clock', type: 'info', title: 'Kasikazi under review', desc: t.title || 'Task', ts });
-        } else {
-          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a Kasikazi task', desc: t.title || 'Task', ts });
-        }
-      });
-    } catch (e) { console.warn('Kasikazi data:', e); }
-  }
-
-  if (currentPerms.craftikazi === true || currentPerms.ekazi === true) {
-    try {
-      const snap = await db.ref('craftikazi_tasks').once('value');
-      const tasks = snap.val() || {};
-      Object.entries(tasks).forEach(([id, t]) => {
-        const c = t.claimedBy && t.claimedBy[uid];
-        if (!c) return;
-        const s = (c.status || 'claimed').toLowerCase();
-        const ts = c.reviewedAt || c.submittedAt || c.startedAt || c.claimedAt || 0;
-        if (!ts) return;
-
-        if (s === 'approved') {
-          completed.push({
-            id: 'c_' + id,
-            title: t.title || 'Craft task',
-            category: t.craft || t.category || 'Craft',
-            client: t.clientName || 'Janta',
-            status: 'completed',
-            statusLabel: 'Completed',
-            ts,
-            source: 'CraftiKazi',
-            sourceColor: APPS.craftikazi.color,
-            link: 'apps/craftikazi/'
-          });
-          activities.push({ icon: 'fa-hammer', type: 'success', title: 'CraftiKazi task approved', desc: t.title || 'Craft task', ts });
-        } else if (s === 'revision') {
-          completed.push({
-            id: 'c_' + id,
-            title: t.title || 'Craft task',
-            category: t.craft || t.category || 'Craft',
-            client: t.clientName || 'Janta',
-            status: 'revision',
-            statusLabel: 'Revision',
-            ts,
-            source: 'CraftiKazi',
-            sourceColor: APPS.craftikazi.color,
-            link: 'apps/craftikazi/'
-          });
-          activities.push({ icon: 'fa-redo', type: 'warning', title: 'CraftiKazi revision', desc: t.title || 'Craft task', ts });
-        } else if (s === 'submitted') {
-          activities.push({ icon: 'fa-clock', type: 'info', title: 'CraftiKazi under review', desc: t.title || 'Craft task', ts });
-        } else {
-          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a craft task', desc: t.title || 'Craft task', ts });
-        }
-      });
-    } catch (e) { console.warn('CraftiKazi data:', e); }
-  }
-
-  if (currentPerms.zindua === true || currentPerms.ekazi === true) {
-    try {
-      const snap = await db.ref('zindua_tasks').once('value');
-      const tasks = snap.val() || {};
-      Object.entries(tasks).forEach(([id, t]) => {
-        const c = t.claimedBy && t.claimedBy[uid];
-        if (!c) return;
-        const s = (c.status || 'claimed').toLowerCase();
-        const ts = c.reviewedAt || c.submittedAt || c.startedAt || c.claimedAt || 0;
-        if (!ts) return;
-
-        if (s === 'approved') {
-          completed.push({
-            id: 'z_' + id,
-            title: t.title || 'Tech task',
-            category: t.tech || t.category || 'Tech',
-            client: t.clientName || 'Janta',
-            status: 'completed',
-            statusLabel: 'Completed',
-            ts,
-            source: 'Zindua Hub',
-            sourceColor: APPS.zindua.color,
-            link: 'apps/zindua-hub/'
-          });
-          activities.push({ icon: 'fa-rocket', type: 'success', title: 'Zindua task approved', desc: t.title || 'Tech task', ts });
-        } else if (s === 'revision') {
-          completed.push({
-            id: 'z_' + id,
-            title: t.title || 'Tech task',
-            category: t.tech || t.category || 'Tech',
-            client: t.clientName || 'Janta',
-            status: 'revision',
-            statusLabel: 'Revision',
-            ts,
-            source: 'Zindua Hub',
-            sourceColor: APPS.zindua.color,
-            link: 'apps/zindua-hub/'
-          });
-          activities.push({ icon: 'fa-redo', type: 'warning', title: 'Zindua revision', desc: t.title || 'Tech task', ts });
-        } else if (s === 'submitted') {
-          activities.push({ icon: 'fa-clock', type: 'info', title: 'Zindua under review', desc: t.title || 'Tech task', ts });
-        } else {
-          activities.push({ icon: 'fa-hand-sparkles', type: 'gold', title: 'You claimed a tech task', desc: t.title || 'Tech task', ts });
-        }
-      });
-    } catch (e) { console.warn('Zindua data:', e); }
-  }
-
-  try {
-    const snap = await db.ref('cashout_requests').orderByChild('taskerId').equalTo(uid).limitToLast(CONFIG.notifLimit).once('value');
-    const payouts = snap.val() || {};
-    Object.entries(payouts).forEach(([id, p]) => {
-      const s = (p.status || 'pending').toLowerCase();
-      const ts = p.paidAt || p.approvedAt || p.timestamp || 0;
-      if (!ts) return;
-      if (s === 'paid') activities.push({ icon: 'fa-check-double', type: 'success', title: 'Payout received', desc: 'Wallet updated', ts });
-      else if (s === 'approved') activities.push({ icon: 'fa-money-bill-wave', type: 'gold', title: 'Payout approved', desc: 'Being dispatched', ts });
-      else if (s === 'pending') activities.push({ icon: 'fa-hourglass-half', type: 'info', title: 'Payout requested', desc: 'Awaiting approval', ts });
-    });
-  } catch (e) { console.warn('Payout data:', e); }
-
-  try {
-    const snap = await db.ref(`learning_progress/${uid}`).once('value');
-    const progress = snap.val() || {};
-    Object.entries(progress).forEach(([courseId, p]) => {
-      const ts = p.completedAt || p.updatedAt || 0;
-      if (!ts) return;
-      if (p.completedAt) activities.push({ icon: 'fa-certificate', type: 'gold', title: 'Course completed', desc: p.title || 'Learning module', ts });
-      else activities.push({ icon: 'fa-graduation-cap', type: 'gold', title: 'Course in progress', desc: `${p.title || 'Course'} — ${p.progress || 0}%`, ts });
-    });
-  } catch (e) {}
-
-  activities.sort((a, b) => b.ts - a.ts);
-  completed.sort((a, b) => b.ts - a.ts);
-
-  recentActivity = activities.slice(0, CONFIG.recentActivityMax);
-  completedTiles = completed.slice(0, CONFIG.completedTilesMax);
-
-  renderCompletedTiles(completedTiles);
-  renderFeed(recentActivity);
+/* ---------- Workspace helpers ---------- */
+function countWorkspaces() {
+  if (!currentPerms) return 0;
+  return Object.keys(currentPerms).filter(k => currentPerms[k] === true && k !== 'learning').length;
 }
 
-function renderCompletedTiles(tiles) {
-  const container = document.getElementById('completedTiles');
+function buildWorkspaceChips() {
+  if (!currentPerms) return '';
+  const keys = Object.keys(currentPerms)
+    .filter(k => currentPerms[k] === true && k !== 'learning' && WORKSPACE_META[k])
+    .slice(0, 4);
+  if (keys.length === 0) return '';
+  return keys.map(k => {
+    const meta = WORKSPACE_META[k];
+    return `
+      <span class="ws-chip">
+        <span class="chip-dot" style="background:${escapeHtml(meta.color)};" aria-hidden="true"></span>
+        ${escapeHtml(meta.name)}
+      </span>
+    `;
+  }).join('');
+}
+
+function renderWorkspaceTiles() {
+  const container = document.getElementById('workspaceTiles');
   if (!container) return;
 
-  if (!tiles || tiles.length === 0) {
+  const keys = Object.keys(currentPerms || {})
+    .filter(k => currentPerms[k] === true && k !== 'learning')
+    .sort((a, b) => {
+      const an = (WORKSPACE_META[a] && WORKSPACE_META[a].name) || a;
+      const bn = (WORKSPACE_META[b] && WORKSPACE_META[b].name) || b;
+      return an.localeCompare(bn);
+    });
+
+  if (keys.length === 0) {
     container.innerHTML = `
       <div class="ws-feed-empty" style="grid-column:1/-1;">
-        <i class="fas fa-inbox" aria-hidden="true"></i>
-        <div>No completed tasks yet</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Claim a task on any board to get started.</div>
+        <i class="fas fa-layer-group" aria-hidden="true"></i>
+        <div>No workspaces yet</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">An admin will grant access to your first workspace.</div>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = tiles.map(t => {
-    const statusClass = t.status === 'revision' ? 'revision' : (t.status === 'completed' ? '' : 'review');
-    const icon = t.status === 'completed' ? 'fa-circle-check' : (t.status === 'revision' ? 'fa-redo' : 'fa-clock');
-    const iconColor = t.status === 'completed' ? '#107c10' : (t.status === 'revision' ? '#f59e0b' : '#0078d4');
+  const visible = keys.slice(0, CONFIG.workspaceTilesMax);
+  container.innerHTML = visible.map(k => {
+    const meta = WORKSPACE_META[k] || { name: toTitleCase(k), icon: 'fa-cube', color: '#ca8a04', desc: 'Workspace' };
+    const role = (currentAssignments && currentAssignments[k] && currentAssignments[k].role) || '';
+    const link = guessWorkspaceLink(k);
     return `
-      <a href="${escapeHtml(t.link)}" class="completed-tile">
-        <div class="completed-tile-top">
-          <div class="completed-tile-icon" style="background:${iconColor};">
-            <i class="fas ${icon}" aria-hidden="true"></i>
+      <a href="${escapeHtml(link)}" class="workspace-tile">
+        <div class="workspace-tile-top">
+          <div class="workspace-tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(meta.color)}, ${escapeHtml(lighten(meta.color, 18))});">
+            <i class="fas ${escapeHtml(meta.icon)}" aria-hidden="true"></i>
           </div>
-          <span class="completed-tile-status ${statusClass}">${escapeHtml(t.statusLabel)}</span>
+          ${role ? `<span class="workspace-tile-role">${escapeHtml(role)}</span>` : ''}
         </div>
-        <div class="completed-tile-title">${escapeHtml(t.title)}</div>
-        <div class="completed-tile-meta">
-          <span>${escapeHtml(t.category)}</span>
-          <span class="dot-sep" aria-hidden="true"></span>
-          <span>${escapeHtml(t.client)}</span>
-        </div>
-        <div class="completed-tile-foot">
-          <span class="completed-tile-source">
-            <span class="src-dot" style="background:${escapeHtml(t.sourceColor)};" aria-hidden="true"></span>
-            ${escapeHtml(t.source)}
-          </span>
-          <span class="completed-tile-cta">
-            ${escapeHtml(getTimeAgo(t.ts))} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        <div class="workspace-tile-name">${escapeHtml(meta.name)}</div>
+        <div class="workspace-tile-desc">${escapeHtml(meta.desc)}</div>
+        <div class="workspace-tile-foot">
+          <span>${escapeHtml(role ? 'Your role: ' + role : 'Member')}</span>
+          <span class="workspace-tile-open">
+            Open <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </span>
         </div>
       </a>
@@ -3401,10 +3301,326 @@ function renderCompletedTiles(tiles) {
   }).join('');
 }
 
+function guessWorkspaceLink(slug) {
+  const map = {
+    brandinn: 'apps/brandinn/',
+    'brandinn-print': 'apps/brandinn-print/',
+    dsog: 'apps/dsog-fashion/',
+    'dsog-fashion': 'apps/dsog-fashion/',
+    'fusion-foods': 'apps/fusion-foods/',
+    heritage: 'apps/heritage/',
+    'heritage-marketplace': 'apps/heritage/',
+    'heritage-interiors': 'apps/heritage-interiors/',
+    workfit: 'apps/workfit/',
+    epitome: 'apps/epitome/',
+    'digital-services': 'apps/digital-services/',
+    'mugs-n-dines': 'apps/mugs-n-dines/',
+    'latter-logistics': 'apps/latter-logistics/',
+    'pick-up': 'apps/pick-up/',
+    'pick-me': 'apps/pick-me/',
+    ekazi: 'apps/flexikazi/',
+    kasikazi: 'apps/kasikazi/',
+    craftikazi: 'apps/craftikazi/',
+    zindua: 'apps/zindua-hub/'
+  };
+  return map[slug] || 'account.html';
+}
+
+/* ============================================================
+   WORKSPACE DATA  (personal progress only — no freelance nodes)
+   ============================================================ */
+async function loadWorkspaceData() {
+  if (!currentUser) return;
+  const db = window._db;
+  if (!db) return;
+
+  const uid = currentUser.uid;
+
+  const learningProgress = {};
+  const certificates = {};
+  const ents = currentEntitlements || {};
+
+  /* Learning progress */
+  try {
+    const snap = await db.ref(`learning_progress/${uid}`).once('value');
+    Object.assign(learningProgress, snap.val() || {});
+  } catch (e) { console.warn('learning_progress read failed:', e); }
+
+  /* Learning certificates */
+  try {
+    const snap = await db.ref(`learning_certificates/${uid}`).once('value');
+    Object.assign(certificates, snap.val() || {});
+  } catch (e) { console.warn('learning_certificates read failed:', e); }
+
+  /* Personal notifications (already wired, already permitted) */
+  try {
+    const snap = await db.ref(`kazinni_notifications/${uid}`).orderByChild('timestamp').limitToLast(CONFIG.notifLimit).once('value');
+    const val = snap.val() || {};
+    notifications = Object.entries(val)
+      .map(([id, n]) => ({ id, ...n }))
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+      .slice(0, CONFIG.maxNotifications);
+  } catch (e) { notifications = []; }
+
+  /* Personal activity feed from notifications */
+  personalActivity = notifications
+    .filter(n => n.timestamp)
+    .slice(0, CONFIG.recentActivityMax)
+    .map(n => ({
+      icon: mapNotifIcon(n.type),
+      type: mapNotifType(n.type),
+      title: n.title || 'Notification',
+      desc: n.body || '',
+      ts: n.timestamp
+    }));
+
+  renderWorkspaceTiles();
+  renderProgressCharts(learningProgress, certificates, ents);
+  renderFeed(personalActivity);
+}
+
+function renderProgressCharts(learningProgress, certificates, ents) {
+  const grid = document.getElementById('progressGrid');
+  if (!grid) return;
+
+  /* --- Derive metrics --- */
+  const courseIds = Object.keys(learningProgress || {});
+  const totalCourses = Math.max(courseIds.length, Object.keys(certificates || {}).length, 1);
+
+  let completed = 0, inProgress = 0, notStarted = 0;
+  const barLabels = [];
+  const barValues = [];
+
+  courseIds.forEach(id => {
+    const p = learningProgress[id] || {};
+    const pct = Math.max(0, Math.min(100, Number(p.progress || 0)));
+    if (p.completedAt) completed++;
+    else if (pct > 0) inProgress++;
+    else notStarted++;
+    const title = p.title || id;
+    barLabels.push(title.length > 22 ? title.slice(0, 20) + '…' : title);
+    barValues.push(pct);
+  });
+  if (courseIds.length === 0) {
+    barLabels.push('No courses yet');
+    barValues.push(0);
+  }
+
+  const certificatesCount = Object.keys(certificates || {}).length;
+
+  /* Activity line: bucket notifications by day over the window */
+  const days = CONFIG.activityWindowDays;
+  const dayBuckets = {};
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    dayBuckets[key] = 0;
+  }
+  notifications.forEach(n => {
+    if (!n.timestamp) return;
+    const d = new Date(n.timestamp);
+    const key = d.toISOString().slice(0, 10);
+    if (key in dayBuckets) dayBuckets[key]++;
+  });
+  const lineLabels = Object.keys(dayBuckets).map(k => {
+    const d = new Date(k);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  });
+  const lineValues = Object.keys(dayBuckets).map(k => dayBuckets[k]);
+
+  /* Workspace footprint bars: count = number of workspaces per app group */
+  const wsLabels = [];
+  const wsValues = [];
+  Object.keys(currentPerms || {}).forEach(k => {
+    if (currentPerms[k] !== true || k === 'learning') return;
+    const meta = WORKSPACE_META[k] || { name: toTitleCase(k) };
+    wsLabels.push(meta.name);
+    wsValues.push(1);
+  });
+  if (wsLabels.length === 0) { wsLabels.push('None yet'); wsValues.push(0); }
+
+  /* --- Render 4 progress cards --- */
+  grid.innerHTML = `
+    <div class="progress-card">
+      <div class="progress-card-head">
+        <div class="progress-card-title"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning completion</div>
+        <div class="progress-card-meta">${completed}/${totalCourses}</div>
+      </div>
+      <div class="progress-canvas-wrap"><canvas id="chartLearning" aria-label="Learning completion donut"></canvas></div>
+    </div>
+    <div class="progress-card">
+      <div class="progress-card-head">
+        <div class="progress-card-title"><i class="fas fa-list-check" aria-hidden="true"></i> Course progress</div>
+        <div class="progress-card-meta">${courseIds.length ? pluralize(courseIds.length, 'course') : 'None yet'}</div>
+      </div>
+      <div class="progress-canvas-wrap"><canvas id="chartCourses" aria-label="Course progress bars"></canvas></div>
+    </div>
+    <div class="progress-card">
+      <div class="progress-card-head">
+        <div class="progress-card-title"><i class="fas fa-wave-square" aria-hidden="true"></i> Activity · last ${days} days</div>
+        <div class="progress-card-meta">${notifications.length} events</div>
+      </div>
+      <div class="progress-canvas-wrap"><canvas id="chartActivity" aria-label="Activity over time"></canvas></div>
+    </div>
+    <div class="progress-card">
+      <div class="progress-card-head">
+        <div class="progress-card-title"><i class="fas fa-layer-group" aria-hidden="true"></i> Workspace footprint</div>
+        <div class="progress-card-meta">${countWorkspaces()} active</div>
+      </div>
+      <div class="progress-canvas-wrap"><canvas id="chartWorkspaces" aria-label="Workspace footprint"></canvas></div>
+    </div>
+  `;
+
+  if (typeof Chart === 'undefined') {
+    grid.querySelectorAll('.progress-canvas-wrap').forEach(w => {
+      w.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;font-family:var(--font-heading);">Charts unavailable</div>';
+    });
+    return;
+  }
+
+  destroyCharts();
+
+  const styles = getComputedStyle(document.documentElement);
+  const gold = styles.getPropertyValue('--gold').trim() || '#ca8a04';
+  const goldLight = styles.getPropertyValue('--gold-light').trim() || '#fbbf24';
+  const borderCol = styles.getPropertyValue('--m365-border').trim() || '#edebe9';
+  const textMuted = styles.getPropertyValue('--text-muted').trim() || '#6b7280';
+  const ink = styles.getPropertyValue('--ink').trim() || '#0f0f1e';
+
+  Chart.defaults.font.family = "'Satoshi','Cabinet Grotesk',system-ui,sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = textMuted;
+
+  /* Donut: learning completion */
+  const donutCtx = document.getElementById('chartLearning');
+  if (donutCtx) {
+    activeCharts.push(new Chart(donutCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'In progress', 'Not started'],
+        datasets: [{
+          data: [completed, inProgress, notStarted],
+          backgroundColor: ['#107c10', gold, borderCol],
+          borderWidth: 0,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '68%',
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, padding: 12 } },
+          tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 }
+        }
+      }
+    }));
+  }
+
+  /* Horizontal bars: course progress */
+  const coursesCtx = document.getElementById('chartCourses');
+  if (coursesCtx) {
+    activeCharts.push(new Chart(coursesCtx, {
+      type: 'bar',
+      data: {
+        labels: barLabels,
+        datasets: [{
+          label: 'Progress %',
+          data: barValues,
+          backgroundColor: gold,
+          borderRadius: 4,
+          barThickness: 14
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { beginAtZero: true, max: 100, grid: { color: borderCol, drawBorder: false }, ticks: { callback: v => v + '%' } },
+          y: { grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ` ${c.parsed.x}%` } }
+        }
+      }
+    }));
+  }
+
+  /* Line: activity over time */
+  const activityCtx = document.getElementById('chartActivity');
+  if (activityCtx) {
+    activeCharts.push(new Chart(activityCtx, {
+      type: 'line',
+      data: {
+        labels: lineLabels,
+        datasets: [{
+          label: 'Events',
+          data: lineValues,
+          borderColor: gold,
+          backgroundColor: 'rgba(202,138,4,0.12)',
+          borderWidth: 2,
+          tension: 0.35,
+          fill: true,
+          pointRadius: 2,
+          pointHoverRadius: 5,
+          pointBackgroundColor: goldLight
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 6 } },
+          y: { beginAtZero: true, grid: { color: borderCol, drawBorder: false }, ticks: { precision: 0 } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 }
+        }
+      }
+    }));
+  }
+
+  /* Bar: workspace footprint */
+  const wsCtx = document.getElementById('chartWorkspaces');
+  if (wsCtx) {
+    activeCharts.push(new Chart(wsCtx, {
+      type: 'bar',
+      data: {
+        labels: wsLabels,
+        datasets: [{
+          label: 'Workspaces',
+          data: wsValues,
+          backgroundColor: gold,
+          borderRadius: 4,
+          barThickness: 14
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 6 } },
+          y: { beginAtZero: true, grid: { color: borderCol, drawBorder: false }, ticks: { precision: 0 } }
+        },
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } }
+      }
+    }));
+  }
+}
+
+function destroyCharts() {
+  activeCharts.forEach(c => { try { c.destroy(); } catch (e) {} });
+  activeCharts = [];
+}
+
 function renderFeed(items) {
   const feed = document.getElementById('wsFeed');
   const railCount = document.getElementById('railActivityCount');
-  if (railCount) railCount.textContent = String(recentActivity.length);
+  if (railCount) railCount.textContent = String(personalActivity.length);
   if (!feed) return;
 
   if (!items || items.length === 0) {
@@ -3412,7 +3628,7 @@ function renderFeed(items) {
       <div class="ws-feed-empty">
         <i class="fas fa-satellite-dish" aria-hidden="true"></i>
         <div>No recent activity</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Task updates and payouts will appear here.</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Workspace updates will appear here.</div>
       </div>
     `;
     return;
@@ -3442,11 +3658,13 @@ function navigateTo(section) {
   if (target) target.classList.add('active');
 
   if (section === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
-  else if (section === 'recent' || section === 'activity') {
+  else if (section === 'progress') {
+    const el = document.getElementById('progressSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (section === 'activity') {
     const el = document.getElementById('recentTitle');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  else if (section === 'learning') window.location.href = 'learning/index.html';
+  } else if (section === 'learning') window.location.href = 'learning/index.html';
   else if (section === 'account') window.location.href = 'account.html';
   else if (section === 'resources') window.location.href = 'resources.html';
 }
@@ -3568,6 +3786,18 @@ function attachNotifListeners() {
         .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
         .slice(0, CONFIG.maxNotifications);
       renderNotifications();
+      /* Keep the dashboard feed fresh too */
+      personalActivity = notifications
+        .filter(n => n.timestamp)
+        .slice(0, CONFIG.recentActivityMax)
+        .map(n => ({
+          icon: mapNotifIcon(n.type),
+          type: mapNotifType(n.type),
+          title: n.title || 'Notification',
+          desc: n.body || '',
+          ts: n.timestamp
+        }));
+      renderFeed(personalActivity);
     };
     ref.on('value', cb, (err) => console.warn('notifications listener:', err));
     notifRefs.push({ ref, cb });
@@ -3593,7 +3823,7 @@ function renderNotifications() {
   }
 
   if (notifications.length === 0) {
-    body.innerHTML = `<div class="notif-empty"><i class="far fa-bell-slash" aria-hidden="true"></i><div>No notifications yet</div><div style="font-size:0.72rem;margin-top:0.4rem;opacity:0.7;">Task updates and payouts will show here</div></div>`;
+    body.innerHTML = `<div class="notif-empty"><i class="far fa-bell-slash" aria-hidden="true"></i><div>No notifications yet</div><div style="font-size:0.72rem;margin-top:0.4rem;opacity:0.7;">Workspace updates will show here</div></div>`;
     badge.classList.remove('visible');
     if (clearBtn) clearBtn.disabled = true;
     return;
@@ -3791,47 +4021,14 @@ async function loadPublicStats() {
     setStat('psTaskers', verified);
   } catch (e) { setStat('psTaskers', '—'); }
 
-  let completed = 0;
   try {
-    const snap = await db.ref('ekazi_assigned_tasks').once('value');
-    const assigned = snap.val() || {};
-    completed += Object.values(assigned).filter(t => {
-      const s = (t.status || '').toLowerCase();
-      return s === 'approved' || s === 'completed';
-    }).length;
-  } catch (e) {}
-  try {
-    const snap = await db.ref('kasikazi_tasks').once('value');
-    const kas = snap.val() || {};
-    Object.values(kas).forEach(t => {
-      if (!t.claimedBy) return;
-      Object.values(t.claimedBy).forEach(c => {
-        if ((c.status || '').toLowerCase() === 'approved') completed++;
-      });
-    });
-  } catch (e) {}
-  try {
-    const snap = await db.ref('craftikazi_tasks').once('value');
-    const craft = snap.val() || {};
-    Object.values(craft).forEach(t => {
-      if (!t.claimedBy) return;
-      Object.values(t.claimedBy).forEach(c => {
-        if ((c.status || '').toLowerCase() === 'approved') completed++;
-      });
-    });
-  } catch (e) {}
-  try {
-    const snap = await db.ref('zindua_tasks').once('value');
-    const zd = snap.val() || {};
-    Object.values(zd).forEach(t => {
-      if (!t.claimedBy) return;
-      Object.values(t.claimedBy).forEach(c => {
-        if ((c.status || '').toLowerCase() === 'approved') completed++;
-      });
-    });
-  } catch (e) {}
-  setStat('psCompleted', completed);
-  setStat('psWorkspaces', Object.keys(APPS).length + 12);
+    const snap = await db.ref('learning_courses').once('value');
+    const courses = snap.val() || {};
+    const count = Object.values(courses).filter(c => c && (c.published === true || c.publishedAt)).length;
+    setStat('psCourses', count || FALLBACK_COURSES.length);
+  } catch (e) { setStat('psCourses', FALLBACK_COURSES.length); }
+
+  setStat('psWorkspaces', Object.keys(WORKSPACE_META).length);
   buildTicker();
 }
 
@@ -3867,18 +4064,17 @@ function buildPublicTicker() {
   const track = document.getElementById('psTicker');
   if (!track) return;
   const items = [
-    { icon: 'fa-circle-check', text: 'A task was approved' },
-    { icon: 'fa-bullhorn', text: 'New task posted on Kasikazi' },
-    { icon: 'fa-hammer', text: 'A craft job went live on CraftiKazi' },
-    { icon: 'fa-rocket', text: 'A tech task went live on Zindua Hub' },
-    { icon: 'fa-user-check', text: 'A tasker joined the network' },
-    { icon: 'fa-certificate', text: 'A learning module was completed' },
-    { icon: 'fa-list-check', text: 'A tasker claimed an open task' }
+    { icon: 'fa-layer-group', html: 'A new workspace was added' },
+    { icon: 'fa-user-check',  html: 'A member joined the network' },
+    { icon: 'fa-certificate', html: 'A learning module was completed' },
+    { icon: 'fa-bullhorn',    html: 'A workspace published an update' },
+    { icon: 'fa-graduation-cap', html: 'A new course went live' },
+    { icon: 'fa-chart-pie',   html: 'Progress analytics refreshed' }
   ];
   const html = items.map(it => `
     <span class="ps-ticker-item">
       <i class="fas ${escapeHtml(it.icon)}" aria-hidden="true"></i>
-      <span>${escapeHtml(it.text)}</span>
+      <span>${it.html}</span>
     </span>
   `).join('');
   track.innerHTML = html + html;
@@ -3888,44 +4084,21 @@ async function buildTicker() {
   const track = document.getElementById('psTicker');
   if (!track) return;
   if (!currentUser) { buildPublicTicker(); return; }
-  const db = window._db;
-  if (!db) { buildPublicTicker(); return; }
 
-  const uid = currentUser.uid;
-  const email = (currentUser.email || '').toLowerCase();
-  const items = [];
-
-  if (currentPerms.ekazi === true) {
-    try {
-      const snap = await db.ref('ekazi_assigned_tasks').orderByChild('taskerEmail').equalTo(email).limitToLast(CONFIG.notifLimit).once('value');
-      const assigned = snap.val() || {};
-      Object.entries(assigned).forEach(([id, t]) => {
-        const s = (t.status || '').toLowerCase();
-        const ts = t.approvedAt || t.reviewedAt || t.lastSubmittedAt || t.assignedAt || 0;
-        if (!ts) return;
-        if (s === 'approved' || s === 'completed') items.push({ icon: 'fa-circle-check', html: `Approved: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-        else if (s === 'assigned' || s === 'new') items.push({ icon: 'fa-list-check', html: `New task: <strong>${escapeHtml(t.title || 'Task')}</strong>`, ts });
-      });
-    } catch (e) {}
-  }
-
-  items.sort((a, b) => b.ts - a.ts);
-
-  if (items.length === 0) {
+  /* Personal ticker from your own notifications */
+  if (personalActivity.length === 0) {
     track.innerHTML = `
       <span class="ps-ticker-item">
         <i class="fas fa-satellite-dish" aria-hidden="true"></i>
-        <span>No recent activity — claim a task or complete work to see it here</span>
+        <span>No recent activity — your updates will appear here</span>
       </span>
     `;
     return;
   }
-
-  const top = items.slice(0, 12);
-  const html = top.map(it => `
+  const html = personalActivity.map(a => `
     <span class="ps-ticker-item">
-      <i class="fas ${escapeHtml(it.icon)}" aria-hidden="true"></i>
-      <span>${it.html}</span>
+      <i class="fas ${escapeHtml(a.icon)}" aria-hidden="true"></i>
+      <span><strong>${escapeHtml(a.title)}</strong> — ${escapeHtml(a.desc || '')}</span>
     </span>
   `).join('');
   track.innerHTML = html + html;
@@ -3959,6 +4132,7 @@ function updatePublicClock() {
    ============================================================ */
 window.addEventListener('beforeunload', () => {
   detachNotifListeners();
+  destroyCharts();
   courseListeners.forEach(({ ref, cb }) => { try { ref.off('value', cb); } catch (e) {} });
 });
 </script>
