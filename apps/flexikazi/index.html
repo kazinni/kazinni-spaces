@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<title>FlexiKazi · KazInni Freelance Network</title>
+<title>FlexiKazi · KazInni Task Board</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,6 @@ body {
   letter-spacing: -0.005em;
 }
 
-/* NOSCRIPT */
 .noscript-warning {
   position: fixed; inset: 0; background: white;
   display: flex; align-items: center; justify-content: center;
@@ -75,7 +74,6 @@ body {
 .noscript-warning h2 { font-size: 1.5rem; color: #0f0f1e; margin-bottom: 0.5rem; }
 .noscript-warning p { color: #6b7280; max-width: 400px; }
 
-/* AMBIENT */
 .ambient { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .ambient .glow { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.5; }
 .glow-1 { width: 700px; height: 700px; background: #fcd34d; top: -220px; left: -200px; }
@@ -87,7 +85,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* ANIMATIONS */
 @keyframes pulseDot {
   0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
   50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
@@ -179,7 +176,6 @@ body {
   text-transform: uppercase; margin-top: 4px;
 }
 
-/* ---------- NAV ---------- */
 .nav-links {
   display: flex; gap: 0.3rem; align-items: center;
   padding: 0.3rem;
@@ -219,7 +215,6 @@ body {
   border-radius: 2px;
 }
 
-/* BUTTONS */
 .btn {
   padding: 0.65rem 1.5rem; border: none; border-radius: 100px;
   font-weight: 600; font-size: 0.85rem; cursor: pointer;
@@ -261,14 +256,12 @@ body {
 
 .btn-lg { padding: 0.95rem 2rem; font-size: 0.95rem; }
 
-/* MAIN */
 .main-content {
   max-width: 1440px; margin: 0 auto;
   padding: calc(var(--header-height) + 2rem) 2.5rem 2rem;
   position: relative; z-index: 2;
 }
 
-/* HERO */
 .hero {
   display: grid; grid-template-columns: 1.1fr 0.9fr;
   gap: 5rem; align-items: center;
@@ -325,7 +318,6 @@ body {
   text-transform: uppercase; letter-spacing: 0.8px;
 }
 
-/* HERO VISUAL */
 .hero-visual {
   position: relative; height: 560px;
   display: flex; align-items: center; justify-content: center;
@@ -411,7 +403,6 @@ body {
 .vc-row .label { flex: 1; }
 .vc-row .time { color: var(--text-muted); font-size: 0.7rem; }
 
-/* TRUST STRIP */
 .trust-strip {
   margin-top: 1rem;
   display: flex; align-items: center; gap: 2rem;
@@ -429,7 +420,6 @@ body {
 }
 .trust-item i { color: var(--gold); font-size: 0.85rem; }
 
-/* DASHBOARD */
 .dash-wrap { display: none; }
 .dash-wrap.active { display: block; animation: fadeUp 0.6s ease; }
 
@@ -533,7 +523,6 @@ body {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
-/* STATS */
 .stats-row {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 1rem; margin-bottom: 2.5rem;
@@ -579,7 +568,6 @@ body {
   text-transform: uppercase; letter-spacing: 0.5px;
 }
 
-/* SECTION TITLE */
 .section-title {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 1.5rem; gap: 1rem;
@@ -604,7 +592,6 @@ body {
   background: var(--success); animation: pulseDot 2s infinite;
 }
 
-/* SUITES GRID */
 .suites-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 1rem; margin-bottom: 1rem;
@@ -675,7 +662,6 @@ body {
   transform: translate(2px, -2px);
 }
 
-/* TASK COUNT BADGE */
 .suite-task-badge {
   position: absolute; top: 1.2rem; right: 1.2rem;
   min-width: 26px; height: 26px; padding: 0 0.55rem;
@@ -692,7 +678,6 @@ body {
 }
 .suite-task-badge.hidden { display: none; }
 
-/* ACTIVITY DOT */
 .suite-activity-dot {
   position: absolute; top: 1.5rem; left: 1.5rem;
   width: 10px; height: 10px; border-radius: 50%;
@@ -703,7 +688,6 @@ body {
 }
 .suite-activity-dot.hidden { display: none; }
 
-/* SUITE PREVIEW LIST */
 .suite-preview-list {
   display: flex; flex-direction: column; gap: 0.3rem;
   margin-top: 0.6rem; position: relative; z-index: 1;
@@ -733,7 +717,6 @@ body {
   padding: 0.25rem 0.5rem; text-align: right;
 }
 
-/* EMPTY STATE */
 .empty-state {
   background: white;
   border: 1.5px dashed rgba(15,15,30,0.1);
@@ -768,7 +751,6 @@ body {
   font-weight: 500;
 }
 
-/* TASK LIST */
 .tasks-container {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 1rem; margin-bottom: 2rem;
@@ -831,12 +813,15 @@ body {
 .task-meta-item i { color: var(--gold); font-size: 0.7rem; }
 .task-bottom {
   display: flex; align-items: center; justify-content: space-between;
+  gap: 0.7rem;
 }
-.task-pay {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 1.3rem; color: var(--gold-dark);
-  letter-spacing: -0.02em; line-height: 1;
+.task-status-pill {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.72rem; color: var(--gold-dark);
+  letter-spacing: 0.4px; text-transform: uppercase;
 }
+.task-status-pill i { font-size: 0.6rem; }
 .task-btn {
   padding: 0.55rem 1.2rem; font-size: 0.78rem;
   background: var(--ink); color: white;
@@ -855,7 +840,6 @@ body {
 .task-btn:hover { box-shadow: var(--shadow-gold-soft); }
 .task-btn:hover::before { opacity: 1; }
 
-/* LOCKED */
 .locked-wrap { display: none; }
 .locked-wrap.active { display: block; }
 .locked-card {
@@ -894,7 +878,6 @@ body {
 }
 .locked-card .btn { position: relative; z-index: 1; }
 
-/* FAQ */
 .faq-section { margin-top: 4rem; margin-bottom: 2rem; }
 .faq-head { text-align: center; margin-bottom: 2.5rem; }
 .faq-head .label {
@@ -944,7 +927,6 @@ body {
   margin-top: 0.8rem; line-height: 1.65;
 }
 
-/* STEP CARDS */
 .steps-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 1rem; max-width: 1200px; margin: 0 auto;
@@ -981,7 +963,6 @@ body {
   line-height: 1.6;
 }
 
-/* MODAL */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15,15,30,0.65);
@@ -1094,7 +1075,6 @@ body {
 }
 .modal-foot i { color: var(--gold); }
 
-/* TOASTS */
 .toast-container {
   position: fixed; top: 90px; right: 24px; z-index: 4000;
   display: flex; flex-direction: column; gap: 0.5rem;
@@ -1115,7 +1095,6 @@ body {
 .toast.error i { color: #f87171; }
 .toast.info i { color: #fbbf24; }
 
-/* FOOTER */
 .footer {
   position: fixed; bottom: 0; left: 0; right: 0;
   height: var(--footer-height);
@@ -1147,7 +1126,6 @@ body {
   font-family: var(--font-heading);
 }
 
-/* USER MENU */
 .user-menu-wrapper { position: relative; display: inline-flex; align-items: center; }
 .user-menu-btn {
   background: white; border: 1px solid var(--border-light);
@@ -1212,7 +1190,6 @@ body {
   margin: 0.35rem 0.4rem;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1100px) {
   .hero { grid-template-columns: 1fr; text-align: left; gap: 3rem; min-height: auto; padding: 2rem 0 4rem; }
   .hero-visual { height: 480px; max-width: 640px; margin: 0 auto; width: 100%; }
@@ -1292,7 +1269,7 @@ body {
   <button class="modal-close" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
 
   <div id="loginView">
-    <div class="modal-brand"><i class="fas fa-briefcase"></i></div>
+    <div class="modal-brand"><i class="fas fa-clipboard-list"></i></div>
     <div class="modal-header">
       <h3>FlexiKazi Sign In</h3>
       <p>Access your task board with KazInni credentials</p>
@@ -1389,15 +1366,15 @@ body {
     <div>
       <div class="hero-badge">
         <span class="dot"></span>
-        <span>Invitation-Only Freelance Network</span>
+        <span>Invitation-Only Task Network</span>
       </div>
       <h1>
-        Real work.<br>
-        Real <span class="accent">earnings</span>.<br>
+        Assigned work.<br>
+        Clear <span class="accent">briefs</span>.<br>
         On your schedule.
       </h1>
       <p class="hero-lede">
-        FlexiKazi connects vetted freelancers with tasks from across KazInni's operational suites. Sign in to view your board, accept tasks, and get paid.
+        FlexiKazi is the internal task board for vetted KazInni contributors. Sign in to see the work assigned to you across our operational suites, submit your deliverables, and track your progress.
       </p>
       <div class="hero-actions">
         <button class="btn btn-primary btn-lg" onclick="openAuthModal()">
@@ -1409,8 +1386,8 @@ body {
       </div>
       <div class="hero-meta">
         <div class="hero-meta-item">
-          <div class="hero-meta-value">48hr</div>
-          <div class="hero-meta-label">Payout Window</div>
+          <div class="hero-meta-value">Email</div>
+          <div class="hero-meta-label">Task Briefs</div>
         </div>
         <div class="hero-meta-item">
           <div class="hero-meta-value">Invitation</div>
@@ -1430,14 +1407,14 @@ body {
 
       <div class="visual-card vc-1">
         <div class="vc-head">
-          <div class="vc-icon gold"><i class="fas fa-wallet"></i></div>
+          <div class="vc-icon gold"><i class="fas fa-inbox"></i></div>
           <div>
-            <div class="vc-title">Earnings</div>
-            <div class="vc-sub">This cycle</div>
+            <div class="vc-title">Assignments</div>
+            <div class="vc-sub">This week</div>
           </div>
         </div>
-        <div class="vc-label">Balance</div>
-        <div class="vc-value">—<span class="unit">KES</span></div>
+        <div class="vc-label">In queue</div>
+        <div class="vc-value">—<span class="unit">open</span></div>
         <div class="vc-progress"><div class="vc-progress-fill" style="width: 0%;"></div></div>
       </div>
 
@@ -1468,13 +1445,13 @@ body {
 
       <div class="visual-card vc-3">
         <div class="vc-head">
-          <div class="vc-icon green"><i class="fas fa-star"></i></div>
+          <div class="vc-icon green"><i class="fas fa-award"></i></div>
           <div>
-            <div class="vc-title">Your Rating</div>
-            <div class="vc-sub">Based on completed tasks</div>
+            <div class="vc-title">Tasker Standing</div>
+            <div class="vc-sub">Based on approved work</div>
           </div>
         </div>
-        <div class="vc-label">Score</div>
+        <div class="vc-label">Rating</div>
         <div class="vc-value">—<span class="unit">/ 5.0</span></div>
         <div class="vc-progress"><div class="vc-progress-fill" style="width: 0%;"></div></div>
       </div>
@@ -1483,9 +1460,9 @@ body {
 
   <!-- TRUST STRIP -->
   <section id="trustStrip" class="trust-strip">
-    <div class="trust-item"><i class="fas fa-shield-halved"></i> Vetted freelancers only</div>
-    <div class="trust-item"><i class="fas fa-bolt"></i> 48-hour M-Pesa payouts</div>
-    <div class="trust-item"><i class="fas fa-envelope"></i> Task comms via email</div>
+    <div class="trust-item"><i class="fas fa-shield-halved"></i> Vetted contributors only</div>
+    <div class="trust-item"><i class="fas fa-envelope"></i> Full brief delivered by email</div>
+    <div class="trust-item"><i class="fas fa-list-check"></i> Structured submission flow</div>
     <div class="trust-item"><i class="fas fa-arrow-up-right-dots"></i> Growth to KazInni staff</div>
   </section>
 
@@ -1546,9 +1523,9 @@ body {
         <div class="stat-caption">Completed</div>
       </div>
       <div class="stat-tile reveal reveal-4">
-        <div class="stat-icon-wrap pink"><i class="fas fa-wallet"></i></div>
-        <div class="stat-number" id="statEarned">—</div>
-        <div class="stat-caption">Approved Earnings (KES)</div>
+        <div class="stat-icon-wrap pink"><i class="fas fa-flag-checkered"></i></div>
+        <div class="stat-number" id="statApproved">—</div>
+        <div class="stat-caption">Approved Tasks</div>
       </div>
     </div>
 
@@ -1600,7 +1577,7 @@ body {
     <div class="empty-state" style="padding:3.5rem 2rem;">
       <div class="empty-icon"><i class="fas fa-lock"></i></div>
       <h3>Your suites and tasks are private</h3>
-      <p>FlexiKazi tasks and suites are visible only to invited freelancers. Sign in with your credentials to view your board.</p>
+      <p>FlexiKazi tasks and suites are visible only to invited contributors. Sign in with your credentials to view your board.</p>
       <button class="btn btn-primary btn-lg" style="margin-top:1.5rem;" onclick="openAuthModal()">
         <i class="fas fa-sign-in-alt"></i> Sign In to FlexiKazi
       </button>
@@ -1642,11 +1619,11 @@ body {
       </div>
       <div class="step-card reveal reveal-4">
         <div class="step-top">
-          <div class="step-icon"><i class="fas fa-wallet"></i></div>
+          <div class="step-icon"><i class="fas fa-flag-checkered"></i></div>
           <span class="step-num">Step 04</span>
         </div>
-        <h4>Get Paid</h4>
-        <p>Once approved, payment is sent to your M-Pesa within 48 hours.</p>
+        <h4>Get Approved</h4>
+        <p>Once reviewed, your task is marked approved and your standing updates instantly.</p>
       </div>
     </div>
   </section>
@@ -1655,7 +1632,7 @@ body {
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-content">
-    <div class="footer-logo"><i class="fas fa-briefcase"></i> FlexiKazi · by KazInni</div>
+    <div class="footer-logo"><i class="fas fa-clipboard-list"></i> FlexiKazi · by KazInni</div>
     <div class="footer-links">
       <a href="#how">How It Works</a>
       <a href="mailto:operations@kazinni.com">Contact</a>
@@ -1779,19 +1756,19 @@ if (auth) {
       const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
       if (!taskerSnap.exists()) {
         await auth.signOut();
-        showToast('This account is not registered as a FlexiKazi tasker.', 'error');
+        showToast('This account is not registered as a FlexiKazi contributor.', 'error');
         return;
       }
       currentTasker = taskerSnap.val();
       if (currentTasker.verified !== true && currentTasker.status !== 'verified') {
         await auth.signOut();
-        showToast('Your tasker account is pending verification.', 'error');
+        showToast('Your contributor account is pending verification.', 'error');
         return;
       }
     } catch (e) {
       console.error('Tasker verification failed:', e);
       await auth.signOut();
-      showToast('Could not verify your tasker account.', 'error');
+      showToast('Could not verify your contributor account.', 'error');
       return;
     }
 
@@ -1972,12 +1949,28 @@ function renderRecentTasks() {
   empty.style.display = 'none';
   label.textContent = `${myTasks.length} task${myTasks.length !== 1 ? 's' : ''}`;
 
+  const STATUS_LABELS = {
+    assigned: 'Assigned',
+    new: 'Assigned',
+    started: 'In progress',
+    'in-progress': 'In progress',
+    'in_progress': 'In progress',
+    review: 'In review',
+    submitted: 'In review',
+    revision: 'Needs revision',
+    approved: 'Approved',
+    completed: 'Completed',
+    cancelled: 'Cancelled'
+  };
+
   grid.innerHTML = recent.map(t => {
     const status = (t.status || 'assigned').toLowerCase();
+    const statusLabel = STATUS_LABELS[status] || (status.charAt(0).toUpperCase() + status.slice(1));
     const wsKey = t.workspace || t.suite || '';
     const wsCfg = SUITE_CONFIG[wsKey] || { name: wsKey || 'Unassigned', color: '#ca8a04', bgColor: '#fef3c7', icon: 'fa-cube', link: '#' };
-    const pay = t.payRate ? `KES ${Number(t.payRate).toLocaleString()}` : '—';
     const due = t.dueDate ? formatDate(t.dueDate) : 'No due date';
+    const priorityClass = status === 'revision' ? 'urgent'
+                       : (status === 'approved' || status === 'completed' ? 'flexible' : 'standard');
 
     return `
       <a href="${wsCfg.link}" class="task-card">
@@ -1985,18 +1978,21 @@ function renderRecentTasks() {
           <span class="task-workspace" style="background:${wsCfg.bgColor};color:${wsCfg.color};">
             <i class="fas ${wsCfg.icon}" style="font-size:0.65rem;"></i> ${escapeHtml(wsCfg.name)}
           </span>
-          <span class="task-priority ${status === 'revision' ? 'urgent' : (status === 'approved' || status === 'completed' ? 'flexible' : 'standard')}">
-            ${escapeHtml(status)}
+          <span class="task-priority ${priorityClass}">
+            ${escapeHtml(statusLabel)}
           </span>
         </div>
         <div class="task-title">${escapeHtml(t.title || t.category || 'Task')}</div>
-        <div class="task-desc">${escapeHtml(t.notes || t.clientName || 'View task details for full brief.')}</div>
+        <div class="task-desc">${escapeHtml(t.notes || t.clientName || 'View task details for the full brief.')}</div>
         <div class="task-meta">
           <div class="task-meta-item"><i class="fas fa-user"></i> ${escapeHtml(t.clientName || 'KazInni')}</div>
           <div class="task-meta-item"><i class="fas fa-calendar"></i> ${escapeHtml(due)}</div>
         </div>
         <div class="task-bottom">
-          <div class="task-pay">${pay}</div>
+          <span class="task-status-pill">
+            <i class="fas fa-circle" style="font-size:0.4rem;"></i>
+            ${escapeHtml(statusLabel)}
+          </span>
           <span class="task-btn"><i class="fas fa-arrow-right"></i> View in Suite</span>
         </div>
       </a>
@@ -2026,7 +2022,6 @@ async function loadTasks(user) {
     renderRecentTasks();
   } catch (e) {
     console.error('Error loading tasks:', e);
-    // Fallback: if index query fails, try full read
     try {
       const snap = await database.ref('ekazi_assigned_tasks').once('value');
       const all = snap.val() || {};
@@ -2074,7 +2069,6 @@ function attachTaskListeners(user) {
     taskListeners.push({ ref, event: 'child_removed', cb: handler });
   } catch (e) {
     console.warn('Indexed task listener failed, falling back:', e);
-    // Fallback: listen on whole table
     try {
       const ref = database.ref('ekazi_assigned_tasks');
       const handler = () => { loadTasks(user); };
@@ -2098,15 +2092,14 @@ function detachTaskListeners() {
 }
 
 function updateTaskStats() {
-  let open = 0, inProgress = 0, completed = 0, earned = 0;
+  let open = 0, inProgress = 0, completed = 0, approved = 0;
 
   myTasks.forEach(t => {
     const s = (t.status || '').toLowerCase();
-    const amount = Number(t.payRate) || 0;
     if (s === 'approved' || s === 'completed') {
       completed++;
-      earned += amount;
-    } else if (s === 'revision' || s === 'review' || s === 'pending' || s === 'started' || s === 'in-progress' || s === 'in_progress') {
+      if (s === 'approved') approved++;
+    } else if (s === 'revision' || s === 'review' || s === 'pending' || s === 'started' || s === 'in-progress' || s === 'in_progress' || s === 'submitted') {
       inProgress++;
     } else {
       open++;
@@ -2116,7 +2109,7 @@ function updateTaskStats() {
   document.getElementById('statOpenTasks').textContent = open;
   document.getElementById('statInProgress').textContent = inProgress;
   document.getElementById('statCompleted').textContent = completed;
-  document.getElementById('statEarned').textContent = earned.toLocaleString();
+  document.getElementById('statApproved').textContent = approved;
 }
 
 // ============================================================
