@@ -1112,7 +1112,7 @@ body.mode-landing .ws-content {
 }
 .progress-canvas-wrap canvas { max-width: 100%; max-height: 100%; }
 
-/* ---------- Today's schedule (read-only) ---------- */
+/* ---------- Today's schedule (read-only, from assigned work) ---------- */
 .schedule-list {
   background: white;
   border: 1px solid var(--m365-border);
@@ -2153,17 +2153,17 @@ const COURSE_CATEGORY_ORDER = [
   'communication', 'productivity', 'career', 'finance', 'civic', 'tech', 'design', 'business', 'other'
 ];
 
-/* Workspace display metadata — used for chips, schedules and workspace footprint. */
+/* Workspace display metadata */
 const WORKSPACE_META = {
-  brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work for client businesses.' },
-  'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders, banners, business cards and stickers.' },
-  dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
-  'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel, merch and franchise operations.' },
+  brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work.' },
+  'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders and stickers.' },
+  dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
+  'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
   'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods supply.' },
   heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and listings.' },
   'heritage-marketplace': { name: 'Heritage Marketplace',  icon: 'fa-store',       color: '#0891b2', desc: 'Listings and marketplace orders.' },
   'heritage-interiors':   { name: 'Heritage Interiors',    icon: 'fa-couch',       color: '#0e7490', desc: 'Furniture, interiors and custom builds.' },
-  workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs, memberships and events.' },
+  workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs and events.' },
   epitome:                { name: 'Epitome Reviews',       icon: 'fa-car',         color: '#3b82f6', desc: 'Cars, homes and reviews.' },
   'digital-services':     { name: 'Digital Services',      icon: 'fa-laptop-code', color: '#1e40af', desc: 'Government and online service applications.' },
   'mugs-n-dines':         { name: 'Mugs n Dines',          icon: 'fa-utensils',    color: '#f59e0b', desc: 'Restaurant and catering operations.' },
@@ -2292,6 +2292,40 @@ function formatTime12(h, m) {
   const hh = h % 12 || 12;
   const mm = String(m).padStart(2, '0');
   return { label: `${hh}:${mm}`, period: ampm };
+}
+
+/* Parse various due date formats from Firebase into a Date object.
+   Supports: ISO strings, "YYYY-MM-DD", "DD MMM YYYY", and epoch numbers. */
+function parseDueDate(raw) {
+  if (!raw) return null;
+  if (typeof raw === 'number') {
+    const d = new Date(raw);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  const s = String(raw).trim();
+  if (!s) return null;
+
+  // ISO or YYYY-MM-DD
+  let d = new Date(s);
+  if (!isNaN(d.getTime())) return d;
+
+  // DD MMM YYYY  (e.g. "14 Oct 2026")
+  const m = s.match(/^(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})$/);
+  if (m) {
+    const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    const mi = months.indexOf(m[2].slice(0,3).toLowerCase());
+    if (mi >= 0) {
+      d = new Date(Number(m[3]), mi, Number(m[1]));
+      return isNaN(d.getTime()) ? null : d;
+    }
+  }
+  return null;
+}
+
+function isSameDay(a, b) {
+  return a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate();
 }
 
 /* ============================================================
@@ -3071,7 +3105,7 @@ function renderPreviewGrid() {
 }
 
 /* ============================================================
-   WORKSPACE  (dashboard: progress + today's schedule + notifications)
+   WORKSPACE
    ============================================================ */
 function renderWorkspace() {
   const content = document.getElementById('wsContent');
@@ -3290,28 +3324,16 @@ function buildWorkspaceChips() {
 }
 
 /* ============================================================
-   TODAY'S SCHEDULE  (read-only, derived from workspaces the user belongs to)
+   TODAY'S SCHEDULE  — derived from real assignments in Firebase
+   ============================================================
+   Reads only nodes already permitted by the rules:
+     • ekazi_assigned_tasks       (filtered by taskerEmail)
+     • user_assignments/{uid}     (to know which workspaces are relevant)
+     • zindua_tasks               (claimedBy[uid])
+     • kasikazi_tasks             (claimedBy[uid])
+     • craftikazi_tasks           (claimedBy[uid])
+   Nothing is written.
    ============================================================ */
-
-/* Templates are pure presentation — a workspace's normal daily rhythm.
-   They do NOT read or write any new Firebase paths. */
-const WORKSPACE_SCHEDULE_TEMPLATES = {
-  'workfit':              [{ h: 6,  m: 0,  title: 'Morning training session',  desc: 'Club activity — check in and log your attendance.' }],
-  'mugs-n-dines':         [{ h: 11, m: 30, title: 'Kitchen prep & lunch service', desc: 'Coordinate with the kitchen on today\'s menu.' }],
-  'fusion-foods':         [{ h: 7,  m: 0,  title: 'Fresh produce intake',       desc: 'Confirm incoming stock from suppliers.' }],
-  'brandinn':             [{ h: 10, m: 0,  title: 'Client design review',       desc: 'Check pending project milestones.' }],
-  'brandinn-print':       [{ h: 9,  m: 0,  title: 'Print queue check',          desc: 'Review today\'s print orders and dispatch.' }],
-  'dsog':                 [{ h: 14, m: 0,  title: 'Franchise stock check',      desc: 'Confirm inventory levels across franchisees.' }],
-  'dsog-fashion':         [{ h: 14, m: 0,  title: 'Franchise stock check',      desc: 'Confirm inventory levels across franchisees.' }],
-  'heritage':             [{ h: 11, m: 0,  title: 'Advertising slot review',    desc: 'Confirm active marketplace listings.' }],
-  'heritage-marketplace': [{ h: 11, m: 0,  title: 'Marketplace listings review',desc: 'Confirm active listings.' }],
-  'heritage-interiors':   [{ h: 13, m: 0,  title: 'Interior project check-in',  desc: 'Review custom build milestones.' }],
-  'epitome':              [{ h: 15, m: 0,  title: 'Listings & reviews sweep',   desc: 'Confirm cars and houses listings.' }],
-  'digital-services':     [{ h: 9,  m: 30, title: 'Applications queue',          desc: 'Process pending client applications.' }],
-  'latter-logistics':     [{ h: 8,  m: 0,  title: 'Route planning',              desc: 'Confirm today\'s shipments and customs.' }],
-  'pick-up':              [{ h: 8,  m: 30, title: 'Delivery round planning',     desc: 'Confirm same-day and scheduled deliveries.' }],
-  'pick-me':              [{ h: 7,  m: 30, title: 'Rides & trips check',         desc: 'Confirm scheduled trips for today.' }]
-};
 
 function updateScheduleDateLabel() {
   const el = document.getElementById('scheduleDateLabel');
@@ -3321,55 +3343,92 @@ function updateScheduleDateLabel() {
   });
 }
 
-function buildTodaySchedule() {
-  const now = new Date();
-  const todayDow = now.getDay(); // 0 = Sunday
+async function fetchTodaySchedule() {
+  const db = window._db;
+  if (!db || !currentUser) return [];
+
+  const uid = currentUser.uid;
+  const email = (currentUser.email || '').toLowerCase();
+  const today = new Date();
   const items = [];
 
-  const ownedKeys = Object.keys(currentPerms || {})
-    .filter(k => currentPerms[k] === true && k !== 'learning');
-
-  ownedKeys.forEach(slug => {
-    const template = WORKSPACE_SCHEDULE_TEMPLATES[slug];
-    if (!template) return;
-    const meta = WORKSPACE_META[slug] || { name: slug, color: '#ca8a04', icon: 'fa-cube' };
-    template.forEach(entry => {
-      // Weekend soft-skip for workday-only workspaces (keeps Sunday quiet)
-      if (todayDow === 0 && ['brandinn', 'brandinn-print', 'digital-services', 'epitome', 'heritage', 'heritage-marketplace', 'heritage-interiors'].includes(slug)) return;
-      if (todayDow === 6 && ['digital-services', 'heritage', 'heritage-marketplace'].includes(slug)) return;
-      const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), entry.h, entry.m, 0, 0);
-      const end = new Date(start.getTime() + 60 * 60 * 1000);
-      items.push({
-        slug,
-        title: entry.title,
-        desc: entry.desc,
-        start,
-        end,
-        workspaceName: meta.name,
-        color: meta.color,
-        icon: meta.icon
+  /* ---- FlexiKazi assigned tasks (by taskerEmail) ---- */
+  if (currentPerms.ekazi === true && email) {
+    try {
+      const snap = await db.ref('ekazi_assigned_tasks')
+        .orderByChild('taskerEmail').equalTo(email).once('value');
+      const val = snap.val() || {};
+      Object.entries(val).forEach(([id, t]) => {
+        const due = parseDueDate(t.dueDate) || parseDueDate(t.targetDate);
+        if (!due || !isSameDay(due, today)) return;
+        const status = (t.status || 'assigned').toLowerCase();
+        if (['approved', 'completed', 'cancelled'].includes(status)) return;
+        items.push({
+          id: 'f_' + id,
+          title: t.title || 'Assigned task',
+          client: t.clientName || '',
+          category: t.category || '',
+          due,
+          status,
+          source: 'FlexiKazi',
+          color: APPS.flexikazi.color
+        });
       });
-    });
-  });
+    } catch (e) { console.warn('FlexiKazi schedule read:', e); }
+  }
 
-  items.sort((a, b) => a.start - b.start);
+  /* ---- Helper for claimedBy-based boards ---- */
+  const readClaimedBoard = async (path, sourceLabel, color, titleKey) => {
+    try {
+      const snap = await db.ref(path).once('value');
+      const val = snap.val() || {};
+      Object.entries(val).forEach(([id, t]) => {
+        const claim = t.claimedBy && t.claimedBy[uid];
+        if (!claim) return;
+        const status = (claim.status || 'claimed').toLowerCase();
+        if (['approved', 'completed', 'cancelled', 'rejected'].includes(status)) return;
+        const due = parseDueDate(t.dueDate) || parseDueDate(claim.dueDate);
+        if (!due || !isSameDay(due, today)) return;
+        items.push({
+          id: sourceLabel[0].toLowerCase() + '_' + id,
+          title: t[titleKey] || t.title || 'Assigned task',
+          client: t.clientName || '',
+          category: t.category || '',
+          due,
+          status,
+          source: sourceLabel,
+          color
+        });
+      });
+    } catch (e) { console.warn(`${sourceLabel} schedule read:`, e); }
+  };
+
+  if (currentPerms.kasikazi === true || currentPerms.ekazi === true) {
+    await readClaimedBoard('kasikazi_tasks', 'Kasikazi', APPS.kasikazi.color, 'title');
+  }
+  if (currentPerms.craftikazi === true || currentPerms.ekazi === true) {
+    await readClaimedBoard('craftikazi_tasks', 'CraftiKazi', APPS.craftikazi.color, 'title');
+  }
+  if (currentPerms.zindua === true || currentPerms.ekazi === true) {
+    await readClaimedBoard('zindua_tasks', 'Zindua Hub', APPS.zindua.color, 'title');
+  }
+
+  items.sort((a, b) => a.due - b.due);
   return items.slice(0, CONFIG.scheduleMax);
 }
 
-function renderSchedule() {
+function renderSchedule(items) {
   const container = document.getElementById('scheduleList');
   if (!container) return;
 
   updateScheduleDateLabel();
 
-  scheduleItems = buildTodaySchedule();
-
-  if (scheduleItems.length === 0) {
+  if (!items || items.length === 0) {
     container.innerHTML = `
       <div class="schedule-empty">
         <i class="fas fa-mug-hot" aria-hidden="true"></i>
         <div>Nothing scheduled for today</div>
-        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Enjoy a calm day across your workspaces.</div>
+        <div style="font-size:0.72rem;margin-top:0.3rem;opacity:0.7;">Assigned work will appear here when it's due today.</div>
       </div>
     `;
     return;
@@ -3377,19 +3436,19 @@ function renderSchedule() {
 
   const now = Date.now();
 
-  container.innerHTML = scheduleItems.map(item => {
-    const startMs = item.start.getTime();
-    const endMs = item.end.getTime();
-    const isPast = now > endMs;
-    const isCurrent = now >= startMs && now <= endMs;
-    const startFmt = formatTime12(item.start.getHours(), item.start.getMinutes());
-    const endFmt = formatTime12(item.end.getHours(), item.end.getMinutes());
+  container.innerHTML = items.map(item => {
+    const dueMs = item.due.getTime();
+    // Treat due times earlier than now (same day) as "past"
+    const isPast = dueMs < now - 30 * 60 * 1000;
+    const isCurrent = !isPast && dueMs - now <= 60 * 60 * 1000;
+    const t = formatTime12(item.due.getHours(), item.due.getMinutes());
     const cls = `schedule-item${isPast ? ' past' : ''}${isCurrent ? ' current' : ''}`;
+    const statusLabel = item.status.replace(/_/g, ' ');
     return `
-      <div class="${cls}" role="listitem" aria-label="${escapeHtml(item.title)} at ${escapeHtml(startFmt.label)} ${escapeHtml(startFmt.period)}">
+      <div class="${cls}" role="listitem" aria-label="${escapeHtml(item.title)} due ${escapeHtml(t.label)} ${escapeHtml(t.period)}">
         <div class="schedule-time">
-          ${escapeHtml(startFmt.label)}
-          <span class="schedule-period">${escapeHtml(startFmt.period)}</span>
+          ${escapeHtml(t.label)}
+          <span class="schedule-period">${escapeHtml(t.period)}</span>
         </div>
         <div class="schedule-dot" style="background:${escapeHtml(item.color)};" aria-hidden="true"></div>
         <div class="schedule-body">
@@ -3397,11 +3456,12 @@ function renderSchedule() {
           <div class="schedule-desc">
             <span class="schedule-tag">
               <span class="tag-dot" style="background:${escapeHtml(item.color)};" aria-hidden="true"></span>
-              ${escapeHtml(item.workspaceName)}
+              ${escapeHtml(item.source)}
             </span>
-            <span>${escapeHtml(item.desc)}</span>
-            ${isCurrent ? '<span class="schedule-tag live"><span class="tag-dot"></span> Now</span>' : ''}
-            <span style="color:var(--text-muted);font-size:0.7rem;">· until ${escapeHtml(endFmt.label)} ${escapeHtml(endFmt.period)}</span>
+            ${item.category ? `<span class="schedule-tag">${escapeHtml(item.category)}</span>` : ''}
+            ${item.client ? `<span>${escapeHtml(item.client)}</span>` : ''}
+            <span class="schedule-tag" style="background:rgba(59,130,246,0.1);color:#1e40af;">${escapeHtml(statusLabel)}</span>
+            ${isCurrent ? '<span class="schedule-tag live"><span class="tag-dot"></span> Due soon</span>' : ''}
           </div>
         </div>
       </div>
@@ -3410,7 +3470,7 @@ function renderSchedule() {
 }
 
 /* ============================================================
-   WORKSPACE DATA  (personal progress only — no freelance nodes)
+   WORKSPACE DATA
    ============================================================ */
 async function loadWorkspaceData() {
   if (!currentUser) return;
@@ -3423,19 +3483,16 @@ async function loadWorkspaceData() {
   const certificates = {};
   const ents = currentEntitlements || {};
 
-  /* Learning progress */
   try {
     const snap = await db.ref(`learning_progress/${uid}`).once('value');
     Object.assign(learningProgress, snap.val() || {});
   } catch (e) { console.warn('learning_progress read failed:', e); }
 
-  /* Learning certificates */
   try {
     const snap = await db.ref(`learning_certificates/${uid}`).once('value');
     Object.assign(certificates, snap.val() || {});
   } catch (e) { console.warn('learning_certificates read failed:', e); }
 
-  /* Personal notifications (already wired, already permitted) */
   try {
     const snap = await db.ref(`kazinni_notifications/${uid}`).orderByChild('timestamp').limitToLast(CONFIG.notifLimit).once('value');
     const val = snap.val() || {};
@@ -3445,7 +3502,6 @@ async function loadWorkspaceData() {
       .slice(0, CONFIG.maxNotifications);
   } catch (e) { notifications = []; }
 
-  /* Personal activity feed from notifications */
   personalActivity = notifications
     .filter(n => n.timestamp)
     .slice(0, CONFIG.recentActivityMax)
@@ -3457,7 +3513,11 @@ async function loadWorkspaceData() {
       ts: n.timestamp
     }));
 
-  renderSchedule();
+  /* Schedule from real assignments */
+  const items = await fetchTodaySchedule();
+  scheduleItems = items;
+  renderSchedule(items);
+
   renderProgressCharts(learningProgress, certificates, ents);
   renderFeed(personalActivity);
 }
@@ -3466,7 +3526,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   const grid = document.getElementById('progressGrid');
   if (!grid) return;
 
-  /* --- Derive metrics --- */
   const courseIds = Object.keys(learningProgress || {});
   const totalCourses = Math.max(courseIds.length, Object.keys(certificates || {}).length, 1);
 
@@ -3489,7 +3548,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
     barValues.push(0);
   }
 
-  /* Activity line: bucket notifications by day over the window */
   const days = CONFIG.activityWindowDays;
   const dayBuckets = {};
   for (let i = days - 1; i >= 0; i--) {
@@ -3510,7 +3568,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   });
   const lineValues = Object.keys(dayBuckets).map(k => dayBuckets[k]);
 
-  /* Workspace footprint bars */
   const wsLabels = [];
   const wsValues = [];
   Object.keys(currentPerms || {}).forEach(k => {
@@ -3521,7 +3578,6 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   });
   if (wsLabels.length === 0) { wsLabels.push('None yet'); wsValues.push(0); }
 
-  /* --- Render 4 progress cards --- */
   grid.innerHTML = `
     <div class="progress-card">
       <div class="progress-card-head">
