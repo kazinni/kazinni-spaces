@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Janta Assistant — ask about work across your Janta workspaces.">
+<meta name="description" content="Janta Assistant — search every service and product across your workspaces.">
 <title>Janta Assistant</title>
 <link rel="icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,15 +32,16 @@
   --danger: #b91c1c;
   --success: #10b981;
   --info: #3b82f6;
+  --huduma: #1e40af;
   --purple: #8b5cf6;
   --green: #107c10;
+  --pink: #ec4899;
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
   --sans: 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --serif: 'Clash Display', Georgia, serif;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 22px;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
   --shadow-lg: 0 12px 32px rgba(0,0,0,0.09);
@@ -58,7 +59,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 input,textarea{font-family:inherit}
 a{color:var(--accent);text-decoration:none}
 
-/* ---------- HEADER ---------- */
+/* HEADER */
 header{
   border-bottom:1px solid var(--line);padding:12px 20px;
   display:flex;align-items:center;justify-content:space-between;
@@ -76,10 +77,7 @@ header{
   font-family:var(--serif);font-size:1.2rem;font-weight:700;
   letter-spacing:-0.03em;color:var(--ink);display:flex;align-items:center;gap:6px;
 }
-.brand .dot{
-  width:6px;height:6px;border-radius:50%;background:var(--success);
-  animation:pulseDot 2s infinite;
-}
+.brand .dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulseDot 2s infinite}
 .brand .accent{
   background:linear-gradient(135deg,#ca8a04,#fbbf24);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
@@ -100,7 +98,7 @@ header{
 .signin-link:hover{background:var(--accent);color:white;border-color:var(--accent)}
 @keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.5)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
 
-/* ---------- SCOPE SELECTOR ---------- */
+/* SCOPE BAR */
 .scope-bar{
   background:var(--bg-soft);border-bottom:1px solid var(--line);
   padding:12px 20px;overflow-x:auto;flex-shrink:0;
@@ -108,7 +106,7 @@ header{
 }
 .scope-bar::-webkit-scrollbar{display:none}
 .scope-inner{
-  max-width:820px;margin:0 auto;display:flex;gap:8px;align-items:center;
+  max-width:880px;margin:0 auto;display:flex;gap:8px;align-items:center;
   flex-wrap:nowrap;
 }
 .scope-label{
@@ -131,34 +129,23 @@ header{
 }
 .scope-chip.active i{color:white}
 .scope-chip.locked{opacity:0.4;cursor:not-allowed;background:var(--bg-soft)}
-.scope-chip.locked i{color:var(--text-muted)}
 .scope-chip .lock{font-size:0.65rem;margin-left:2px}
 
-/* ---------- CHAT ---------- */
-.chat{
-  flex:1;overflow-y:auto;padding:32px 20px 20px;
-  scroll-behavior:smooth;
-}
-.chat-inner{
-  max-width:820px;margin:0 auto;
-  display:flex;flex-direction:column;gap:24px;
-}
+/* CHAT */
+.chat{flex:1;overflow-y:auto;padding:32px 20px 20px;scroll-behavior:smooth}
+.chat-inner{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 
-/* ---------- TURNS ---------- */
+/* TURNS */
 .turn{display:flex;flex-direction:column;gap:8px;animation:fadeUp 0.3s cubic-bezier(0.2,0.8,0.2,1)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
 .turn-user{align-items:flex-end}
 .turn-user .bubble{
   background:var(--ink);color:white;padding:11px 16px;
   border-radius:18px 18px 4px 18px;max-width:80%;
   font-size:0.94rem;line-height:1.5;
 }
-
 .turn-janta{align-items:flex-start}
-.turn-janta .janta-row{
-  display:flex;gap:10px;align-items:flex-start;width:100%;
-}
+.turn-janta .janta-row{display:flex;gap:10px;align-items:flex-start;width:100%}
 .janta-avatar{
   width:32px;height:32px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,#ca8a04,#fbbf24);
@@ -172,15 +159,7 @@ header{
   width:100%;max-width:calc(100% - 42px);font-size:0.94rem;line-height:1.65;
 }
 
-/* ---------- GREETING / OPENER ---------- */
-.opener{color:var(--text-soft)}
-.opener strong{color:var(--ink);font-weight:700}
-.opener .hint{
-  display:block;margin-top:12px;font-size:0.86rem;color:var(--text-muted);
-  line-height:1.6;
-}
-
-/* ---------- WELCOME CARD ---------- */
+/* WELCOME CARD */
 .welcome{
   background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);
   border:1px solid rgba(202,138,4,0.2);border-radius:var(--radius-lg);
@@ -190,9 +169,7 @@ header{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
   background:linear-gradient(90deg,var(--accent),var(--accent-light));
 }
-.welcome-head{
-  display:flex;align-items:center;gap:10px;margin-bottom:10px;
-}
+.welcome-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .welcome-icon{
   width:40px;height:40px;border-radius:10px;
   background:linear-gradient(135deg,#ca8a04,#fbbf24);color:white;
@@ -205,24 +182,52 @@ header{
 }
 .welcome-subtitle{font-size:0.82rem;color:var(--text-soft);margin-top:2px}
 .welcome-text{font-size:0.92rem;color:var(--text-soft);line-height:1.6;margin-bottom:14px}
-
-/* ---------- QUICK CHIPS ---------- */
-.quick-chips{
-  display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;
-}
+.quick-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .quick-chip{
   display:inline-flex;align-items:center;gap:7px;
   padding:8px 14px;border-radius:100px;background:white;
   border:1px solid var(--line-2);font-size:0.83rem;font-weight:500;
   color:var(--text-soft);transition:all 0.15s;text-align:left;
 }
-.quick-chip:hover{
-  border-color:var(--accent);color:var(--ink);
-  transform:translateY(-1px);box-shadow:var(--shadow-sm);
-}
+.quick-chip:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
 .quick-chip i{font-size:0.72rem;color:var(--accent)}
 
-/* ---------- RESULT GROUPS ---------- */
+/* PINNED ANSWER */
+.pinned-answer{
+  background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
+  border:2px solid #3b82f6;border-radius:var(--radius-md);
+  padding:16px 18px;margin-bottom:14px;position:relative;
+}
+.pinned-answer::before{
+  content:'';position:absolute;top:-8px;left:16px;
+  background:#3b82f6;color:white;font-size:0.65rem;font-weight:700;
+  padding:2px 10px;border-radius:100px;letter-spacing:0.05em;text-transform:uppercase;
+  content:'Answer';
+}
+.pinned-answer .pa-label{
+  position:absolute;top:-9px;left:16px;background:#3b82f6;color:white;
+  font-size:0.65rem;font-weight:700;padding:2px 10px;border-radius:100px;
+  letter-spacing:0.05em;text-transform:uppercase;
+}
+.pinned-answer .pa-title{
+  font-family:var(--serif);font-size:1.1rem;font-weight:700;
+  color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px;line-height:1.3;
+}
+.pinned-answer .pa-price{
+  font-family:var(--mono);font-size:1.35rem;font-weight:700;
+  color:#1e40af;margin-bottom:6px;letter-spacing:-0.02em;
+}
+.pinned-answer .pa-context{
+  font-size:0.82rem;color:var(--text-soft);line-height:1.5;margin-bottom:8px;
+}
+.pinned-answer .pa-meta{
+  font-size:0.78rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:6px;
+}
+.pinned-answer .pa-meta span{display:inline-flex;align-items:center;gap:4px}
+.pinned-answer .pa-meta span i{font-size:0.65rem;color:#1e40af}
+.pinned-answer .pa-meta span + span::before{content:"·";margin-right:6px;color:var(--line-2)}
+
+/* GROUPS */
 .group{margin-top:16px}
 .group:first-child{margin-top:0}
 .group-head{
@@ -239,7 +244,7 @@ header{
   color:var(--text-muted);font-family:var(--mono);
 }
 
-/* ---------- ITEMS ---------- */
+/* ITEMS */
 .item{
   padding:14px 16px;border-radius:var(--radius-md);
   background:white;border:1px solid var(--line);
@@ -247,6 +252,17 @@ header{
 }
 .item:hover{border-color:var(--line-2);box-shadow:var(--shadow-sm)}
 .item:last-child{margin-bottom:0}
+.item.exact{
+  border-color:#3b82f6;border-width:2px;
+  background:linear-gradient(135deg,#ffffff 0%,#eff6ff 100%);
+  box-shadow:0 4px 16px rgba(59,130,246,0.12);
+}
+.item.exact .item-name::after{
+  content:'★ Exact match';display:inline-block;
+  background:#3b82f6;color:white;font-size:0.6rem;font-weight:700;
+  padding:2px 8px;border-radius:100px;letter-spacing:0.05em;
+  text-transform:uppercase;margin-left:8px;vertical-align:middle;
+}
 .item-name{
   font-weight:700;color:var(--ink);font-size:0.96rem;
   margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
@@ -256,16 +272,23 @@ header{
   letter-spacing:0.05em;padding:2px 8px;border-radius:100px;
   background:var(--accent-soft);color:var(--accent-dark);
 }
+.item-badge.huduma{background:#dbeafe;color:#1e40af}
+.item-badge.fusion{background:#dcfce7;color:#166534}
+.item-badge.dsog{background:#ede9fe;color:#6d28d9}
+.item-badge.workfit{background:#fce7f3;color:#be185d}
+.item-badge.brandinn{background:#fef3c7;color:#a16207}
+.item-badge.heritage{background:#e0f2fe;color:#0369a1}
+.item-badge.mugs{background:#ffedd5;color:#c2410c}
 .item-price{
   font-family:var(--mono);font-size:0.9rem;color:var(--accent-dark);
   font-weight:700;margin-bottom:6px;
 }
-.item-desc{
-  font-size:0.88rem;color:var(--text-soft);line-height:1.55;margin-bottom:8px;
-}
-.item-features{
-  font-size:0.84rem;color:var(--text-soft);margin:8px 0;padding-left:18px;
-}
+.item-price.huduma{color:#1e40af}
+.item-price.fusion{color:#166534}
+.item-price.dsog{color:#6d28d9}
+.item-price.workfit{color:#be185d}
+.item-desc{font-size:0.88rem;color:var(--text-soft);line-height:1.55;margin-bottom:8px}
+.item-features{font-size:0.84rem;color:var(--text-soft);margin:8px 0;padding-left:18px}
 .item-features li{margin-bottom:3px}
 .item-meta{
   font-size:0.78rem;color:var(--text-muted);line-height:1.5;
@@ -274,21 +297,51 @@ header{
 .item-meta span{display:inline-flex;align-items:center;gap:4px}
 .item-meta span i{font-size:0.65rem;color:var(--accent)}
 .item-meta span + span::before{content:"·";margin-right:6px;color:var(--line-2)}
-.item-actions{
-  display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;
-}
+.item-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .item-action{
   padding:5px 12px;border-radius:100px;font-size:0.74rem;font-weight:600;
   background:var(--bg-softer);color:var(--text-soft);
   border:1px solid var(--line);transition:all 0.15s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:4px;
 }
 .item-action:hover{background:var(--accent);color:white;border-color:var(--accent)}
-.item-action i{font-size:0.7rem;margin-right:4px}
+.item-action i{font-size:0.7rem}
 
-/* ---------- LOADING ---------- */
-.loading{
-  display:inline-flex;gap:5px;align-items:center;padding:4px 0;
+/* PRICING TABLE */
+.pricing-table{
+  width:100%;border-collapse:collapse;margin-top:12px;
+  font-size:0.86rem;background:white;
+  border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;
 }
+.pricing-table thead th{
+  background:var(--bg-softer);text-align:left;padding:10px 14px;
+  font-size:0.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.06em;color:var(--text-muted);
+  border-bottom:1px solid var(--line);
+}
+.pricing-table tbody td{
+  padding:10px 14px;border-bottom:1px solid var(--line);
+  color:var(--text-soft);vertical-align:middle;
+}
+.pricing-table tbody tr:last-child td{border-bottom:none}
+.pricing-table tbody tr:hover{background:var(--bg-soft)}
+.pricing-table tbody tr.exact td{
+  background:linear-gradient(90deg,#eff6ff 0%,#ffffff 100%);
+  font-weight:600;color:var(--ink);
+}
+.pricing-table tbody tr.exact td:first-child{border-left:3px solid #3b82f6}
+.pricing-table .pt-name{font-weight:600;color:var(--ink);font-size:0.9rem}
+.pricing-table .pt-fee{
+  font-family:var(--mono);font-weight:700;color:var(--accent-dark);
+  white-space:nowrap;text-align:right;
+}
+.pricing-table .pt-workspace{
+  font-size:0.72rem;color:var(--text-muted);
+  text-transform:capitalize;
+}
+
+/* LOADING */
+.loading{display:inline-flex;gap:5px;align-items:center;padding:4px 0}
 .loading span{
   width:7px;height:7px;border-radius:50%;
   background:var(--text-muted);animation:pulse 1.4s infinite ease-in-out;
@@ -299,27 +352,15 @@ header{
   0%,80%,100%{opacity:0.3;transform:scale(0.85)}
   40%{opacity:1;transform:scale(1)}
 }
-.typing{
-  display:flex;align-items:center;gap:10px;
-  font-size:0.86rem;color:var(--text-muted);font-style:italic;
-}
+.typing{display:flex;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);font-style:italic}
 
-/* ---------- SUMMARY ---------- */
-.summary{
-  font-size:0.9rem;color:var(--text-soft);margin-bottom:12px;
-  font-weight:500;
-}
+/* SUMMARY */
+.summary{font-size:0.9rem;color:var(--text-soft);margin-bottom:12px;font-weight:500}
 .summary strong{color:var(--ink);font-weight:700}
+.no-results{color:var(--text-muted);font-size:0.92rem;font-style:italic;padding:12px 0}
+.no-results-suggest{margin-top:12px;font-style:normal;font-size:0.85rem;color:var(--text-soft)}
 
-.no-results{
-  color:var(--text-muted);font-size:0.92rem;font-style:italic;
-  padding:12px 0;
-}
-.no-results-suggest{
-  margin-top:12px;font-style:normal;font-size:0.85rem;color:var(--text-soft);
-}
-
-/* ---------- LOCKED STATE ---------- */
+/* LOCKED */
 .locked-notice{
   display:flex;gap:10px;align-items:flex-start;
   padding:14px 16px;background:#fef2f2;border:1px solid #fecaca;
@@ -328,15 +369,16 @@ header{
 }
 .locked-notice i{color:#dc2626;margin-top:2px;flex-shrink:0}
 .locked-notice strong{display:block;color:#7f1d1d;margin-bottom:3px}
-.locked-notice a{color:#991b1b;font-weight:600;text-decoration:underline}
 
-/* ---------- INPUT ---------- */
-.input-wrap{
-  border-top:1px solid var(--line);padding:16px 20px 20px;
-  background:white;flex-shrink:0;
-}
+/* OPENER */
+.opener{color:var(--text-soft)}
+.opener strong{color:var(--ink);font-weight:700}
+.opener .hint{display:block;margin-top:12px;font-size:0.86rem;color:var(--text-muted);line-height:1.6}
+
+/* INPUT */
+.input-wrap{border-top:1px solid var(--line);padding:16px 20px 20px;background:white;flex-shrink:0}
 .scope-context{
-  max-width:820px;margin:0 auto 10px;
+  max-width:880px;margin:0 auto 10px;
   display:flex;align-items:center;gap:8px;
   font-size:0.78rem;color:var(--text-muted);
   min-height:18px;
@@ -350,7 +392,7 @@ header{
 .scope-context .change:hover{background:var(--accent-soft)}
 
 .input-row{
-  max-width:820px;margin:0 auto;
+  max-width:880px;margin:0 auto;
   display:flex;align-items:flex-end;gap:10px;
   border:1px solid var(--line-2);border-radius:var(--radius-lg);
   padding:10px 12px 10px 16px;background:var(--bg-soft);
@@ -359,9 +401,6 @@ header{
 .input-row:focus-within{
   border-color:var(--accent);background:white;
   box-shadow:0 0 0 3px rgba(202,138,4,0.1);
-}
-.input-row.locked{
-  opacity:0.6;cursor:not-allowed;background:var(--bg-softer);
 }
 textarea{
   flex:1;border:none;outline:none;background:transparent;
@@ -378,7 +417,7 @@ textarea::placeholder{color:var(--text-muted)}
 .send:hover:not(:disabled){background:var(--accent);transform:scale(1.05)}
 .send:disabled{opacity:0.4;cursor:not-allowed}
 
-/* ---------- RESPONSIVE ---------- */
+/* RESPONSIVE */
 @media (max-width:700px){
   .scope-bar{padding:10px 16px}
   .scope-label{display:none}
@@ -393,6 +432,8 @@ textarea::placeholder{color:var(--text-muted)}
   #userEmail{display:none}
   .item{padding:12px 14px}
   .item-meta{font-size:0.75rem}
+  .pricing-table{font-size:0.78rem}
+  .pricing-table thead th,.pricing-table tbody td{padding:8px 10px}
 }
 @media (max-width:420px){
   .brand{font-size:1.05rem}
@@ -416,11 +457,8 @@ textarea::placeholder{color:var(--text-muted)}
   </div>
 </header>
 
-<!-- SCOPE SELECTOR -->
 <div class="scope-bar" id="scopeBar" role="tablist" aria-label="Search scope">
-  <div class="scope-inner" id="scopeInner">
-    <!-- populated by JS -->
-  </div>
+  <div class="scope-inner" id="scopeInner"></div>
 </div>
 
 <div class="chat" id="chat">
@@ -471,7 +509,7 @@ let currentPerms = {};
 const cache = {};
 
 /* ==========================================================
-   SCOPES — what the assistant can search
+   SCOPE DEFINITIONS
    ========================================================== */
 const SCOPES = [
   {
@@ -479,48 +517,50 @@ const SCOPES = [
     label: 'Ask Anything',
     icon: 'fa-wand-magic-sparkles',
     placeholder: 'Ask anything about work on KazInni…',
+    permRequired: null
+  },
+  {
+    id: 'pricing',
+    label: 'Services & Pricing',
+    icon: 'fa-tags',
+    placeholder: 'Ask about any service price — eTIMS, KRA PIN, passport, beds, cabbages…',
     permRequired: null,
-    description: 'Every workspace you have access to'
+    isPricing: true
   },
   {
     id: 'businesses',
     label: 'Businesses',
     icon: 'fa-store',
     placeholder: 'Search businesses — e.g. furniture, salons, workshops…',
-    permRequired: null,
-    description: 'All registered businesses on BrandInn'
+    permRequired: null
   },
   {
     id: 'products',
     label: 'Products',
     icon: 'fa-box',
-    placeholder: 'Search products — e.g. beds under 25k, beanie caps…',
-    permRequired: null,
-    description: 'Products from business catalogues'
+    placeholder: 'Search products — e.g. beds under 25k, beanie caps, cabbage…',
+    permRequired: null
   },
   {
     id: 'services',
     label: 'Services',
     icon: 'fa-concierge-bell',
-    placeholder: 'Search services — e.g. metal fabrication, branding…',
-    permRequired: null,
-    description: 'Services offered by businesses'
+    placeholder: 'Search services — e.g. metal fabrication, eTIMS, branding…',
+    permRequired: null
   },
   {
     id: 'courses',
     label: 'Courses',
     icon: 'fa-graduation-cap',
     placeholder: 'Search courses — e.g. writing, M-Pesa safety…',
-    permRequired: 'learning',
-    description: 'Learning courses & certificates'
+    permRequired: 'learning'
   },
   {
     id: 'resources',
     label: 'Resources',
     icon: 'fa-book-open',
     placeholder: 'Search resources — e.g. Canva, templates, guides…',
-    permRequired: null,
-    description: 'Tools, guides and references'
+    permRequired: null
   }
 ];
 
@@ -536,10 +576,221 @@ const chatInner = document.getElementById('chatInner');
 const userEmailEl = document.getElementById('userEmail');
 const userAvatarEl = document.getElementById('userAvatar');
 const signinLink = document.getElementById('signinLink');
-const scopeBar = document.getElementById('scopeBar');
 const scopeInner = document.getElementById('scopeInner');
 const scopeContext = document.getElementById('scopeContext');
 const inputRow = document.getElementById('inputRow');
+
+/* ==========================================================
+   CATALOGUE SOURCES — every workspace's services & products
+   ==========================================================
+   Each source returns a list of normalized items:
+   { workspace, id, name, price, description, meta[], sourceId }
+   ========================================================== */
+const CATALOGUE = {
+  /* ---- E-Huduma (Digital Services) ---- */
+  digital_services_services: {
+    path: 'digital_services_services',
+    workspace: 'E-Huduma',
+    badgeClass: 'huduma',
+    priceClass: 'huduma',
+    icon: 'fa-landmark',
+    build: (id, s) => ({
+      workspace: 'E-Huduma',
+      id,
+      name: s.name || 'Service',
+      price: Number(s.fee) || 0,
+      priceLabel: Number(s.fee) ? `KSh ${Number(s.fee).toLocaleString()}` : 'Fee on request',
+      description: s.description || '',
+      meta: [],
+      sourceId: id
+    })
+  },
+
+  /* ---- Fusion Foods (products) ---- */
+  fusion_foods_products: {
+    path: 'fusion_foods_products',
+    workspace: 'Fusion Foods',
+    badgeClass: 'fusion',
+    priceClass: 'fusion',
+    icon: 'fa-carrot',
+    build: (id, p) => ({
+      workspace: 'Fusion Foods',
+      id,
+      name: p.name || 'Product',
+      price: Number(p.unitPrice) || 0,
+      priceLabel: Number(p.unitPrice) ? `KSh ${Number(p.unitPrice).toLocaleString()} / ${p.unit || 'unit'}` : 'Price on request',
+      description: p.description || p.desc || '',
+      meta: [
+        p.category ? `Category: ${p.category}` : null,
+        p.supplier ? `Supplier: ${p.supplier}` : null
+      ].filter(Boolean),
+      sourceId: id
+    })
+  },
+
+  /* ---- DSOG Fashion (products) ---- */
+  dsog_fashion_products: {
+    path: 'dsog_fashion_products',
+    workspace: 'DSOG Fashion',
+    badgeClass: 'dsog',
+    priceClass: 'dsog',
+    icon: 'fa-shirt',
+    build: (id, p) => {
+      const price = Number(p.salePrice) || Number(p.price) || 0;
+      const wasPrice = Number(p.price) || 0;
+      const onSale = Number(p.salePrice) > 0 && wasPrice > Number(p.salePrice);
+      return {
+        workspace: 'DSOG Fashion',
+        id,
+        name: p.name || 'Product',
+        price,
+        priceLabel: price ? `KSh ${price.toLocaleString()}${onSale ? ` (was KSh ${wasPrice.toLocaleString()})` : ''}` : 'Price on request',
+        description: p.description || p.desc || '',
+        meta: [
+          p.category ? `Category: ${p.category}` : null,
+          p.colors ? `Colours: ${Array.isArray(p.colors) ? p.colors.join(', ') : p.colors}` : null,
+          p.sizes ? `Sizes: ${p.sizes}` : null,
+          p.fabric ? `Fabric: ${p.fabric}` : null
+        ].filter(Boolean),
+        sourceId: id
+      };
+    }
+  },
+
+  /* ---- BrandInn (services from client business pages) ---- */
+  brandinn_subdomains: {
+    path: 'brandinn_subdomains',
+    workspace: 'BrandInn',
+    badgeClass: 'brandinn',
+    priceClass: 'accent',
+    icon: 'fa-bullhorn',
+    nested: true,
+    extract: (slug, b) => {
+      const items = [];
+      const pd = b.pageData || {};
+      const bizName = b.businessName || b.name || slug;
+
+      for (const [i, s] of (pd.services || []).entries()) {
+        const price = Number(String(s.price || '').replace(/[^\d]/g, '')) || 0;
+        items.push({
+          workspace: 'BrandInn',
+          sourceLabel: bizName,
+          id: `${slug}-service-${i}`,
+          name: s.title || 'Service',
+          price,
+          priceLabel: s.price ? String(s.price) : (price ? `KSh ${price.toLocaleString()}` : 'Contact for pricing'),
+          description: s.desc || '',
+          meta: [bizName ? `Offered by ${bizName}` : null].filter(Boolean),
+          sourceId: `${slug}-service-${i}`
+        });
+      }
+
+      for (const [i, o] of (pd.offers || []).entries()) {
+        const price = Number(String(o.price || '').replace(/[^\d]/g, '')) || 0;
+        items.push({
+          workspace: 'BrandInn',
+          sourceLabel: bizName,
+          id: `${slug}-offer-${i}`,
+          name: o.title || 'Offer',
+          price,
+          priceLabel: o.price ? String(o.price) : (price ? `KSh ${price.toLocaleString()}` : 'Contact for pricing'),
+          description: o.desc || '',
+          meta: [bizName ? `Offered by ${bizName}` : null, o.tag ? `Tag: ${o.tag}` : null].filter(Boolean),
+          sourceId: `${slug}-offer-${i}`
+        });
+      }
+
+      return items;
+    }
+  },
+
+  /* ---- WorkFit (shop products + library) ---- */
+  workfit_shop_products: {
+    path: 'workfit_shop_products',
+    workspace: 'WorkFit',
+    badgeClass: 'workfit',
+    priceClass: 'workfit',
+    icon: 'fa-dumbbell',
+    build: (id, p) => ({
+      workspace: 'WorkFit',
+      id,
+      name: p.name || 'Product',
+      price: Number(p.price) || 0,
+      priceLabel: Number(p.price) ? `KSh ${Number(p.price).toLocaleString()}` : 'Price on request',
+      description: p.description || '',
+      meta: [
+        p.category ? `Category: ${p.category}` : null,
+        p.brand ? `Brand: ${p.brand}` : null
+      ].filter(Boolean),
+      sourceId: id
+    })
+  },
+
+  /* ---- Heritage (marketplace products) ---- */
+  heritage_marketplace_products: {
+    path: 'heritage_marketplace_products',
+    workspace: 'Heritage',
+    badgeClass: 'heritage',
+    priceClass: 'accent',
+    icon: 'fa-store',
+    build: (id, p) => ({
+      workspace: 'Heritage',
+      id,
+      name: p.name || 'Product',
+      price: Number(p.price) || 0,
+      priceLabel: Number(p.price) ? `KSh ${Number(p.price).toLocaleString()}` : 'Price on request',
+      description: p.description || '',
+      meta: [
+        p.category ? `Category: ${p.category}` : null,
+        p.partnerId ? `Partner: ${p.partnerId}` : null
+      ].filter(Boolean),
+      sourceId: id
+    })
+  },
+
+  /* ---- Mugs n Dines (menu items) ---- */
+  mugs_n_dines_menu: {
+    path: 'mugs_n_dines_menu',
+    workspace: 'Mugs n Dines',
+    badgeClass: 'mugs',
+    priceClass: 'accent',
+    icon: 'fa-utensils',
+    build: (id, m) => ({
+      workspace: 'Mugs n Dines',
+      id,
+      name: m.name || 'Menu item',
+      price: Number(m.price) || 0,
+      priceLabel: Number(m.price) ? `KSh ${Number(m.price).toLocaleString()}` : 'Price on request',
+      description: m.description || '',
+      meta: [
+        m.category ? `Category: ${m.category}` : null
+      ].filter(Boolean),
+      sourceId: id
+    })
+  },
+
+  /* ---- WorkFit library (resources) ---- */
+  workfit_library_books: {
+    path: 'workfit_library_books',
+    workspace: 'WorkFit Library',
+    badgeClass: 'workfit',
+    priceClass: 'workfit',
+    icon: 'fa-book',
+    build: (id, b) => ({
+      workspace: 'WorkFit Library',
+      id,
+      name: b.title || 'Book',
+      price: 0,
+      priceLabel: b.status === 'available' ? 'Available to borrow' : (b.status || 'Library'),
+      description: b.description || '',
+      meta: [
+        b.author ? `By ${b.author}` : null,
+        b.category ? `Category: ${b.category}` : null
+      ].filter(Boolean),
+      sourceId: id
+    })
+  }
+};
 
 /* ==========================================================
    AUTH
@@ -567,6 +818,7 @@ auth.onAuthStateChanged(async user => {
 
   renderScopeBar();
   renderScopeContext();
+  updatePlaceholder();
   openConversation();
 });
 
@@ -578,10 +830,7 @@ function scopeAllowed(scope) {
   if (!currentUser) return false;
   return currentPerms[scope.permRequired] === true || currentPerms.admins === true;
 }
-
-function getScope(id) {
-  return SCOPES.find(s => s.id === id) || SCOPES[0];
-}
+function getScope(id) { return SCOPES.find(s => s.id === id) || SCOPES[0]; }
 
 function renderScopeBar() {
   scopeInner.innerHTML = '';
@@ -598,12 +847,8 @@ function renderScopeBar() {
     btn.setAttribute('role', 'tab');
     btn.setAttribute('aria-selected', s.id === activeScope ? 'true' : 'false');
     btn.innerHTML = `<i class="fas ${s.icon}"></i><span>${s.label}</span>${!allowed ? '<i class="fas fa-lock lock"></i>' : ''}`;
-    btn.title = allowed ? s.description : `Sign in with the right access to use this scope`;
     btn.addEventListener('click', () => {
-      if (!allowed) {
-        showToast('You need additional access for this scope', 'info');
-        return;
-      }
+      if (!allowed) { showToast('You need additional access for this scope', 'info'); return; }
       activeScope = s.id;
       renderScopeBar();
       renderScopeContext();
@@ -616,22 +861,18 @@ function renderScopeBar() {
 function renderScopeContext() {
   const scope = getScope(activeScope);
   scopeContext.innerHTML = '';
-
   if (activeScope === 'all') {
     scopeContext.innerHTML = `<i class="fas fa-wand-magic-sparkles"></i> Searching <strong>across all your workspaces</strong>`;
     return;
   }
-
   scopeContext.innerHTML = `<i class="fas ${scope.icon}"></i> Searching only in <strong>${scope.label}</strong> <span class="change" id="scopeChange">change</span>`;
   const change = document.getElementById('scopeChange');
-  if (change) {
-    change.addEventListener('click', () => {
-      activeScope = 'all';
-      renderScopeBar();
-      renderScopeContext();
-      updatePlaceholder();
-    });
-  }
+  if (change) change.addEventListener('click', () => {
+    activeScope = 'all';
+    renderScopeBar();
+    renderScopeContext();
+    updatePlaceholder();
+  });
 }
 
 function updatePlaceholder() {
@@ -667,7 +908,6 @@ function partOfDay() {
   if (h < 21) return 'Good evening';
   return 'Good night';
 }
-
 function firstName() {
   if (!currentUser) return '';
   const raw = currentUser.displayName || currentUser.email || '';
@@ -681,16 +921,15 @@ function openConversation() {
 
   const hi = partOfDay();
   const name = firstName();
-  const greeting = currentUser
-    ? `${esc(hi)}${name ? ', ' + esc(name) : ''}.`
-    : `${esc(hi)}.`;
+  const greeting = currentUser ? `${esc(hi)}${name ? ', ' + esc(name) : ''}.` : `${esc(hi)}.`;
 
   const quickActions = [
-    { label: 'Beds under 25k', scope: 'products', query: 'beds under 25k' },
-    { label: 'Courses on writing', scope: 'courses', query: 'writing' },
-    { label: 'Metal fabrication', scope: 'services', query: 'metal fabrication' },
-    { label: 'Best Furniture', scope: 'businesses', query: 'Best Furniture' },
-    { label: 'Design tools', scope: 'resources', query: 'Canva design' }
+    { label: 'eTIMS fee', scope: 'pricing', query: 'eTIMS' },
+    { label: 'KRA PIN price', scope: 'pricing', query: 'KRA PIN' },
+    { label: 'Cabbage price', scope: 'pricing', query: 'cabbage' },
+    { label: 'Beanie caps', scope: 'pricing', query: 'beanie' },
+    { label: 'Passport cost', scope: 'pricing', query: 'passport' },
+    { label: 'Cypress bed', scope: 'pricing', query: 'cypress bed' }
   ];
 
   const actions = quickActions.map(a =>
@@ -705,11 +944,11 @@ function openConversation() {
         <div class="welcome-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
         <div>
           <div class="welcome-title">${esc(greeting)} I'm Janta Assistant.</div>
-          <div class="welcome-subtitle">Your work directory for KazInni</div>
+          <div class="welcome-subtitle">Your pricing & directory assistant for KazInni</div>
         </div>
       </div>
       <div class="welcome-text">
-        I can find businesses, products, services, courses, and resources from your workspaces. Tell me what you're looking for — or pick a starting point below.
+        Ask about <strong>any service or product</strong> across the ecosystem — E-Huduma applications, Fusion Foods produce, DSOG apparel, BrandInn services, WorkFit merchandise, Heritage products and Mugs n Dines menu. I'll show you the exact price plus the full price list around it.
       </div>
       <div class="quick-chips">${actions}</div>
     </div>
@@ -760,7 +999,6 @@ async function runQuery() {
   sendBtn.disabled = true;
 
   appendUser(q);
-
   const { body } = appendJanta();
   body.innerHTML = `<div class="typing"><div class="loading"><span></span><span></span><span></span></div> Searching…</div>`;
 
@@ -776,8 +1014,8 @@ async function runQuery() {
     const priceCap = extractPriceCap(q);
     const scope = getScope(activeScope);
 
-    const results = await runScopedSearch(scope.id, tokens, priceCap);
-    body.innerHTML = renderResults(results, priceCap, scope);
+    const results = await runScopedSearch(scope.id, tokens, priceCap, q);
+    body.innerHTML = renderResults(results, priceCap, scope, q);
   } catch (err) {
     console.error(err);
     body.innerHTML = '<span class="no-results">Something went wrong. Try again.</span>';
@@ -789,43 +1027,45 @@ async function runQuery() {
 /* ==========================================================
    SCOPED SEARCH
    ========================================================== */
-async function runScopedSearch(scopeId, tokens, priceCap) {
+async function runScopedSearch(scopeId, tokens, priceCap, rawQuery) {
   const results = {
     businesses: [],
     products: [],
     services: [],
     courses: [],
     resources: [],
+    catalogue: [],
+    priced: [],
     locked: []
   };
 
   const wantsBusinesses = scopeId === 'all' || scopeId === 'businesses';
-  const wantsProducts = scopeId === 'all' || scopeId === 'products';
-  const wantsServices = scopeId === 'all' || scopeId === 'services';
+  const wantsProducts = scopeId === 'all' || scopeId === 'products' || scopeId === 'pricing';
+  const wantsServices = scopeId === 'all' || scopeId === 'services' || scopeId === 'pricing';
+  const wantsCatalogue = scopeId === 'pricing' || scopeId === 'all';
   const wantsCourses = scopeId === 'all' || scopeId === 'courses';
   const wantsResources = scopeId === 'all' || scopeId === 'resources';
 
-  /* Courses requires permission */
   const canCourses = wantsCourses && (currentUser && (currentPerms.learning === true || currentPerms.admins === true));
-  if (wantsCourses && !canCourses) {
-    results.locked.push('courses');
-  }
+  if (wantsCourses && !canCourses) results.locked.push('courses');
 
-  const [businesses, courses, resources] = await Promise.all([
+  const [businesses, courses, resources, catalogueItems] = await Promise.all([
     (wantsBusinesses || wantsProducts || wantsServices) ? getBusinesses() : Promise.resolve([]),
     canCourses ? getCourses() : Promise.resolve([]),
-    wantsResources ? getResources() : Promise.resolve([])
+    wantsResources ? getResources() : Promise.resolve([]),
+    wantsCatalogue ? getCatalogue() : Promise.resolve([])
   ]);
 
+  /* Business matches */
   if (wantsBusinesses) {
     for (const b of businesses) {
-      const text = [b.businessName, b.name, b.tagline, b.category, b.industry, b.description, b.area, b.road]
-        .filter(Boolean).join(' ');
+      const text = [b.businessName, b.name, b.tagline, b.category, b.industry, b.description, b.area, b.road].filter(Boolean).join(' ');
       const s = score(text, tokens);
       if (s > 0) results.businesses.push({ item: b, score: s });
     }
   }
 
+  /* Product + service matches from business pages (BrandInn) */
   if (wantsProducts || wantsServices) {
     for (const b of businesses) {
       const pd = b.pageData || {};
@@ -843,7 +1083,6 @@ async function runScopedSearch(scopeId, tokens, priceCap) {
           }
         }
       }
-
       if (wantsServices) {
         for (const sv of (pd.services || [])) {
           const text = [sv.title, sv.desc, sv.tag, (sv.features || []).join(' ')].filter(Boolean).join(' ');
@@ -857,6 +1096,19 @@ async function runScopedSearch(scopeId, tokens, priceCap) {
     }
   }
 
+  /* Catalogue matches — E-Huduma, Fusion, DSOG, WorkFit, Heritage, Mugs n Dines */
+  if (wantsCatalogue) {
+    for (const c of catalogueItems) {
+      const text = [c.name, c.description, c.workspace, (c.meta || []).join(' ')].filter(Boolean).join(' ');
+      const s = score(text, tokens);
+      const priceOk = !priceCap || c.price === 0 || c.price <= priceCap;
+      if (s > 0 && priceOk) {
+        results.catalogue.push({ item: c, score: s + (priceCap && c.price > 0 ? 2 : 0) });
+        if (c.price > 0) results.priced.push(c);
+      }
+    }
+  }
+
   if (canCourses) {
     for (const c of courses) {
       const text = [c.title, c.desc, c.longDesc, c.category, c.level].filter(Boolean).join(' ');
@@ -864,7 +1116,6 @@ async function runScopedSearch(scopeId, tokens, priceCap) {
       if (s > 0) results.courses.push({ item: c, score: s });
     }
   }
-
   if (wantsResources) {
     for (const r of resources) {
       const text = [r.title, r.description, r.workspace].filter(Boolean).join(' ');
@@ -873,12 +1124,69 @@ async function runScopedSearch(scopeId, tokens, priceCap) {
     }
   }
 
-  for (const k of ['businesses', 'courses', 'products', 'services', 'resources']) {
+  for (const k of ['businesses', 'courses', 'products', 'services', 'resources', 'catalogue']) {
     results[k].sort((a, b) => b.score - a.score);
-    results[k] = results[k].slice(0, 8);
+    results[k] = results[k].slice(0, 12);
   }
 
+  /* Find the exact match: the top catalogue result whose name matches the query best */
+  results.exactMatch = pickExactMatch(rawQuery, results.catalogue, results.products, results.services);
+
   return results;
+}
+
+/* Picks the single "exact match" item for the pinned answer */
+function pickExactMatch(rawQuery, catalogue, products, services) {
+  const q = rawQuery.toLowerCase();
+  const candidates = [];
+
+  /* Catalogue items are the primary candidates (E-Huduma, Fusion, DSOG, etc.) */
+  for (const { item } of (catalogue || [])) {
+    const name = (item.name || '').toLowerCase();
+    let bonus = 0;
+    if (name === q) bonus = 100;
+    else if (name.includes(q) || q.includes(name)) bonus = 60;
+    else {
+      const words = q.split(/\s+/).filter(w => w.length > 2);
+      const hits = words.filter(w => name.includes(w)).length;
+      if (hits > 0) bonus = hits * 20;
+    }
+    if (bonus > 0) candidates.push({ ...item, _bonus: bonus });
+  }
+
+  /* Also consider product/service items from business pages */
+  for (const { item } of (products || [])) {
+    const name = (item.name || item.title || '').toLowerCase();
+    if (name.includes(q) || q.includes(name)) {
+      candidates.push({
+        workspace: 'BrandInn',
+        name: item.name || item.title,
+        price: Number(item.price) || 0,
+        priceLabel: Number(item.price) ? `KSh ${Number(item.price).toLocaleString()}` : 'Contact for pricing',
+        description: item.desc || item.description || '',
+        meta: [],
+        _bonus: 40
+      });
+    }
+  }
+  for (const { item } of (services || [])) {
+    const name = (item.title || '').toLowerCase();
+    if (name.includes(q) || q.includes(name)) {
+      const price = Number(String(item.price || '').replace(/[^\d]/g, '')) || 0;
+      candidates.push({
+        workspace: 'BrandInn',
+        name: item.title,
+        price,
+        priceLabel: item.price ? String(item.price) : (price ? `KSh ${price.toLocaleString()}` : 'Contact for pricing'),
+        description: item.desc || '',
+        meta: [],
+        _bonus: 40
+      });
+    }
+  }
+
+  candidates.sort((a, b) => b._bonus - a._bonus);
+  return candidates[0] || null;
 }
 
 /* ==========================================================
@@ -894,12 +1202,13 @@ const STOP_WORDS = new Set([
   'would','should','may','might','must','what','which','who',
   'whom','whose','where','when','why','how','any','some','all',
   'no','not','only','just','show','find','give','tell','me',
-  'please','need','want','looking','look','see','get'
+  'please','need','want','looking','look','see','get','much',
+  'price','cost','fee','charge','how','does','whats'
 ]);
 
 function tokenize(q) {
   return q.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/)
-    .filter(w => w && !STOP_WORDS.has(w));
+    .filter(w => w && !STOP_WORDS.has(w) && w.length > 1);
 }
 
 function extractPriceCap(q) {
@@ -924,7 +1233,7 @@ function score(text, tokens) {
 }
 
 /* ==========================================================
-   DATA LOADERS (cached)
+   DATA LOADERS
    ========================================================== */
 async function getBusinesses() {
   if (cache.businesses) return cache.businesses;
@@ -960,6 +1269,39 @@ async function getResources() {
   return out;
 }
 
+/* Loads everything from CATALOGUE across all workspaces */
+async function getCatalogue() {
+  if (cache.catalogue) return cache.catalogue;
+
+  const items = [];
+  const sources = Object.values(CATALOGUE);
+
+  await Promise.all(sources.map(async (src) => {
+    try {
+      const snap = await db.ref(src.path).once('value');
+      const val = snap.val() || {};
+
+      if (src.nested && src.extract) {
+        /* BrandInn: iterate businesses, pull their services & offers */
+        for (const [slug, b] of Object.entries(val)) {
+          const extracted = src.extract(slug, b);
+          for (const e of extracted) items.push(e);
+        }
+      } else if (src.build) {
+        for (const [id, raw] of Object.entries(val)) {
+          if (!raw || typeof raw !== 'object') continue;
+          items.push(src.build(id, raw));
+        }
+      }
+    } catch (e) {
+      console.warn(`Catalogue source ${src.path} failed:`, e);
+    }
+  }));
+
+  cache.catalogue = items;
+  return items;
+}
+
 /* ==========================================================
    CONVERSATIONAL INTENTS
    ========================================================== */
@@ -976,7 +1318,7 @@ const CONVERSATION_RULES = [
     ],
     reply: () => {
       const name = firstName();
-      return `${partOfDay()}${name ? ', ' + name : ''}. What would you like to find? You can search businesses, products, services, courses, or resources.`;
+      return `${partOfDay()}${name ? ', ' + name : ''}. What would you like to find? I can search services and products across all your workspaces — E-Huduma, Fusion Foods, DSOG, BrandInn, WorkFit, Heritage and Mugs n Dines.`;
     }
   },
   {
@@ -984,7 +1326,7 @@ const CONVERSATION_RULES = [
     patterns: [/how\s+are\s+you/i, /how'?s\s+it\s+going/i, /umeamkaje/i, /habari\s+yako/i],
     reply: () => {
       const name = firstName();
-      return `Running well${name ? ', ' + name : ''}. Ready to help you find anything on KazInni — businesses, products, services, courses, or resources.`;
+      return `Running well${name ? ', ' + name : ''}. Ready to price-check anything across KazInni.`;
     }
   },
   {
@@ -995,25 +1337,27 @@ const CONVERSATION_RULES = [
       /tell\s+me\s+about\s+(yourself|janta)/i
     ],
     reply: () =>
-      `I'm the Janta Assistant — a work directory for KazInni. I read from the platform's database: businesses, products, services, learning courses, and resources. Pick a scope above to focus your search, or leave it on "Ask Anything".`
+      `I'm the Janta Assistant. I search across every workspace in the ecosystem — E-Huduma government services, Fusion Foods produce, DSOG apparel, BrandInn design services, WorkFit gear, Heritage marketplace and Mugs n Dines menu. Ask me a service or product and I'll show you the exact price plus the full price list around it.`
   },
   {
     id: 'help',
     patterns: [/^help$/i, /^help\s+me$/i, /how\s+do\s+i\s+use\s+(you|janta|the assistant)/i],
     reply: () =>
-      `Just pick a scope (Businesses, Products, Services, Courses, Resources) — or leave it on Ask Anything — then ask in your own words. For example:<br><br>
-       › beds under 25k<br>
-       › courses on writing<br>
-       › metal fabrication services<br>
-       › what does Best Furniture offer<br><br>
-       I'll search only the workspace you're in.`
+      `Just ask in your own words — for example:<br><br>
+       › how much is eTIMS?<br>
+       › KRA PIN price<br>
+       › cabbage price<br>
+       › how much is a passport?<br>
+       › beanie caps<br>
+       › cypress bed under 25k<br><br>
+       I'll pin the exact answer, then show you the full price list across the ecosystem.`
   },
   {
     id: 'thanks',
     patterns: [/^(thanks|thank\s+you|thx|asante|asante\s+sana)\b/i, /\bthanks\s+(janta|assistant)\b/i],
     reply: () => {
       const name = firstName();
-      return `You're welcome${name ? ', ' + name : ''}. Anything else you need?`;
+      return `You're welcome${name ? ', ' + name : ''}. Anything else you need priced?`;
     }
   },
   {
@@ -1061,13 +1405,14 @@ function esc(s) {
   return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function renderResults(results, priceCap, scope) {
+function renderResults(results, priceCap, scope, rawQuery) {
   const total =
     results.businesses.length +
     results.courses.length +
     results.products.length +
     results.services.length +
-    results.resources.length;
+    results.resources.length +
+    results.catalogue.length;
 
   const lockedHTML = (results.locked || []).map(id => {
     const s = SCOPES.find(x => x.id === id);
@@ -1082,32 +1427,50 @@ function renderResults(results, priceCap, scope) {
   }).join('');
 
   if (total === 0) {
-    const sugg = scope.id === 'all'
-      ? 'Try a different word, or narrow the scope using the bar above.'
-      : `Try a different word, or change the scope to "Ask Anything" above.`;
     return `
-      <span class="no-results">Nothing matches that on KazInni.</span>
-      <div class="no-results-suggest">${esc(sugg)}</div>
+      <span class="no-results">Nothing matches "${esc(rawQuery)}" on KazInni.</span>
+      <div class="no-results-suggest">Try a different word, or change the scope above.</div>
       ${lockedHTML}
     `;
   }
 
-  const cap = priceCap ? ` under KSh ${priceCap.toLocaleString()}` : '';
-  const scopeLabel = scope.id === 'all' ? '' : ` in ${scope.label}`;
   const parts = [];
 
+  /* ---- Pinned answer ---- */
+  if (results.exactMatch) {
+    const e = results.exactMatch;
+    parts.push(`<div class="pinned-answer">
+      <div class="pa-label">Answer</div>
+      <div class="pa-title">${esc(e.name)}</div>
+      <div class="pa-price">${esc(e.priceLabel)}</div>
+      ${e.description ? `<div class="pa-context">${esc(e.description.slice(0, 280))}${e.description.length > 280 ? '…' : ''}</div>` : ''}
+      <div class="pa-meta">
+        <span><i class="fas fa-folder"></i>${esc(e.workspace)}</span>
+        ${(e.meta || []).map(m => `<span><i class="fas fa-info-circle"></i>${esc(m)}</span>`).join('')}
+      </div>
+    </div>`);
+  }
+
+  const cap = priceCap ? ` under KSh ${priceCap.toLocaleString()}` : '';
+  const scopeLabel = scope.id === 'all' ? '' : ` in ${scope.label}`;
   parts.push(`<div class="summary">Found <strong>${total} match${total === 1 ? '' : 'es'}</strong>${esc(cap)}${esc(scopeLabel)} on KazInni.</div>`);
+
+  /* ---- Full pricing table for the catalogue ---- */
+  if (results.catalogue.length > 0) {
+    const exactId = results.exactMatch?.sourceId;
+    parts.push(renderPricingTable(results.catalogue.map(r => r.item), exactId));
+  }
 
   if (results.businesses.length) {
     parts.push(renderGroup('Businesses', 'fa-store', results.businesses.length,
       results.businesses.map(r => renderBusiness(r.item)).join('')));
   }
   if (results.products.length) {
-    parts.push(renderGroup('Products', 'fa-box', results.products.length,
+    parts.push(renderGroup('Products (business pages)', 'fa-box', results.products.length,
       results.products.map(r => renderProduct(r)).join('')));
   }
   if (results.services.length) {
-    parts.push(renderGroup('Services', 'fa-concierge-bell', results.services.length,
+    parts.push(renderGroup('Services (business pages)', 'fa-concierge-bell', results.services.length,
       results.services.map(r => renderService(r)).join('')));
   }
   if (results.courses.length) {
@@ -1121,6 +1484,31 @@ function renderResults(results, priceCap, scope) {
 
   parts.push(lockedHTML);
   return parts.join('');
+}
+
+function renderPricingTable(items, exactId) {
+  if (!items.length) return '';
+  const rows = items.map(c => {
+    const isExact = c.sourceId === exactId;
+    return `<tr class="${isExact ? 'exact' : ''}">
+      <td class="pt-name">${esc(c.name)}</td>
+      <td class="pt-workspace">${esc(c.workspace)}</td>
+      <td class="pt-fee">${esc(c.priceLabel)}</td>
+    </tr>`;
+  }).join('');
+  return `<div class="group">
+    <div class="group-head">
+      <i class="fas fa-tags"></i>
+      <span class="group-label">Full price list</span>
+      <span class="group-count">${items.length}</span>
+    </div>
+    <table class="pricing-table">
+      <thead>
+        <tr><th>Service / Product</th><th>Workspace</th><th style="text-align:right;">Price</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
 }
 
 function renderGroup(label, icon, count, inner) {
@@ -1143,16 +1531,11 @@ function renderBusiness(b) {
   const phone = pd.contact?.phone || b.phone || '';
   const email = pd.contact?.email || b.email || '';
   const desc = pd.business?.description || b.description || '';
-  const services = (pd.services || []).map(s => s.title).filter(Boolean);
 
   return `<div class="item">
-    <div class="item-name">
-      ${esc(name)}
-      ${category ? `<span class="item-badge">${esc(category)}</span>` : ''}
-    </div>
+    <div class="item-name">${esc(name)}${category ? `<span class="item-badge brandinn">${esc(category)}</span>` : ''}</div>
     ${tagline ? `<div class="item-desc" style="color:var(--accent-dark);font-weight:500;">${esc(tagline)}</div>` : ''}
     ${desc ? `<div class="item-desc">${esc(desc)}</div>` : ''}
-    ${services.length ? `<ul class="item-features">${services.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
     <div class="item-meta">
       ${address ? `<span><i class="fas fa-location-dot"></i>${esc(address)}</span>` : ''}
       ${phone ? `<span><i class="fas fa-phone"></i>${esc(phone)}</span>` : ''}
@@ -1170,19 +1553,13 @@ function renderProduct(r) {
   const name = p.name || p.title || 'Unnamed product';
   const price = Number(p.price);
   const desc = p.desc || p.description || '';
-  const cat = p.category || '';
-  const img = p.image || p.img || p.imageUrl;
   return `<div class="item">
-    <div class="item-name">${esc(name)}${cat ? `<span class="item-badge">${esc(cat)}</span>` : ''}</div>
+    <div class="item-name">${esc(name)}${p.category ? `<span class="item-badge brandinn">${esc(p.category)}</span>` : ''}</div>
     ${price ? `<div class="item-price">KSh ${price.toLocaleString()}</div>` : ''}
-    ${desc ? `<div class="item-desc">${esc(desc.slice(0, 350))}${desc.length > 350 ? '…' : ''}</div>` : ''}
+    ${desc ? `<div class="item-desc">${esc(desc.slice(0, 300))}${desc.length > 300 ? '…' : ''}</div>` : ''}
     <div class="item-meta">
       ${r.bizName ? `<span><i class="fas fa-store"></i>${esc(r.bizName)}</span>` : ''}
       ${r.phone ? `<span><i class="fas fa-phone"></i>${esc(r.phone)}</span>` : ''}
-      ${r.address ? `<span><i class="fas fa-location-dot"></i>${esc(r.address)}</span>` : ''}
-    </div>
-    <div class="item-actions">
-      ${r.phone ? `<a href="tel:${esc(r.phone)}" class="item-action"><i class="fas fa-phone"></i>Call ${esc(r.bizName || '')}</a>` : ''}
     </div>
   </div>`;
 }
@@ -1194,17 +1571,13 @@ function renderService(r) {
   const desc = s.desc || '';
   const features = s.features || [];
   return `<div class="item">
-    <div class="item-name">${esc(title)}${s.tag ? `<span class="item-badge">${esc(s.tag)}</span>` : ''}</div>
+    <div class="item-name">${esc(title)}${s.tag ? `<span class="item-badge brandinn">${esc(s.tag)}</span>` : ''}</div>
     ${price ? `<div class="item-price">${esc(price)}</div>` : ''}
     ${desc ? `<div class="item-desc">${esc(desc)}</div>` : ''}
     ${features.length ? `<ul class="item-features">${features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
     <div class="item-meta">
       ${r.bizName ? `<span><i class="fas fa-store"></i>${esc(r.bizName)}</span>` : ''}
       ${r.phone ? `<span><i class="fas fa-phone"></i>${esc(r.phone)}</span>` : ''}
-      ${r.address ? `<span><i class="fas fa-location-dot"></i>${esc(r.address)}</span>` : ''}
-    </div>
-    <div class="item-actions">
-      ${r.phone ? `<a href="tel:${esc(r.phone)}" class="item-action"><i class="fas fa-phone"></i>Call</a>` : ''}
     </div>
   </div>`;
 }
@@ -1223,7 +1596,6 @@ function renderCourse(c) {
       ${level ? `<span><i class="fas fa-signal"></i>${esc(level)}</span>` : ''}
       ${duration ? `<span><i class="fas fa-clock"></i>${esc(duration)}</span>` : ''}
       ${lessonCount ? `<span><i class="fas fa-list-check"></i>${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>` : ''}
-      ${c.free ? `<span><i class="fas fa-gift"></i>Free</span>` : ''}
     </div>
     <div class="item-actions">
       <a href="learning/course.html?id=${encodeURIComponent(c.id)}" class="item-action"><i class="fas fa-arrow-right"></i>Open course</a>
@@ -1247,9 +1619,6 @@ function renderResource(r) {
   </div>`;
 }
 
-/* ==========================================================
-   INIT
-   ========================================================== */
 updatePlaceholder();
 </script>
 </body>
