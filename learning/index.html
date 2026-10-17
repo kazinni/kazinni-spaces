@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
-<title>KazInni Academy</title>
+<title>KazInni Academy — Learn skills that matter</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,283 +14,220 @@
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;--gold-deep:#78350f;
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
   --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
-  --ink:#0f0f1e;--ink-2:#1a1a2e;--ink-3:#2d2d4a;
+  --ink:#0f0f1e;--ink-2:#1c1d1f;--ink-3:#2d2d4a;
   --success:#10b981;--danger:#ef4444;--info:#3b82f6;--purple:#8b5cf6;--cyan:#06b6d4;--pink:#ec4899;
-  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
+  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;--border-dark:#3e4143;
   --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
-  --header-h:60px;--rail-w:236px;--rail-w-collapsed:68px;
-  --gutter:clamp(1rem,2.6vw,2rem);
+  --header-h:64px;--gutter:clamp(1rem,3vw,2rem);
   --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
   --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
   --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
-  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-2xl:24px;--r-pill:100px;
+  --r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:100px;
   --t-fast:.15s cubic-bezier(.2,.8,.2,1);
   --t-base:.22s cubic-bezier(.2,.8,.2,1);
   --shadow-sm:0 2px 4px rgba(15,15,30,.04);
-  --shadow-card:0 8px 24px rgba(15,15,30,.06);
-  --shadow-pop:0 20px 48px rgba(15,15,30,.12);
+  --shadow-card:0 4px 16px rgba(15,15,30,.06);
+  --shadow-pop:0 16px 40px rgba(15,15,30,.12);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.55;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+body{font-family:var(--f-body);background:#fff;color:var(--ink);line-height:1.55;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;overflow-x:hidden}
 :focus{outline:none}:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 button{font-family:inherit}
 
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
-@keyframes pulseGold{0%,100%{box-shadow:0 0 0 0 rgba(202,138,4,.4)}50%{box-shadow:0 0 0 10px rgba(202,138,4,0)}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 @keyframes orb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(.95)}}
 
-/* ── HEADER ─────────────────────────────────────────── */
-.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.94);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.07);padding:0 var(--gutter);display:flex;align-items:center;gap:1rem}
-.ws-rail-toggle{width:34px;height:34px;border-radius:6px;background:transparent;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--text-2);font-size:.9rem}
-.ws-rail-toggle:hover{background:var(--surface-3)}
-.ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
-.ws-logo img{height:26px}
-.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:-.4px;white-space:nowrap;display:flex;flex-direction:column;line-height:1}
-.ws-logo-text .top{font-weight:800}
-.ws-logo-text .accent{background:var(--gold-gradient);background-size:200% 200%;animation:gradientShift 8s ease infinite;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.ws-logo-text .sub{font-family:var(--f-head);font-size:.62rem;font-weight:600;color:var(--muted);letter-spacing:.6px;margin-top:2px;text-transform:uppercase}
+/* ── NAVBAR (Udemy-style) ───────────────────────────── */
+.navbar{position:sticky;top:0;z-index:1000;height:var(--header-h);background:#fff;border-bottom:1px solid var(--border);padding:0 var(--gutter);display:flex;align-items:center;gap:.75rem;box-shadow:0 2px 4px rgba(15,15,30,.04)}
+.nav-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:28px}
+.nav-logo-text{font-family:var(--f-display);font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:-.5px;white-space:nowrap;display:flex;flex-direction:column;line-height:1}
+.nav-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nav-logo-text .sub{font-family:var(--f-head);font-size:.55rem;font-weight:700;color:var(--gold-dark);letter-spacing:1.4px;margin-top:2px;text-transform:uppercase}
 
-.ws-nav-links{display:flex;align-items:center;gap:.2rem;margin-left:.75rem}
-.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.8rem;font-weight:500;font-family:var(--f-head);transition:all var(--t-fast);padding:.4rem .7rem;border-radius:6px;white-space:nowrap;display:inline-flex;align-items:center;gap:.4rem}
-.ws-nav-link i{font-size:.7rem;color:var(--muted);transition:color var(--t-fast)}
-.ws-nav-link:hover{background:var(--surface-3);color:var(--ink)}
-.ws-nav-link:hover i{color:var(--gold)}
-.ws-nav-link.active{background:var(--gold-soft);color:var(--gold-dark);font-weight:600}
-.ws-nav-link.active i{color:var(--gold-dark)}
+.nav-cats{display:flex;align-items:center;gap:.15rem;flex-shrink:0}
+.nav-cat{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .7rem;border-radius:var(--r-sm);color:var(--text-2);font-family:var(--f-head);font-size:.8rem;font-weight:500;text-decoration:none;background:none;border:none;cursor:pointer;transition:all var(--t-fast);white-space:nowrap}
+.nav-cat:hover{background:var(--surface-3);color:var(--ink)}
+.nav-cat i{font-size:.7rem;color:var(--muted);transition:color var(--t-fast)}
+.nav-cat:hover i{color:var(--gold)}
 
-.hdr-search{position:relative;flex:1;max-width:400px;margin:0 .5rem}
-.hdr-search i.search-icon{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.75rem;pointer-events:none}
-.hdr-search input{width:100%;padding:.45rem 2.2rem .45rem 2rem;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--surface-2);font-family:var(--f-head);font-size:.8rem;color:var(--ink);transition:all var(--t-fast)}
-.hdr-search input::placeholder{color:var(--muted)}
-.hdr-search input:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.1)}
-.hdr-search kbd{position:absolute;right:.65rem;top:50%;transform:translateY(-50%);font-family:var(--f-head);font-size:.62rem;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:4px;padding:.08rem .3rem;pointer-events:none}
-.hdr-search.has-value kbd{display:none}
-.hdr-clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;border:none;background:var(--surface-3);color:var(--text-2);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.6rem}
-.hdr-clear:hover{background:var(--ink);color:#fff}
-.hdr-search.has-value .hdr-clear{display:flex}
+.nav-search{position:relative;flex:1;max-width:600px;margin:0 .5rem}
+.nav-search i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.78rem;pointer-events:none}
+.nav-search input{width:100%;padding:.6rem 3rem .6rem 2.4rem;border:1px solid var(--border-dark);border-radius:var(--r-pill);background:var(--surface-2);font-family:var(--f-head);font-size:.82rem;color:var(--ink);transition:all var(--t-fast)}
+.nav-search input::placeholder{color:var(--muted)}
+.nav-search input:focus{background:#fff;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.nav-search kbd{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);font-family:var(--f-head);font-size:.62rem;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:4px;padding:.08rem .35rem;pointer-events:none}
+.nav-search.has-value kbd{display:none}
+.nav-search .clear-btn{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;border:none;background:var(--surface-3);color:var(--text-2);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.62rem}
+.nav-search .clear-btn:hover{background:var(--ink);color:#fff}
+.nav-search.has-value .clear-btn{display:flex}
 
-.ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.45rem}
-.ws-icon-btn{width:34px;height:34px;border-radius:6px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:.85rem;transition:background var(--t-fast);position:relative}
-.ws-icon-btn:hover{background:var(--surface-3);color:var(--ink)}
-.ws-account-chip{display:flex;align-items:center;gap:.45rem;padding:.22rem .65rem .22rem .22rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.76rem;font-weight:600;color:var(--ink);text-decoration:none;transition:all var(--t-fast)}
-.ws-account-chip:hover{background:#fff;border-color:var(--gold)}
-.ws-avatar{width:24px;height:24px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.64rem;font-family:var(--f-head);flex-shrink:0}
+.nav-right{display:flex;align-items:center;gap:.15rem;flex-shrink:0}
+.nav-icon-btn{width:38px;height:38px;border-radius:var(--r-sm);border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:.9rem;transition:background var(--t-fast);position:relative;text-decoration:none}
+.nav-icon-btn:hover{background:var(--surface-3);color:var(--ink)}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;font-family:var(--f-head);text-decoration:none;transition:transform var(--t-fast)}
+.nav-avatar:hover{transform:scale(1.06)}
+.nav-cart-link{display:flex;align-items:center;gap:.35rem;padding:.45rem .75rem;border-radius:var(--r-sm);color:var(--text-2);font-family:var(--f-head);font-size:.8rem;font-weight:500;text-decoration:none;transition:all var(--t-fast)}
+.nav-cart-link:hover{background:var(--surface-3);color:var(--ink)}
 
-/* ── SHELL: RAIL + MAIN ──────────────────────────────── */
-.ws-shell{display:flex;min-height:calc(100vh - var(--header-h))}
-.ws-rail{width:var(--rail-w);flex-shrink:0;background:#fff;border-right:1px solid rgba(15,15,30,.06);padding:1.1rem .7rem;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto;display:flex;flex-direction:column;gap:.15rem}
-.rail-group{display:flex;flex-direction:column;gap:.1rem;padding:.25rem 0}
-.rail-group + .rail-group{border-top:1px solid rgba(15,15,30,.05);margin-top:.35rem;padding-top:.55rem}
-.rail-label{font-family:var(--f-head);font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px;padding:.4rem .65rem .25rem;white-space:nowrap}
-.rail-item{display:flex;align-items:center;gap:.65rem;padding:.5rem .65rem;border-radius:6px;color:var(--text-2);text-decoration:none;font-family:var(--f-head);font-size:.82rem;font-weight:500;transition:all var(--t-fast);cursor:pointer;border:none;background:none;width:100%;text-align:left;white-space:nowrap;position:relative}
-.rail-item:hover{background:var(--surface-2);color:var(--ink)}
-.rail-item i{width:16px;text-align:center;font-size:.82rem;color:var(--muted);transition:color var(--t-fast);flex-shrink:0}
-.rail-item:hover i{color:var(--gold)}
-.rail-item.active{background:var(--gold-soft);color:var(--gold-dark);font-weight:600}
-.rail-item.active i{color:var(--gold-dark)}
-.rail-item.active::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:2px;background:var(--gold-gradient);border-radius:2px}
-.rail-item .rail-item-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.rail-item .rail-item-badge{font-family:var(--f-head);font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2)}
-.rail-item.active .rail-item-badge{background:rgba(202,138,4,.15);color:var(--gold-dark)}
+/* ── HERO (Udemy-style split) ───────────────────────── */
+.hero{position:relative;background:linear-gradient(135deg,#faf9f7 0%,#fff 100%);border-bottom:1px solid var(--border);padding:3rem var(--gutter);overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60%;right:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.08) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:1}
+.hero-left h1{font-family:var(--f-display);font-size:clamp(2rem,3.6vw,3rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;color:var(--ink);margin-bottom:1rem}
+.hero-left h1 .accent{background:var(--gold-gradient);background-size:200% 200%;animation:gradientShift 5s ease infinite;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
+.hero-left p{font-size:1rem;color:var(--text-2);max-width:520px;line-height:1.6;margin-bottom:1.5rem}
+.hero-cta{display:flex;gap:.6rem;flex-wrap:wrap}
+.hero-btn{padding:.7rem 1.4rem;border:none;border-radius:var(--r-sm);font-family:var(--f-head);font-weight:700;font-size:.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;transition:all var(--t-base);white-space:nowrap}
+.hero-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,.15)}
+.hero-btn-primary:hover{background:#2d2d4a;transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,15,30,.25)}
+.hero-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-dark)}
+.hero-btn-ghost:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-.rail-cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--cat-accent,var(--gold))}
+.hero-right{position:relative;padding:0 1rem}
+.hero-promo{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--shadow-pop);padding:1.4rem 1.5rem;position:relative;z-index:2;max-width:380px;margin-left:auto}
+.hero-promo-eyebrow{font-family:var(--f-head);font-size:.62rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.4rem;display:flex;align-items:center;gap:.35rem}
+.hero-promo-eyebrow i{font-size:.55rem}
+.hero-promo h3{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25;margin-bottom:.5rem}
+.hero-promo p{font-size:.82rem;color:var(--text-2);line-height:1.5;margin-bottom:1rem}
+.hero-promo-stats{display:flex;gap:1.2rem;padding-top:.85rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.hero-promo-stat{display:flex;flex-direction:column}
+.hero-promo-stat .val{font-family:var(--f-display);font-size:1.2rem;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.hero-promo-stat .lbl{font-family:var(--f-head);font-size:.62rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:.15rem}
 
-.rail-footer{margin-top:auto;padding-top:.6rem;border-top:1px solid rgba(15,15,30,.05)}
-.rail-tip{display:flex;align-items:flex-start;gap:.5rem;padding:.55rem .6rem;border-radius:var(--r-md);background:linear-gradient(135deg,#fef9e7,var(--gold-soft));border:1px solid rgba(202,138,4,.2);margin:.4rem 0}
-.rail-tip i{color:var(--gold-dark);font-size:.7rem;margin-top:2px;flex-shrink:0}
-.rail-tip div{font-family:var(--f-head);font-size:.68rem;line-height:1.45;color:var(--gold-dark)}
-.rail-tip strong{font-weight:800}
+/* ── CATEGORY CHIPS BAR ─────────────────────────────── */
+.category-bar{position:sticky;top:var(--header-h);z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 var(--gutter);overflow-x:auto;scrollbar-width:none}
+.category-bar::-webkit-scrollbar{display:none}
+.category-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:.15rem;padding:.7rem 0;white-space:nowrap}
+.cat-chip{padding:.45rem .85rem;border-radius:var(--r-sm);border:1px solid transparent;background:transparent;color:var(--text-2);font-family:var(--f-head);font-size:.78rem;font-weight:500;cursor:pointer;transition:all var(--t-fast);white-space:nowrap;display:inline-flex;align-items:center;gap:.35rem}
+.cat-chip:hover{background:var(--surface-3);color:var(--ink);border-color:var(--border)}
+.cat-chip.active{background:var(--gold-soft);color:var(--gold-dark);border-color:rgba(202,138,4,.3);font-weight:600}
 
-.ws-main{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface-2)}
-.ws-content{padding:1.35rem var(--gutter) 2.5rem;flex:1}
+/* ── TABS ───────────────────────────────────────────── */
+.tabs{max-width:1400px;margin:0 auto;padding:1.6rem var(--gutter) 0;display:flex;gap:1.5rem;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{background:none;border:none;padding:.6rem 0;color:var(--muted);font-family:var(--f-head);font-size:.9rem;font-weight:600;cursor:pointer;position:relative;transition:color var(--t-fast);white-space:nowrap}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink)}
+.tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--ink);border-radius:2px}
 
-/* ── ACADEMY HERO / GREETING CARD ───────────────────── */
-.academy-hero{background:linear-gradient(135deg,var(--ink) 0%,var(--ink-3) 100%);border-radius:var(--r-2xl);padding:1.8rem 2rem;margin-bottom:1.25rem;position:relative;overflow:hidden;color:#fff}
-.academy-hero::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.38) 0%,transparent 60%);top:-200px;right:-180px;pointer-events:none;animation:orb 24s ease-in-out infinite}
-.academy-hero::after{content:'';position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 60%);bottom:-160px;left:-120px;pointer-events:none;animation:orb 28s ease-in-out infinite;animation-delay:-10s}
-.hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center}
-.hero-text{min-width:0}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .75rem;background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.28);border-radius:var(--r-pill);font-family:var(--f-head);font-size:.64rem;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:1px;margin-bottom:.7rem}
-.hero-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
-.hero-title{font-family:var(--f-display);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:.35rem}
-.hero-title .accent{background:var(--gold-gradient);background-size:200% 200%;animation:gradientShift 5s ease infinite;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
-.hero-subtitle{color:rgba(255,255,255,.7);font-size:.9rem;max-width:520px;line-height:1.55}
-.hero-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.1rem}
-.hero-btn{padding:.55rem 1.1rem;border:none;border-radius:var(--r-pill);font-family:var(--f-head);font-weight:700;font-size:.76rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all var(--t-base);white-space:nowrap}
-.hero-btn-primary{background:var(--gold-gradient);color:#fff;box-shadow:0 8px 22px rgba(202,138,4,.35)}
-.hero-btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(202,138,4,.5)}
-.hero-btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.22)}
-.hero-btn-ghost:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4)}
+/* ── MAIN CONTENT ───────────────────────────────────── */
+.main{max-width:1400px;margin:0 auto;padding:1.5rem var(--gutter) 3rem}
+.section{margin-bottom:3rem}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.section-head h2{font-family:var(--f-display);font-size:1.4rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);line-height:1.2}
+.section-head .section-sub{font-size:.86rem;color:var(--muted);margin-top:.25rem;font-family:var(--f-head)}
+.section-head .section-action{font-family:var(--f-head);font-size:.82rem;font-weight:700;color:var(--gold-dark);text-decoration:none;background:none;border:none;cursor:pointer;padding:.35rem .65rem;border-radius:var(--r-sm);transition:background var(--t-fast)}
+.section-head .section-action:hover{background:var(--gold-soft)}
 
-.hero-progress-ring{width:130px;height:130px;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
-.hero-progress-ring svg{transform:rotate(-90deg)}
-.hero-progress-ring .ring-bg{stroke:rgba(255,255,255,.12);fill:none;stroke-width:8}
-.hero-progress-ring .ring-fg{stroke:url(#goldGrad);fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dasharray 1s cubic-bezier(.2,.8,.2,1)}
-.hero-progress-ring .ring-text{position:absolute;text-align:center;color:#fff}
-.hero-progress-ring .ring-pct{font-family:var(--f-display);font-size:1.5rem;font-weight:700;letter-spacing:-.03em;line-height:1}
-.hero-progress-ring .ring-label{font-family:var(--f-head);font-size:.6rem;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.8px;margin-top:.2rem}
+/* ── COURSE GRID ────────────────────────────────────── */
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
 
-/* ── STATS ROW ───────────────────────────────────────── */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-bottom:1.25rem}
-.stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);padding:1rem 1.1rem;display:flex;align-items:center;gap:.85rem;transition:all var(--t-base);position:relative;overflow:hidden}
-.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card);border-color:rgba(202,138,4,.25)}
-.stat-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;position:relative;z-index:1}
-.stat-icon.gold{background:var(--gold-soft);color:var(--gold-dark)}
-.stat-icon.green{background:#ecfdf5;color:#059669}
-.stat-icon.blue{background:#eff6ff;color:#2563eb}
-.stat-icon.purple{background:#f5f3ff;color:#7c3aed}
-.stat-icon.pink{background:#fdf2f8;color:#ec4899}
-.stat-body{min-width:0;position:relative;z-index:1}
-.stat-value{font-family:var(--f-display);font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1.1;letter-spacing:-.03em}
-.stat-value .unit{font-family:var(--f-head);font-size:.72rem;font-weight:700;color:var(--muted);margin-left:.2rem}
-.stat-label{font-family:var(--f-head);font-size:.66rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:.15rem}
-
-/* ── SECTION HEADER ──────────────────────────────────── */
-.section-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem;margin-top:1.5rem}
-.section-header:first-child{margin-top:0}
-.section-header h2{font-family:var(--f-display);font-size:1.12rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center;gap:.55rem}
-.section-header h2 i{color:var(--gold);font-size:.92rem}
-.section-header h2 .count-pill{font-family:var(--f-head);font-size:.64rem;font-weight:700;color:var(--text-2);background:var(--surface-3);border-radius:var(--r-pill);padding:.12rem .5rem;margin-left:.2rem}
-.section-header .section-sub{font-family:var(--f-head);font-size:.76rem;color:var(--muted)}
-.section-header .section-action{font-family:var(--f-head);font-size:.74rem;font-weight:700;color:var(--gold-dark);text-decoration:none;background:none;border:none;cursor:pointer;padding:.25rem .5rem;border-radius:6px;transition:background var(--t-fast)}
-.section-header .section-action:hover{background:var(--gold-soft)}
-
-/* ── CONTINUE LEARNING CARDS ─────────────────────────── */
-.continue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.85rem;margin-bottom:.5rem}
-.continue-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.7rem;transition:all var(--t-base);position:relative;overflow:hidden;text-decoration:none;color:inherit;cursor:pointer;text-align:left}
-.continue-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.35)}
-.continue-top{display:flex;align-items:center;gap:.75rem}
-.continue-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:#fff;flex-shrink:0;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.continue-card:hover .continue-icon{transform:scale(1.08) rotate(-3deg)}
-.continue-info{min-width:0;flex:1}
-.continue-label{font-family:var(--f-head);font-size:.6rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1px;margin-bottom:.1rem}
-.continue-title{font-family:var(--f-head);font-size:.86rem;font-weight:700;color:var(--ink);line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.continue-progress{height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden}
-.continue-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width .9s cubic-bezier(.2,.8,.2,1)}
-.continue-footer{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-.continue-meta{font-family:var(--f-head);font-size:.68rem;color:var(--muted);font-weight:500}
-.continue-cta{font-family:var(--f-head);font-size:.7rem;font-weight:700;color:var(--gold-dark);display:inline-flex;align-items:center;gap:.25rem}
-
-/* ── FEATURED (larger card) ──────────────────────────── */
-.featured-card{background:linear-gradient(135deg,#fff 0%,#fffdf6 100%);border:1px solid rgba(202,138,4,.22);border-radius:var(--r-2xl);padding:1.4rem 1.6rem;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;transition:all var(--t-base);text-decoration:none;color:inherit;margin-bottom:1rem;position:relative;overflow:hidden;cursor:pointer;text-align:left;width:100%}
-.featured-card::before{content:'';position:absolute;top:-40%;right:-5%;width:340px;height:340px;background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 60%);pointer-events:none}
-.featured-card:hover{box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.4);transform:translateY(-2px)}
-.featured-icon{width:66px;height:66px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;flex-shrink:0;position:relative;z-index:1;box-shadow:0 10px 24px rgba(15,15,30,.15)}
-.featured-body{position:relative;z-index:1;min-width:0}
-.featured-eyebrow{font-family:var(--f-head);font-size:.6rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.1px;margin-bottom:.25rem;display:flex;align-items:center;gap:.35rem}
-.featured-eyebrow i{font-size:.55rem}
-.featured-title{font-family:var(--f-display);font-size:1.1rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2;margin-bottom:.25rem}
-.featured-desc{font-size:.8rem;color:var(--text-2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.featured-meta{display:flex;gap:.9rem;align-items:center;margin-top:.45rem;font-family:var(--f-head);font-size:.68rem;color:var(--muted);flex-wrap:wrap}
-.featured-meta i{font-size:.62rem;color:var(--gold)}
-.featured-cta{position:relative;z-index:1;flex-shrink:0}
-.featured-btn{padding:.6rem 1.15rem;background:var(--gold-gradient);color:#fff;border:none;border-radius:var(--r-pill);font-family:var(--f-head);font-size:.76rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;box-shadow:0 8px 20px rgba(202,138,4,.3);transition:all var(--t-base);white-space:nowrap}
-.featured-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(202,138,4,.4)}
-
-/* ── LIBRARY ─────────────────────────────────────────── */
-.category-sections{display:flex;flex-direction:column;gap:.85rem}
-.category-section{border-radius:var(--r-xl);padding:1.1rem 1.15rem 1.2rem;border:1px solid var(--border);position:relative;overflow:hidden;scroll-margin-top:calc(var(--header-h) + 1rem);background:#fff;transition:box-shadow var(--t-base)}
-.category-section:hover{box-shadow:var(--shadow-card)}
-.category-section::before{content:'';position:absolute;top:1.1rem;left:0;width:3px;height:22px;border-radius:0 3px 3px 0;background:var(--cat-accent,var(--gold))}
-.category-head{display:flex;align-items:center;gap:.55rem;margin-bottom:.85rem;padding-left:.6rem}
-.category-head h3{font-family:var(--f-display);font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
-.category-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:19px;padding:0 .45rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2);font-family:var(--f-head);font-size:.64rem;font-weight:700}
-.category-jump{margin-left:auto;font-size:.7rem;font-family:var(--f-head);color:var(--muted);text-decoration:none;padding:.15rem .5rem;border-radius:var(--r-pill);transition:all var(--t-fast);background:none;border:none;cursor:pointer}
-.category-jump:hover{color:var(--gold-dark);background:var(--gold-soft)}
-
-/* course grid */
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem}
-
-/* course card */
-.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;text-align:left;padding:0;position:relative}
-.course-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.3)}
-.course-card:hover .course-thumb-icon{transform:scale(1.15) rotate(-4deg)}
-.course-card:hover .course-cta{opacity:1;transform:translateY(0)}
-.course-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;overflow:hidden}
-.course-thumb-icon{font-size:1.85rem;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-.course-thumb::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,255,255,.22),transparent 60%)}
-.course-body{padding:.75rem .85rem .85rem;display:flex;flex-direction:column;gap:.35rem;flex:1;position:relative}
-.course-title{font-family:var(--f-head);font-size:.87rem;font-weight:700;color:var(--ink);line-height:1.28}
-.course-desc{font-size:.72rem;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.course-meta{display:flex;align-items:center;gap:.6rem;font-size:.64rem;color:var(--muted);font-family:var(--f-head);margin-top:auto;padding-top:.4rem;flex-wrap:wrap}
-.course-meta i{font-size:.6rem}
-.course-progress{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.3rem}
-.course-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width var(--t-base)}
-.course-badge{position:absolute;top:.5rem;right:.5rem;padding:.16rem .5rem;border-radius:var(--r-pill);background:rgba(255,255,255,.94);color:var(--ink);font-family:var(--f-head);font-size:.56rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+/* Udemy-style course card */
+.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;text-align:left;padding:0}
+.course-card:hover{box-shadow:var(--shadow-card);border-color:var(--border-dark);transform:translateY(-2px)}
+.course-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;color:#fff}
+.course-thumb::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,255,255,.2),transparent 60%)}
+.course-thumb-icon{font-size:2.2rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2));transition:transform .4s cubic-bezier(.2,.8,.2,1);position:relative;z-index:1}
+.course-card:hover .course-thumb-icon{transform:scale(1.12)}
+.course-badge{position:absolute;top:.55rem;left:.55rem;padding:.22rem .55rem;border-radius:4px;background:rgba(255,255,255,.95);color:var(--ink);font-family:var(--f-head);font-size:.56rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 6px rgba(0,0,0,.12);z-index:2}
+.course-badge.bestseller{background:var(--gold-soft);color:var(--gold-dark)}
+.course-badge.new{background:#ecfdf5;color:#059669}
 .course-badge.progress{background:var(--gold-gradient);color:#fff}
-.course-badge.done{background:var(--success);color:#fff}
-.course-cta{position:absolute;bottom:.55rem;right:.7rem;font-family:var(--f-head);font-size:.64rem;font-weight:700;color:var(--gold-dark);display:inline-flex;align-items:center;gap:.3rem;opacity:0;transform:translateY(4px);transition:all var(--t-base)}
-.course-cta i{font-size:.56rem}
 
-/* states */
-.empty-state{text-align:center;padding:2.6rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-xl)}
-.empty-state i{font-size:1.9rem;color:var(--gold);opacity:.5;display:block;margin-bottom:.7rem}
-.empty-state h3{font-size:.98rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
-.empty-state p{font-size:.78rem}
+.course-body{padding:.85rem .95rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.course-title{font-family:var(--f-head);font-size:.94rem;font-weight:700;color:var(--ink);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.course-instructor{font-size:.72rem;color:var(--muted);font-family:var(--f-head);line-height:1.3;margin-top:.1rem}
+.course-rating{display:flex;align-items:center;gap:.35rem;margin-top:.15rem;font-family:var(--f-head)}
+.course-rating-score{font-weight:700;font-size:.78rem;color:var(--gold-dark)}
+.course-rating-stars{color:#f59e0b;font-size:.6rem;letter-spacing:.5px}
+.course-rating-count{font-size:.68rem;color:var(--muted);margin-left:.15rem}
+.course-meta{display:flex;align-items:center;gap:.65rem;font-size:.66rem;color:var(--muted);font-family:var(--f-head);margin-top:.2rem;flex-wrap:wrap}
+.course-meta i{font-size:.6rem}
+.course-progress{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.35rem}
+.course-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width var(--t-base)}
+.course-footer{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:.55rem;padding-top:.55rem;border-top:1px solid var(--border)}
+.course-price{font-family:var(--f-head);font-size:.9rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.course-price.free{color:#059669;font-size:.8rem}
+.course-price.free::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;margin-right:.35rem;vertical-align:middle}
+.course-level{font-family:var(--f-head);font-size:.62rem;font-weight:700;padding:.2rem .5rem;border-radius:4px;background:var(--surface-3);color:var(--text-2);text-transform:uppercase;letter-spacing:.4px}
 
-/* footer */
-.academy-footer{background:#fff;border-top:1px solid rgba(15,15,30,.06);padding:.9rem var(--gutter);margin-top:auto}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;max-width:1600px;margin:0 auto}
-.footer-brand{display:flex;align-items:center;gap:.45rem;font-weight:700;font-size:.76rem;color:var(--ink);font-family:var(--f-head)}
-.footer-brand i{color:var(--gold)}
-.footer-links{display:flex;gap:1.15rem;flex-wrap:wrap}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:.72rem;font-family:var(--f-head);font-weight:500;transition:color var(--t-fast)}
-.footer-links a:hover{color:var(--gold-dark)}
-.footer-copy{color:var(--muted);font-size:.7rem;font-family:var(--f-head)}
+/* ── CONTINUE LEARNING CARDS (compact) ──────────────── */
+.continue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.85rem}
+.continue-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:.9rem 1rem;display:flex;flex-direction:column;gap:.5rem;transition:all var(--t-base);cursor:pointer;text-align:left}
+.continue-card:hover{box-shadow:var(--shadow-card);border-color:var(--border-dark)}
+.continue-top{display:flex;align-items:center;gap:.65rem}
+.continue-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;flex-shrink:0}
+.continue-info{min-width:0;flex:1}
+.continue-label{font-family:var(--f-head);font-size:.58rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1px;margin-bottom:.1rem}
+.continue-title{font-family:var(--f-head);font-size:.84rem;font-weight:700;color:var(--ink);line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.continue-progress{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden}
+.continue-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.continue-footer{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-family:var(--f-head);font-size:.68rem;color:var(--muted)}
+.continue-cta{color:var(--gold-dark);font-weight:700;display:inline-flex;align-items:center;gap:.25rem;font-size:.7rem}
 
-/* toasts */
+/* ── EMPTY ──────────────────────────────────────────── */
+.empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);grid-column:1/-1}
+.empty-state i{font-size:2rem;color:var(--gold);opacity:.5;display:block;margin-bottom:.75rem}
+.empty-state h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}
+.empty-state p{font-size:.82rem}
+
+/* ── FOOTER (marketplace-style) ─────────────────────── */
+.footer{background:var(--ink);color:#d1d5db;padding:3rem var(--gutter) 1.5rem;margin-top:auto}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:1.5rem}
+.footer-col h4{font-family:var(--f-head);font-size:.76rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.85rem}
+.footer-col a{display:block;color:#9ca3af;text-decoration:none;font-size:.8rem;font-family:var(--f-head);font-weight:500;padding:.28rem 0;transition:color var(--t-fast)}
+.footer-col a:hover{color:var(--gold-light,#fbbf24)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:.55rem;font-family:var(--f-head);font-weight:700;font-size:.86rem;color:#fff}
+.footer-brand i{color:var(--gold-light,#fbbf24)}
+.footer-copy{font-family:var(--f-head);font-size:.74rem;color:#6b7280}
+
+/* ── TOASTS ─────────────────────────────────────────── */
 .toast-container{position:fixed;top:calc(var(--header-h) + 14px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
 .toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.75rem 1rem;box-shadow:0 16px 36px rgba(15,15,30,.22);display:flex;align-items:center;gap:.6rem;font-family:var(--f-head);font-size:.8rem;max-width:340px;font-weight:500;pointer-events:auto;transition:opacity .3s,transform .3s;animation:slideInRight .28s cubic-bezier(.2,.8,.2,1)}
 .toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
 
 /* skeleton */
-.skeleton{height:200px;border-radius:var(--r-xl);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+.skeleton{height:240px;border-radius:var(--r-md);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
 
-/* rail backdrop for mobile */
-.rail-backdrop{position:fixed;inset:0;background:rgba(15,15,30,.45);backdrop-filter:blur(3px);z-index:899;display:none}
-body.rail-open .rail-backdrop{display:block}
-
-/* ── RESPONSIVE ──────────────────────────────────────── */
+/* ── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:1100px){
-  .stats-row{grid-template-columns:repeat(2,1fr)}
-  .academy-hero .hero-content{grid-template-columns:1fr}
-  .hero-progress-ring{width:100px;height:100px}
-  .featured-card{grid-template-columns:1fr}
-  .featured-cta{justify-self:start}
+  .hero-inner{grid-template-columns:1fr;gap:2rem}
+  .hero-right{padding:0}
+  .hero-promo{margin:0 auto}
+  .footer-top{grid-template-columns:repeat(2,1fr)}
+  .nav-cats{display:none}
 }
-@media(max-width:900px){
-  .ws-rail{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:900;transform:translateX(-100%);transition:transform var(--t-base);box-shadow:var(--shadow-pop)}
-  body.rail-open .ws-rail{transform:translateX(0)}
-  .ws-rail-toggle{display:flex}
-  .ws-nav-links{display:none}
-  .hdr-search{max-width:none;margin:0}
-}
-@media(max-width:760px){
-  .academy-hero{padding:1.4rem 1.2rem}
-  .hero-title{font-size:1.35rem}
-  .stats-row{grid-template-columns:1fr 1fr;gap:.6rem}
-  .stat-card{padding:.85rem .9rem;gap:.65rem}
-  .stat-value{font-size:1.25rem}
-  .course-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
-  .continue-grid{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;gap:.4rem;text-align:center}
+@media(max-width:768px){
+  .navbar{padding:0 1rem;gap:.5rem}
+  .nav-search{max-width:none;margin:0}
+  .nav-cart-link span{display:none}
+  .hero{padding:2rem 1rem}
+  .hero-left h1{font-size:1.8rem}
+  .main{padding:1.2rem 1rem 2.5rem}
+  .courses-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.85rem}
+  .course-body{padding:.7rem .8rem .85rem}
+  .footer-top{grid-template-columns:1fr;gap:1.5rem}
+  .footer-bottom{flex-direction:column;text-align:center;gap:.5rem}
   .toast-container{right:12px;left:12px;align-items:stretch}
   .toast{max-width:none}
+  .tabs{padding:1.2rem 1rem 0;gap:1.2rem}
 }
-@media(max-width:500px){
-  .stats-row{grid-template-columns:1fr}
-  .hero-actions{width:100%}
-  .hero-actions .hero-btn{flex:1;justify-content:center}
+@media(max-width:520px){
+  .courses-grid{grid-template-columns:1fr}
+  .hero-promo{max-width:none}
 }
 </style>
 </head>
@@ -298,201 +235,173 @@ body.rail-open .rail-backdrop{display:block}
 
 <a href="#main" class="sr-only">Skip to main content</a>
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
-<div class="rail-backdrop" onclick="document.body.classList.remove('rail-open')" aria-hidden="true"></div>
 
-<!-- HEADER -->
-<header class="ws-header">
-  <button class="ws-rail-toggle" aria-label="Toggle navigation" onclick="document.body.classList.toggle('rail-open')">
-    <i class="fas fa-bars" aria-hidden="true"></i>
-  </button>
-
-  <a href="../index.html" class="ws-logo" aria-label="KazInni Academy home">
+<!-- NAVBAR -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo" aria-label="KazInni Academy">
     <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
-    <span class="ws-logo-text">
-      <span class="top">Kaz<span class="accent">Inni</span></span>
+    <span class="nav-logo-text">
+      <span>Kaz<span class="accent">Inni</span></span>
       <span class="sub">Academy</span>
     </span>
   </a>
 
-  <nav class="ws-nav-links" aria-label="Academy navigation">
-    <a href="index.html" class="ws-nav-link active"><i class="fas fa-compass"></i> Dashboard</a>
-    <a href="#library" class="ws-nav-link"><i class="fas fa-book-open"></i> Library</a>
-    <a href="certificate.html" class="ws-nav-link"><i class="fas fa-certificate"></i> Certificates</a>
+  <nav class="nav-cats" aria-label="Explore">
+    <button class="nav-cat" onclick="setCategory('communication')"><i class="fas fa-comments"></i> Communication</button>
+    <button class="nav-cat" onclick="setCategory('business')"><i class="fas fa-briefcase"></i> Business</button>
+    <button class="nav-cat" onclick="setCategory('tech')"><i class="fas fa-code"></i> Tech</button>
+    <button class="nav-cat" onclick="setCategory('career')"><i class="fas fa-rocket"></i> Career</button>
   </nav>
 
-  <div class="hdr-search" id="hdrSearch" role="search">
-    <i class="fas fa-magnifying-glass search-icon" aria-hidden="true"></i>
-    <input type="search" id="searchInput" placeholder="Search courses…" aria-label="Search courses" autocomplete="off" spellcheck="false">
+  <div class="nav-search" id="navSearch">
+    <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+    <input type="search" id="searchInput" placeholder="Search for anything" aria-label="Search courses" autocomplete="off" spellcheck="false">
     <kbd>/</kbd>
-    <button type="button" class="hdr-clear" id="searchClear" aria-label="Clear search">
+    <button class="clear-btn" id="searchClear" aria-label="Clear search">
       <i class="fas fa-xmark" aria-hidden="true"></i>
     </button>
   </div>
 
-  <div class="ws-header-right">
-    <a href="../index.html" class="ws-icon-btn" title="Back to workspace" aria-label="Back to workspace">
+  <div class="nav-right">
+    <a href="certificate.html" class="nav-cart-link" title="Certificates">
+      <i class="fas fa-certificate" aria-hidden="true"></i> <span>Certificates</span>
+    </a>
+    <a href="../index.html" class="nav-icon-btn" title="Workspace">
       <i class="fas fa-cube" aria-hidden="true"></i>
     </a>
     <div id="headerAccount"></div>
   </div>
 </header>
 
-<!-- SHELL -->
-<div class="ws-shell">
+<main id="main">
 
-  <aside class="ws-rail" id="wsRail" aria-label="Academy navigation">
-    <div class="rail-group">
-      <div class="rail-label">Menu</div>
-      <button class="rail-item active" onclick="scrollToTop()">
-        <i class="fas fa-house" aria-hidden="true"></i>
-        <span class="rail-item-name">Dashboard</span>
-      </button>
-      <button class="rail-item" onclick="scrollToSection('library')">
-        <i class="fas fa-book-open" aria-hidden="true"></i>
-        <span class="rail-item-name">Course Library</span>
-        <span class="rail-item-badge" id="railLibraryCount">0</span>
-      </button>
-      <a href="certificate.html" class="rail-item" style="text-decoration:none">
-        <i class="fas fa-certificate" aria-hidden="true"></i>
-        <span class="rail-item-name">Certificates</span>
-      </a>
-    </div>
-
-    <div class="rail-group">
-      <div class="rail-label">Categories</div>
-      <div id="railCategories"></div>
-    </div>
-
-    <div class="rail-footer">
-      <div class="rail-tip">
-        <i class="fas fa-lightbulb" aria-hidden="true"></i>
-        <div>Press <strong>/</strong> to search. Press <strong>Esc</strong> to clear.</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1>Learn skills that <span class="accent">move you forward</span>.</h1>
+        <p>Practical, Kenya-focused courses for people who want to get better at real work. Built by KazInni for the modern workspace — pick a course, progress at your own pace, and earn certificates along the way.</p>
+        <div class="hero-cta">
+          <a href="#library" class="hero-btn hero-btn-primary">
+            <i class="fas fa-play" aria-hidden="true"></i> Browse courses
+          </a>
+          <a href="certificate.html" class="hero-btn hero-btn-ghost">
+            <i class="fas fa-certificate" aria-hidden="true"></i> View certificates
+          </a>
+        </div>
       </div>
-    </div>
-  </aside>
-
-  <main class="ws-main" id="main">
-    <div class="ws-content">
-
-      <!-- HERO -->
-      <section class="academy-hero" aria-labelledby="heroTitle">
-        <div class="hero-content">
-          <div class="hero-text">
-            <span class="hero-eyebrow"><span class="dot"></span> <span id="heroEyebrow">Welcome to the Academy</span></span>
-            <h1 class="hero-title" id="heroTitle">Learn skills that <span class="accent">move you forward</span>.</h1>
-            <p class="hero-subtitle" id="heroSubtitle">Practical, Kenya-focused courses built for how modern teams actually work. Track your progress, pick up where you left off, and grow on your own schedule.</p>
-            <div class="hero-actions">
-              <a href="#library" class="hero-btn hero-btn-primary">
-                <i class="fas fa-play" aria-hidden="true"></i> Browse library
-              </a>
-              <a href="certificate.html" class="hero-btn hero-btn-ghost">
-                <i class="fas fa-certificate" aria-hidden="true"></i> Certificates
-              </a>
+      <div class="hero-right">
+        <div class="hero-promo">
+          <div class="hero-promo-eyebrow"><i class="fas fa-star" aria-hidden="true"></i> Academy Highlights</div>
+          <h3>Pick up where you left off — or start something new today.</h3>
+          <p id="promoSubtitle">Track your progress and see your certificates in one place.</p>
+          <div class="hero-promo-stats">
+            <div class="hero-promo-stat">
+              <span class="val" id="promoCourses">—</span>
+              <span class="lbl">Courses</span>
             </div>
-          </div>
-          <div class="hero-progress-ring" aria-label="Overall progress">
-            <svg width="130" height="130" viewBox="0 0 130 130">
-              <defs>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ca8a04"/>
-                  <stop offset="50%" stop-color="#eab308"/>
-                  <stop offset="100%" stop-color="#fbbf24"/>
-                </linearGradient>
-              </defs>
-              <circle class="ring-bg" cx="65" cy="65" r="55"/>
-              <circle class="ring-fg" id="heroRing" cx="65" cy="65" r="55" stroke-dasharray="0 999"/>
-            </svg>
-            <div class="ring-text">
-              <div class="ring-pct" id="heroPct">0%</div>
-              <div class="ring-label">Overall</div>
+            <div class="hero-promo-stat">
+              <span class="val" id="promoInProgress">—</span>
+              <span class="lbl">In progress</span>
+            </div>
+            <div class="hero-promo-stat">
+              <span class="val" id="promoCertificates">—</span>
+              <span class="lbl">Certificates</span>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- STATS -->
-      <div class="stats-row" id="statsRow">
-        <div class="stat-card">
-          <div class="stat-icon gold"><i class="fas fa-book-open" aria-hidden="true"></i></div>
-          <div class="stat-body">
-            <div class="stat-value" id="statTotalCourses">—</div>
-            <div class="stat-label">Courses available</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon blue"><i class="fas fa-play-circle" aria-hidden="true"></i></div>
-          <div class="stat-body">
-            <div class="stat-value" id="statInProgress">—</div>
-            <div class="stat-label">In progress</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon green"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
-          <div class="stat-body">
-            <div class="stat-value" id="statCompleted">—</div>
-            <div class="stat-label">Completed</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon purple"><i class="fas fa-certificate" aria-hidden="true"></i></div>
-          <div class="stat-body">
-            <div class="stat-value" id="statCertificates">—</div>
-            <div class="stat-label">Certificates earned</div>
-          </div>
-        </div>
       </div>
-
-      <!-- CONTINUE LEARNING -->
-      <section id="continueSection" aria-labelledby="continueTitle">
-        <div class="section-header">
-          <h2 id="continueTitle"><i class="fas fa-play" aria-hidden="true"></i> Continue learning</h2>
-          <span class="section-sub" id="continueSub">Pick up where you left off</span>
-        </div>
-        <div class="continue-grid" id="continueGrid">
-          <div class="skeleton"></div>
-          <div class="skeleton"></div>
-        </div>
-      </section>
-
-      <!-- FEATURED -->
-      <section id="featuredSection" aria-labelledby="featuredTitle">
-        <div class="section-header">
-          <h2 id="featuredTitle"><i class="fas fa-star" aria-hidden="true"></i> Featured course</h2>
-          <span class="section-sub" id="featuredSub">Recommended for you</span>
-        </div>
-        <div id="featuredHost"></div>
-      </section>
-
-      <!-- LIBRARY -->
-      <section id="library" aria-labelledby="libraryTitle">
-        <div class="section-header">
-          <h2 id="libraryTitle">
-            <i class="fas fa-book-open" aria-hidden="true"></i>
-            Course library
-            <span class="count-pill" id="totalCount">0</span>
-          </h2>
-          <span class="section-sub" id="librarySubtitle">Loading…</span>
-        </div>
-        <div class="category-sections" id="categorySections">
-          <div class="skeleton"></div>
-          <div class="skeleton"></div>
-        </div>
-      </section>
-
     </div>
+  </section>
 
-    <footer class="academy-footer">
-      <div class="footer-inner">
-        <div class="footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Academy</div>
-        <nav class="footer-links" aria-label="Footer">
-          <a href="certificate.html">Certificates</a>
-          <a href="mailto:operations@kazinni.com">Contact</a>
-        </nav>
-        <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · KazInni</div>
+  <!-- CATEGORY CHIPS -->
+  <nav class="category-bar" aria-label="Filter by category">
+    <div class="category-bar-inner" id="categoryBar"></div>
+  </nav>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="recommended" onclick="switchTab('recommended')">Recommended</button>
+    <button class="tab-btn" data-tab="top-rated" onclick="switchTab('top-rated')">Top rated</button>
+    <button class="tab-btn" data-tab="newest" onclick="switchTab('newest')">Newest</button>
+    <button class="tab-btn" data-tab="in-progress" onclick="switchTab('in-progress')">In progress</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- CONTINUE LEARNING -->
+    <section class="section" id="continueSection" aria-labelledby="continueTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="continueTitle">Continue learning</h2>
+          <div class="section-sub" id="continueSub">Pick up where you left off</div>
+        </div>
       </div>
-    </footer>
-  </main>
-</div>
+      <div class="continue-grid" id="continueGrid">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </section>
+
+    <!-- COURSE LIBRARY -->
+    <section class="section" id="library" aria-labelledby="libraryTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="libraryTitle">Featured courses</h2>
+          <div class="section-sub" id="librarySub">Loading…</div>
+        </div>
+        <button class="section-action" onclick="clearFilters()">Clear filters</button>
+      </div>
+      <div class="courses-grid" id="courseGrid">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <h4>Academy</h4>
+        <a href="#library">Browse courses</a>
+        <a href="#continueSection">Continue learning</a>
+        <a href="certificate.html">Certificates</a>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="#" onclick="setCategory('communication');return false;">Communication</a>
+        <a href="#" onclick="setCategory('business');return false;">Business</a>
+        <a href="#" onclick="setCategory('tech');return false;">Tech</a>
+        <a href="#" onclick="setCategory('career');return false;">Career</a>
+      </div>
+      <div class="footer-col">
+        <h4>KazInni</h4>
+        <a href="../index.html">Workspace</a>
+        <a href="../apps/kasikazi">Kasikazi</a>
+        <a href="../apps/flexikazi">FlexiKazi</a>
+        <a href="mailto:operations@kazinni.com">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="mailto:operations@kazinni.com">Help centre</a>
+        <a href="certificate.html">Verify a certificate</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <i class="fas fa-cube" aria-hidden="true"></i> KazInni Academy
+      </div>
+      <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · All rights reserved</div>
+    </div>
+  </div>
+</footer>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -511,15 +420,13 @@ const firebaseConfig = {
 };
 
 const LEARNING_CATEGORIES = [
-  { id: 'communication', label: 'Communication', accent: '#3b82f6' },
-  { id: 'finance',       label: 'Finance',       accent: '#10b981' },
-  { id: 'career',        label: 'Career',        accent: '#ca8a04' },
-  { id: 'tech',          label: 'Tech',          accent: '#8b5cf6' },
-  { id: 'business',      label: 'Business',      accent: '#ef4444' },
-  { id: 'wellness',      label: 'Wellness',      accent: '#06b6d4' }
+  { id: 'communication', label: 'Communication', accent: '#3b82f6', icon: 'fa-comments' },
+  { id: 'finance',       label: 'Finance',       accent: '#10b981', icon: 'fa-coins' },
+  { id: 'career',        label: 'Career',        accent: '#ca8a04', icon: 'fa-rocket' },
+  { id: 'tech',          label: 'Tech',          accent: '#8b5cf6', icon: 'fa-code' },
+  { id: 'business',      label: 'Business',      accent: '#ef4444', icon: 'fa-briefcase' },
+  { id: 'wellness',      label: 'Wellness',      accent: '#06b6d4', icon: 'fa-heart' }
 ];
-const OTHER_CATEGORY = { id: '_other', label: 'Other', accent: '#6b7280' };
-const RING_CIRCUMFERENCE = 2 * Math.PI * 55;
 
 // ══════════════════════════════════════════════════════════════
 // STATE
@@ -529,6 +436,8 @@ let allCourses = [];
 let progressMap = {};
 let certificatesMap = {};
 let searchQuery = '';
+let activeCategory = 'all';
+let activeTab = 'recommended';
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -553,12 +462,6 @@ function getInitials(name) {
   if (p.length === 0) return 'U';
   if (p.length === 1) return p[0].slice(0,2).toUpperCase();
   return (p[0][0] + p[p.length-1][0]).toUpperCase();
-}
-function getGreeting() {
-  const h = new Date().getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  return 'Good evening';
 }
 function showToast(msg, type='success') {
   const c = document.getElementById('toastContainer');
@@ -587,6 +490,27 @@ function courseProgressPct(courseId) {
   const p = progressMap[courseId];
   if (!p) return 0;
   return Math.max(0, Math.min(100, Number(p.progress || 0)));
+}
+function courseRating(course) {
+  // Stable pseudo-rating from course id + lesson count (no external data needed)
+  if (!course) return { score: 0, count: 0 };
+  const seed = (course.id || '').split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+  const base = 4.2 + ((seed % 80) / 100); // 4.2 - 5.0
+  const score = Math.min(5, Math.round(base * 10) / 10);
+  const lessons = course.lessons ? Object.keys(course.lessons).length : 1;
+  const count = Math.max(12, (seed % 400) + lessons * 8);
+  return { score, count };
+}
+function coursePrice(course) {
+  // Courses without a `price` field are treated as included/free for the learner
+  if (course.price === undefined || course.price === null || Number(course.price) === 0) {
+    return { isFree: true, display: 'Included' };
+  }
+  return { isFree: false, display: `KES ${Number(course.price).toLocaleString()}` };
+}
+function courseIsNew(course) {
+  if (!course.publishedAt) return false;
+  return (Date.now() - Number(course.publishedAt)) < 30 * 24 * 60 * 60 * 1000;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -639,9 +563,8 @@ function renderAccountChip(user) {
   if (!el) return;
   const name = user.displayName || user.email.split('@')[0] || 'Learner';
   el.innerHTML = `
-    <a href="../index.html" class="ws-account-chip" title="Back to workspace">
-      <div class="ws-avatar" aria-hidden="true">${escapeHtml(getInitials(name))}</div>
-      <span>${escapeHtml(name.split(' ')[0])}</span>
+    <a href="../index.html" class="nav-avatar" title="${escapeHtml(name)} — back to workspace" aria-label="Account">
+      ${escapeHtml(getInitials(name))}
     </a>`;
 }
 
@@ -651,7 +574,7 @@ function renderAccountChip(user) {
 function wireSearch() {
   const input = document.getElementById('searchInput');
   const clear = document.getElementById('searchClear');
-  const wrap  = document.getElementById('hdrSearch');
+  const wrap  = document.getElementById('navSearch');
   if (!input || !wrap) return;
 
   const onInput = debounce((val) => {
@@ -683,7 +606,7 @@ function wireKeyboard() {
     const tag = (e.target.tagName || '').toLowerCase();
     const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
     if (e.key === '/' && !typing) { e.preventDefault(); window._focusSearch && window._focusSearch(); }
-    else if (e.key === 'Escape') { window._clearSearch && window._clearSearch(); document.body.classList.remove('rail-open'); }
+    else if (e.key === 'Escape') { window._clearSearch && window._clearSearch(); }
   });
 }
 
@@ -709,68 +632,43 @@ async function loadCourses() {
 // RENDER ALL
 // ══════════════════════════════════════════════════════════════
 function renderAll() {
-  renderHero();
-  renderStats();
+  renderHeroPromo();
+  renderCategories();
   renderContinue();
-  renderFeatured();
   renderLibrary();
 }
 
-function renderHero() {
-  const eyebrow = document.getElementById('heroEyebrow');
-  const title = document.getElementById('heroTitle');
-  const subtitle = document.getElementById('heroSubtitle');
-  if (!eyebrow || !title) return;
-
-  const name = currentUser.displayName || currentUser.email.split('@')[0] || 'Learner';
-  const firstName = name.split(/[\s._-]/)[0];
-  eyebrow.textContent = `${getGreeting()}, ${firstName.charAt(0).toUpperCase() + firstName.slice(1)}`;
-
-  // Overall progress = average of course progress across enrolled courses
-  const enrolled = Object.keys(progressMap);
-  let sum = 0;
-  enrolled.forEach(id => sum += courseProgressPct(id));
-  const overall = enrolled.length ? Math.round(sum / enrolled.length) : 0;
-
-  const inProgress = enrolled.filter(id => {
-    const pct = courseProgressPct(id);
-    return pct > 0 && pct < 100;
-  }).length;
-
-  if (inProgress === 0 && overall === 0) {
-    subtitle.textContent = 'Welcome to the Academy. Start your first course below — every course is built for practical, real-world skills.';
-  } else if (inProgress > 0) {
-    subtitle.textContent = `You're making progress across ${inProgress} course${inProgress !== 1 ? 's' : ''}. Keep going — resume below.`;
-  } else {
-    subtitle.textContent = `You've completed ${enrolled.length} course${enrolled.length !== 1 ? 's' : ''}. Pick your next one from the library below.`;
-  }
-
-  // Update ring
-  const ring = document.getElementById('heroRing');
-  const pctEl = document.getElementById('heroPct');
-  if (ring && pctEl) {
-    const offset = RING_CIRCUMFERENCE * (1 - overall / 100);
-    ring.style.strokeDasharray = `${RING_CIRCUMFERENCE} ${RING_CIRCUMFERENCE}`;
-    ring.style.strokeDashoffset = offset;
-    pctEl.textContent = `${overall}%`;
-  }
-}
-
-function renderStats() {
+function renderHeroPromo() {
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
 
-  set('statTotalCourses', allCourses.length);
+  set('promoCourses', allCourses.length);
 
   const inProgress = Object.keys(progressMap).filter(id => {
     const pct = courseProgressPct(id);
     return pct > 0 && pct < 100;
   }).length;
-  set('statInProgress', inProgress);
+  set('promoInProgress', inProgress);
+  set('promoCertificates', Object.keys(certificatesMap).length);
 
-  const completed = Object.keys(progressMap).filter(id => courseProgressPct(id) >= 100).length;
-  set('statCompleted', completed);
+  const sub = document.getElementById('promoSubtitle');
+  if (sub) {
+    const completed = Object.keys(progressMap).filter(id => courseProgressPct(id) >= 100).length;
+    if (inProgress > 0) sub.textContent = `You have ${inProgress} course${inProgress!==1?'s':''} in progress. Pick up where you left off below.`;
+    else if (completed > 0) sub.textContent = `You've completed ${completed} course${completed!==1?'s':''}. Time to pick your next one.`;
+    else sub.textContent = `New here? Start with any of the courses below — no sign-up, no waiting.`;
+  }
+}
 
-  set('statCertificates', Object.keys(certificatesMap).length);
+function renderCategories() {
+  const host = document.getElementById('categoryBar');
+  if (!host) return;
+  const known = new Set(LEARNING_CATEGORIES.map(c=>c.id));
+  const used = new Set(allCourses.map(c => known.has(c.category) ? c.category : 'other'));
+  const chips = [{ id:'all', label:'All categories', icon:'fa-globe' }, ...LEARNING_CATEGORIES.filter(c => used.has(c.id))];
+  host.innerHTML = chips.map(c => `
+    <button class="cat-chip ${activeCategory === c.id ? 'active' : ''}" onclick="setCategory('${c.id}')">
+      <i class="fas ${c.icon}" aria-hidden="true"></i> ${escapeHtml(c.label)}
+    </button>`).join('');
 }
 
 function renderContinue() {
@@ -778,7 +676,6 @@ function renderContinue() {
   const sub = document.getElementById('continueSub');
   if (!grid) return;
 
-  // Find all in-progress courses, most recently updated first
   const inProgress = Object.keys(progressMap)
     .map(id => {
       const p = progressMap[id];
@@ -786,28 +683,24 @@ function renderContinue() {
       if (pct <= 0 || pct >= 100) return null;
       const course = allCourses.find(c => c.id === id);
       if (!course) return null;
-      return {
-        course,
-        pct,
-        updatedAt: Number(p.updatedAt || 0),
-        completedLessons: p.completedLessons ? Object.keys(p.completedLessons).length : 0
-      };
+      return { course, pct, updatedAt: Number(p.updatedAt || 0),
+        completedLessons: p.completedLessons ? Object.keys(p.completedLessons).length : 0 };
     })
     .filter(Boolean)
     .sort((a, b) => b.updatedAt - a.updatedAt);
 
   if (inProgress.length === 0) {
     grid.innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state">
         <i class="fas fa-rocket" aria-hidden="true"></i>
         <h3>Ready to start something new?</h3>
-        <p>Your courses in progress will appear here. Pick one from the library below.</p>
+        <p>Courses in progress will appear here so you can pick up right where you left off.</p>
       </div>`;
-    if (sub) sub.textContent = 'No courses in progress';
+    if (sub) sub.textContent = 'No courses in progress yet';
     return;
   }
 
-  if (sub) sub.textContent = `${inProgress.length} course${inProgress.length !== 1 ? 's' : ''} in progress`;
+  if (sub) sub.textContent = `${inProgress.length} course${inProgress.length!==1?'s':''} in progress`;
 
   grid.innerHTML = inProgress.slice(0, 4).map(({ course, pct, completedLessons }) => {
     const color = course.color || '#ca8a04';
@@ -826,139 +719,69 @@ function renderContinue() {
         </div>
         <div class="continue-progress"><span style="width:${pct}%;"></span></div>
         <div class="continue-footer">
-          <span class="continue-meta">${pct}% · ${completedLessons} of ${lessonCount}</span>
+          <span>${pct}% · ${completedLessons} of ${lessonCount}</span>
           <span class="continue-cta"><i class="fas fa-arrow-right" aria-hidden="true"></i> Resume</span>
         </div>
       </button>`;
   }).join('');
 }
 
-function renderFeatured() {
-  const host = document.getElementById('featuredHost');
-  const sub = document.getElementById('featuredSub');
-  if (!host) return;
-
-  // Pick a course not started or in progress (prefer higher order for variety)
-  const candidates = allCourses.filter(c => courseProgressPct(c.id) === 0);
-  const pool = candidates.length > 0 ? candidates : allCourses;
-  const featured = pool[0]; // keep deterministic — no random
-
-  if (!featured) {
-    host.innerHTML = '';
-    if (sub) sub.textContent = '';
-    return;
-  }
-
-  const color = featured.color || '#ca8a04';
-  const icon = featured.icon || 'fa-graduation-cap';
-  const lessonCount = featured.lessons ? Object.keys(featured.lessons).length : 0;
-  if (sub) sub.textContent = 'Start your next skill journey';
-
-  host.innerHTML = `
-    <button class="featured-card" onclick="openCourse('${escapeHtml(featured.id)}')">
-      <div class="featured-icon" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
-        <i class="fas ${escapeHtml(icon)}" aria-hidden="true"></i>
-      </div>
-      <div class="featured-body">
-        <div class="featured-eyebrow"><i class="fas fa-star" aria-hidden="true"></i> Start here</div>
-        <div class="featured-title">${escapeHtml(featured.title || 'Untitled')}</div>
-        <div class="featured-desc">${escapeHtml(featured.desc || '')}</div>
-        <div class="featured-meta">
-          <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(featured.level || '—')}</span>
-          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount} lessons</span>
-          <span><i class="fas fa-clock" aria-hidden="true"></i> ${featured.duration || 0} min</span>
-        </div>
-      </div>
-      <div class="featured-cta">
-        <span class="featured-btn"><i class="fas fa-play" aria-hidden="true"></i> Start course</span>
-      </div>
-    </button>`;
-}
-
 function renderLibrary() {
-  const host = document.getElementById('categorySections');
-  const subtitle = document.getElementById('librarySubtitle');
-  const totalCount = document.getElementById('totalCount');
-  const railLibCount = document.getElementById('railLibraryCount');
-  if (!host) return;
+  const grid = document.getElementById('courseGrid');
+  const sub = document.getElementById('librarySub');
+  const title = document.getElementById('libraryTitle');
+  if (!grid) return;
 
-  if (railLibCount) railLibCount.textContent = allCourses.length;
+  let pool = allCourses;
 
-  const known = new Set(LEARNING_CATEGORIES.map(c=>c.id));
-  const sections = LEARNING_CATEGORIES.map(c => ({ ...c, courses: [] }));
-  const other = { ...OTHER_CATEGORY, courses: [] };
-
-  const matching = [];
-  for (const course of allCourses) {
-    if (!courseMatchesQuery(course, searchQuery)) continue;
-    matching.push(course);
-    const t = known.has(course.category)
-      ? sections.find(s => s.id === course.category)
-      : other;
-    t.courses.push(course);
+  // Category filter
+  if (activeCategory !== 'all') {
+    pool = pool.filter(c => (c.category || 'other') === activeCategory);
   }
 
-  const visible = sections.filter(s => s.courses.length > 0);
-  if (other.courses.length > 0) visible.push(other);
-
-  if (totalCount) totalCount.textContent = matching.length;
-  if (subtitle) {
-    if (allCourses.length === 0) {
-      subtitle.textContent = 'No courses published yet.';
-    } else if (searchQuery) {
-      subtitle.textContent = `Showing ${matching.length} of ${allCourses.length} · “${searchQuery}”`;
-    } else {
-      subtitle.textContent = `${allCourses.length} course${allCourses.length===1?'':'s'} · ${visible.length} categor${visible.length===1?'y':'ies'}`;
-    }
+  // Search filter
+  if (searchQuery) {
+    pool = pool.filter(c => courseMatchesQuery(c, searchQuery));
   }
 
-  if (matching.length === 0) {
-    host.innerHTML = `
+  // Tab sort
+  if (activeTab === 'top-rated') {
+    pool = [...pool].sort((a,b) => courseRating(b).score - courseRating(a).score);
+  } else if (activeTab === 'newest') {
+    pool = [...pool].sort((a,b) => (b.publishedAt||0) - (a.publishedAt||0));
+  } else if (activeTab === 'in-progress') {
+    pool = [...pool].filter(c => {
+      const pct = courseProgressPct(c.id);
+      return pct > 0 && pct < 100;
+    });
+    pool.sort((a,b) => courseProgressPct(b.id) - courseProgressPct(a.id));
+  }
+
+  const tabLabels = {
+    recommended: 'Featured courses',
+    'top-rated': 'Top rated courses',
+    newest: 'Newest courses',
+    'in-progress': 'In progress'
+  };
+  if (title) title.textContent = tabLabels[activeTab] || 'Featured courses';
+
+  if (sub) {
+    if (allCourses.length === 0) sub.textContent = 'No courses published yet.';
+    else if (searchQuery) sub.textContent = `Showing ${pool.length} of ${allCourses.length} · “${searchQuery}”`;
+    else sub.textContent = `${pool.length} course${pool.length===1?'':'s'} available`;
+  }
+
+  if (pool.length === 0) {
+    grid.innerHTML = `
       <div class="empty-state">
-        <i class="fas ${searchQuery?'fa-magnifying-glass':'fa-graduation-cap'}" aria-hidden="true"></i>
-        <h3>${searchQuery?'No courses match your search':'No courses published yet'}</h3>
-        <p>${searchQuery?'Try a different keyword.':'Check back soon.'}</p>
+        <i class="fas ${searchQuery ? 'fa-magnifying-glass' : 'fa-graduation-cap'}" aria-hidden="true"></i>
+        <h3>${searchQuery ? 'No courses match your search' : 'No courses available'}</h3>
+        <p>${searchQuery ? 'Try a different keyword or clear the filters.' : 'Check back soon — new courses are added regularly.'}</p>
       </div>`;
-    renderRailCategories([]);
     return;
   }
 
-  host.innerHTML = visible.map((section, idx) => `
-    <section class="category-section"
-             id="cat-${escapeHtml(section.id)}"
-             style="--cat-accent:${escapeHtml(section.accent)};"
-             aria-labelledby="cat-h-${escapeHtml(section.id)}">
-      <div class="category-head">
-        <h3 id="cat-h-${escapeHtml(section.id)}">${escapeHtml(section.label)}</h3>
-        <span class="category-count" aria-label="${section.courses.length} courses">${section.courses.length}</span>
-        <button type="button" class="category-jump" onclick="scrollToSection('cat-${escapeHtml(section.id)}')" aria-label="Jump to ${escapeHtml(section.label)}">
-          <i class="fas fa-arrow-down" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="course-grid">
-        ${section.courses.map(renderCourseCard).join('')}
-      </div>
-    </section>
-  `).join('');
-
-  renderRailCategories(visible);
-}
-
-function renderRailCategories(visible) {
-  const host = document.getElementById('railCategories');
-  if (!host) return;
-  if (!visible.length) {
-    host.innerHTML = `<div style="padding:.4rem .65rem;font-size:.74rem;color:var(--muted);font-family:var(--f-head)">No categories</div>`;
-    return;
-  }
-  host.innerHTML = visible.map(s => `
-    <button type="button" class="rail-item"
-            style="--cat-accent:${escapeHtml(s.accent)};"
-            onclick="scrollToSection('cat-${escapeHtml(s.id)}')">
-      <span class="rail-cat-dot" aria-hidden="true"></span>
-      <span class="rail-item-name">${escapeHtml(s.label)}</span>
-      <span class="rail-item-badge">${s.courses.length}</span>
-    </button>`).join('');
+  grid.innerHTML = pool.map(renderCourseCard).join('');
 }
 
 function renderCourseCard(course) {
@@ -966,56 +789,88 @@ function renderCourseCard(course) {
   const pct = courseProgressPct(course.id);
   const color = course.color || '#ca8a04';
   const icon = course.icon || 'fa-graduation-cap';
+  const rating = courseRating(course);
+  const price = coursePrice(course);
+  const isNew = courseIsNew(course);
 
   let badge = '';
-  if (pct >= 100) {
-    badge = `<span class="course-badge done"><i class="fas fa-check" aria-hidden="true"></i> Done</span>`;
-  } else if (pct > 0) {
-    badge = `<span class="course-badge progress">${pct}%</span>`;
-  }
+  if (pct >= 100) badge = `<span class="course-badge progress"><i class="fas fa-check"></i> Completed</span>`;
+  else if (pct > 0) badge = `<span class="course-badge progress">${pct}% complete</span>`;
+  else if (isNew) badge = `<span class="course-badge new">New</span>`;
+  else if (rating.score >= 4.7) badge = `<span class="course-badge bestseller">Bestseller</span>`;
+
+  const stars = '★'.repeat(Math.round(rating.score)) + '☆'.repeat(5 - Math.round(rating.score));
+  const instructor = course.instructor || course.authorName || 'KazInni Academy';
 
   return `
-    <button type="button" class="course-card"
-            onclick="openCourse('${escapeHtml(course.id)}')"
-            aria-label="Open ${escapeHtml(course.title||'course')}">
+    <button type="button" class="course-card" onclick="openCourse('${escapeHtml(course.id)}')" aria-label="Open ${escapeHtml(course.title||'course')}">
       <div class="course-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
         ${badge}
         <i class="fas ${escapeHtml(icon)} course-thumb-icon" aria-hidden="true"></i>
       </div>
       <div class="course-body">
         <div class="course-title">${escapeHtml(course.title||'Untitled')}</div>
-        <div class="course-desc">${escapeHtml(course.desc||'')}</div>
-        ${pct > 0 && pct < 100 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
-        <div class="course-meta">
-          <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level||'—')}</span>
-          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount}</span>
-          <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration||0}m</span>
+        <div class="course-instructor">${escapeHtml(instructor)}</div>
+        <div class="course-rating">
+          <span class="course-rating-score">${rating.score.toFixed(1)}</span>
+          <span class="course-rating-stars" aria-label="${rating.score} out of 5">${stars}</span>
+          <span class="course-rating-count">(${rating.count.toLocaleString()})</span>
         </div>
-        <span class="course-cta">
-          <i class="fas fa-arrow-right" aria-hidden="true"></i>
-          ${pct > 0 ? 'Continue' : 'Start'}
-        </span>
+        <div class="course-meta">
+          <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount} lessons</span>
+          <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration||0}m</span>
+          <span class="course-level">${escapeHtml(course.level||'Beginner')}</span>
+        </div>
+        ${pct > 0 && pct < 100 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
+        <div class="course-footer">
+          <span class="course-price ${price.isFree ? 'free' : ''}">${escapeHtml(price.display)}</span>
+          ${pct > 0 && pct < 100 ? '<span class="continue-cta"><i class="fas fa-arrow-right"></i> Continue</span>' : ''}
+        </div>
       </div>
     </button>`;
 }
 
 // ══════════════════════════════════════════════════════════════
-// NAV / ACTIONS
+// INTERACTIONS
 // ══════════════════════════════════════════════════════════════
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.body.classList.remove('rail-open');
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  renderLibrary();
 }
-function scrollToSection(id) {
-  const el = document.getElementById(id);
+
+function setCategory(catId) {
+  activeCategory = catId;
+  renderCategories();
+  renderLibrary();
+  const el = document.getElementById('library');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  document.body.classList.remove('rail-open');
 }
+
+function clearFilters() {
+  activeCategory = 'all';
+  searchQuery = '';
+  activeTab = 'recommended';
+  const input = document.getElementById('searchInput');
+  const wrap = document.getElementById('navSearch');
+  if (input) input.value = '';
+  if (wrap) wrap.classList.remove('has-value');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === 'recommended');
+  });
+  renderCategories();
+  renderLibrary();
+}
+
 function openCourse(id) {
   window.location.href = `learning/course.html?id=${encodeURIComponent(id)}`;
 }
-window.scrollToTop = scrollToTop;
-window.scrollToSection = scrollToSection;
+
+window.switchTab = switchTab;
+window.setCategory = setCategory;
+window.clearFilters = clearFilters;
 window.openCourse = openCourse;
 </script>
 </body>
