@@ -41,8 +41,10 @@ button{font-family:inherit}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── HEADER (full-bleed) ─────────────────────────────── */
+/* ── HEADER ─────────────────────────────────────────── */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.94);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.07);padding:0 var(--gutter);display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
 .ws-logo img{height:26px}
@@ -53,7 +55,6 @@ button{font-family:inherit}
 .ws-nav-link:hover{color:var(--ink)}
 .ws-nav-link.active{color:var(--gold-dark);font-weight:600}
 
-/* header search */
 .hdr-search{position:relative;flex:1;max-width:440px;margin:0 .5rem}
 .hdr-search i{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.78rem;pointer-events:none}
 .hdr-search input{width:100%;padding:.5rem 2.4rem .5rem 2.1rem;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--surface-2);font-family:var(--f-head);font-size:.82rem;color:var(--ink);transition:all var(--t-fast)}
@@ -87,17 +88,38 @@ button{font-family:inherit}
 .rail-count{margin-left:auto;font-size:.7rem;color:var(--muted);font-weight:600}
 .rail-link.active .rail-count{color:var(--gold-dark)}
 
+.rail-divider{margin:1rem .4rem .6rem;border-top:1px solid var(--border);padding-top:.9rem}
+.rail-section-label{font-family:var(--f-head);font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px;padding:0 .65rem;margin-bottom:.5rem}
+.rail-tip{display:flex;align-items:flex-start;gap:.55rem;padding:.6rem .65rem;border-radius:var(--r-md);background:linear-gradient(135deg,var(--gold-soft),#fef9e7);border:1px solid rgba(202,138,4,.18);margin:.4rem .35rem 0}
+.rail-tip i{color:var(--gold-dark);font-size:.72rem;margin-top:2px;flex-shrink:0}
+.rail-tip div{font-family:var(--f-head);font-size:.7rem;line-height:1.45;color:var(--gold-dark)}
+.rail-tip strong{font-weight:700}
+
 .portal-main{flex:1;min-width:0;display:flex;flex-direction:column}
 
-/* ── HERO (compact banner, left-aligned) ─────────────── */
-.learning-hero{padding:1.6rem var(--gutter) 1.4rem;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
-.hero-left{min-width:0}
+/* ── HERO (compact banner) ───────────────────────────── */
+.learning-hero{padding:1.6rem var(--gutter) 1.4rem;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.learning-hero::before{content:'';position:absolute;top:-60%;right:-10%;width:420px;height:420px;background:radial-gradient(circle,rgba(202,138,4,.08) 0%,transparent 60%);pointer-events:none}
+.hero-left{min-width:0;position:relative;z-index:1}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;padding:.22rem .65rem;background:var(--gold-soft);border-radius:var(--r-pill);font-size:.62rem;font-weight:700;color:var(--gold-dark);margin-bottom:.5rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.9px}
 .hero-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
 .hero-left h1{font-family:var(--f-display);font-size:clamp(1.4rem,2.1vw,1.85rem);font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.15;margin-bottom:.25rem}
 .hero-left h1 .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
 .hero-left p{font-size:.86rem;color:var(--text-2);max-width:640px}
-.hero-actions{display:flex;gap:.5rem;flex-shrink:0}
+.hero-actions{display:flex;gap:.5rem;flex-shrink:0;position:relative;z-index:1}
+
+/* ── CONTINUE LEARNING STRIP ────────────────────────── */
+.continue-strip{margin:1.25rem var(--gutter) 0;padding:1rem 1.15rem;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);display:none;align-items:center;gap:1rem;box-shadow:var(--shadow-card)}
+.continue-strip.visible{display:flex;animation:fadeUp .5s ease}
+.continue-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:#fff;flex-shrink:0}
+.continue-body{flex:1;min-width:0}
+.continue-label{font-family:var(--f-head);font-size:.62rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1px;margin-bottom:.15rem}
+.continue-title{font-family:var(--f-head);font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:.25rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.continue-progress{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;max-width:340px}
+.continue-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.continue-meta{font-family:var(--f-head);font-size:.7rem;color:var(--muted);margin-top:.35rem}
+.continue-btn{padding:.55rem 1.15rem;background:var(--gold-gradient);color:#fff;border:none;border-radius:var(--r-pill);font-family:var(--f-head);font-size:.78rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0;box-shadow:0 6px 16px rgba(202,138,4,.25);transition:all var(--t-base);text-decoration:none}
+.continue-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(202,138,4,.35)}
 
 /* ── LIBRARY ─────────────────────────────────────────── */
 .library{flex:1;padding:1.35rem var(--gutter) 2.5rem;min-width:0}
@@ -108,32 +130,40 @@ button{font-family:inherit}
 
 /* category sections */
 .category-sections{display:flex;flex-direction:column;gap:.85rem}
-.category-section{border-radius:var(--r-lg);padding:1.1rem 1.15rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden;scroll-margin-top:calc(var(--header-h) + 1rem)}
+.category-section{border-radius:var(--r-lg);padding:1.1rem 1.15rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden;scroll-margin-top:calc(var(--header-h) + 1rem);transition:box-shadow var(--t-base)}
+.category-section:hover{box-shadow:var(--shadow-card)}
 .category-section.bg-a{background:#fff}
 .category-section.bg-b{background:linear-gradient(180deg,#fdfbf5 0%,#fff 100%)}
 .category-section::before{content:'';position:absolute;top:1.1rem;left:0;width:3px;height:24px;border-radius:0 3px 3px 0;background:var(--cat-accent,var(--gold))}
 .category-head{display:flex;align-items:center;gap:.55rem;margin-bottom:.9rem;padding-left:.6rem}
 .category-head h3{font-family:var(--f-display);font-size:1.02rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
 .category-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:19px;padding:0 .45rem;border-radius:var(--r-pill);background:var(--surface-3);color:var(--text-2);font-family:var(--f-head);font-size:.66rem;font-weight:700}
-.category-jump{margin-left:auto;font-size:.7rem;font-family:var(--f-head);color:var(--muted);text-decoration:none;padding:.15rem .5rem;border-radius:var(--r-pill);transition:all var(--t-fast)}
+.category-jump{margin-left:auto;font-size:.7rem;font-family:var(--f-head);color:var(--muted);text-decoration:none;padding:.15rem .5rem;border-radius:var(--r-pill);transition:all var(--t-fast);background:none;border:none;cursor:pointer}
 .category-jump:hover{color:var(--gold-dark);background:var(--gold-soft)}
 
 /* course grid */
 .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:.85rem}
 
 /* course card */
-.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;text-align:left;padding:0}
-.course-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.3)}
-.course-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;position:relative}
-.course-thumb-icon{font-size:1.9rem;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;text-align:left;padding:0;position:relative}
+.course-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.3)}
+.course-card:hover .course-thumb-icon{transform:scale(1.15) rotate(-4deg)}
+.course-card:hover .course-cta{opacity:1;transform:translateY(0)}
+.course-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;overflow:hidden}
+.course-thumb-icon{font-size:1.9rem;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .course-thumb::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,255,255,.22),transparent 60%)}
-.course-body{padding:.8rem .9rem .9rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.course-body{padding:.8rem .9rem .9rem;display:flex;flex-direction:column;gap:.4rem;flex:1;position:relative}
 .course-title{font-family:var(--f-head);font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.28}
 .course-desc{font-size:.74rem;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .course-meta{display:flex;align-items:center;gap:.65rem;font-size:.66rem;color:var(--muted);font-family:var(--f-head);margin-top:auto;padding-top:.45rem;flex-wrap:wrap}
 .course-meta i{font-size:.62rem}
 .course-progress{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:.3rem}
 .course-progress>span{display:block;height:100%;background:var(--gold-gradient);transition:width var(--t-base)}
+.course-badge{position:absolute;top:.55rem;right:.55rem;padding:.18rem .5rem;border-radius:var(--r-pill);background:rgba(255,255,255,.94);color:var(--ink);font-family:var(--f-head);font-size:.58rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.course-badge.progress{background:var(--gold-gradient);color:#fff}
+.course-badge.done{background:var(--success);color:#fff}
+.course-cta{position:absolute;bottom:.6rem;right:.75rem;font-family:var(--f-head);font-size:.66rem;font-weight:700;color:var(--gold-dark);display:inline-flex;align-items:center;gap:.3rem;opacity:0;transform:translateY(4px);transition:all var(--t-base)}
+.course-cta i{font-size:.58rem}
 
 /* states */
 .empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg)}
@@ -168,6 +198,8 @@ button{font-family:inherit}
   .learning-hero{padding:1.2rem var(--gutter) 1.1rem}
   .hero-actions{width:100%}
   .hero-actions .ws-btn{flex:1;justify-content:center}
+  .continue-strip{flex-direction:column;align-items:flex-start;margin:1rem var(--gutter) 0}
+  .continue-btn{width:100%;justify-content:center}
   .course-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
   .toast-container{right:12px;left:12px;align-items:stretch}
@@ -188,7 +220,7 @@ button{font-family:inherit}
 
   <nav class="ws-nav-links" aria-label="Learning navigation">
     <a href="index.html" class="ws-nav-link active">Library</a>
-    <a href="learning/certificate.html" class="ws-nav-link">Certificates</a>
+    <a href="certificate.html" class="ws-nav-link">Certificates</a>
   </nav>
 
   <div class="hdr-search" id="hdrSearch" role="search">
@@ -219,6 +251,14 @@ button{font-family:inherit}
   <aside class="side-rail" aria-label="Categories">
     <h4>Categories</h4>
     <div id="railList"></div>
+
+    <div class="rail-divider">
+      <div class="rail-section-label">Quick Tips</div>
+      <div class="rail-tip">
+        <i class="fas fa-lightbulb" aria-hidden="true"></i>
+        <div>Press <strong>/</strong> to search courses instantly. <strong>Esc</strong> clears.</div>
+      </div>
+    </div>
   </aside>
 
   <div class="portal-main">
@@ -226,13 +266,16 @@ button{font-family:inherit}
     <section class="learning-hero">
       <div class="hero-left">
         <span class="hero-eyebrow"><span class="dot"></span> KazInni Learning Portal</span>
-        <h1>Learn skills that <span class="accent">pay you back</span></h1>
-        <p>Practical, Kenya-focused courses built for the gig economy. Browse by category and start at your own pace.</p>
+        <h1>Learn skills that <span class="accent">move you forward</span></h1>
+        <p>Practical, Kenya-focused courses built for how modern teams actually work. Browse by category, track your progress, and pick up exactly where you left off.</p>
       </div>
       <div class="hero-actions" id="heroActions"></div>
     </section>
 
-    <section class="library">
+    <!-- Continue Learning strip (hidden until there's something to continue) -->
+    <div class="continue-strip" id="continueStrip"></div>
+
+    <section class="library" id="libraryTop">
       <div class="library-header">
         <h2>Browse by category <span class="count-pill" id="totalCount">0</span></h2>
         <span class="library-sub" id="librarySubtitle">Loading…</span>
@@ -368,6 +411,7 @@ async function onAuthChanged(user) {
 
   renderHeroActions();
   await loadCourses();
+  renderContinueStrip();
   renderCourses();
 }
 
@@ -387,7 +431,55 @@ function renderHeroActions() {
   el.innerHTML = `
     <a href="#libraryTop" class="ws-btn ws-btn-primary">
       <i class="fas fa-play" aria-hidden="true"></i> <span>Start learning</span>
+    </a>
+    <a href="certificate.html" class="ws-btn ws-btn-ghost">
+      <i class="fas fa-certificate" aria-hidden="true"></i> <span>Certificates</span>
     </a>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CONTINUE LEARNING
+// ══════════════════════════════════════════════════════════════
+function renderContinueStrip() {
+  const strip = document.getElementById('continueStrip');
+  if (!strip) return;
+
+  // Find the most recently updated course with 0 < progress < 100
+  let best = null;
+  Object.entries(progressMap).forEach(([courseId, p]) => {
+    const pct = Number(p && p.progress || 0);
+    if (pct <= 0 || pct >= 100) return;
+    const updatedAt = Number(p.updatedAt || 0);
+    if (!best || updatedAt > best.updatedAt) {
+      best = { courseId, pct, updatedAt, title: p.title };
+    }
+  });
+
+  if (!best) { strip.classList.remove('visible'); return; }
+
+  const course = allCourses.find(c => c.id === best.courseId);
+  const title = (course && course.title) || best.title || 'Course';
+  const color = (course && course.color) || '#ca8a04';
+  const icon = (course && course.icon) || 'fa-graduation-cap';
+  const lessonCount = course && course.lessons ? Object.keys(course.lessons).length : 0;
+  const completedLessons = (progressMap[best.courseId] && progressMap[best.courseId].completedLessons)
+    ? Object.keys(progressMap[best.courseId].completedLessons).length
+    : 0;
+
+  strip.innerHTML = `
+    <div class="continue-icon" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+      <i class="fas ${escapeHtml(icon)}" aria-hidden="true"></i>
+    </div>
+    <div class="continue-body">
+      <div class="continue-label"><i class="fas fa-play-circle" aria-hidden="true"></i> Continue where you left off</div>
+      <div class="continue-title">${escapeHtml(title)}</div>
+      <div class="continue-progress"><span style="width:${best.pct}%;"></span></div>
+      <div class="continue-meta">${best.pct}% complete · ${completedLessons} of ${lessonCount} lessons</div>
+    </div>
+    <a href="learning/course.html?id=${encodeURIComponent(best.courseId)}" class="continue-btn">
+      <i class="fas fa-arrow-right" aria-hidden="true"></i> Resume
+    </a>`;
+  strip.classList.add('visible');
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -491,7 +583,6 @@ function renderCourses() {
   const visible = sections.filter(s => s.courses.length > 0);
   if (other.courses.length > 0) visible.push(other);
 
-  // header counts + subtitle
   if (totalCount) totalCount.textContent = matching.length;
   if (subtitle) {
     if (allCourses.length === 0) {
@@ -503,7 +594,6 @@ function renderCourses() {
     }
   }
 
-  // empty
   if (matching.length === 0) {
     host.innerHTML = `
       <div class="empty-state">
@@ -515,7 +605,6 @@ function renderCourses() {
     return;
   }
 
-  // render sections
   host.innerHTML = visible.map((section, idx) => {
     const bg = idx % 2 === 0 ? 'bg-a' : 'bg-b';
     return `
@@ -526,9 +615,9 @@ function renderCourses() {
         <div class="category-head">
           <h3 id="cat-h-${escapeHtml(section.id)}">${escapeHtml(section.label)}</h3>
           <span class="category-count" aria-label="${section.courses.length} courses">${section.courses.length}</span>
-          <a class="category-jump" href="#cat-${escapeHtml(section.id)}" aria-label="Jump to ${escapeHtml(section.label)}">
+          <button type="button" class="category-jump" onclick="scrollToSection('cat-${escapeHtml(section.id)}')" aria-label="Jump to ${escapeHtml(section.label)}">
             <i class="fas fa-arrow-down" aria-hidden="true"></i>
-          </a>
+          </button>
         </div>
         <div class="course-grid">
           ${section.courses.map(renderCourseCard).join('')}
@@ -562,6 +651,7 @@ function scrollToSection(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
 }
+window.scrollToSection = scrollToSection;
 
 function renderCourseCard(course) {
   const lessonCount = course.lessons ? Object.keys(course.lessons).length : 0;
@@ -570,22 +660,34 @@ function renderCourseCard(course) {
   const color = course.color || '#ca8a04';
   const icon = course.icon || 'fa-graduation-cap';
 
+  let badge = '';
+  if (pct >= 100) {
+    badge = `<span class="course-badge done"><i class="fas fa-check" aria-hidden="true"></i> Done</span>`;
+  } else if (pct > 0) {
+    badge = `<span class="course-badge progress">${pct}%</span>`;
+  }
+
   return `
     <button type="button" class="course-card"
             onclick="openCourse('${escapeHtml(course.id)}')"
             aria-label="Open ${escapeHtml(course.title||'course')}">
       <div class="course-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
+        ${badge}
         <i class="fas ${escapeHtml(icon)} course-thumb-icon" aria-hidden="true"></i>
       </div>
       <div class="course-body">
         <div class="course-title">${escapeHtml(course.title||'Untitled')}</div>
         <div class="course-desc">${escapeHtml(course.desc||'')}</div>
-        ${pct > 0 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
+        ${pct > 0 && pct < 100 ? `<div class="course-progress"><span style="width:${pct}%;"></span></div>` : ''}
         <div class="course-meta">
           <span><i class="fas fa-signal" aria-hidden="true"></i> ${escapeHtml(course.level||'—')}</span>
           <span><i class="fas fa-book-open" aria-hidden="true"></i> ${lessonCount}</span>
           <span><i class="fas fa-clock" aria-hidden="true"></i> ${course.duration||0}m</span>
         </div>
+        <span class="course-cta">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          ${pct > 0 ? 'Continue' : 'Start'}
+        </span>
       </div>
     </button>`;
 }
@@ -593,9 +695,10 @@ function renderCourseCard(course) {
 function openCourse(id) {
   window.location.href = `learning/course.html?id=${encodeURIComponent(id)}`;
 }
+window.openCourse = openCourse;
 
 // ══════════════════════════════════════════════════════════════
-// SCROLL SPY — highlight active category in the side rail
+// SCROLL SPY
 // ══════════════════════════════════════════════════════════════
 let _sectionObserver = null;
 function observeSections(ids) {
@@ -607,7 +710,6 @@ function observeSections(ids) {
   links.forEach(l => map.set(l.dataset.target, l));
 
   _sectionObserver = new IntersectionObserver((entries) => {
-    // pick the entry with the largest intersection
     let best = null;
     for (const e of entries) {
       if (!e.isIntersecting) continue;
