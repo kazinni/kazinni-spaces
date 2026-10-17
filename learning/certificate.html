@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
-<title>Certificates — KazInni Learning</title>
+<title>Certificates — KazInni Academy</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,25 +14,27 @@
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;--gold-light:#fbbf24;
   --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
-  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;
-  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;
+  --ink:#0f0f1e;--ink-2:#1c1d1f;--ink-3:#2d2d4a;
+  --success:#10b981;--danger:#ef4444;--info:#3b82f6;--purple:#8b5cf6;
+  --text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;--border-dark:#3e4143;
   --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
-  --header-h:58px;
-  --gutter:clamp(1rem,2.6vw,2rem);
+  --header-h:64px;--gutter:clamp(1rem,3vw,2rem);
   --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
   --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
   --f-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
-  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-pill:100px;
+  --f-serif:'Playfair Display',Georgia,serif;
+  --r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:100px;
   --t-fast:.15s cubic-bezier(.2,.8,.2,1);
   --t-base:.22s cubic-bezier(.2,.8,.2,1);
-  --shadow-pop:0 20px 48px rgba(15,15,30,.14);
+  --shadow-card:0 4px 16px rgba(15,15,30,.06);
+  --shadow-pop:0 16px 40px rgba(15,15,30,.12);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.55;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden}
+body{font-family:var(--f-body);background:#fff;color:var(--ink);line-height:1.55;letter-spacing:-.005em;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden}
 :focus{outline:none}:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 button{font-family:inherit}
@@ -40,142 +42,226 @@ button{font-family:inherit}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes modalIn{from{opacity:0;transform:translateY(-8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-/* HEADER */
-.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.94);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(15,15,30,.07);padding:0 var(--gutter);display:flex;align-items:center;gap:1rem}
-.ws-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
-.ws-logo img{height:26px}
-.ws-logo-text{font-family:var(--f-display);font-weight:800;font-size:.98rem;color:var(--ink);letter-spacing:-.4px;white-space:nowrap}
-.ws-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.ws-nav-links{display:flex;align-items:center;gap:1.2rem;margin-left:.5rem}
-.ws-nav-link{color:var(--text-2);text-decoration:none;font-size:.82rem;font-weight:500;font-family:var(--f-head);transition:color var(--t-fast);padding:.4rem 0;white-space:nowrap}
-.ws-nav-link:hover{color:var(--ink)}
-.ws-nav-link.active{color:var(--gold-dark);font-weight:600}
-.ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
-.ws-btn{padding:.5rem 1rem;border:none;border-radius:var(--r-pill);font-weight:600;font-size:.8rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:.45rem;font-family:var(--f-head);white-space:nowrap}
-.ws-btn-primary{background:var(--ink);color:#fff;position:relative;overflow:hidden}
-.ws-btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold-gradient);opacity:0;transition:opacity var(--t-base)}
-.ws-btn-primary>*{position:relative;z-index:1}
-.ws-btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(202,138,4,.28)}
-.ws-btn-primary:hover::before{opacity:1}
-.ws-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-2)}
-.ws-btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.ws-btn:disabled{opacity:.55;cursor:wait}
-.ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.25rem .75rem .25rem .25rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.78rem;font-weight:600;color:var(--ink);text-decoration:none}
-.ws-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;font-family:var(--f-head)}
+/* ── NAVBAR (matches Academy) ──────────────────────── */
+.navbar{position:sticky;top:0;z-index:1000;height:var(--header-h);background:#fff;border-bottom:1px solid var(--border);padding:0 var(--gutter);display:flex;align-items:center;gap:.75rem;box-shadow:0 2px 4px rgba(15,15,30,.04)}
+.nav-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:28px}
+.nav-logo-text{font-family:var(--f-display);font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:-.5px;white-space:nowrap;display:flex;flex-direction:column;line-height:1}
+.nav-logo-text .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nav-logo-text .sub{font-family:var(--f-head);font-size:.55rem;font-weight:700;color:var(--gold-dark);letter-spacing:1.4px;margin-top:2px;text-transform:uppercase}
 
-/* SHELL */
-.portal-shell{display:flex;flex:1;min-height:0}
-.side-rail{width:250px;flex-shrink:0;border-right:1px solid rgba(15,15,30,.06);background:#fff;padding:1.25rem .9rem;position:sticky;top:var(--header-h);align-self:flex-start;height:calc(100vh - var(--header-h));overflow-y:auto;display:flex;flex-direction:column;gap:1rem}
-.rail-block{padding:.85rem .85rem 1rem;border-radius:var(--r-lg);border:1px solid var(--border);background:linear-gradient(180deg,#fdfbf5 0%,#fff 100%)}
-.rail-block .rail-label{font-family:var(--f-head);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:.55rem;display:block}
-.rail-stat{display:flex;align-items:baseline;gap:.5rem}
-.rail-stat .big{font-family:var(--f-display);font-size:1.9rem;font-weight:700;letter-spacing:-.04em;color:var(--ink);line-height:1}
-.rail-stat .unit{font-family:var(--f-head);font-size:.72rem;color:var(--muted);font-weight:500}
-.rail-note{font-family:var(--f-head);font-size:.72rem;color:var(--text-2);margin-top:.4rem;line-height:1.4}
-.rail-note strong{color:var(--ink);font-weight:700}
-.rail-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
-.rail-list li{display:flex;align-items:center;gap:.5rem;font-family:var(--f-head);font-size:.78rem;color:var(--text-2)}
-.rail-list li i{color:var(--gold);width:14px;text-align:center;font-size:.72rem}
-.rail-list li b{color:var(--ink);font-weight:700;margin-left:auto}
-.rail-cta{margin-top:auto;padding-top:.5rem}
-.rail-cta .ws-btn{width:100%;justify-content:center}
+.nav-links{display:flex;align-items:center;gap:.15rem;flex-shrink:0}
+.nav-link{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .7rem;border-radius:var(--r-sm);color:var(--text-2);font-family:var(--f-head);font-size:.8rem;font-weight:500;text-decoration:none;background:none;border:none;cursor:pointer;transition:all var(--t-fast);white-space:nowrap}
+.nav-link:hover{background:var(--surface-3);color:var(--ink)}
+.nav-link i{font-size:.7rem;color:var(--muted);transition:color var(--t-fast)}
+.nav-link:hover i{color:var(--gold)}
+.nav-link.active{background:var(--gold-soft);color:var(--gold-dark);font-weight:600}
+.nav-link.active i{color:var(--gold-dark)}
 
-.portal-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.nav-right{display:flex;align-items:center;gap:.15rem;flex-shrink:0;margin-left:auto}
+.nav-icon-btn{width:38px;height:38px;border-radius:var(--r-sm);border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:.9rem;transition:background var(--t-fast);position:relative;text-decoration:none}
+.nav-icon-btn:hover{background:var(--surface-3);color:var(--ink)}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;font-family:var(--f-head);text-decoration:none;transition:transform var(--t-fast)}
+.nav-avatar:hover{transform:scale(1.06)}
 
-/* HERO */
-.cert-hero{padding:1.6rem var(--gutter) 1.4rem;background:#fff;border-bottom:1px solid rgba(15,15,30,.05);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden}
-.cert-hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.cert-hero-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.25}
-.cert-hero-bg .orb-1{width:360px;height:360px;background:#fde68a;top:-140px;left:-60px}
-.cert-hero-bg .orb-2{width:300px;height:300px;background:#fbbf24;bottom:-140px;right:-60px;opacity:.16}
-.hero-left{position:relative;z-index:1;min-width:0}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;padding:.22rem .65rem;background:var(--gold-soft);border-radius:var(--r-pill);font-size:.62rem;font-weight:700;color:var(--gold-dark);margin-bottom:.5rem;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.9px}
-.hero-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
-.hero-left h1{font-family:var(--f-display);font-size:clamp(1.4rem,2.1vw,1.85rem);font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.15;margin-bottom:.25rem}
-.hero-left h1 .accent{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
-.hero-left p{font-size:.86rem;color:var(--text-2);max-width:640px;line-height:1.5}
-.hero-actions{position:relative;z-index:1;display:flex;gap:.5rem;flex-shrink:0}
+/* ── HERO (matches Academy) ────────────────────────── */
+.hero{position:relative;background:linear-gradient(135deg,#faf9f7 0%,#fff 100%);border-bottom:1px solid var(--border);padding:3rem var(--gutter);overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60%;right:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(202,138,4,.08) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:1}
+.hero-left h1{font-family:var(--f-display);font-size:clamp(2rem,3.6vw,3rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;color:var(--ink);margin-bottom:1rem}
+.hero-left h1 .accent{background:var(--gold-gradient);background-size:200% 200%;animation:gradientSlide 5s ease infinite;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic;font-weight:500}
+@keyframes gradientSlide{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-left p{font-size:1rem;color:var(--text-2);max-width:520px;line-height:1.6;margin-bottom:1.5rem}
+.hero-cta{display:flex;gap:.6rem;flex-wrap:wrap}
+.hero-btn{padding:.7rem 1.4rem;border:none;border-radius:var(--r-sm);font-family:var(--f-head);font-weight:700;font-size:.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;transition:all var(--t-base);white-space:nowrap}
+.hero-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,.15)}
+.hero-btn-primary:hover{background:#2d2d4a;transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,15,30,.25)}
+.hero-btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border-dark)}
+.hero-btn-ghost:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-/* MAIN */
-.cert-main{flex:1;padding:1.35rem var(--gutter) 2.5rem;min-width:0}
-.cert-header{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
-.cert-header h2{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center;gap:.6rem}
-.cert-header h2 .count-pill{font-family:var(--f-head);font-size:.7rem;font-weight:700;color:var(--text-2);background:var(--surface-3);border-radius:var(--r-pill);padding:.15rem .55rem}
-.cert-sub{font-size:.8rem;color:var(--muted);font-family:var(--f-head)}
+.hero-right{position:relative;padding:0 1rem}
+.hero-promo{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--shadow-pop);padding:1.4rem 1.5rem;position:relative;z-index:2;max-width:380px;margin-left:auto}
+.hero-promo-eyebrow{font-family:var(--f-head);font-size:.62rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.4rem;display:flex;align-items:center;gap:.35rem}
+.hero-promo-eyebrow i{font-size:.55rem}
+.hero-promo h3{font-family:var(--f-display);font-size:1.15rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25;margin-bottom:.5rem}
+.hero-promo p{font-size:.82rem;color:var(--text-2);line-height:1.5;margin-bottom:1rem}
+.hero-promo-stats{display:flex;gap:1.2rem;padding-top:.85rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.hero-promo-stat{display:flex;flex-direction:column}
+.hero-promo-stat .val{font-family:var(--f-display);font-size:1.2rem;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.hero-promo-stat .lbl{font-family:var(--f-head);font-size:.62rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:.15rem}
 
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:.9rem}
+/* ── MAIN ──────────────────────────────────────────── */
+.main{max-width:1400px;margin:0 auto;padding:2rem var(--gutter) 3rem;flex:1;width:100%}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.section-head h2{font-family:var(--f-display);font-size:1.4rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);line-height:1.2;display:flex;align-items:center;gap:.55rem}
+.section-head h2 .count-pill{font-family:var(--f-head);font-size:.7rem;font-weight:700;color:var(--text-2);background:var(--surface-3);border-radius:var(--r-pill);padding:.15rem .55rem}
+.section-head .section-sub{font-size:.86rem;color:var(--muted);margin-top:.25rem;font-family:var(--f-head)}
 
-.cert-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem 1.15rem 1.15rem;display:flex;flex-direction:column;gap:.85rem;transition:all var(--t-base);position:relative;overflow:hidden}
-.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-gradient);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.cert-card:hover::before{transform:scaleX(1)}
-.cert-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.3)}
+/* ── CERT GRID ─────────────────────────────────────── */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
 
-.cert-card-top{display:flex;align-items:flex-start;gap:.85rem}
-.cert-badge{width:44px;height:44px;border-radius:12px;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.05rem;box-shadow:0 8px 18px rgba(202,138,4,.24);flex-shrink:0}
-.cert-card-info{min-width:0;flex:1}
-.cert-card-title{font-family:var(--f-head);font-size:.92rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:.3rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cert-card-meta{font-size:.7rem;color:var(--muted);font-family:var(--f-head);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.cert-card-meta i{font-size:.66rem;opacity:.7}
-.cert-card-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.5}
+.cert-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;transition:all var(--t-base);position:relative}
+.cert-card:hover{box-shadow:var(--shadow-pop);border-color:rgba(202,138,4,.35);transform:translateY(-2px)}
 
-.verified-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.15rem .5rem;border-radius:var(--r-pill);background:rgba(16,185,129,.1);color:#047857;font-family:var(--f-head);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.verified-chip i{font-size:.6rem}
+/* preview thumbnail inside card */
+.cert-thumb{position:relative;aspect-ratio:1.414/1;background:#faf9f7;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);cursor:pointer}
+.cert-thumb-inner{width:100%;height:100%;padding:.8rem;display:flex;align-items:center;justify-content:center}
+.cert-mini{width:100%;max-width:440px;aspect-ratio:1.414/1;background:#fff;border:2px solid var(--gold);border-radius:6px;padding:1rem 1.15rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;box-shadow:0 6px 18px rgba(15,15,30,.08)}
+.cert-mini-frame{position:absolute;inset:4px;border:0.5px solid var(--gold-light);border-radius:3px;pointer-events:none}
+.cert-mini-header{display:flex;align-items:center;justify-content:space-between;gap:.4rem;position:relative;z-index:1}
+.cert-mini-logo{display:flex;align-items:center;gap:.3rem;font-family:var(--f-display);font-weight:800;font-size:.5rem;color:var(--ink);letter-spacing:-.2px;line-height:1}
+.cert-mini-logo-badge{width:14px;height:14px;border-radius:4px;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.4rem;font-weight:800;font-family:var(--f-display)}
+.cert-mini-logo .accent{color:var(--gold)}
+.cert-mini-id{font-family:ui-monospace,'Courier New',monospace;font-size:.38rem;color:var(--muted);letter-spacing:.4px;line-height:1.2;text-align:right}
+.cert-mini-body{text-align:center;position:relative;z-index:1}
+.cert-mini-eyebrow{font-family:var(--f-head);font-size:.32rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:2px;margin-bottom:.3rem;line-height:1.2}
+.cert-mini-title{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.05rem;color:var(--ink);line-height:1;margin-bottom:.6rem}
+.cert-mini-presented{font-family:var(--f-head);font-size:.34rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;line-height:1.2;margin-bottom:.25rem}
+.cert-mini-name{font-family:var(--f-serif);font-weight:600;font-size:.85rem;color:var(--ink);line-height:1.1;margin-bottom:.15rem;padding-bottom:.15rem}
+.cert-mini-rule{width:45%;height:1px;background:var(--gold);margin:0 auto .35rem}
+.cert-mini-for{font-family:var(--f-head);font-size:.34rem;color:var(--text-2);line-height:1.2;margin-bottom:.2rem}
+.cert-mini-course{font-family:var(--f-display);font-weight:700;font-size:.55rem;color:var(--ink);line-height:1.15;margin-bottom:.25rem}
+.cert-mini-cat{display:inline-block;font-family:var(--f-head);font-size:.3rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;background:var(--gold-soft);color:var(--gold-dark);border-radius:100px;line-height:1}
+.cert-mini-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:.4rem;position:relative;z-index:1;padding-top:.35rem;border-top:0.5px dashed var(--border)}
+.cert-mini-foot-cell{flex:1;text-align:center;line-height:1.1}
+.cert-mini-foot-label{font-family:var(--f-head);font-size:.28rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;line-height:1.2;margin-top:.25rem}
+.cert-mini-foot-rule{height:.5px;background:var(--ink);margin-bottom:.15rem}
+.cert-mini-foot-value{font-family:var(--f-display);font-weight:600;font-size:.4rem;color:var(--ink);line-height:1.1;margin-bottom:.15rem}
+.cert-mini-seal{width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;font-family:var(--f-display);font-weight:700;font-size:.28rem;letter-spacing:.3px;line-height:1;box-shadow:0 2px 6px rgba(202,138,4,.4)}
+.cert-mini-seal div{font-size:.22rem;font-weight:500;letter-spacing:.5px;margin-top:1px;opacity:.95}
 
-.cert-card-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--text-2);padding:.4rem .6rem;background:var(--surface-2);border-radius:6px;display:flex;align-items:center;gap:.5rem;border:1px solid var(--border);overflow:hidden;letter-spacing:.4px}
-.cert-card-id .label{font-family:var(--f-head);font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;flex-shrink:0}
-.cert-card-id .code{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);font-weight:600}
+.cert-thumb-overlay{position:absolute;inset:0;background:rgba(15,15,30,.55);opacity:0;transition:opacity var(--t-base);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--f-head);font-size:.8rem;font-weight:700;gap:.4rem;backdrop-filter:blur(2px)}
+.cert-thumb:hover .cert-thumb-overlay{opacity:1}
+.cert-thumb-overlay i{font-size:.9rem}
 
-.cert-actions{display:grid;grid-template-columns:1fr auto;gap:.5rem;margin-top:auto;padding-top:.75rem;border-top:1px dashed var(--border)}
-.cert-actions .ws-btn{padding:.55rem 1rem;font-size:.78rem;justify-content:center}
-.cert-actions .ws-btn-primary{width:100%}
-.cert-actions .ws-btn.icon-only{padding:.55rem;width:auto;min-width:40px}
+/* card body */
+.cert-body{padding:1rem 1.1rem 1.15rem;display:flex;flex-direction:column;gap:.65rem;flex:1}
+.cert-card-title{font-family:var(--f-head);font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cert-meta{font-family:var(--f-head);font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.cert-meta i{font-size:.66rem;opacity:.75}
+.cert-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.5}
 
-.empty-state{padding:2.5rem 1.5rem;color:var(--muted);font-family:var(--f-head);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);display:flex;align-items:flex-start;gap:1.1rem}
-.empty-state .empty-icon{width:52px;height:52px;border-radius:14px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-.empty-state .empty-body h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;font-family:var(--f-head)}
-.empty-state .empty-body p{font-size:.82rem;line-height:1.5;margin-bottom:.85rem;max-width:520px}
-.empty-state .ws-btn{padding:.55rem 1.1rem;font-size:.8rem}
+.cert-id{font-family:ui-monospace,'Courier New',monospace;font-size:.7rem;color:var(--text-2);padding:.35rem .55rem;background:var(--surface-2);border-radius:6px;display:flex;align-items:center;gap:.5rem;border:1px solid var(--border);letter-spacing:.4px}
+.cert-id .label{font-family:var(--f-head);font-size:.58rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;flex-shrink:0}
+.cert-id .code{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);font-weight:600;flex:1;min-width:0}
 
-.skeleton{height:190px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+.cert-actions{display:flex;gap:.4rem;margin-top:auto;padding-top:.6rem;border-top:1px dashed var(--border)}
+.cert-btn{flex:1;padding:.55rem .8rem;border-radius:var(--r-sm);border:none;font-family:var(--f-head);font-weight:700;font-size:.76rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;transition:all var(--t-base);white-space:nowrap}
+.cert-btn-preview{background:var(--ink);color:#fff}
+.cert-btn-preview:hover{background:#2d2d4a}
+.cert-btn-download{background:var(--gold-gradient);color:#fff;box-shadow:0 4px 12px rgba(202,138,4,.25)}
+.cert-btn-download:hover{box-shadow:0 8px 20px rgba(202,138,4,.35);transform:translateY(-1px)}
+.cert-btn-icon{flex:0 0 auto;width:38px;padding:0;background:transparent;border:1.5px solid var(--border);color:var(--text-2)}
+.cert-btn-icon:hover{border-color:var(--ink);color:var(--ink);background:var(--surface-3)}
+.cert-btn:disabled{opacity:.55;cursor:wait;transform:none;box-shadow:none}
 
-.learning-footer{background:#fff;border-top:1px solid rgba(15,15,30,.06);padding:1rem var(--gutter);margin-top:auto}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.footer-brand{display:flex;align-items:center;gap:.45rem;font-weight:700;font-size:.78rem;color:var(--ink);font-family:var(--f-head)}
-.footer-brand i{color:var(--gold)}
-.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:.74rem;font-family:var(--f-head);font-weight:500;transition:color var(--t-fast)}
-.footer-links a:hover{color:var(--gold-dark)}
-.footer-copy{color:var(--muted);font-size:.72rem;font-family:var(--f-head)}
+/* ── EMPTY ─────────────────────────────────────────── */
+.empty-state{padding:3rem 1.5rem;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-xl);text-align:center;grid-column:1/-1}
+.empty-icon{width:64px;height:64px;border-radius:16px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 1rem}
+.empty-state h3{font-family:var(--f-head);font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}
+.empty-state p{font-size:.85rem;color:var(--muted);max-width:460px;margin:0 auto 1.2rem;line-height:1.5}
+.empty-state .hero-btn{padding:.6rem 1.2rem}
 
-.toast-container{position:fixed;top:calc(var(--header-h) + 14px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.75rem 1rem;box-shadow:0 16px 36px rgba(15,15,30,.22);display:flex;align-items:center;gap:.6rem;font-family:var(--f-head);font-size:.82rem;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity .3s,transform .3s;animation:slideInRight .28s cubic-bezier(.2,.8,.2,1)}
+.skeleton{height:280px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+
+/* ── PREVIEW MODAL ─────────────────────────────────── */
+.preview-overlay{position:fixed;inset:0;background:rgba(15,15,30,.75);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto}
+.preview-overlay.active{display:flex}
+.preview-dialog{background:#fff;border-radius:var(--r-xl);max-width:1100px;width:100%;max-height:calc(100vh - 3rem);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.4);animation:modalIn .25s cubic-bezier(.2,.8,.2,1)}
+.preview-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.preview-header h3{font-family:var(--f-head);font-size:.95rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:.5rem}
+.preview-header h3 i{color:var(--gold)}
+.preview-close{width:34px;height:34px;border-radius:var(--r-sm);border:none;background:transparent;color:var(--text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all var(--t-fast)}
+.preview-close:hover{background:var(--surface-3);color:var(--ink)}
+.preview-stage{flex:1;padding:1.2rem;background:linear-gradient(135deg,#faf9f7 0%,#f4f3f1 100%);display:flex;align-items:center;justify-content:center;overflow:auto}
+.preview-stage .cert-mini{max-width:760px;width:100%;padding:2rem 2.5rem;border-width:3px;border-radius:10px}
+.preview-stage .cert-mini-frame{inset:6px;border-width:1px;border-radius:5px}
+.preview-stage .cert-mini-logo{font-size:.85rem;gap:.5rem}
+.preview-stage .cert-mini-logo-badge{width:28px;height:28px;font-size:.75rem;border-radius:6px}
+.preview-stage .cert-mini-id{font-size:.7rem;letter-spacing:.8px}
+.preview-stage .cert-mini-eyebrow{font-size:.6rem;letter-spacing:3px;margin-bottom:.6rem}
+.preview-stage .cert-mini-title{font-size:2.4rem;margin-bottom:1.4rem}
+.preview-stage .cert-mini-presented{font-size:.62rem;letter-spacing:1.8px;margin-bottom:.5rem}
+.preview-stage .cert-mini-name{font-size:2rem;margin-bottom:.4rem;padding-bottom:.4rem}
+.preview-stage .cert-mini-rule{height:1px;margin-bottom:.9rem}
+.preview-stage .cert-mini-for{font-size:.62rem;margin-bottom:.5rem}
+.preview-stage .cert-mini-course{font-size:1.1rem;margin-bottom:.7rem}
+.preview-stage .cert-mini-cat{font-size:.55rem;padding:4px 12px;letter-spacing:2px}
+.preview-stage .cert-mini-footer{padding-top:.8rem}
+.preview-stage .cert-mini-foot-label{font-size:.5rem;letter-spacing:1.6px;margin-top:.5rem}
+.preview-stage .cert-mini-foot-value{font-size:.75rem;margin-bottom:.25rem}
+.preview-stage .cert-mini-foot-rule{height:1px;margin-bottom:.35rem}
+.preview-stage .cert-mini-seal{width:56px;height:56px;font-size:.55rem;letter-spacing:.5px;box-shadow:0 4px 12px rgba(202,138,4,.4)}
+.preview-stage .cert-mini-seal div{font-size:.42rem;letter-spacing:1px;margin-top:2px}
+.preview-footer{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.9rem 1.2rem;border-top:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.preview-footer-info{font-family:var(--f-head);font-size:.74rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.preview-footer-info i{color:var(--success);font-size:.7rem}
+.preview-footer-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.preview-btn{padding:.6rem 1.15rem;border-radius:var(--r-sm);font-family:var(--f-head);font-weight:700;font-size:.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:all var(--t-base);border:none;text-decoration:none;white-space:nowrap}
+.preview-btn-download{background:var(--gold-gradient);color:#fff;box-shadow:0 4px 12px rgba(202,138,4,.3)}
+.preview-btn-download:hover{box-shadow:0 8px 22px rgba(202,138,4,.4);transform:translateY(-1px)}
+.preview-btn-download:disabled{opacity:.6;cursor:wait;transform:none}
+.preview-btn-share{background:transparent;color:var(--text-2);border:1.5px solid var(--border-2)}
+.preview-btn-share:hover{border-color:var(--ink);color:var(--ink);background:var(--surface-3)}
+.preview-btn-close{background:transparent;color:var(--muted);border:none;padding:.6rem .8rem}
+.preview-btn-close:hover{color:var(--ink)}
+
+/* ── FOOTER (matches Academy) ──────────────────────── */
+.footer{background:var(--ink);color:#d1d5db;padding:3rem var(--gutter) 1.5rem;margin-top:auto}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:1.5rem}
+.footer-col h4{font-family:var(--f-head);font-size:.76rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.85rem}
+.footer-col a{display:block;color:#9ca3af;text-decoration:none;font-size:.8rem;font-family:var(--f-head);font-weight:500;padding:.28rem 0;transition:color var(--t-fast)}
+.footer-col a:hover{color:var(--gold-light)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:.55rem;font-family:var(--f-head);font-weight:700;font-size:.86rem;color:#fff}
+.footer-brand i{color:var(--gold-light)}
+.footer-copy{font-family:var(--f-head);font-size:.74rem;color:#6b7280}
+
+/* ── TOASTS ───────────────────────────────────────── */
+.toast-container{position:fixed;top:calc(var(--header-h) + 14px);right:16px;z-index:6000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.75rem 1rem;box-shadow:0 16px 36px rgba(15,15,30,.22);display:flex;align-items:center;gap:.6rem;font-family:var(--f-head);font-size:.82rem;max-width:340px;font-weight:500;pointer-events:auto;transition:opacity .3s,transform .3s;animation:slideInRight .28s cubic-bezier(.2,.8,.2,1)}
 .toast i{font-size:.9rem;flex-shrink:0}
 .toast.success i{color:#34d399}
 .toast.error i{color:#f87171}
 .toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
 
-/* ── PDF RENDER TARGET ────────────────────────────────────────
-   Visible to html2canvas, offscreen for the user. Every value in
-   here is deliberately "rasterizer-friendly": no radial gradients
-   on the root, no flexbox on the outer frame, fixed px line-heights,
-   and solid fills only where gradients were causing banding. */
+/* ── PDF RENDER TARGET ─────────────────────────────── */
 #pdfRender{position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none}
 #pdfRender *{box-sizing:border-box}
 
-@media(max-width:1024px){.side-rail{display:none}}
-@media(max-width:760px){
-  .ws-nav-links{display:none}
-  .cert-hero{padding:1.2rem var(--gutter) 1.1rem}
-  .hero-actions{width:100%}
-  .hero-actions .ws-btn{flex:1;justify-content:center}
-  .cert-main{padding:1.1rem var(--gutter) 2rem}
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:1100px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem}
+  .hero-right{padding:0}
+  .hero-promo{margin:0 auto}
+  .nav-links{display:none}
+  .footer-top{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .navbar{padding:0 1rem;gap:.5rem}
+  .hero{padding:2rem 1rem}
+  .hero-left h1{font-size:1.8rem}
+  .main{padding:1.5rem 1rem 2.5rem}
   .cert-grid{grid-template-columns:1fr}
-  .empty-state{flex-direction:column}
-  .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
+  .footer-top{grid-template-columns:1fr;gap:1.5rem}
+  .footer-bottom{flex-direction:column;text-align:center;gap:.5rem}
   .toast-container{right:12px;left:12px;align-items:stretch}
   .toast{max-width:none}
+  .preview-overlay{padding:.5rem}
+  .preview-stage{padding:.75rem}
+  .preview-stage .cert-mini{padding:1.2rem 1.5rem}
+  .preview-stage .cert-mini-title{font-size:1.6rem}
+  .preview-stage .cert-mini-name{font-size:1.3rem}
+  .preview-stage .cert-mini-course{font-size:.85rem}
+  .preview-footer{flex-direction:column;align-items:stretch}
+  .preview-footer-actions{justify-content:center}
+  .cert-actions{flex-wrap:wrap}
 }
 </style>
 </head>
@@ -184,98 +270,155 @@ button{font-family:inherit}
 <a href="#main" class="sr-only">Skip to main content</a>
 <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
 
-<header class="ws-header">
-  <a href="../index.html" class="ws-logo" aria-label="Back to KazInni">
+<!-- NAVBAR -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo" aria-label="KazInni Academy">
     <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
-    <span class="ws-logo-text">Kaz<span class="accent">Inni</span> <span style="font-weight:600;opacity:.5;font-size:.82rem;">Learning</span></span>
+    <span class="nav-logo-text">
+      <span>Kaz<span class="accent">Inni</span></span>
+      <span class="sub">Academy</span>
+    </span>
   </a>
 
-  <nav class="ws-nav-links" aria-label="Learning navigation">
-    <a href="index.html" class="ws-nav-link">Library</a>
-    <a href="certificate.html" class="ws-nav-link active">Certificates</a>
+  <nav class="nav-links" aria-label="Academy navigation">
+    <a href="index.html" class="nav-link"><i class="fas fa-book-open"></i> Library</a>
+    <a href="certificate.html" class="nav-link active"><i class="fas fa-certificate"></i> Certificates</a>
   </nav>
 
-  <div class="ws-header-right">
-    <a href="../index.html" class="ws-btn ws-btn-ghost">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Workspace</span>
+  <div class="nav-right">
+    <a href="../index.html" class="nav-icon-btn" title="Workspace" aria-label="Workspace">
+      <i class="fas fa-cube" aria-hidden="true"></i>
     </a>
     <div id="headerAccount"></div>
   </div>
 </header>
 
-<main id="main" class="portal-shell">
+<main id="main">
 
-  <aside class="side-rail" aria-label="Certificate summary">
-    <div class="rail-block">
-      <span class="rail-label">Your achievements</span>
-      <div class="rail-stat">
-        <span class="big" id="statTotal">0</span>
-        <span class="unit" id="statTotalUnit">certificates</span>
-      </div>
-      <div class="rail-note" id="statNote">Loading…</div>
-    </div>
-
-    <div class="rail-block">
-      <span class="rail-label">Breakdown</span>
-      <ul class="rail-list">
-        <li><i class="fas fa-calendar-check" aria-hidden="true"></i> This year <b id="statThisYear">0</b></li>
-        <li><i class="fas fa-clock" aria-hidden="true"></i> Most recent <b id="statRecent">—</b></li>
-        <li><i class="fas fa-fingerprint" aria-hidden="true"></i> Verified IDs <b id="statIds">0</b></li>
-      </ul>
-    </div>
-
-    <div class="rail-cta">
-      <a href="index.html" class="ws-btn ws-btn-primary">
-        <i class="fas fa-graduation-cap" aria-hidden="true"></i> <span>Browse library</span>
-      </a>
-    </div>
-  </aside>
-
-  <div class="portal-main">
-
-    <section class="cert-hero">
-      <div class="cert-hero-bg" aria-hidden="true">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
       <div class="hero-left">
-        <span class="hero-eyebrow"><span class="dot"></span> Achievements</span>
-        <h1>Your <span class="accent">certificates</span></h1>
-        <p>Every course you complete earns a shareable certificate. Download it as a PDF, or share it to your portfolio.</p>
+        <h1>Your <span class="accent">certificates</span>.</h1>
+        <p>Every course you complete earns a verifiable certificate. Preview it, download it as a print-ready PDF, or share it with your network.</p>
+        <div class="hero-cta">
+          <a href="index.html" class="hero-btn hero-btn-primary">
+            <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
+          </a>
+          <a href="#certificates" class="hero-btn hero-btn-ghost">
+            <i class="fas fa-arrow-down" aria-hidden="true"></i> View my certificates
+          </a>
+        </div>
       </div>
-      <div class="hero-actions">
-        <a href="index.html" class="ws-btn ws-btn-ghost">
-          <i class="fas fa-book-open" aria-hidden="true"></i> <span>Continue learning</span>
-        </a>
+      <div class="hero-right">
+        <div class="hero-promo">
+          <div class="hero-promo-eyebrow"><i class="fas fa-star" aria-hidden="true"></i> Your achievements</div>
+          <h3 id="promoHeadline">Every certificate is verifiable and shareable.</h3>
+          <p id="promoSubtitle">Complete a course to earn your first certificate. It will appear here automatically.</p>
+          <div class="hero-promo-stats">
+            <div class="hero-promo-stat">
+              <span class="val" id="statTotal">0</span>
+              <span class="lbl">Total</span>
+            </div>
+            <div class="hero-promo-stat">
+              <span class="val" id="statThisYear">0</span>
+              <span class="lbl">This year</span>
+            </div>
+            <div class="hero-promo-stat">
+              <span class="val" id="statIds">0</span>
+              <span class="lbl">Verified IDs</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="cert-main">
-      <div class="cert-header">
+  <!-- MAIN -->
+  <section class="main" id="certificates">
+    <div class="section-head">
+      <div>
         <h2>Issued certificates <span class="count-pill" id="certCount">0</span></h2>
-        <span class="cert-sub" id="certSubtitle">Loading…</span>
+        <div class="section-sub" id="certSubtitle">Loading…</div>
       </div>
-      <div class="cert-grid" id="certGrid">
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-      </div>
-    </section>
+    </div>
+    <div class="cert-grid" id="certGrid">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </section>
 
-  </div>
 </main>
 
-<footer class="learning-footer">
+<!-- FOOTER -->
+<footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand"><i class="fas fa-cube" aria-hidden="true"></i> KazInni Learning</div>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="index.html">Library</a>
-      <a href="certificate.html">Certificates</a>
-      <a href="mailto:operations@kazinni.com">Contact</a>
-    </nav>
-    <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · KazInni</div>
+    <div class="footer-top">
+      <div class="footer-col">
+        <h4>Academy</h4>
+        <a href="index.html">Browse courses</a>
+        <a href="index.html#continueSection">Continue learning</a>
+        <a href="certificate.html">Certificates</a>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="index.html">Communication</a>
+        <a href="index.html">Business</a>
+        <a href="index.html">Tech</a>
+        <a href="index.html">Career</a>
+      </div>
+      <div class="footer-col">
+        <h4>KazInni</h4>
+        <a href="../index.html">Workspace</a>
+        <a href="../apps/kasikazi">Kasikazi</a>
+        <a href="../apps/flexikazi">FlexiKazi</a>
+        <a href="mailto:operations@kazinni.com">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="mailto:operations@kazinni.com">Help centre</a>
+        <a href="certificate.html">Verify a certificate</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <i class="fas fa-cube" aria-hidden="true"></i> KazInni Academy
+      </div>
+      <div class="footer-copy">© <span id="footerYear">2026</span> Teleio Savour · All rights reserved</div>
+    </div>
   </div>
 </footer>
+
+<!-- PREVIEW MODAL -->
+<div class="preview-overlay" id="previewOverlay" role="dialog" aria-modal="true" aria-labelledby="previewTitle" onclick="if(event.target===this)closePreview()">
+  <div class="preview-dialog" role="document">
+    <div class="preview-header">
+      <h3 id="previewTitle"><i class="fas fa-eye" aria-hidden="true"></i> Certificate preview</h3>
+      <button class="preview-close" onclick="closePreview()" aria-label="Close preview">
+        <i class="fas fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="preview-stage" id="previewStage">
+      <!-- cert-mini injected here -->
+    </div>
+    <div class="preview-footer">
+      <div class="preview-footer-info">
+        <i class="fas fa-shield-halved" aria-hidden="true"></i>
+        <span>Verifiable · shareable · print-ready</span>
+      </div>
+      <div class="preview-footer-actions">
+        <button class="preview-btn preview-btn-close" onclick="closePreview()">Close</button>
+        <button class="preview-btn preview-btn-share" id="previewShareBtn">
+          <i class="fas fa-share-nodes" aria-hidden="true"></i> Share
+        </button>
+        <button class="preview-btn preview-btn-download" id="previewDownloadBtn">
+          <i class="fas fa-download" aria-hidden="true"></i> Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Hidden render target for html2canvas -->
 <div id="pdfRender" aria-hidden="true"></div>
@@ -301,6 +444,7 @@ const firebaseConfig = {
 let currentUser = null;
 let certificatesCache = [];
 let coursesCache = {};
+let previewCert = null;
 
 // ══════════════════════════════════════════════════════════════
 // UTILS
@@ -365,6 +509,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
   auth.onAuthStateChanged(onAuthChanged);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('previewOverlay').classList.contains('active')) {
+      closePreview();
+    }
+  });
 });
 
 async function onAuthChanged(user) {
@@ -384,11 +534,10 @@ async function onAuthChanged(user) {
 function renderAccountChip(user) {
   const el = document.getElementById('headerAccount');
   if (!el) return;
-  const name = user.displayName || user.email.split('@')[0] || 'User';
+  const name = user.displayName || user.email.split('@')[0] || 'Learner';
   el.innerHTML = `
-    <a href="../index.html" class="ws-account-chip" title="Back to workspace">
-      <div class="ws-avatar" aria-hidden="true">${escapeHtml(getInitials(name))}</div>
-      <span>${escapeHtml(name)}</span>
+    <a href="../index.html" class="nav-avatar" title="${escapeHtml(name)} — back to workspace" aria-label="Account">
+      ${escapeHtml(getInitials(name))}
     </a>`;
 }
 
@@ -477,7 +626,7 @@ async function backfillMissingIndexEntries(certs) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// LOAD & RENDER CERTIFICATES
+// LOAD & RENDER
 // ══════════════════════════════════════════════════════════════
 async function loadCertificates() {
   const grid = document.getElementById('certGrid');
@@ -499,7 +648,7 @@ async function loadCertificates() {
     .sort((a, b) => (b.issuedAt || 0) - (a.issuedAt || 0));
 
   certificatesCache = list;
-  updateRailStats(list);
+  updateStats(list);
 
   const countPill = document.getElementById('certCount');
   if (countPill) countPill.textContent = list.length;
@@ -512,76 +661,79 @@ async function loadCertificates() {
   }
 
   if (list.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon" aria-hidden="true"><i class="fas fa-certificate"></i></div>
-        <div class="empty-body">
-          <h3>No certificates yet</h3>
-          <p>Complete a course to earn your first certificate. It will appear here automatically — no action needed on your part.</p>
-          <a href="index.html" class="ws-btn ws-btn-primary">
-            <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
-          </a>
-        </div>
-      </div>`;
+    renderEmpty('No certificates yet', 'Complete a course to earn your first certificate. It will appear here automatically — no action needed on your part.');
     return;
   }
 
   grid.innerHTML = list.map(c => {
     const course = coursesCache[c.courseId] || {};
     const category = course.category || '';
-    const lessonCount = course.lessons ? Object.keys(course.lessons).length : 0;
     const certId = c.certificateId || c.id;
+
     return `
       <article class="cert-card">
-        <div class="cert-card-top">
-          <div class="cert-badge" aria-hidden="true"><i class="fas fa-certificate"></i></div>
-          <div class="cert-card-info">
-            <h3 class="cert-card-title">${escapeHtml(c.courseTitle || 'Course')}</h3>
-            <div class="cert-card-meta">
-              <span><i class="fas fa-calendar" aria-hidden="true"></i> ${escapeHtml(getFullTime(c.issuedAt))}</span>
-              ${category ? `<span class="dot-sep" aria-hidden="true"></span><span>${escapeHtml(category)}</span>` : ''}
-              ${lessonCount > 0 ? `<span class="dot-sep" aria-hidden="true"></span><span>${lessonCount} lesson${lessonCount === 1 ? '' : 's'}</span>` : ''}
-            </div>
+        <div class="cert-thumb" onclick="openPreview('${escapeHtml(c.id)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPreview('${escapeHtml(c.id)}')}" aria-label="Preview certificate for ${escapeHtml(c.courseTitle || 'course')}">
+          <div class="cert-thumb-inner">
+            ${renderMiniCertificate({
+              recipientName: getRecipientName(),
+              courseTitle: c.courseTitle || 'Course',
+              courseCategory: category,
+              certificateId: certId,
+              issuedAt: c.issuedAt
+            })}
           </div>
-          <span class="verified-chip" title="Indexed and verifiable">
-            <i class="fas fa-shield-halved" aria-hidden="true"></i> Verified
-          </span>
+          <div class="cert-thumb-overlay">
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview
+          </div>
         </div>
-        <div class="cert-card-id" title="${escapeHtml(certId)}">
-          <span class="label">Cert ID</span>
-          <span class="code">${escapeHtml(certId)}</span>
-        </div>
-        <div class="cert-actions">
-          <button type="button" class="ws-btn ws-btn-primary" onclick="downloadCert(this, '${escapeHtml(c.id)}')">
-            <i class="fas fa-download" aria-hidden="true"></i> <span>Download PDF</span>
-          </button>
-          <button type="button" class="ws-btn ws-btn-ghost icon-only" onclick="shareCert('${escapeHtml(c.id)}')" aria-label="Share certificate" title="Share">
-            <i class="fas fa-share-nodes" aria-hidden="true"></i>
-          </button>
+        <div class="cert-body">
+          <h3 class="cert-card-title">${escapeHtml(c.courseTitle || 'Course')}</h3>
+          <div class="cert-meta">
+            <span><i class="fas fa-calendar" aria-hidden="true"></i> ${escapeHtml(getFullTime(c.issuedAt))}</span>
+            ${category ? `<span class="dot-sep" aria-hidden="true"></span><span>${escapeHtml(category)}</span>` : ''}
+          </div>
+          <div class="cert-id" title="${escapeHtml(certId)}">
+            <span class="label">Cert ID</span>
+            <span class="code">${escapeHtml(certId)}</span>
+          </div>
+          <div class="cert-actions">
+            <button type="button" class="cert-btn cert-btn-preview" onclick="openPreview('${escapeHtml(c.id)}')">
+              <i class="fas fa-eye" aria-hidden="true"></i> Preview
+            </button>
+            <button type="button" class="cert-btn cert-btn-download" onclick="downloadCert(this, '${escapeHtml(c.id)}')">
+              <i class="fas fa-download" aria-hidden="true"></i> Download
+            </button>
+            <button type="button" class="cert-btn cert-btn-icon" onclick="shareCert('${escapeHtml(c.id)}')" aria-label="Share certificate" title="Share">
+              <i class="fas fa-share-nodes" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
       </article>
     `;
   }).join('');
 }
 
-function updateRailStats(list) {
+function updateStats(list) {
   const total = list.length;
   const thisYear = new Date().getFullYear();
   const yearCount = list.filter(c => c.issuedAt && new Date(c.issuedAt).getFullYear() === thisYear).length;
   const withIds = list.filter(c => c.certificateId).length;
-  const mostRecent = list[0];
   const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
   setTxt('statTotal', total);
-  setTxt('statTotalUnit', total === 1 ? 'certificate' : 'certificates');
   setTxt('statThisYear', yearCount);
   setTxt('statIds', withIds);
-  setTxt('statRecent', mostRecent ? getFullTime(mostRecent.issuedAt) : '—');
 
-  const note = document.getElementById('statNote');
-  if (note) {
-    if (total === 0) note.innerHTML = 'Complete a course to earn your first one.';
-    else note.innerHTML = `Latest: <strong>${escapeHtml(mostRecent.courseTitle || 'a course')}</strong>`;
+  const headline = document.getElementById('promoHeadline');
+  const subtitle = document.getElementById('promoSubtitle');
+  if (headline && subtitle) {
+    if (total === 0) {
+      headline.textContent = 'Every certificate is verifiable and shareable.';
+      subtitle.textContent = 'Complete a course to earn your first certificate. It will appear here automatically.';
+    } else {
+      headline.textContent = `You've earned ${total} certificate${total !== 1 ? 's' : ''}.`;
+      subtitle.textContent = `Each one is verifiable via its unique ID. Preview, download or share from your list below.`;
+    }
   }
 }
 
@@ -593,36 +745,112 @@ function renderEmpty(title, detail, isError) {
       <div class="empty-icon" aria-hidden="true">
         <i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-certificate'}"></i>
       </div>
-      <div class="empty-body">
-        <h3>${escapeHtml(title)}</h3>
-        <p>${escapeHtml(detail)}</p>
-        <a href="index.html" class="ws-btn ws-btn-primary">
-          <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
-        </a>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(detail)}</p>
+      <a href="index.html" class="hero-btn hero-btn-primary">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i> Browse library
+      </a>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// MINI CERTIFICATE (shared by thumbnail + preview)
+// ══════════════════════════════════════════════════════════════
+function renderMiniCertificate(opts) {
+  const {
+    recipientName = 'KazInni Learner',
+    courseTitle = 'Course',
+    courseCategory = '',
+    certificateId = '',
+    issuedAt = Date.now(),
+    instructor = 'KazInni Learning'
+  } = opts || {};
+
+  const issued = getFullDate(issuedAt);
+  const certId = certificateId || 'KAZ-0000-XXXXXX';
+
+  return `
+    <div class="cert-mini">
+      <div class="cert-mini-frame"></div>
+      <div class="cert-mini-header">
+        <div class="cert-mini-logo">
+          <div class="cert-mini-logo-badge">K</div>
+          <span>Kaz<span class="accent">Inni</span> Academy</span>
+        </div>
+        <div class="cert-mini-id">${escapeHtml(certId)}</div>
+      </div>
+      <div class="cert-mini-body">
+        <div class="cert-mini-eyebrow">Certificate of Completion</div>
+        <div class="cert-mini-title">Certificate</div>
+        <div class="cert-mini-presented">This certificate is proudly presented to</div>
+        <div class="cert-mini-name">${escapeHtml(recipientName)}</div>
+        <div class="cert-mini-rule"></div>
+        <div class="cert-mini-for">for successfully completing the course</div>
+        <div class="cert-mini-course">${escapeHtml(courseTitle)}</div>
+        ${courseCategory ? `<span class="cert-mini-cat">${escapeHtml(courseCategory)}</span>` : ''}
+      </div>
+      <div class="cert-mini-footer">
+        <div class="cert-mini-foot-cell">
+          <div class="cert-mini-foot-value">${escapeHtml(issued)}</div>
+          <div class="cert-mini-foot-rule"></div>
+          <div class="cert-mini-foot-label">Date Issued</div>
+        </div>
+        <div class="cert-mini-foot-cell">
+          <div class="cert-mini-seal">
+            KAZINNI
+            <div>VERIFIED</div>
+          </div>
+        </div>
+        <div class="cert-mini-foot-cell">
+          <div class="cert-mini-foot-value">${escapeHtml(instructor)}</div>
+          <div class="cert-mini-foot-rule"></div>
+          <div class="cert-mini-foot-label">Instructor</div>
+        </div>
       </div>
     </div>`;
 }
 
 // ══════════════════════════════════════════════════════════════
-// CERTIFICATE PDF — rasterizer-friendly markup
+// PREVIEW MODAL
+// ══════════════════════════════════════════════════════════════
+function openPreview(certId) {
+  const cert = certificatesCache.find(c => c.id === certId);
+  if (!cert) { showToast('Certificate not found', 'error'); return; }
+
+  previewCert = cert;
+  const course = coursesCache[cert.courseId] || {};
+
+  document.getElementById('previewStage').innerHTML = renderMiniCertificate({
+    recipientName: getRecipientName(),
+    courseTitle: cert.courseTitle || 'Course',
+    courseCategory: course.category || '',
+    certificateId: cert.certificateId || cert.id,
+    issuedAt: cert.issuedAt
+  });
+
+  const downloadBtn = document.getElementById('previewDownloadBtn');
+  const shareBtn = document.getElementById('previewShareBtn');
+  downloadBtn.onclick = () => downloadCert(downloadBtn, cert.id);
+  shareBtn.onclick = () => shareCert(cert.id);
+
+  document.getElementById('previewOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  document.getElementById('previewOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  previewCert = null;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CERTIFICATE PDF
 // ══════════════════════════════════════════════════════════════
 function getRecipientName() {
   if (!currentUser) return 'KazInni Learner';
   return currentUser.displayName || currentUser.email.split('@')[0] || 'KazInni Learner';
 }
 
-/**
- * Build the certificate markup that goes inside #pdfRender.
- *
- * Rendering rules followed here (all learned from html2canvas quirks):
- *  - No radial gradients on the root (banding) → use a light cream fill + border.
- *  - No flexbox for the outer frame (measuring bugs) → block layout with
- *    fixed paddings and an absolutely positioned inner outline.
- *  - All line-heights in explicit px so html2canvas doesn't inherit body line-height.
- *  - Solid hex backgrounds only inside the frame; gradient is applied to
- *    small elements (badge, seal) where it renders reliably.
- *  - Font families listed with web + system fallbacks, and no `clamp()`.
- */
 function buildCertificateMarkup(opts) {
   const {
     recipientName = 'KazInni Learner',
@@ -636,7 +864,6 @@ function buildCertificateMarkup(opts) {
   const issued = getFullDate(issuedAt);
   const certId = certificateId || `KZ-${Date.now().toString(36).toUpperCase()}`;
 
-  // 1400 x 990 = A4 landscape aspect ratio (1.4141:1)
   return `
   <div style="
     width:1400px;height:990px;background:#ffffff;
@@ -644,7 +871,6 @@ function buildCertificateMarkup(opts) {
     color:#0f0f1e;font-size:16px;line-height:1.5;
     position:relative;">
 
-    <!-- Outer gold frame + inner hairline -->
     <div style="
       position:absolute;top:60px;left:60px;right:60px;bottom:60px;
       border:5px solid #ca8a04;border-radius:22px;
@@ -654,11 +880,9 @@ function buildCertificateMarkup(opts) {
       border:1.5px solid #fbbf24;border-radius:14px;
       pointer-events:none;"></div>
 
-    <!-- Content area -->
     <div style="
       position:absolute;top:96px;left:96px;right:96px;bottom:96px;">
 
-      <!-- Header -->
       <table role="presentation" style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="vertical-align:middle;width:50%;">
@@ -678,7 +902,7 @@ function buildCertificateMarkup(opts) {
                   <div style="
                     font-family:'Clash Display','Cabinet Grotesk',Arial,sans-serif;
                     font-weight:700;font-size:22px;line-height:26px;color:#0f0f1e;">
-                    Kaz<span style="color:#ca8a04;">Inni</span> Learning
+                    Kaz<span style="color:#ca8a04;">Inni</span> Academy
                   </div>
                 </td>
               </tr>
@@ -698,7 +922,6 @@ function buildCertificateMarkup(opts) {
         </tr>
       </table>
 
-      <!-- Body (uses vertical rhythm rather than flexbox) -->
       <div style="margin-top:48px;text-align:center;">
 
         <div style="
@@ -759,7 +982,6 @@ function buildCertificateMarkup(opts) {
           </div>` : ''}
       </div>
 
-      <!-- Footer -->
       <div style="
         position:absolute;left:0;right:0;bottom:0;
         padding-top:24px;border-top:1px dashed #e9ecef;">
@@ -811,7 +1033,6 @@ function buildCertificateMarkup(opts) {
   </div>`;
 }
 
-/** Wait for the webfonts we use in the certificate to be truly loaded. */
 async function waitForCertificateFonts() {
   if (!document.fonts || !document.fonts.load) return;
   const specs = [
@@ -828,19 +1049,16 @@ async function waitForCertificateFonts() {
   try { await document.fonts.ready; } catch (e) {}
 }
 
-/** Render the hidden markup to a canvas and save as a real PDF. */
 async function generateCertificatePDF(opts) {
   if (typeof window.jspdf === 'undefined' || typeof html2canvas === 'undefined') {
     throw new Error('PDF library failed to load — check your connection.');
   }
 
-  // Make sure the certificate fonts are ready BEFORE rasterizing.
   await waitForCertificateFonts();
 
   const target = document.getElementById('pdfRender');
   target.innerHTML = buildCertificateMarkup(opts);
 
-  // Two RAFs + a small timeout lets layout settle after the inner HTML swap.
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   await new Promise(r => setTimeout(r, 60));
 
@@ -859,7 +1077,6 @@ async function generateCertificatePDF(opts) {
     scrollX: 0,
     scrollY: 0,
     onclone: (doc) => {
-      // Force the cloned node to the exact size we asked for
       const cloned = doc.getElementById('pdfRender')?.firstElementChild;
       if (cloned) {
         cloned.style.width = '1400px';
@@ -871,13 +1088,10 @@ async function generateCertificatePDF(opts) {
   });
 
   const { jsPDF } = window.jspdf;
-  // A4 landscape = 297 x 210 mm → in points: 841.89 x 595.28
   const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
 
-  // Fill the page with the certificate; small 12pt margin keeps the gold
-  // border off the paper edge, which looks better on most printers.
   const margin = 12;
   const usableW = pageW - margin * 2;
   const usableH = pageH - margin * 2;
@@ -891,8 +1105,6 @@ async function generateCertificatePDF(opts) {
   const x = (pageW - drawW) / 2;
   const y = (pageH - drawH) / 2;
 
-  // PNG keeps text crisp (no JPEG ringing on small text) at the cost of size.
-  // 0.95 JPEG is fine for a mostly-white page and much smaller — we use JPEG.
   const imgData = canvas.toDataURL('image/jpeg', 0.95);
   pdf.addImage(imgData, 'JPEG', x, y, drawW, drawH, undefined, 'FAST');
 
@@ -908,7 +1120,7 @@ async function downloadCert(btn, certId) {
   const originalHTML = btn ? btn.innerHTML : null;
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> <span>Preparing…</span>';
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Preparing…';
   }
 
   try {
@@ -942,9 +1154,9 @@ async function shareCert(certId) {
   const cert = certificatesCache.find(c => c.id === certId);
   if (!cert) return;
 
-  const shareUrl = window.location.origin + window.location.pathname.replace(/certificate\.html$/, 'index.html');
-  const shareTitle = `I completed ${cert.courseTitle} on KazInni Learning`;
-  const shareText = `I earned a certificate for "${cert.courseTitle}" — check it out on KazInni Learning.`;
+  const shareUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/index.html');
+  const shareTitle = `I completed ${cert.courseTitle} on KazInni Academy`;
+  const shareText = `I earned a certificate for "${cert.courseTitle}" — check it out on KazInni Academy.`;
 
   if (navigator.share) {
     try {
@@ -960,6 +1172,12 @@ async function shareCert(certId) {
     showToast('Sharing not available on this device', 'error');
   }
 }
+
+// expose
+window.openPreview = openPreview;
+window.closePreview = closePreview;
+window.downloadCert = downloadCert;
+window.shareCert = shareCert;
 </script>
 </body>
 </html>
