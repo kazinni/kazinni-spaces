@@ -440,7 +440,13 @@ body {
 .task-card-meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
 .task-card-meta i { font-size: 0.65rem; color: var(--brand); }
 .task-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: auto; }
-.task-card-pay { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--brand-dark); letter-spacing: -0.02em; }
+.task-card-status-pill {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.72rem; color: var(--brand-dark);
+  letter-spacing: 0.4px; text-transform: uppercase;
+}
+.task-card-status-pill i { font-size: 0.6rem; }
 .task-card-slots {
   font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-heading);
   font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;
@@ -687,13 +693,13 @@ body {
         <span>Open Task Board · Live</span>
       </div>
       <h1>
-        Grab work.<br>
-        Earn on<br>
-        <span class="accent">your terms.</span>
+        Pick work.<br>
+        Move fast.<br>
+        On <span class="accent">your terms.</span>
       </h1>
       <p class="hero-lede">
-        Kasikazi is the public task board for FlexiKazi taskers. Browse open tasks from every
-        KazInni suite you have access to, claim what fits your schedule, and deliver.
+        Kasikazi is the open task board for vetted KazInni contributors. Browse tasks posted by
+        the suites you belong to, claim what fits your schedule, and deliver — all in one place.
       </p>
       <div class="hero-actions">
         <a href="#board" class="btn btn-primary btn-lg">
@@ -769,24 +775,24 @@ body {
 
       <div class="visual-card vc-3">
         <div class="vc-head">
-          <div class="vc-icon green"><i class="fas fa-wallet"></i></div>
+          <div class="vc-icon green"><i class="fas fa-flag-checkered"></i></div>
           <div>
-            <div class="vc-title">Approved Earnings</div>
-            <div class="vc-sub">All-time</div>
+            <div class="vc-title">Delivered Work</div>
+            <div class="vc-sub">Approved tasks</div>
           </div>
         </div>
         <div class="vc-label">Total</div>
-        <div class="vc-value" id="vcEarned">0<span class="unit">KES</span></div>
+        <div class="vc-value" id="vcDelivered">0<span class="unit">tasks</span></div>
         <div class="vc-progress"><div class="vc-progress-fill" style="width: 100%;"></div></div>
       </div>
     </div>
   </section>
 
   <section class="trust-strip">
-    <div class="trust-item"><i class="fas fa-bullhorn"></i> Public to FlexiKazi taskers</div>
+    <div class="trust-item"><i class="fas fa-bullhorn"></i> Open to vetted contributors</div>
     <div class="trust-item"><i class="fas fa-shield-halved"></i> Suite-scoped access</div>
     <div class="trust-item"><i class="fas fa-bolt"></i> First-come, first-served slots</div>
-    <div class="trust-item"><i class="fas fa-wallet"></i> 48-hour M-Pesa payouts</div>
+    <div class="trust-item"><i class="fas fa-clipboard-check"></i> Clear submission flow</div>
   </section>
 
   <div class="board-header" id="board">
@@ -816,9 +822,8 @@ body {
     </div>
     <select class="filter-select" id="sortSelect" onchange="onSortChange()">
       <option value="newest">Newest first</option>
-      <option value="pay-high">Highest pay</option>
-      <option value="pay-low">Lowest pay</option>
       <option value="due">Due soonest</option>
+      <option value="title">Title A–Z</option>
     </select>
   </div>
 
@@ -1104,10 +1109,6 @@ function updateHero() {
     return (c.status || '').toLowerCase() === 'approved';
   }).length;
 
-  const earned = myClaims
-    .filter(t => (t.claimedBy[currentUser.uid].status || '').toLowerCase() === 'approved')
-    .reduce((sum, t) => sum + (Number(t.payRate) || 0), 0);
-
   document.getElementById('heroOpenCount').textContent = openCount;
   document.getElementById('heroMyClaims').textContent = myActive + myReview + myRevision;
   document.getElementById('heroSlots').textContent = totalSlots;
@@ -1118,7 +1119,7 @@ function updateHero() {
   document.getElementById('vcMyReview').textContent = myReview;
   document.getElementById('vcMyRevision').textContent = myRevision;
   document.getElementById('vcMyApproved').textContent = myApproved;
-  document.getElementById('vcEarned').innerHTML = earned.toLocaleString() + '<span class="unit">KES</span>';
+  document.getElementById('vcDelivered').innerHTML = myApproved + '<span class="unit">tasks</span>';
 
   document.getElementById('boardCount').textContent = `${openCount} open task${openCount !== 1 ? 's' : ''}`;
 }
@@ -1184,16 +1185,14 @@ function renderTasks() {
   const sorted = [...list];
   if (currentSort === 'newest') {
     sorted.sort((a, b) => (b.postedAt || 0) - (a.postedAt || 0));
-  } else if (currentSort === 'pay-high') {
-    sorted.sort((a, b) => (Number(b.payRate) || 0) - (Number(a.payRate) || 0));
-  } else if (currentSort === 'pay-low') {
-    sorted.sort((a, b) => (Number(a.payRate) || 0) - (Number(b.payRate) || 0));
   } else if (currentSort === 'due') {
     sorted.sort((a, b) => {
       const da = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
       const db = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
       return da - db;
     });
+  } else if (currentSort === 'title') {
+    sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
   }
 
   if (sorted.length === 0) {
@@ -1215,15 +1214,25 @@ function renderTasks() {
   document.getElementById('boardSubtitle').textContent =
     `${sorted.length} open task${sorted.length !== 1 ? 's' : ''} you can claim`;
 
+  const STATUS_LABELS = {
+    open: 'Open',
+    claimed: 'Claimed',
+    working: 'In Progress',
+    submitted: 'In Review',
+    revision: 'Needs Revision',
+    approved: 'Approved',
+    closed: 'Closed'
+  };
+
   grid.innerHTML = sorted.map(t => {
     const cfg = SUITE_CONFIG[t.workspace || t.suite] || { name: 'Suite', icon: 'fa-cube', color: '#0891b2', bgColor: '#cffafe' };
-    const pay = `KES ${Number(t.payRate || 0).toLocaleString()}`;
     const due = t.dueDate ? formatDate(t.dueDate) : '—';
     const slots = t.slots || 1;
     const claimedCount = t.claimedBy ? Object.keys(t.claimedBy).length : 0;
     const available = slots - claimedCount;
     const iClaimed = t.claimedBy && t.claimedBy[currentUser.uid];
     const status = (t.status || 'open').toLowerCase();
+    const statusLabel = STATUS_LABELS[status] || 'Open';
 
     const isNew = t.postedAt && t.postedAt > lastSeenTimestamp && lastSeenTimestamp > 0;
     const cardClass = iClaimed ? 'claimed' : (available <= 0 ? 'slots-full' : '');
@@ -1250,7 +1259,10 @@ function renderTasks() {
           <span><i class="fas fa-user"></i> ${escapeHtml(t.clientName || 'KazInni')}</span>
         </div>
         <div class="task-card-bottom">
-          <span class="task-card-pay">${pay}</span>
+          <span class="task-card-status-pill">
+            <i class="fas fa-circle" style="font-size:0.4rem;"></i>
+            ${escapeHtml(statusLabel)}
+          </span>
           <span class="task-card-slots ${available <= 0 ? 'full' : ''}">
             <i class="fas fa-users"></i> ${claimedCount} / ${slots} slots
           </span>
@@ -1339,10 +1351,6 @@ window.viewTask = function(taskId) {
       <div class="modal-section-title"><i class="fas fa-circle-info"></i> Details</div>
       <div class="detail-list">
         <div class="detail-item">
-          <span class="label">Pay Rate</span>
-          <span class="value" style="font-family:var(--font-display);font-weight:700;color:var(--brand-dark);">KES ${Number(t.payRate || 0).toLocaleString()}</span>
-        </div>
-        <div class="detail-item">
           <span class="label">Category</span>
           <span class="value">${escapeHtml(t.category || '—')}</span>
         </div>
@@ -1392,7 +1400,7 @@ window.claimTask = async function(taskId) {
   const t = allOpenTasks.find(x => x.id === taskId);
   if (!t) { showToast('Task not found', 'error'); return; }
 
-  if (!confirm(`Claim "${t.title || 'this task'}" for KES ${Number(t.payRate || 0).toLocaleString()}?`)) return;
+  if (!confirm(`Claim "${t.title || 'this task'}"?`)) return;
 
   const btn = document.getElementById('claimBtn');
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Claiming…'; }
