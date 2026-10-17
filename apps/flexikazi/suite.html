@@ -67,7 +67,6 @@ body {
   padding-bottom: var(--footer-height);
 }
 
-/* NOSCRIPT */
 .noscript-warning {
   position: fixed; inset: 0; background: white;
   display: flex; align-items: center; justify-content: center;
@@ -129,7 +128,6 @@ body {
   text-transform: uppercase; margin-top: 4px;
 }
 
-/* ---------- NAV (matches index.html) ---------- */
 .nav-links {
   display: flex; gap: 0.3rem; align-items: center;
   padding: 0.3rem;
@@ -495,10 +493,10 @@ body {
   display: flex; flex-direction: column; align-items: flex-end;
   gap: 0.4rem; flex-shrink: 0;
 }
-.task-row-pay {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 1rem; color: var(--text-primary);
-  letter-spacing: -0.02em;
+.task-row-status {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.72rem; color: var(--suite-color);
+  letter-spacing: 0.4px; text-transform: uppercase;
 }
 .task-action-hint {
   font-size: 0.62rem; color: var(--gold-dark);
@@ -1053,10 +1051,10 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon" style="background:#fdf2f8;color:#ec4899;"><i class="fas fa-wallet"></i></div>
+        <div class="stat-icon" style="background:#fdf2f8;color:#ec4899;"><i class="fas fa-flag-checkered"></i></div>
         <div>
-          <div class="stat-value" id="statEarned">0</div>
-          <div class="stat-label">Approved Earnings</div>
+          <div class="stat-value" id="statApproved">0</div>
+          <div class="stat-label">Approved Tasks</div>
         </div>
       </div>
     </div>
@@ -1370,17 +1368,17 @@ async function initPage(user) {
   try {
     const taskerSnap = await database.ref(`taskers/${user.uid}`).once('value');
     if (!taskerSnap.exists()) {
-      showDenied('Not a tasker', 'This account is not registered as a FlexiKazi tasker.');
+      showDenied('Not a contributor', 'This account is not registered as a FlexiKazi contributor.');
       return;
     }
     taskerProfile = taskerSnap.val();
     if (taskerProfile.verified !== true && taskerProfile.status !== 'verified') {
-      showDenied('Pending verification', 'Your tasker account is pending verification.');
+      showDenied('Pending verification', 'Your contributor account is pending verification.');
       return;
     }
   } catch (e) {
-    console.error('Tasker verification failed:', e);
-    showDenied('Verification error', 'Could not verify your tasker account. Please refresh.');
+    console.error('Contributor verification failed:', e);
+    showDenied('Verification error', 'Could not verify your contributor account. Please refresh.');
     return;
   }
 
@@ -1436,13 +1434,12 @@ function renderSuiteHero() {
 }
 
 // ============================================================
-// LISTENERS — indexed queries for efficiency
+// LISTENERS
 // ============================================================
 function setupTaskListener(user) {
   const myEmail = (user.email || '').toLowerCase();
   detachTaskListeners();
 
-  // Primary: indexed query by email
   let attached = false;
   try {
     const ref = database.ref('ekazi_assigned_tasks')
@@ -1475,7 +1472,6 @@ function setupTaskListener(user) {
     console.warn('Indexed task listener failed, falling back:', e);
   }
 
-  // Fallback: full-table listen (only if indexed query failed)
   if (!attached) {
     try {
       const ref = database.ref('ekazi_assigned_tasks');
@@ -1704,9 +1700,24 @@ function renderTaskList(list) {
     return;
   }
 
+  const STATUS_LABELS = {
+    assigned: 'Assigned',
+    new: 'Assigned',
+    started: 'In Progress',
+    'in-progress': 'In Progress',
+    in_progress: 'In Progress',
+    review: 'In Review',
+    pending: 'In Review',
+    ready_to_submit: 'Ready to Submit',
+    revision: 'Needs Revision',
+    approved: 'Approved',
+    completed: 'Completed',
+    rejected: 'Rejected'
+  };
+
   container.innerHTML = list.map(t => {
     const status = (t.status || 'assigned').toLowerCase();
-    const pay = t.payRate ? `KES ${Number(t.payRate).toLocaleString()}` : '—';
+    const statusLabel = STATUS_LABELS[status] || (status.charAt(0).toUpperCase() + status.slice(1));
     const due = t.dueDate ? formatDate(t.dueDate) : '—';
     const submittedAt = t.lastSubmittedAt ? getTimeAgo(t.lastSubmittedAt) : '';
 
@@ -1747,7 +1758,7 @@ function renderTaskList(list) {
           </div>
         </div>
         <div class="task-row-right">
-          <span class="task-row-pay">${pay}</span>
+          <span class="task-row-status">${escapeHtml(statusLabel)}</span>
           ${statusBadge(t.status)}
         </div>
       </div>
@@ -1771,12 +1782,14 @@ function renderEmptyTasks(title, message) {
 // ============================================================
 function updateStats() {
   let open = 0, inProgress = 0, completed = 0, total = allSuiteTasks.length;
-  let earned = 0;
+  let approved = 0;
 
   allSuiteTasks.forEach(t => {
     const s = (t.status || '').toLowerCase();
-    const amount = Number(t.payRate) || 0;
-    if (s === 'approved' || s === 'completed') { completed++; earned += amount; }
+    if (s === 'approved' || s === 'completed') {
+      completed++;
+      if (s === 'approved') approved++;
+    }
     else if (s === 'started' || s === 'in-progress' || s === 'in_progress' || s === 'revision' || s === 'review' || s === 'pending') inProgress++;
     else open++;
   });
@@ -1784,7 +1797,7 @@ function updateStats() {
   document.getElementById('statTotalTasks').textContent = total;
   document.getElementById('statActiveTasks').textContent = open + inProgress;
   document.getElementById('statCompletedTasks').textContent = completed;
-  document.getElementById('statEarned').textContent = earned.toLocaleString();
+  document.getElementById('statApproved').textContent = approved;
 }
 
 // ============================================================
@@ -1792,12 +1805,10 @@ function updateStats() {
 // ============================================================
 function updateCharts() {
   if (typeof Chart === 'undefined') {
-    // Chart.js failed to load — silently skip
     return;
   }
 
   try {
-    // Weekly data
     const now = new Date();
     const weeks = [];
     for (let i = 7; i >= 0; i--) {
@@ -1847,7 +1858,6 @@ function updateCharts() {
       }
     }
 
-    // Status data
     let open = 0, inProgress = 0, review = 0, completed = 0, revision = 0;
     allSuiteTasks.forEach(t => {
       const s = (t.status || '').toLowerCase();
@@ -1987,10 +1997,6 @@ window.viewTask = function(taskId) {
         <span class="value">${escapeHtml(t.clientName || '—')}${t.clientEmail ? `<br><span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(t.clientEmail)}</span>` : ''}</span>
       </div>
       <div class="detail-item">
-        <span class="label">Pay Rate</span>
-        <span class="value" style="font-family:var(--font-display);font-weight:700;color:var(--gold-dark);">KES ${Number(t.payRate || 0).toLocaleString()}</span>
-      </div>
-      <div class="detail-item">
         <span class="label">Due Date</span>
         <span class="value">${escapeHtml(due)}</span>
       </div>
@@ -2104,8 +2110,8 @@ function buildActions(t, status) {
         <div class="action-banner success" style="flex:1;margin:0;">
           <i class="fas fa-check-circle"></i>
           <div>
-            <strong>Task Approved 🎉</strong><br>
-            Payment of KES ${Number(t.payRate || 0).toLocaleString()} will be processed within 48 hours.
+            <strong>Task Approved</strong><br>
+            This task has been reviewed and approved. Thank you for your work.
           </div>
         </div>
       </div>
@@ -2119,7 +2125,7 @@ function buildActions(t, status) {
           <i class="fas fa-clock"></i>
           <div>
             <strong>Awaiting review</strong><br>
-            Your submission is being reviewed. You'll receive an email once there's a decision.
+            Your submission is being reviewed. You'll receive a notification once there's a decision.
           </div>
         </div>
       </div>
