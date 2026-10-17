@@ -1330,7 +1330,7 @@ body {
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-container">
-    <a href="#" class="logo">
+    <a href="/apps/flexikazi/index.html" class="logo">
       <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="FlexiKazi">
       <div class="logo-text">
         <span class="kz">FlexiKazi</span>
@@ -1339,13 +1339,13 @@ body {
     </a>
 
     <nav class="nav-links" id="navLinks" style="display:none;" aria-label="FlexiKazi navigation">
-      <a href="index.html" class="nav-link active">
+      <a href="/apps/flexikazi/index.html" class="nav-link active">
         <i class="fas fa-chart-pie" aria-hidden="true"></i> <span>Dashboard</span>
       </a>
       <a href="#suites" class="nav-link">
         <i class="fas fa-layer-group" aria-hidden="true"></i> <span>Suites</span>
       </a>
-      <a href="../../index.html" class="nav-link">
+      <a href="/index.html" class="nav-link">
         <i class="fas fa-cube" aria-hidden="true"></i> <span>KazInni Suite</span>
       </a>
     </nav>
@@ -1482,7 +1482,7 @@ body {
           <a href="#suites" class="btn btn-gold">
             <i class="fas fa-layer-group"></i> My Suites
           </a>
-          <a href="../../index.html" class="btn btn-ghost" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: white;">
+          <a href="/index.html" class="btn btn-ghost" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: white;">
             <i class="fas fa-cube"></i> KazInni Suite
           </a>
         </div>
@@ -1666,22 +1666,26 @@ try {
 // ============================================================
 // SUITE CONFIG
 // ============================================================
+// Absolute link base so every suite link resolves correctly
+// regardless of which folder the page is loaded from.
+const SUITE_BASE = '/apps/flexikazi/suite.html';
+
 const SUITE_CONFIG = {
-  'brandinn':              { name: 'BrandInn',              desc: 'Branding, projects & business portal', icon: 'fa-building',      color: '#4f46e5', bgColor: '#eef2ff', link: 'suite.html?workspace=brandinn' },
-  'brandinn-print':        { name: 'BrandInn Print',        desc: 'Print orders, jobs & inventory',       icon: 'fa-print',          color: '#db2777', bgColor: '#fdf2f8', link: 'suite.html?workspace=brandinn-print' },
-  'dsog':                  { name: 'DSOG Fashion',          desc: 'Apparel, orders & franchisees',        icon: 'fa-tshirt',         color: '#ec4899', bgColor: '#fdf2f8', link: 'suite.html?workspace=dsog' },
-  'fusion-foods':          { name: 'Fusion Foods',          desc: 'Food supply, orders & dispatch',       icon: 'fa-utensils',       color: '#10b981', bgColor: '#ecfdf5', link: 'suite.html?workspace=fusion-foods' },
-  'mugs-n-dines':          { name: 'Mugs n Dines',          desc: 'Restaurant orders & kitchen flow',     icon: 'fa-utensil-spoon',  color: '#ef4444', bgColor: '#fef2f2', link: 'suite.html?workspace=mugs-n-dines' },
-  'heritage':              { name: 'Heritage Ads',          desc: 'Outdoor advertising & partners',       icon: 'fa-landmark',       color: '#d946ef', bgColor: '#faf5ff', link: 'suite.html?workspace=heritage' },
-  'heritage-marketplace':  { name: 'Heritage Marketplace',  desc: 'Catalogues, partners & orders',        icon: 'fa-store',          color: '#d97706', bgColor: '#fffbeb', link: 'suite.html?workspace=heritage-marketplace' },
-  'heritage-interiors':    { name: 'Heritage Interiors',    desc: 'Interiors, bookings & inventory',      icon: 'fa-couch',          color: '#7c3aed', bgColor: '#f5f3ff', link: 'suite.html?workspace=heritage-interiors' },
-  'digital-services':      { name: 'E-Huduma',              desc: 'Digital applications & processing',    icon: 'fa-laptop-code',    color: '#0ea5e9', bgColor: '#f0f9ff', link: 'suite.html?workspace=digital-services' },
-  'pick-up':               { name: 'Pick-Up Deliveries',    desc: 'Deliveries, riders & dispatch',        icon: 'fa-truck-fast',     color: '#f59e0b', bgColor: '#fffbeb', link: 'suite.html?workspace=pick-up' },
-  'pick-me':               { name: 'Pick-Me Rides',         desc: 'Rides, drivers & bookings',            icon: 'fa-taxi',           color: '#06b6d4', bgColor: '#ecfeff', link: 'suite.html?workspace=pick-me' },
-  'workfit':               { name: 'WorkFit',               desc: 'Fitness clubs, members & schedules',   icon: 'fa-dumbbell',       color: '#22c55e', bgColor: '#f0fdf4', link: 'suite.html?workspace=workfit' },
-  'epitome':               { name: 'Epitome Reviews',       desc: 'Cars, homes & partner listings',       icon: 'fa-car',            color: '#3b82f6', bgColor: '#eff6ff', link: 'suite.html?workspace=epitome' },
-  'ekazi':                 { name: 'FlexiKazi Tasks',       desc: 'Your assigned tasks & submissions',    icon: 'fa-list-check',     color: '#059669', bgColor: '#ecfdf5', link: 'suite.html?workspace=ekazi' },
-  'latter-logistics':      { name: 'Latter Logistics',      desc: 'Intercounty & cross-border shipments', icon: 'fa-ship',           color: '#0891b2', bgColor: '#ecfeff', link: 'suite.html?workspace=latter-logistics' }
+  'brandinn':              { name: 'BrandInn',              desc: 'Branding, projects & business portal', icon: 'fa-building',      color: '#4f46e5', bgColor: '#eef2ff', link: `${SUITE_BASE}?workspace=brandinn` },
+  'brandinn-print':        { name: 'BrandInn Print',        desc: 'Print orders, jobs & inventory',       icon: 'fa-print',          color: '#db2777', bgColor: '#fdf2f8', link: `${SUITE_BASE}?workspace=brandinn-print` },
+  'dsog':                  { name: 'DSOG Fashion',          desc: 'Apparel, orders & franchisees',        icon: 'fa-tshirt',         color: '#ec4899', bgColor: '#fdf2f8', link: `${SUITE_BASE}?workspace=dsog` },
+  'fusion-foods':          { name: 'Fusion Foods',          desc: 'Food supply, orders & dispatch',       icon: 'fa-utensils',       color: '#10b981', bgColor: '#ecfdf5', link: `${SUITE_BASE}?workspace=fusion-foods` },
+  'mugs-n-dines':          { name: 'Mugs n Dines',          desc: 'Restaurant orders & kitchen flow',     icon: 'fa-utensil-spoon',  color: '#ef4444', bgColor: '#fef2f2', link: `${SUITE_BASE}?workspace=mugs-n-dines` },
+  'heritage':              { name: 'Heritage Ads',          desc: 'Outdoor advertising & partners',       icon: 'fa-landmark',       color: '#d946ef', bgColor: '#faf5ff', link: `${SUITE_BASE}?workspace=heritage` },
+  'heritage-marketplace':  { name: 'Heritage Marketplace',  desc: 'Catalogues, partners & orders',        icon: 'fa-store',          color: '#d97706', bgColor: '#fffbeb', link: `${SUITE_BASE}?workspace=heritage-marketplace` },
+  'heritage-interiors':    { name: 'Heritage Interiors',    desc: 'Interiors, bookings & inventory',      icon: 'fa-couch',          color: '#7c3aed', bgColor: '#f5f3ff', link: `${SUITE_BASE}?workspace=heritage-interiors` },
+  'digital-services':      { name: 'E-Huduma',              desc: 'Digital applications & processing',    icon: 'fa-laptop-code',    color: '#0ea5e9', bgColor: '#f0f9ff', link: `${SUITE_BASE}?workspace=digital-services` },
+  'pick-up':               { name: 'Pick-Up Deliveries',    desc: 'Deliveries, riders & dispatch',        icon: 'fa-truck-fast',     color: '#f59e0b', bgColor: '#fffbeb', link: `${SUITE_BASE}?workspace=pick-up` },
+  'pick-me':               { name: 'Pick-Me Rides',         desc: 'Rides, drivers & bookings',            icon: 'fa-taxi',           color: '#06b6d4', bgColor: '#ecfeff', link: `${SUITE_BASE}?workspace=pick-me` },
+  'workfit':               { name: 'WorkFit',               desc: 'Fitness clubs, members & schedules',   icon: 'fa-dumbbell',       color: '#22c55e', bgColor: '#f0fdf4', link: `${SUITE_BASE}?workspace=workfit` },
+  'epitome':               { name: 'Epitome Reviews',       desc: 'Cars, homes & partner listings',       icon: 'fa-car',            color: '#3b82f6', bgColor: '#eff6ff', link: `${SUITE_BASE}?workspace=epitome` },
+  'ekazi':                 { name: 'FlexiKazi Tasks',       desc: 'Your assigned tasks & submissions',    icon: 'fa-list-check',     color: '#059669', bgColor: '#ecfdf5', link: `${SUITE_BASE}?workspace=ekazi` },
+  'latter-logistics':      { name: 'Latter Logistics',      desc: 'Intercounty & cross-border shipments', icon: 'fa-ship',           color: '#0891b2', bgColor: '#ecfeff', link: `${SUITE_BASE}?workspace=latter-logistics` }
 };
 
 // ============================================================
@@ -1827,9 +1831,9 @@ function renderSignedIn(user, tasker, perms) {
         <i class="fas fa-chevron-down"></i>
       </button>
       <div class="user-dropdown-menu" id="userDropdownMenu">
-        <a href="index.html" class="dropdown-item"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <a href="/apps/flexikazi/index.html" class="dropdown-item"><i class="fas fa-chart-pie"></i> Dashboard</a>
         <a href="#suites" class="dropdown-item"><i class="fas fa-layer-group"></i> My Suites</a>
-        <a href="../../index.html" class="dropdown-item"><i class="fas fa-cube"></i> KazInni Suite</a>
+        <a href="/index.html" class="dropdown-item"><i class="fas fa-cube"></i> KazInni Suite</a>
         <div class="divider"></div>
         <button class="dropdown-item danger" onclick="handleSignOut()">
           <i class="fas fa-sign-out-alt"></i> Sign Out
