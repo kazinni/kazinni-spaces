@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ca8a04">
+<meta name="color-scheme" content="light">
+<meta name="description" content="BrandInn — projects, client businesses, print jobs and subscription analytics.">
+<title>BrandInn · Janta</title>
+<link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-light:#fbbf24;--gold-soft:#fef3c7;
+  --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
+  --ink:#0f0f1e;--ink-2:#1a1a2e;
+  --success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;
+  --purple:#8b5cf6;--pink:#ec4899;--cyan:#0891b2;--green:#107c10;
+  --text-primary:#0f0f1e;--text-secondary:#4a4a5e;--text-muted:#6b7280;
+  --border-light:#e9ecef;--border-medium:#d1d5db;
+  --surface:#ffffff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
+  --m365-hover:#f3f2f1;--m365-pressed:#edebe9;--m365-border:#edebe9;
+  --m365-text:#323130;--m365-text-muted:#605e5c;
+  --m365-shadow:0 6.4px 14.4px 0 rgba(0,0,0,0.132),0 1.2px 3.6px 0 rgba(0,0,0,0.108);
+  --header-h:60px;--rail-w:232px;--rail-w-collapsed:68px;
+  --font-display:'Clash Display','Cabinet Grotesk',sans-serif;
+  --font-heading:'Satoshi','Cabinet Grotesk',sans-serif;
+  --font-body:'Satoshi','Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  --radius-sm:4px;--radius-md:8px;--radius-lg:12px;--radius-xl:20px;--radius-pill:100px;
+  --t-fast:0.1s cubic-bezier(0.2,0.8,0.2,1);
+  --t-base:0.2s cubic-bezier(0.2,0.8,0.2,1);
+  --t-slow:0.3s cubic-bezier(0.2,0.8,0.2,1);
+  --shadow-sm:0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.06);
+  --shadow-xl:0 20px 40px -8px rgba(0,0,0,0.1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--font-body);background:var(--surface-2);color:var(--text-primary);line-height:1.6;letter-spacing:-0.005em;overflow-x:hidden;min-height:100vh;min-height:100dvh}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(202,138,4,0.5)}50%{box-shadow:0 0 0 10px rgba(202,138,4,0)}}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes popIn{from{opacity:0;transform:translateY(-4px) scale(0.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes orb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(0.95)}}
+
+/* HEADER */
+.ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,0.96);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--m365-border);padding:0 1rem;display:flex;align-items:center;gap:1rem}
+.ws-header-inner{width:100%;display:flex;align-items:center;gap:1rem}
+.ws-logo{display:flex;align-items:center;gap:0.55rem;text-decoration:none;flex-shrink:0}
+.ws-logo img{height:30px}
+.ws-logo-text{font-family:var(--font-display);font-weight:700;font-size:clamp(1.4rem,1.8vw,1.65rem);letter-spacing:-0.045em;line-height:1;white-space:nowrap;background:var(--gold-gradient);background-size:200% 200%;animation:gradientShift 8s ease infinite;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.ws-rail-toggle{width:36px;height:36px;border-radius:6px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--m365-text);font-size:0.95rem;transition:background var(--t-fast)}
+.ws-rail-toggle:hover{background:var(--m365-hover)}
+.ws-search{flex:1;max-width:520px;position:relative}
+.ws-search input{width:100%;padding:0.5rem 2.3rem 0.5rem 2.3rem;border-radius:4px;border:1px solid var(--border-light);background:var(--surface-3);font-family:var(--font-body);font-size:0.85rem;color:var(--ink);transition:all var(--t-fast)}
+.ws-search input:focus{outline:none;background:#fff;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,0.12)}
+.ws-search > i.fa-magnifying-glass{position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.8rem;pointer-events:none}
+.ws-search-clear{position:absolute;right:0.5rem;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:4px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:0.75rem;transition:background var(--t-fast),color var(--t-fast)}
+.ws-search-clear:hover{background:var(--m365-hover);color:var(--ink)}
+.ws-search-clear.visible{display:flex}
+.ws-search-hint{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--m365-border);border-radius:8px;box-shadow:var(--m365-shadow);max-height:400px;overflow-y:auto;display:none;z-index:1100;animation:popIn 0.15s ease}
+.ws-search-hint.active{display:block}
+.ws-search-hint-group{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);padding:0.7rem 0.9rem 0.35rem;font-family:var(--font-heading)}
+.ws-search-hint-item{display:flex;align-items:center;gap:0.65rem;padding:0.55rem 0.9rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:background var(--t-fast);font-family:var(--font-body)}
+.ws-search-hint-item:hover,.ws-search-hint-item.active{background:var(--m365-hover)}
+.ws-search-hint-thumb{width:36px;height:36px;border-radius:6px;background:var(--surface-3);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;color:var(--gold-dark);font-size:0.85rem;font-family:var(--font-heading);font-weight:700}
+.ws-search-hint-thumb img{width:100%;height:100%;object-fit:cover}
+.ws-search-hint-body{flex:1;min-width:0}
+.ws-search-hint-title{font-family:var(--font-heading);font-size:0.82rem;font-weight:600;color:var(--ink);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-search-hint-meta{font-size:0.7rem;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-search-hint-empty{padding:2rem 1rem;text-align:center;font-size:0.82rem;color:var(--text-muted);font-family:var(--font-heading)}
+.ws-search-hint-empty i{display:block;font-size:1.4rem;color:var(--gold);opacity:0.4;margin-bottom:0.5rem}
+
+.ws-header-right{margin-left:auto;display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
+.ws-icon-btn{width:38px;height:38px;border-radius:4px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--m365-text);font-size:0.95rem;transition:background var(--t-fast);position:relative}
+.ws-icon-btn:hover{background:var(--m365-hover);color:var(--ink)}
+.ws-icon-btn .dot-badge{position:absolute;top:5px;right:5px;min-width:16px;height:16px;padding:0 4px;background:var(--danger);color:#fff;border-radius:var(--radius-pill);border:2px solid #fff;font-size:0.55rem;font-weight:800;display:none;align-items:center;justify-content:center;font-family:var(--font-heading)}
+.ws-icon-btn .dot-badge.visible{display:flex}
+.ws-waffle{width:38px;height:38px;border-radius:4px;background:transparent;border:none;cursor:pointer;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;padding:9px;transition:background var(--t-fast)}
+.ws-waffle:hover{background:var(--m365-hover)}
+.ws-waffle span{width:4px;height:4px;border-radius:1px;background:var(--m365-text);justify-self:center;align-self:center}
+.ws-account-btn{display:flex;align-items:center;gap:0.55rem;padding:0.25rem 0.7rem 0.25rem 0.25rem;border-radius:4px;background:transparent;border:1px solid transparent;cursor:pointer;transition:background var(--t-fast),border-color var(--t-fast);font-family:var(--font-body)}
+.ws-account-btn:hover{background:var(--m365-hover);border-color:var(--m365-border)}
+.ws-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;font-family:var(--font-heading);flex-shrink:0}
+.ws-account-name{font-size:0.82rem;font-weight:600;color:var(--m365-text);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-heading)}
+.ws-btn{padding:0.6rem 1.3rem;border:none;border-radius:var(--radius-pill);font-weight:600;font-size:0.85rem;cursor:pointer;transition:all var(--t-base);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-heading);white-space:nowrap}
+.ws-btn-primary{background:var(--ink);color:#fff;box-shadow:0 4px 14px rgba(15,15,30,0.18);position:relative;overflow:hidden}
+.ws-btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold-gradient);opacity:0;transition:opacity var(--t-base)}
+.ws-btn-primary>*{position:relative;z-index:1}
+.ws-btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(202,138,4,0.3)}
+.ws-btn-primary:hover::before{opacity:1}
+
+/* SHELL */
+body.mode-workspace{background:var(--surface-2)}
+body.mode-workspace .ws-shell{display:grid;grid-template-columns:var(--rail-w) 1fr;min-height:calc(100vh - var(--header-h));transition:grid-template-columns var(--t-base)}
+body.mode-workspace.rail-collapsed .ws-shell{grid-template-columns:var(--rail-w-collapsed) 1fr}
+body.mode-workspace .ws-rail{display:flex;flex-direction:column}
+.ws-rail{background:var(--surface);border-right:1px solid var(--m365-border);padding:0.85rem 0.6rem;gap:0.15rem;overflow-y:auto;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));height:calc(100dvh - var(--header-h))}
+.rail-group{display:flex;flex-direction:column;gap:0.15rem;padding:0.35rem 0}
+.rail-group + .rail-group{border-top:1px solid var(--m365-border);margin-top:0.3rem;padding-top:0.65rem}
+.rail-label{font-family:var(--font-heading);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);padding:0.55rem 0.85rem 0.35rem;white-space:nowrap;overflow:hidden}
+body.rail-collapsed .rail-label{opacity:0;height:0;padding:0}
+.rail-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.85rem;border-radius:4px;color:var(--text-secondary);text-decoration:none;font-family:var(--font-heading);font-size:0.85rem;font-weight:500;transition:background var(--t-fast),color var(--t-fast);cursor:pointer;background:none;border:none;width:100%;text-align:left;white-space:nowrap;position:relative}
+.rail-item:hover{background:var(--m365-hover);color:var(--ink)}
+.rail-item.active{background:rgba(202,138,4,0.1);color:var(--gold-dark);font-weight:600}
+.rail-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--gold-gradient);border-radius:2px}
+.rail-item i{width:18px;text-align:center;font-size:0.92rem;color:var(--text-muted);transition:color var(--t-fast);flex-shrink:0}
+.rail-item:hover i,.rail-item.active i{color:var(--gold)}
+.rail-item .rail-item-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+body.rail-collapsed .rail-item .rail-item-name{display:none}
+body.rail-collapsed .rail-item{justify-content:center;padding:0.7rem 0}
+body.rail-collapsed .rail-item i{font-size:1rem}
+.rail-sub{display:flex;flex-direction:column;gap:0.1rem}
+.rail-sub-item{display:flex;align-items:center;gap:0.7rem;padding:0.5rem 0.85rem 0.5rem 2.4rem;border-radius:4px;color:var(--text-secondary);text-decoration:none;font-size:0.82rem;font-family:var(--font-body);transition:background var(--t-fast),color var(--t-fast);white-space:nowrap}
+.rail-sub-item:hover{background:var(--m365-hover);color:var(--ink)}
+.rail-sub-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+body.rail-collapsed .rail-sub{display:none}
+.rail-spacer{flex:1;min-height:0.5rem}
+
+/* CONTENT */
+.ws-content{padding:1.75rem 2rem;max-width:1500px;width:100%;margin:0 auto}
+body.rail-collapsed .ws-content{padding:1.75rem 2.5rem}
+
+/* HERO */
+.bi-hero{position:relative;overflow:hidden;border-radius:var(--radius-lg);background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 40%,#fde68a 100%);border:1px solid rgba(202,138,4,0.15);padding:2rem 2rem 1.8rem;margin-bottom:1.6rem}
+.bi-hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bi-hero-bg .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;will-change:transform}
+.bi-hero-bg .orb-1{width:340px;height:340px;background:#fbbf24;top:-100px;left:-80px;animation:orb 24s ease-in-out infinite}
+.bi-hero-bg .orb-2{width:280px;height:280px;background:#f59e0b;bottom:-100px;right:-60px;opacity:0.25;animation:orb 28s ease-in-out infinite;animation-delay:-8s}
+.bi-hero-inner{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+.bi-hero-left{max-width:640px}
+.bi-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem;background:#fff;border:1px solid rgba(202,138,4,0.22);border-radius:var(--radius-pill);font-size:0.68rem;font-weight:700;color:var(--gold-dark);margin-bottom:1rem;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 12px rgba(202,138,4,0.08)}
+.bi-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulseDot 2s infinite}
+.bi-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,3vw,2.6rem);font-weight:700;letter-spacing:-0.035em;color:var(--ink);line-height:1.1;margin-bottom:0.6rem}
+.bi-hero h1 .accent{color:var(--gold-dark)}
+.bi-hero-lede{font-size:0.95rem;color:var(--text-secondary);line-height:1.6;max-width:560px;margin-bottom:1.2rem}
+.bi-hero-chips{display:flex;gap:0.4rem;flex-wrap:wrap}
+.bi-chip{display:inline-flex;align-items:center;gap:0.35rem;padding:0.3rem 0.7rem;background:#fff;border:1px solid rgba(202,138,4,0.18);border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:0.72rem;font-weight:600;color:var(--text-secondary)}
+.bi-chip i{color:var(--gold);font-size:0.7rem}
+.bi-hero-actions{display:flex;flex-direction:column;gap:0.5rem;flex-shrink:0}
+.bi-hero-actions .ws-btn{padding:0.55rem 1.1rem;font-size:0.8rem}
+
+/* SECTIONS */
+.bi-section{margin-bottom:1.8rem}
+.bi-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem;gap:1rem;flex-wrap:wrap}
+.bi-section-title{font-family:var(--font-heading);font-size:0.95rem;font-weight:700;color:var(--ink);letter-spacing:-0.01em;display:flex;align-items:center;gap:0.5rem}
+.bi-section-title i{color:var(--gold);font-size:0.85rem}
+.bi-section-action{font-family:var(--font-heading);font-size:0.76rem;font-weight:600;color:var(--gold-dark);text-decoration:none;cursor:pointer;background:none;border:none;transition:color var(--t-fast)}
+.bi-section-action:hover{color:var(--gold)}
+
+/* KPI */
+.bi-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.9rem}
+.bi-kpi{background:#fff;border:1px solid var(--m365-border);border-radius:8px;padding:1.1rem 1.15rem 1rem;position:relative;overflow:hidden;transition:all var(--t-base)}
+.bi-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-gradient);transform:scaleX(0);transform-origin:left;transition:transform var(--t-slow)}
+.bi-kpi:hover::before{transform:scaleX(1)}
+.bi-kpi:hover{transform:translateY(-2px);box-shadow:var(--m365-shadow);border-color:rgba(202,138,4,0.2)}
+.bi-kpi-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem}
+.bi-kpi-icon{width:34px;height:34px;border-radius:6px;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:0.85rem}
+.bi-kpi-icon.blue{background:#eff6ff;color:var(--info)}
+.bi-kpi-icon.green{background:#f0fdf4;color:var(--green)}
+.bi-kpi-icon.rose{background:#fef2f2;color:var(--danger)}
+.bi-kpi-delta{font-family:var(--font-heading);font-size:0.68rem;font-weight:700;display:inline-flex;align-items:center;gap:0.2rem;padding:2px 7px;border-radius:var(--radius-pill)}
+.bi-kpi-delta.up{background:#dcfce7;color:#166534}
+.bi-kpi-delta.down{background:#fee2e2;color:#991b1b}
+.bi-kpi-delta.flat{background:var(--surface-3);color:var(--text-muted)}
+.bi-kpi-value{font-family:var(--font-display);font-size:1.7rem;font-weight:700;color:var(--ink);letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.25rem;display:flex;align-items:baseline;gap:0.3rem}
+.bi-kpi-value.loading{width:60%;height:1.7rem;border-radius:6px;color:transparent;background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+.bi-kpi-label{font-family:var(--font-heading);font-size:0.68rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px}
+.bi-kpi-sub{font-size:0.7rem;color:var(--text-muted);margin-top:0.35rem;font-family:var(--font-heading)}
+
+/* CARDS + CHARTS */
+.bi-chart-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:0.9rem}
+.bi-chart-grid.three{grid-template-columns:repeat(3,1fr)}
+.bi-card{background:#fff;border:1px solid var(--m365-border);border-radius:8px;padding:1.1rem 1.2rem 1.1rem;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:280px}
+.bi-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;gap:0.7rem}
+.bi-card-title{font-family:var(--font-heading);font-size:0.85rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:0.5rem}
+.bi-card-title i{color:var(--gold);font-size:0.8rem}
+.bi-card-meta{font-family:var(--font-heading);font-size:0.7rem;font-weight:600;color:var(--text-muted)}
+.bi-canvas-wrap{position:relative;flex:1;min-height:200px;display:flex;align-items:center;justify-content:center}
+.bi-canvas-wrap canvas{max-width:100%;max-height:100%}
+
+/* TOOLBAR */
+.bi-table-wrap{background:#fff;border:1px solid var(--m365-border);border-radius:8px;overflow:hidden}
+.bi-table-toolbar{display:flex;align-items:center;justify-content:space-between;gap:0.7rem;padding:0.75rem 1rem;border-bottom:1px solid var(--m365-border);background:#faf9f8;flex-wrap:wrap}
+.bi-table-tabs{display:flex;gap:0.2rem;flex-wrap:wrap}
+.bi-tab{padding:0.4rem 0.75rem;border-radius:4px;border:1px solid transparent;background:transparent;font-family:var(--font-heading);font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all var(--t-fast)}
+.bi-tab:hover{background:var(--m365-hover);color:var(--ink)}
+.bi-tab.active{background:#fff;color:var(--gold-dark);border-color:rgba(202,138,4,0.25);box-shadow:var(--shadow-sm)}
+.bi-table-search{position:relative}
+.bi-table-search input{padding:0.4rem 0.75rem 0.4rem 1.9rem;border-radius:4px;border:1px solid var(--border-light);background:#fff;font-family:var(--font-body);font-size:0.78rem;color:var(--ink);transition:all var(--t-fast);width:240px}
+.bi-table-search input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,0.12)}
+.bi-table-search i{position:absolute;left:0.7rem;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.72rem;pointer-events:none}
+
+/* TABLE */
+.bi-table{width:100%;border-collapse:collapse;font-family:var(--font-body);font-size:0.82rem}
+.bi-table th{text-align:left;font-family:var(--font-heading);font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-muted);padding:0.7rem 1rem;border-bottom:1px solid var(--m365-border);background:#faf9f8;white-space:nowrap}
+.bi-table td{padding:0.7rem 1rem;border-bottom:1px solid var(--m365-border);color:var(--text-secondary);vertical-align:middle}
+.bi-table tr:last-child td{border-bottom:none}
+.bi-table tbody tr:hover{background:var(--m365-hover)}
+.bi-table .cell-primary{color:var(--ink);font-weight:600;font-family:var(--font-heading);font-size:0.82rem}
+.bi-table .cell-muted{color:var(--text-muted);font-size:0.76rem}
+.bi-table .cell-num{text-align:right;font-family:var(--font-heading);font-weight:600;color:var(--ink);white-space:nowrap}
+.bi-table-empty{padding:2.5rem 1rem;text-align:center;color:var(--text-muted);font-family:var(--font-heading);font-size:0.82rem}
+.bi-table-empty i{font-size:1.5rem;color:var(--gold);opacity:0.4;display:block;margin-bottom:0.5rem}
+
+.bi-status{display:inline-flex;align-items:center;gap:0.3rem;padding:2px 8px;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;white-space:nowrap}
+.bi-status .tag-dot{width:5px;height:5px;border-radius:50%}
+.bi-status.planning{background:#dbeafe;color:#1e40af}.bi-status.planning .tag-dot{background:#2563eb}
+.bi-status.in-progress{background:#fef3c7;color:#92400e}.bi-status.in-progress .tag-dot{background:#d97706}
+.bi-status.review{background:#ede9fe;color:#6d28d9}.bi-status.review .tag-dot{background:#7c3aed}
+.bi-status.completed{background:#dcfce7;color:#166534}.bi-status.completed .tag-dot{background:#16a34a}
+.bi-status.on-hold{background:#f3f4f6;color:#4b5563}.bi-status.on-hold .tag-dot{background:#9ca3af}
+
+/* BUSINESS DIRECTORY (image grid) */
+.bi-business-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.9rem;padding:1rem}
+.bi-business-card{background:#fff;border:1px solid var(--m365-border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:all var(--t-base);cursor:pointer;position:relative}
+.bi-business-card:hover{transform:translateY(-3px);box-shadow:var(--m365-shadow);border-color:rgba(202,138,4,0.28)}
+.bi-business-card:hover .bi-business-img img{transform:scale(1.06)}
+.bi-business-img{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bi-business-img img{width:100%;height:100%;object-fit:cover;transition:transform var(--t-slow);display:block}
+.bi-business-img .bi-business-placeholder{font-size:2rem;color:rgba(202,138,4,0.35)}
+.bi-business-logo{position:absolute;bottom:-20px;left:0.9rem;width:48px;height:48px;border-radius:8px;border:3px solid #fff;background:var(--surface-2);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--gold-dark);font-family:var(--font-heading);font-weight:700;font-size:1rem;box-shadow:var(--shadow-md)}
+.bi-business-logo img{width:100%;height:100%;object-fit:cover}
+.bi-business-badge{position:absolute;top:8px;right:8px;padding:2px 8px;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;background:#fff;color:var(--gold-dark);border:1px solid rgba(202,138,4,0.2);box-shadow:var(--shadow-sm)}
+.bi-business-badge.suspended{background:#fef2f2;color:#991b1b;border-color:rgba(239,68,68,0.25)}
+.bi-business-body{padding:1.3rem 0.9rem 0.85rem;display:flex;flex-direction:column;gap:0.35rem;flex:1}
+.bi-business-name{font-family:var(--font-heading);font-size:0.88rem;font-weight:700;color:var(--ink);line-height:1.25;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:2.2em}
+.bi-business-tagline{font-size:0.72rem;color:var(--text-muted);font-family:var(--font-heading);line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.bi-business-meta{display:flex;gap:0.35rem;flex-wrap:wrap;margin-top:0.4rem}
+.bi-business-pill{display:inline-flex;align-items:center;gap:0.25rem;padding:1px 7px;border-radius:var(--radius-pill);background:var(--surface-3);font-family:var(--font-heading);font-size:0.62rem;font-weight:600;color:var(--text-secondary)}
+.bi-business-pill.plan{background:var(--gold-soft);color:var(--gold-dark);text-transform:capitalize}
+.bi-business-pill i{font-size:0.55rem}
+.bi-business-empty{padding:3rem 1rem;text-align:center;color:var(--text-muted);font-family:var(--font-heading);font-size:0.85rem}
+.bi-business-empty i{font-size:1.8rem;color:var(--gold);opacity:0.4;display:block;margin-bottom:0.6rem}
+.bi-product-highlight{background:#fef3c7;color:var(--ink);padding:0 2px;border-radius:2px;font-weight:700}
+
+/* BUSINESS LIGHTBOX */
+.bi-lightbox{position:fixed;inset:0;z-index:2500;background:rgba(15,15,30,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:2rem}
+.bi-lightbox.active{display:flex;animation:fadeUp 0.25s cubic-bezier(0.2,0.8,0.2,1)}
+.bi-lightbox-inner{background:#fff;border-radius:12px;overflow:hidden;max-width:760px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 40px 80px rgba(15,15,30,0.4);position:relative}
+.bi-lightbox-cover{position:relative;aspect-ratio:16/7;background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bi-lightbox-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.bi-lightbox-cover .bi-business-placeholder{font-size:4rem;color:rgba(202,138,4,0.3)}
+.bi-lightbox-logo{position:absolute;bottom:-28px;left:1.4rem;width:64px;height:64px;border-radius:10px;border:3px solid #fff;background:var(--surface-2);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--gold-dark);font-family:var(--font-heading);font-weight:700;font-size:1.3rem;box-shadow:var(--shadow-md)}
+.bi-lightbox-logo img{width:100%;height:100%;object-fit:cover}
+.bi-lightbox-body{padding:2rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:0.5rem;overflow-y:auto}
+.bi-lightbox-name{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--ink);letter-spacing:-0.02em;line-height:1.2;padding-right:2.5rem}
+.bi-lightbox-tagline{font-size:0.85rem;color:var(--text-muted);font-style:italic;font-family:var(--font-heading)}
+.bi-lightbox-meta{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;font-size:0.8rem;color:var(--text-secondary);font-family:var(--font-heading);margin-top:0.3rem}
+.bi-lightbox-desc{font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-top:0.6rem;max-height:200px;overflow-y:auto;padding-right:0.3rem}
+.bi-lightbox-desc p{margin-bottom:0.5rem}
+.bi-lightbox-attrs{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.4rem}
+.bi-lightbox-attr{padding:2px 9px;border-radius:var(--radius-pill);background:var(--surface-2);border:1px solid var(--m365-border);font-family:var(--font-heading);font-size:0.68rem;font-weight:600;color:var(--text-secondary)}
+.bi-lightbox-attr strong{color:var(--ink);font-weight:700}
+.bi-lightbox-close{position:absolute;top:0.8rem;right:0.8rem;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,0.95);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.95rem;box-shadow:var(--m365-shadow);transition:all var(--t-fast);z-index:2}
+.bi-lightbox-close:hover{background:var(--ink);color:#fff;transform:scale(1.05)}
+.bi-lightbox-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.8rem}
+.bi-lightbox-stat{background:var(--surface-2);border-radius:6px;padding:0.6rem 0.7rem;border:1px solid var(--m365-border)}
+.bi-lightbox-stat .label{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;font-family:var(--font-heading);font-weight:700}
+.bi-lightbox-stat .value{font-family:var(--font-heading);font-size:1rem;font-weight:700;color:var(--ink);margin-top:2px}
+.bi-lightbox-links{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.8rem}
+.bi-lightbox-link{display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.85rem;border-radius:var(--radius-pill);background:var(--surface-2);border:1px solid var(--m365-border);color:var(--text-secondary);text-decoration:none;font-family:var(--font-heading);font-size:0.72rem;font-weight:600;transition:all var(--t-fast)}
+.bi-lightbox-link:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+.bi-lightbox-link i{font-size:0.7rem}
+
+/* ABOUT */
+.bi-about{background:#fff;border:1px solid var(--m365-border);border-radius:8px;padding:1.4rem 1.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:1.6rem}
+.bi-about h3{font-family:var(--font-heading);font-size:0.95rem;font-weight:700;color:var(--ink);margin-bottom:0.6rem}
+.bi-about p{font-size:0.85rem;color:var(--text-secondary);line-height:1.65;margin-bottom:0.9rem}
+.bi-about-list{display:flex;flex-direction:column;gap:0.65rem}
+.bi-about-item{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.83rem;color:var(--text-secondary)}
+.bi-about-item .num{width:22px;height:22px;border-radius:50%;background:var(--gold-soft);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:0.7rem;font-weight:700;flex-shrink:0;margin-top:0.05rem;border:1px solid rgba(202,138,4,0.2)}
+.bi-about-side{background:var(--surface-2);border-radius:6px;padding:1rem 1.1rem;border:1px solid var(--m365-border)}
+.bi-about-side h4{font-family:var(--font-heading);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:0.6rem}
+.bi-about-side ul{list-style:none;display:flex;flex-direction:column;gap:0.45rem}
+.bi-about-side li{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-secondary)}
+.bi-about-side li i{color:var(--gold);font-size:0.7rem;flex-shrink:0}
+.bi-about-side li strong{color:var(--ink);font-family:var(--font-heading);font-weight:600}
+
+/* SKELETON */
+.bi-skeleton{height:96px;border-radius:6px;background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite}
+.bi-skeleton.tall{height:280px}
+
+/* TOAST */
+.toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:0.5rem;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:#fff;border-radius:6px;padding:0.8rem 1.1rem;box-shadow:var(--m365-shadow);display:flex;align-items:center;gap:0.65rem;font-family:var(--font-heading);font-size:0.85rem;animation:fadeUp 0.3s;max-width:360px;font-weight:500;pointer-events:auto;transition:opacity 0.35s,transform 0.35s}
+.toast i{font-size:0.95rem}
+.toast.success i{color:#34d399}
+.toast.error i{color:#f87171}
+.toast.info i{color:#fbbf24}
+.toast.leaving{opacity:0;transform:translateX(24px)}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  body.mode-workspace .ws-shell{grid-template-columns:var(--rail-w-collapsed) 1fr}
+  body.mode-workspace .rail-item .rail-item-name{display:none}
+  body.mode-workspace .rail-item{justify-content:center;padding:0.7rem 0}
+  body.mode-workspace .rail-item i{font-size:1rem}
+  body.mode-workspace .rail-sub{display:none}
+  body.mode-workspace .rail-label{opacity:0;height:0;padding:0}
+  .bi-kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .bi-chart-grid{grid-template-columns:1fr}
+  .bi-chart-grid.three{grid-template-columns:1fr}
+  .bi-about{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  body.mode-workspace .ws-shell{grid-template-columns:1fr}
+  body.mode-workspace .ws-rail{position:fixed;top:var(--header-h);left:0;bottom:0;width:260px;max-width:82vw;transform:translateX(-100%);transition:transform var(--t-base);z-index:900;box-shadow:var(--m365-shadow)}
+  body.mode-workspace.rail-open .ws-rail{transform:translateX(0)}
+  body.mode-workspace.rail-collapsed .ws-rail{display:flex}
+  body.mode-workspace .rail-item .rail-item-name{display:block}
+  body.mode-workspace .rail-item{justify-content:flex-start;padding:0.6rem 0.85rem}
+  body.mode-workspace .rail-sub{display:flex}
+  body.mode-workspace .rail-label{opacity:1;height:auto;padding:0.55rem 0.85rem 0.35rem}
+  .ws-content{padding:1.25rem}
+  .bi-hero{padding:1.5rem 1.3rem}
+  .bi-hero-actions{flex-direction:row;flex-wrap:wrap}
+  .ws-account-name{display:none}
+  .toast-container{right:12px;left:12px;align-items:stretch}
+  .toast{max-width:none}
+  .bi-lightbox{padding:1rem}
+}
+@media (max-width:560px){
+  .bi-kpi-grid{grid-template-columns:1fr}
+  .bi-table-search input{width:100%}
+  .bi-table{font-size:0.78rem}
+  .bi-table th,.bi-table td{padding:0.6rem 0.7rem}
+  .bi-business-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));padding:0.7rem;gap:0.6rem}
+  .ws-search{max-width:none}
+  .bi-lightbox-stats{grid-template-columns:1fr}
+}
+.rail-backdrop{position:fixed;inset:0;background:rgba(15,15,30,0.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:899;display:none}
+body.rail-open .rail-backdrop{display:block}
+@media (min-width:901px){.rail-backdrop{display:none!important}}
+</style>
+</head>
+<body class="mode-workspace">
+
+<a href="#main" class="sr-only" style="position:absolute;top:8px;left:8px;padding:0.6rem 1rem;background:var(--ink);color:#fff;border-radius:8px;z-index:9999;">Skip to main content</a>
+
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<header class="ws-header">
+  <div class="ws-header-inner">
+    <button type="button" class="ws-rail-toggle" id="railToggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleRail()">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <a href="index.html" class="ws-logo" aria-label="Janta home">
+      <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="">
+      <span class="ws-logo-text">Janta</span>
+    </a>
+    <div class="ws-search" role="search" id="wsSearchWrap">
+      <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" id="wsSearch" placeholder="Search projects, clients, subscriptions…" aria-label="Search BrandInn" autocomplete="off" aria-expanded="false" aria-controls="wsSearchHint">
+      <button type="button" class="ws-search-clear" id="wsSearchClear" aria-label="Clear search"><i class="fas fa-times"></i></button>
+      <div class="ws-search-hint" id="wsSearchHint" role="listbox" aria-label="Search suggestions"></div>
+    </div>
+    <div class="ws-header-right">
+      <button type="button" class="ws-icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+        <i class="far fa-bell" aria-hidden="true"></i>
+        <span class="dot-badge" id="notifBadge" aria-live="polite">0</span>
+      </button>
+      <button type="button" class="ws-waffle" id="waffleBtn" title="App launcher" aria-label="App launcher" aria-haspopup="true" aria-expanded="false" onclick="location.href='index.html'">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+      <div id="headerAccount"></div>
+    </div>
+  </div>
+</header>
+
+<div class="rail-backdrop" id="railBackdrop" onclick="closeRail()" aria-hidden="true"></div>
+
+<div class="ws-shell">
+  <aside class="ws-rail" id="wsRail" aria-label="BrandInn navigation">
+    <div class="rail-group">
+      <a href="index.html" class="rail-item"><i class="fas fa-arrow-left" aria-hidden="true"></i><span class="rail-item-name">Back to Janta</span></a>
+      <button type="button" class="rail-item active" data-nav="overview" onclick="scrollToSection('biOverview')"><i class="fas fa-chart-pie" aria-hidden="true"></i><span class="rail-item-name">Overview</span></button>
+      <button type="button" class="rail-item" data-nav="projects" onclick="scrollToSection('biProjects')"><i class="fas fa-bullseye" aria-hidden="true"></i><span class="rail-item-name">Projects</span></button>
+      <button type="button" class="rail-item" data-nav="clients" onclick="scrollToSection('biClients')"><i class="fas fa-store" aria-hidden="true"></i><span class="rail-item-name">Client businesses</span></button>
+      <button type="button" class="rail-item" data-nav="subscriptions" onclick="scrollToSection('biSubs')"><i class="fas fa-credit-card" aria-hidden="true"></i><span class="rail-item-name">Subscriptions</span></button>
+      <button type="button" class="rail-item" data-nav="about" onclick="scrollToSection('biAbout')"><i class="fas fa-circle-info" aria-hidden="true"></i><span class="rail-item-name">How it works</span></button>
+    </div>
+    <div class="rail-group">
+      <div class="rail-label">Data</div>
+      <div class="rail-sub" id="railApps"></div>
+    </div>
+    <div class="rail-spacer"></div>
+    <div class="rail-group">
+      <button type="button" class="rail-item" onclick="loadAll(true)"><i class="fas fa-arrows-rotate" aria-hidden="true"></i><span class="rail-item-name">Refresh</span></button>
+      <button type="button" class="rail-item" onclick="location.href='index.html'"><i class="fas fa-house" aria-hidden="true"></i><span class="rail-item-name">Home</span></button>
+    </div>
+  </aside>
+
+  <main class="ws-main" id="main">
+    <div class="ws-content" id="wsContent">
+
+      <!-- HERO -->
+      <section class="bi-hero" id="biOverview" aria-labelledby="biHeroTitle">
+        <div class="bi-hero-bg" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+        <div class="bi-hero-inner">
+          <div class="bi-hero-left">
+            <div class="bi-eyebrow"><span class="dot" aria-hidden="true"></span><span>BrandInn · Design & Brand Studio</span></div>
+            <h1 id="biHeroTitle">Build brands that <span class="accent">people remember.</span></h1>
+            <p class="bi-hero-lede">BrandInn is the branding, design and print studio of the Janta portfolio — helping Kenyan SMEs launch, look and grow through identity work, print assets and monthly subscription branding.</p>
+            <div class="bi-hero-chips">
+              <span class="bi-chip"><i class="fas fa-palette" aria-hidden="true"></i> Brand identity</span>
+              <span class="bi-chip"><i class="fas fa-print" aria-hidden="true"></i> Print & design</span>
+              <span class="bi-chip"><i class="fas fa-repeat" aria-hidden="true"></i> Subscription retainers</span>
+              <span class="bi-chip"><i class="fas fa-users" aria-hidden="true"></i> SME clients</span>
+            </div>
+          </div>
+          <div class="bi-hero-actions">
+            <a href="apps/brandinn/" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open operations</a>
+            <a href="#biAbout" class="ws-btn ws-btn-primary" style="background:#fff;color:var(--gold-dark);box-shadow:none;border:1.5px solid rgba(202,138,4,0.25)"><i class="fas fa-circle-info" aria-hidden="true"></i> How it works</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI -->
+      <section class="bi-section" aria-labelledby="biKpiTitle">
+        <div class="bi-section-header">
+          <h2 class="bi-section-title" id="biKpiTitle"><i class="fas fa-chart-line" aria-hidden="true"></i> Key metrics</h2>
+          <span class="bi-section-action" id="biLastUpdated" style="cursor:default;">Loading…</span>
+        </div>
+        <div class="bi-kpi-grid">
+          <div class="bi-kpi">
+            <div class="bi-kpi-head"><div class="bi-kpi-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div><span class="bi-kpi-delta flat" id="biProjectsDelta">—</span></div>
+            <div class="bi-kpi-value loading" id="biTotalProjects">0</div>
+            <div class="bi-kpi-label">Active Projects</div>
+            <div class="bi-kpi-sub" id="biProjectsSub">—</div>
+          </div>
+          <div class="bi-kpi">
+            <div class="bi-kpi-head"><div class="bi-kpi-icon green"><i class="fas fa-store" aria-hidden="true"></i></div><span class="bi-kpi-delta flat" id="biClientsDelta">—</span></div>
+            <div class="bi-kpi-value loading" id="biTotalClients">0</div>
+            <div class="bi-kpi-label">Client Businesses</div>
+            <div class="bi-kpi-sub" id="biClientsSub">—</div>
+          </div>
+          <div class="bi-kpi">
+            <div class="bi-kpi-head"><div class="bi-kpi-icon blue"><i class="fas fa-credit-card" aria-hidden="true"></i></div><span class="bi-kpi-delta flat" id="biSubsDelta">—</span></div>
+            <div class="bi-kpi-value loading" id="biTotalSubs">0</div>
+            <div class="bi-kpi-label">Active Subscriptions</div>
+            <div class="bi-kpi-sub" id="biSubsSub">—</div>
+          </div>
+          <div class="bi-kpi">
+            <div class="bi-kpi-head"><div class="bi-kpi-icon rose"><i class="fas fa-coins" aria-hidden="true"></i></div><span class="bi-kpi-delta flat" id="biRevenueDelta">—</span></div>
+            <div class="bi-kpi-value loading" id="biTotalRevenue">0</div>
+            <div class="bi-kpi-label">Subscription Revenue</div>
+            <div class="bi-kpi-sub" id="biRevenueSub">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHARTS -->
+      <section class="bi-section" aria-labelledby="biChartsTitle">
+        <div class="bi-section-header">
+          <h2 class="bi-section-title" id="biChartsTitle"><i class="fas fa-chart-column" aria-hidden="true"></i> Analytics</h2>
+          <button type="button" class="bi-section-action" onclick="loadAll(true)">Refresh →</button>
+        </div>
+        <div class="bi-chart-grid">
+          <div class="bi-card">
+            <div class="bi-card-head"><div class="bi-card-title"><i class="fas fa-chart-line" aria-hidden="true"></i> Subscription revenue · last 14 days</div><div class="bi-card-meta" id="biRevenueChartMeta">—</div></div>
+            <div class="bi-canvas-wrap"><canvas id="biRevenueChart" aria-label="Revenue over time"></canvas></div>
+          </div>
+          <div class="bi-card">
+            <div class="bi-card-head"><div class="bi-card-title"><i class="fas fa-chart-pie" aria-hidden="true"></i> Projects by status</div><div class="bi-card-meta" id="biStatusChartMeta">—</div></div>
+            <div class="bi-canvas-wrap"><canvas id="biStatusChart" aria-label="Project status breakdown"></canvas></div>
+          </div>
+        </div>
+        <div class="bi-chart-grid three" style="margin-top:0.9rem;">
+          <div class="bi-card">
+            <div class="bi-card-head"><div class="bi-card-title"><i class="fas fa-bullseye" aria-hidden="true"></i> Top service types</div><div class="bi-card-meta">By project count</div></div>
+            <div class="bi-canvas-wrap"><canvas id="biServicesChart" aria-label="Top service types"></canvas></div>
+          </div>
+          <div class="bi-card">
+            <div class="bi-card-head"><div class="bi-card-title"><i class="fas fa-credit-card" aria-hidden="true"></i> Plan distribution</div><div class="bi-card-meta">Client subscriptions</div></div>
+            <div class="bi-canvas-wrap"><canvas id="biPlansChart" aria-label="Plan distribution"></canvas></div>
+          </div>
+          <div class="bi-card">
+            <div class="bi-card-head"><div class="bi-card-title"><i class="fas fa-check-circle" aria-hidden="true"></i> Delivery rate</div><div class="bi-card-meta">Last 14 days</div></div>
+            <div class="bi-canvas-wrap"><canvas id="biPerfChart" aria-label="Delivery performance"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="bi-section" id="biProjects" aria-labelledby="biProjectsTitle">
+        <div class="bi-section-header">
+          <h2 class="bi-section-title" id="biProjectsTitle"><i class="fas fa-bullseye" aria-hidden="true"></i> Projects</h2>
+          <span class="bi-section-action" id="biProjectsCount" style="cursor:default;">—</span>
+        </div>
+        <div class="bi-table-wrap">
+          <div class="bi-table-toolbar">
+            <div class="bi-table-tabs" id="biProjectTabs">
+              <button type="button" class="bi-tab active" data-filter="all">All</button>
+              <button type="button" class="bi-tab" data-filter="planning">Planning</button>
+              <button type="button" class="bi-tab" data-filter="in-progress">In progress</button>
+              <button type="button" class="bi-tab" data-filter="review">Review</button>
+              <button type="button" class="bi-tab" data-filter="completed">Completed</button>
+              <button type="button" class="bi-tab" data-filter="on-hold">On hold</button>
+            </div>
+            <div class="bi-table-search">
+              <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="biProjectSearch" placeholder="Search projects…" aria-label="Search projects" autocomplete="off">
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="bi-table" id="biProjectsTable">
+              <thead><tr><th>Project</th><th>Business</th><th>Service</th><th>Priority</th><th>Status</th><th>Target</th></tr></thead>
+              <tbody id="biProjectsBody"><tr><td colspan="6" class="bi-table-empty"><i class="fas fa-circle-notch fa-spin"></i>Loading projects…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLIENT BUSINESSES — image directory with search -->
+      <section class="bi-section" id="biClients" aria-labelledby="biClientsTitle">
+        <div class="bi-section-header">
+          <h2 class="bi-section-title" id="biClientsTitle"><i class="fas fa-store" aria-hidden="true"></i> Client businesses</h2>
+          <span class="bi-section-action" id="biClientsCount" style="cursor:default;">—</span>
+        </div>
+        <div class="bi-table-wrap">
+          <div class="bi-table-toolbar">
+            <div class="bi-table-tabs" id="biPlanTabs">
+              <button type="button" class="bi-tab active" data-plan="all">All</button>
+            </div>
+            <div class="bi-table-search">
+              <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="biClientSearch" placeholder="Search businesses, industries, plans…" aria-label="Search client businesses" autocomplete="off">
+            </div>
+          </div>
+          <div class="bi-business-grid" id="biBusinessGrid" role="list">
+            <div class="bi-skeleton" style="grid-column:1/-1;height:180px;"></div>
+          </div>
+          <div class="bi-business-empty" id="biBusinessEmpty" hidden>
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+            <div>No businesses match your search</div>
+            <button type="button" class="bi-tab active" onclick="clearClientSearch()" style="margin-top:0.7rem;">Clear search</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUBSCRIPTIONS TABLE -->
+      <section class="bi-section" id="biSubs" aria-labelledby="biSubsTitle">
+        <div class="bi-section-header">
+          <h2 class="bi-section-title" id="biSubsTitle"><i class="fas fa-credit-card" aria-hidden="true"></i> Recent subscription payments</h2>
+          <span class="bi-section-action" id="biSubsCount" style="cursor:default;">—</span>
+        </div>
+        <div class="bi-table-wrap">
+          <div style="overflow-x:auto;">
+            <table class="bi-table" id="biSubsTable">
+              <thead><tr><th>Business</th><th>Plan</th><th>Action</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="biSubsBody"><tr><td colspan="6" class="bi-table-empty"><i class="fas fa-circle-notch fa-spin"></i>Loading subscriptions…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="bi-section" id="biAbout" aria-labelledby="biAboutTitle">
+        <div class="bi-section-header"><h2 class="bi-section-title" id="biAboutTitle"><i class="fas fa-circle-info" aria-hidden="true"></i> How BrandInn works</h2></div>
+        <div class="bi-about">
+          <div>
+            <h3>From brief to brand</h3>
+            <p>BrandInn is a full-service branding studio built for Kenyan SMEs. Every client gets a public brand page, an active project pipeline, and access to print and design production — all tracked in one place.</p>
+            <div class="bi-about-list">
+              <div class="bi-about-item"><span class="num">1</span><div><strong>A client signs up</strong> and picks a plan — Basic, Standard or Complete Branding.</div></div>
+              <div class="bi-about-item"><span class="num">2</span><div><strong>A project is created</strong> with milestones, a service type and target date.</div></div>
+              <div class="bi-about-item"><span class="num">3</span><div><strong>Work is dispatched</strong> to a tasker or Kasikazi board — design, print or content.</div></div>
+              <div class="bi-about-item"><span class="num">4</span><div><strong>Deliverables ship</strong> — logos, banners, business cards, websites or social content.</div></div>
+            </div>
+          </div>
+          <div class="bi-about-side">
+            <h4>At a glance</h4>
+            <ul>
+              <li><i class="fas fa-store" aria-hidden="true"></i> <span><strong id="biAboutClientCount">0</strong> client businesses</span></li>
+              <li><i class="fas fa-bullseye" aria-hidden="true"></i> <span><strong id="biAboutProjectCount">0</strong> total projects</span></li>
+              <li><i class="fas fa-credit-card" aria-hidden="true"></i> <span><strong>3</strong> subscription tiers</span></li>
+              <li><i class="fas fa-palette" aria-hidden="true"></i> <span><strong>Brand, print, web</strong> & content</span></li>
+              <li><i class="fas fa-mobile-screen" aria-hidden="true"></i> <span><strong>M-Pesa</strong> & manual invoicing</span></li>
+              <li><i class="fas fa-clock" aria-hidden="true"></i> <span>Typical project: <strong>1–3 weeks</strong></span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- BUSINESS LIGHTBOX -->
+<div class="bi-lightbox" id="biLightbox" role="dialog" aria-modal="true" aria-labelledby="biLightboxTitle" aria-hidden="true">
+  <div class="bi-lightbox-inner">
+    <button type="button" class="bi-lightbox-close" onclick="closeLightbox()" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="bi-lightbox-cover" id="biLightboxCover"></div>
+    <div class="bi-lightbox-body">
+      <div class="bi-lightbox-name" id="biLightboxTitle">Business</div>
+      <div class="bi-lightbox-tagline" id="biLightboxTagline"></div>
+      <div class="bi-lightbox-meta" id="biLightboxMeta"></div>
+      <div class="bi-lightbox-stats" id="biLightboxStats"></div>
+      <div class="bi-lightbox-attrs" id="biLightboxAttrs"></div>
+      <div class="bi-lightbox-desc" id="biLightboxDesc"></div>
+      <div class="bi-lightbox-links" id="biLightboxLinks"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js" defer></script>
+<script>
+'use strict';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
+  authDomain: "mugera-e51cc.firebaseapp.com",
+  databaseURL: "https://mugera-e51cc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mugera-e51cc"
+};
+
+const BI = { color: '#ca8a04', colorDark: '#a16207', colorLight: '#fbbf24', chartDays: 14, tablePageSize: 40, searchDebounceMs: 180 };
+
+let currentUser = null;
+let currentPerms = {};
+let allProjects = [];
+let allBusinesses = [];
+let allSubs = [];
+let filteredProjects = [];
+let filteredBusinesses = [];
+let activeProjectFilter = 'all';
+let activePlanFilter = 'all';
+let projectSearchQuery = '';
+let clientSearchQuery = '';
+let activeCharts = [];
+let projectSearchDebounce = null;
+let clientSearchDebounce = null;
+let globalSearchDebounce = null;
+let activeLightboxBusiness = null;
+let lastFocusedBeforeLightbox = null;
+
+/* ============================================================
+   UTILS
+   ============================================================ */
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  if (!c) return;
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span></span>`;
+  t.querySelector('span').textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
+}
+
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeRegex(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function highlightMatch(text, query) {
+  if (!query || !text) return escapeHtml(text);
+  const safe = escapeHtml(text);
+  const re = new RegExp(`(${escapeRegex(query)})`, 'ig');
+  return safe.replace(re, '<span class="bi-product-highlight">$1</span>');
+}
+
+function formatKes(n) {
+  const v = Number(n) || 0;
+  if (v >= 1000000) return 'KSh ' + (v / 1000000).toFixed(2) + 'M';
+  if (v >= 1000) return 'KSh ' + (v / 1000).toFixed(1) + 'K';
+  return 'KSh ' + v.toLocaleString();
+}
+function formatKesExact(n) { return 'KSh ' + (Number(n) || 0).toLocaleString(); }
+
+function formatDate(ts) {
+  if (!ts) return '—';
+  try { return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+  catch (e) { return '—'; }
+}
+function getInitials(name) {
+  if (!name) return '?';
+  const parts = String(name).trim().split(/[\s._-]+/).filter(Boolean);
+  if (!parts.length) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+function pluralize(n, w) { return `${n} ${w}${n === 1 ? '' : 's'}`; }
+
+function projectStatusLabel(s) {
+  const v = String(s || 'planning').toLowerCase();
+  const map = { planning: 'Planning', 'in-progress': 'In progress', review: 'Review', completed: 'Completed', 'on-hold': 'On hold', cancelled: 'Cancelled' };
+  return map[v] || v;
+}
+function projectStatusClass(s) {
+  const v = String(s || 'planning').toLowerCase();
+  if (['completed'].includes(v)) return 'completed';
+  if (['cancelled'].includes(v)) return 'cancelled';
+  if (['in-progress'].includes(v)) return 'in-progress';
+  if (['review'].includes(v)) return 'review';
+  if (['on-hold'].includes(v)) return 'on-hold';
+  return 'planning';
+}
+function priorityLabel(p) {
+  const v = String(p || 'medium').toLowerCase();
+  const map = { low: 'Low', medium: 'Medium', high: 'High', urgent: 'Urgent' };
+  return map[v] || v;
+}
+function planLabel(p) {
+  const v = String(p || 'basic').toLowerCase();
+  const map = { basic: 'Basic', standard: 'Standard', complete_branding: 'Complete Branding', complete_branding_800: 'Complete Branding', premium: 'Premium' };
+  return map[v] || v;
+}
+function actionLabel(a) {
+  const v = String(a || '').toLowerCase();
+  const map = { subscribe: 'Subscribe', renew: 'Renew', change_plan: 'Change plan', suspend: 'Suspend', reactivate: 'Reactivate', manual_invoice: 'Manual invoice' };
+  return map[v] || v;
+}
+function businessImage(b) {
+  if (!b) return null;
+  const page = b.pageData || {};
+  const biz = page.business || {};
+  const candidates = [
+    biz.heroImage, biz.coverImage, biz.image,
+    page.heroImage, page.coverImage,
+    (Array.isArray(page.hero?.slides) && page.hero.slides[0]?.img) || null,
+    b.heroImage, b.coverImage
+  ];
+  for (const c of candidates) {
+    if (c && typeof c === 'string' && /^https?:\/\//.test(c.trim())) return c.trim();
+  }
+  return null;
+}
+function businessLogo(b) {
+  if (!b) return null;
+  const page = b.pageData || {};
+  const candidates = [
+    b.logo, (page.business || {}).logo
+  ];
+  for (const c of candidates) {
+    if (c && typeof c === 'string' && /^https?:\/\//.test(c.trim())) return c.trim();
+  }
+  return null;
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  setupKeyboardHandlers();
+  setupGlobalSearch();
+  setupProjectFilters();
+  setupClientFilters();
+  setupLightbox();
+  bootFirebase();
+});
+
+function setupKeyboardHandlers() {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeRail(); closeGlobalSearch();
+      if (activeLightboxBusiness) { closeLightbox(); return; }
+      const ps = document.getElementById('biProjectSearch');
+      if (ps && ps.value) { ps.value = ''; projectSearchQuery = ''; applyProjectFilter(); }
+      const cs = document.getElementById('biClientSearch');
+      if (cs && cs.value) { cs.value = ''; clientSearchQuery = ''; applyClientFilter(); }
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      const s = document.getElementById('wsSearch');
+      if (s) { s.focus(); s.select(); }
+    }
+  });
+}
+
+/* ============================================================
+   GLOBAL SEARCH
+   ============================================================ */
+function setupGlobalSearch() {
+  const input = document.getElementById('wsSearch');
+  const clear = document.getElementById('wsSearchClear');
+  const hint = document.getElementById('wsSearchHint');
+  if (!input || !hint) return;
+  input.addEventListener('input', () => {
+    clearTimeout(globalSearchDebounce);
+    const q = input.value.trim();
+    if (clear) clear.classList.toggle('visible', !!q);
+    if (!q) { closeGlobalSearch(); return; }
+    globalSearchDebounce = setTimeout(() => renderGlobalSearchHint(q), 140);
+  });
+  input.addEventListener('focus', () => { const q = input.value.trim(); if (q) renderGlobalSearchHint(q); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); const q = input.value.trim(); if (q) jumpToFirstResult(q); }
+  });
+  if (clear) clear.addEventListener('click', () => {
+    input.value = ''; clear.classList.remove('visible'); closeGlobalSearch(); input.focus();
+  });
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('wsSearchWrap');
+    if (wrap && !wrap.contains(e.target)) closeGlobalSearch();
+  });
+}
+
+function renderGlobalSearchHint(query) {
+  const hint = document.getElementById('wsSearchHint');
+  const input = document.getElementById('wsSearch');
+  if (!hint || !input) return;
+  const q = query.toLowerCase();
+
+  const projectMatches = allProjects.filter(p => {
+    const hay = [p.projectName, p.businessName, p.serviceType, p.description, p.priority, p.status].filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(q);
+  }).slice(0, 4);
+
+  const clientMatches = allBusinesses.filter(b => {
+    const hay = [b.name, b.businessName, b.tagline, b.category, b.industry, b.email, b.phone, b.plan].filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(q);
+  }).slice(0, 3);
+
+  const subMatches = allSubs.filter(s => {
+    const hay = [s.businessName, s.email, s.tier, s.action, s.plan].filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(q);
+  }).slice(0, 3);
+
+  if (!projectMatches.length && !clientMatches.length && !subMatches.length) {
+    hint.innerHTML = `<div class="ws-search-hint-empty"><i class="fas fa-magnifying-glass" aria-hidden="true"></i><div>No matches for “${escapeHtml(query)}”</div></div>`;
+    hint.classList.add('active');
+    input.setAttribute('aria-expanded', 'true');
+    return;
+  }
+
+  let html = '';
+  if (clientMatches.length) {
+    html += `<div class="ws-search-hint-group">Client businesses</div>`;
+    html += clientMatches.map(b => {
+      const logo = businessLogo(b);
+      const initials = getInitials(b.businessName || b.name);
+      const thumb = logo
+        ? `<div class="ws-search-hint-thumb"><img src="${escapeHtml(logo)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='${escapeHtml(initials)}';"></div>`
+        : `<div class="ws-search-hint-thumb">${escapeHtml(initials)}</div>`;
+      return `<button type="button" class="ws-search-hint-item" onclick="focusBusiness('${escapeHtml(b.id)}')" role="option">
+        ${thumb}
+        <div class="ws-search-hint-body">
+          <div class="ws-search-hint-title">${highlightMatch(b.businessName || b.name, query)}</div>
+          <div class="ws-search-hint-meta">${escapeHtml(planLabel(b.plan))} · ${escapeHtml(b.category || b.industry || '')}</div>
+        </div>
+      </button>`;
+    }).join('');
+  }
+  if (projectMatches.length) {
+    html += `<div class="ws-search-hint-group">Projects</div>`;
+    html += projectMatches.map(p => `
+      <button type="button" class="ws-search-hint-item" onclick="focusProject('${escapeHtml(p.id)}')" role="option">
+        <div class="ws-search-hint-thumb"><i class="fas fa-bullseye"></i></div>
+        <div class="ws-search-hint-body">
+          <div class="ws-search-hint-title">${highlightMatch(p.projectName || 'Project', query)}</div>
+          <div class="ws-search-hint-meta">${escapeHtml(p.businessName || '')} · ${escapeHtml(projectStatusLabel(p.status))}</div>
+        </div>
+      </button>
+    `).join('');
+  }
+  if (subMatches.length) {
+    html += `<div class="ws-search-hint-group">Subscriptions</div>`;
+    html += subMatches.map(s => `
+      <button type="button" class="ws-search-hint-item" onclick="focusSub('${escapeHtml(s.id)}')" role="option">
+        <div class="ws-search-hint-thumb"><i class="fas fa-credit-card"></i></div>
+        <div class="ws-search-hint-body">
+          <div class="ws-search-hint-title">${highlightMatch(s.businessName || 'Subscription', query)}</div>
+          <div class="ws-search-hint-meta">${escapeHtml(planLabel(s.tier))} · ${formatKes(s.amount)} · ${escapeHtml(actionLabel(s.action))}</div>
+        </div>
+      </button>
+    `).join('');
+  }
+  hint.innerHTML = html;
+  hint.classList.add('active');
+  input.setAttribute('aria-expanded', 'true');
+}
+
+function closeGlobalSearch() {
+  const hint = document.getElementById('wsSearchHint');
+  const input = document.getElementById('wsSearch');
+  if (hint) hint.classList.remove('active');
+  if (input) input.setAttribute('aria-expanded', 'false');
+}
+function focusBusiness(id) {
+  closeGlobalSearch();
+  const b = allBusinesses.find(x => x.id === id);
+  if (!b) return;
+  const si = document.getElementById('biClientSearch');
+  if (si) si.value = '';
+  clientSearchQuery = ''; activePlanFilter = 'all';
+  document.querySelectorAll('#biPlanTabs .bi-tab').forEach(t => t.classList.toggle('active', t.dataset.plan === 'all'));
+  applyClientFilter();
+  scrollToSection('biClients');
+  setTimeout(() => openLightbox(b), 200);
+}
+function focusProject(id) {
+  closeGlobalSearch();
+  const p = allProjects.find(x => x.id === id);
+  if (!p) return;
+  const si = document.getElementById('biProjectSearch');
+  if (si) si.value = '';
+  projectSearchQuery = ''; activeProjectFilter = 'all';
+  document.querySelectorAll('#biProjectTabs .bi-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === 'all'));
+  applyProjectFilter();
+  scrollToSection('biProjects');
+}
+function focusSub(id) {
+  closeGlobalSearch();
+  scrollToSection('biSubs');
+}
+function jumpToFirstResult(query) {
+  const q = query.toLowerCase();
+  const b = allBusinesses.find(x => [x.businessName, x.name, x.category, x.industry].filter(Boolean).join(' ').toLowerCase().includes(q));
+  if (b) { focusBusiness(b.id); return; }
+  const p = allProjects.find(x => [x.projectName, x.businessName, x.serviceType].filter(Boolean).join(' ').toLowerCase().includes(q));
+  if (p) { focusProject(p.id); return; }
+  showToast(`No matches for “${query}”`, 'info');
+  closeGlobalSearch();
+}
+
+/* ============================================================
+   PROJECT FILTERS
+   ============================================================ */
+function setupProjectFilters() {
+  document.querySelectorAll('#biProjectTabs .bi-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#biProjectTabs .bi-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeProjectFilter = tab.dataset.filter || 'all';
+      applyProjectFilter();
+    });
+  });
+  const search = document.getElementById('biProjectSearch');
+  if (search) {
+    search.addEventListener('input', () => {
+      clearTimeout(projectSearchDebounce);
+      projectSearchDebounce = setTimeout(() => {
+        projectSearchQuery = search.value.trim().toLowerCase();
+        applyProjectFilter();
+      }, BI.searchDebounceMs);
+    });
+  }
+}
+function applyProjectFilter() {
+  filteredProjects = allProjects.filter(p => {
+    const s = String(p.status || 'planning').toLowerCase();
+    if (activeProjectFilter !== 'all' && s !== activeProjectFilter) return false;
+    if (projectSearchQuery) {
+      const hay = [p.projectName, p.businessName, p.serviceType, p.description, p.priority].filter(Boolean).join(' ').toLowerCase();
+      if (!hay.includes(projectSearchQuery)) return false;
+    }
+    return true;
+  });
+  renderProjectTable();
+}
+
+/* ============================================================
+   CLIENT FILTERS
+   ============================================================ */
+function setupClientFilters() {
+  const search = document.getElementById('biClientSearch');
+  if (search) {
+    search.addEventListener('input', () => {
+      clearTimeout(clientSearchDebounce);
+      clientSearchDebounce = setTimeout(() => {
+        clientSearchQuery = search.value.trim().toLowerCase();
+        applyClientFilter();
+      }, BI.searchDebounceMs);
+    });
+  }
+}
+function buildPlanTabs() {
+  const container = document.getElementById('biPlanTabs');
+  if (!container) return;
+  const plans = Array.from(new Set(allBusinesses.map(b => String(b.plan || '').trim()).filter(Boolean))).sort();
+  const currentActive = activePlanFilter;
+  let html = `<button type="button" class="bi-tab ${currentActive === 'all' ? 'active' : ''}" data-plan="all">All <span style="opacity:0.6;font-weight:500;">(${allBusinesses.length})</span></button>`;
+  html += plans.map(p => {
+    const count = allBusinesses.filter(b => String(b.plan || '').trim() === p).length;
+    return `<button type="button" class="bi-tab ${currentActive === p ? 'active' : ''}" data-plan="${escapeHtml(p)}">${escapeHtml(planLabel(p))} <span style="opacity:0.6;font-weight:500;">(${count})</span></button>`;
+  }).join('');
+  container.innerHTML = html;
+  container.querySelectorAll('.bi-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      container.querySelectorAll('.bi-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activePlanFilter = tab.dataset.plan || 'all';
+      applyClientFilter();
+    });
+  });
+}
+function applyClientFilter() {
+  filteredBusinesses = allBusinesses.filter(b => {
+    if (activePlanFilter !== 'all' && String(b.plan || '').trim() !== activePlanFilter) return false;
+    if (clientSearchQuery) {
+      const hay = [b.businessName, b.name, b.tagline, b.category, b.industry, b.plan, b.email].filter(Boolean).join(' ').toLowerCase();
+      if (!hay.includes(clientSearchQuery)) return false;
+    }
+    return true;
+  });
+  renderBusinessGrid();
+}
+function clearClientSearch() {
+  const search = document.getElementById('biClientSearch');
+  if (search) search.value = '';
+  clientSearchQuery = ''; activePlanFilter = 'all';
+  document.querySelectorAll('#biPlanTabs .bi-tab').forEach(t => t.classList.toggle('active', t.dataset.plan === 'all'));
+  applyClientFilter();
+}
+
+/* ============================================================
+   FIREBASE
+   ============================================================ */
+function bootFirebase() {
+  if (typeof firebase === 'undefined') {
+    console.warn('Firebase SDK failed to load');
+    showToast('Could not load data service', 'error');
+    renderEmpty();
+    return;
+  }
+  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); }
+  catch (e) { console.warn('Firebase init error:', e); }
+  const auth = firebase.auth();
+  const db = firebase.database();
+  window._auth = auth; window._db = db;
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  auth.onAuthStateChanged(handleAuth);
+}
+async function handleAuth(user) {
+  const db = window._db;
+  if (!user) {
+    currentUser = null; currentPerms = {};
+    renderAccountButton();
+    showToast('Sign in to view BrandInn analytics', 'info');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    return;
+  }
+  currentUser = user;
+  try {
+    const snap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
+    currentPerms = snap.exists() ? (snap.val() || {}) : {};
+  } catch (e) { currentPerms = {}; }
+
+  renderAccountButton();
+  const allowed = currentPerms.brandinn === true || currentPerms.admins === true;
+  if (!allowed) {
+    showToast('You do not have access to BrandInn', 'error');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    return;
+  }
+  loadAll();
+}
+
+function toggleRail() {
+  if (window.innerWidth <= 900) document.body.classList.toggle('rail-open');
+  else document.body.classList.toggle('rail-collapsed');
+  const expanded = document.body.classList.contains('rail-open') || !document.body.classList.contains('rail-collapsed');
+  const btn = document.getElementById('railToggle');
+  if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+}
+function closeRail() { document.body.classList.remove('rail-open'); }
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.rail-item[data-nav]').forEach(el => el.classList.remove('active'));
+  const map = { biOverview: 'overview', biProjects: 'projects', biClients: 'clients', biSubs: 'subscriptions', biAbout: 'about' };
+  const nav = document.querySelector(`.rail-item[data-nav="${map[id] || ''}"]`);
+  if (nav) nav.classList.add('active');
+  closeRail();
+}
+function renderAccountButton() {
+  const c = document.getElementById('headerAccount');
+  if (!c) return;
+  if (!currentUser) {
+    c.innerHTML = `<a href="index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-right-to-bracket"></i><span>Sign in</span></a>`;
+    return;
+  }
+  const name = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
+  const initials = getInitials(name);
+  c.innerHTML = `
+    <div class="ws-account-wrap" style="position:relative;">
+      <button type="button" class="ws-account-btn" onclick="location.href='account.html'" aria-label="Account">
+        <div class="ws-avatar">${escapeHtml(initials)}</div>
+        <span class="ws-account-name">${escapeHtml(name)}</span>
+      </button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   LOAD ALL
+   ============================================================ */
+async function loadAll(manual = false) {
+  const db = window._db;
+  if (!db || !currentUser) return;
+  if (manual) showToast('Refreshing data…', 'info');
+  await Promise.all([loadProjects(), loadBusinesses(), loadSubs()]);
+  updateKpis();
+  renderCharts();
+  buildPlanTabs();
+  applyProjectFilter();
+  applyClientFilter();
+  renderSubsTable();
+  updateAboutCounts();
+  updateLastUpdated();
+}
+function updateLastUpdated() {
+  const el = document.getElementById('biLastUpdated');
+  if (el) el.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
+function updateAboutCounts() {
+  const cc = document.getElementById('biAboutClientCount');
+  const pc = document.getElementById('biAboutProjectCount');
+  if (cc) cc.textContent = allBusinesses.length || '0';
+  if (pc) pc.textContent = allProjects.length || '0';
+}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+async function loadProjects() {
+  const db = window._db;
+  try {
+    const snap = await db.ref('brandinn_projects').once('value');
+    const val = snap.val() || {};
+    allProjects = Object.entries(val).map(([id, p]) => ({
+      id, ...p,
+      projectName: p.projectName || 'Untitled project',
+      businessName: p.businessName || '—',
+      serviceType: p.serviceType || '—',
+      status: p.status || 'planning',
+      priority: p.priority || 'medium',
+      budget: Number(p.budget) || 0,
+      _ts: Number(p.createdAt || p.updatedAt || p.timestamp) || 0
+    })).sort((a, b) => b._ts - a._ts);
+  } catch (e) { console.warn('projects read failed:', e); allProjects = []; }
+}
+function renderProjectTable() {
+  const body = document.getElementById('biProjectsBody');
+  const count = document.getElementById('biProjectsCount');
+  if (count) count.textContent = pluralize(allProjects.length, 'project');
+  if (!body) return;
+  if (filteredProjects.length === 0) {
+    body.innerHTML = `<tr><td colspan="6" class="bi-table-empty"><i class="fas fa-inbox"></i>No projects match this filter</td></tr>`;
+    return;
+  }
+  body.innerHTML = filteredProjects.slice(0, BI.tablePageSize).map(p => `
+    <tr>
+      <td><span class="cell-primary">${escapeHtml(p.projectName)}</span><br><span class="cell-muted">${escapeHtml(p.description || '').slice(0, 60)}${(p.description || '').length > 60 ? '…' : ''}</span></td>
+      <td><span class="cell-muted">${escapeHtml(p.businessName)}</span></td>
+      <td><span class="cell-muted">${escapeHtml(p.serviceType)}</span></td>
+      <td><span class="cell-muted" style="text-transform:capitalize;">${escapeHtml(priorityLabel(p.priority))}</span></td>
+      <td><span class="bi-status ${projectStatusClass(p.status)}"><span class="tag-dot"></span>${escapeHtml(projectStatusLabel(p.status))}</span></td>
+      <td><span class="cell-muted">${escapeHtml(p.targetDate || '—')}</span></td>
+    </tr>
+  `).join('');
+}
+
+/* ============================================================
+   BUSINESSES (image directory)
+   ============================================================ */
+async function loadBusinesses() {
+  const db = window._db;
+  try {
+    const snap = await db.ref('brandinn_subdomains').once('value');
+    const val = snap.val() || {};
+    const list = Object.entries(val)
+      .filter(([k, b]) => b && (b.businessName || b.name) && !b.uid === false)
+      .map(([id, b]) => ({
+        id,
+        ...b,
+        businessName: b.businessName || b.name || 'Business',
+        name: b.name || b.businessName || 'Business',
+        tagline: (b.pageData && b.pageData.business && b.pageData.business.tagline) || b.tagline || '',
+        category: b.category || (b.pageData && b.pageData.business && b.pageData.business.category) || '',
+        industry: b.industry || (b.pageData && b.pageData.business && b.pageData.business.industry) || '',
+        plan: b.plan || 'basic',
+        status: b.status || 'active',
+        _ts: Number(b.createdAt || b.updatedAt || b.timestamp) || 0
+      }))
+      .filter(b => b.businessName && b.businessName !== 'Business');
+    allBusinesses = list.sort((a, b) => b._ts - a._ts);
+  } catch (e) { console.warn('businesses read failed:', e); allBusinesses = []; }
+}
+function renderBusinessGrid() {
+  const grid = document.getElementById('biBusinessGrid');
+  const empty = document.getElementById('biBusinessEmpty');
+  const count = document.getElementById('biClientsCount');
+  if (count) count.textContent = `${filteredBusinesses.length} of ${allBusinesses.length} businesses`;
+  if (!grid) return;
+  if (filteredBusinesses.length === 0) {
+    grid.innerHTML = '';
+    if (empty) empty.hidden = false;
+    return;
+  }
+  if (empty) empty.hidden = true;
+
+  grid.innerHTML = filteredBusinesses.slice(0, BI.tablePageSize).map(b => {
+    const cover = businessImage(b);
+    const logo = businessLogo(b);
+    const initials = getInitials(b.businessName);
+    const statusBadge = b.status === 'suspended' ? '<span class="bi-business-badge suspended">Suspended</span>' : '';
+    const media = cover
+      ? `<img src="${escapeHtml(cover)}" alt="${escapeHtml(b.businessName)}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas fa-store bi-business-placeholder\\"></i>';">`
+      : `<i class="fas fa-store bi-business-placeholder" aria-hidden="true"></i>`;
+    const logoMedia = logo
+      ? `<img src="${escapeHtml(logo)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='${escapeHtml(initials)}';">`
+      : escapeHtml(initials);
+    const subCount = allSubs.filter(s => s.email && b.email && s.email.toLowerCase() === b.email.toLowerCase()).length;
+    return `<article class="bi-business-card" role="listitem" tabindex="0"
+      onclick="openLightboxById('${escapeHtml(b.id)}')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightboxById('${escapeHtml(b.id)}')}">
+      <div class="bi-business-img">${statusBadge}${media}<div class="bi-business-logo">${logoMedia}</div></div>
+      <div class="bi-business-body">
+        <div class="bi-business-name">${highlightMatch(b.businessName, clientSearchQuery)}</div>
+        <div class="bi-business-tagline">${escapeHtml(b.tagline || b.category || b.industry || '')}</div>
+        <div class="bi-business-meta">
+          <span class="bi-business-pill plan"><i class="fas fa-crown"></i>${escapeHtml(planLabel(b.plan))}</span>
+          ${b.category || b.industry ? `<span class="bi-business-pill"><i class="fas fa-tag"></i>${escapeHtml(b.category || b.industry)}</span>` : ''}
+          ${subCount ? `<span class="bi-business-pill"><i class="fas fa-credit-card"></i>${subCount} payment${subCount === 1 ? '' : 's'}</span>` : ''}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ============================================================
+   SUBSCRIPTIONS
+   ============================================================ */
+async function loadSubs() {
+  const db = window._db;
+  try {
+    const snap = await db.ref('brandinn_subscription_payments').once('value');
+    const val = snap.val() || {};
+    allSubs = Object.entries(val).map(([id, s]) => ({
+      id, ...s,
+      amount: Number(s.amount) || 0,
+      tier: s.tier || s.plan || 'basic',
+      action: s.action || 'subscribe',
+      status: s.status || 'paid',
+      businessName: s.businessName || s.businessSlug || '—',
+      email: s.email || '',
+      _ts: Number(s.createdAt || s.updatedAt || s.timestamp) || 0
+    })).sort((a, b) => b._ts - a._ts);
+  } catch (e) { console.warn('subs read failed:', e); allSubs = []; }
+}
+function renderSubsTable() {
+  const body = document.getElementById('biSubsBody');
+  const count = document.getElementById('biSubsCount');
+  if (count) count.textContent = pluralize(allSubs.length, 'payment');
+  if (!body) return;
+  if (allSubs.length === 0) {
+    body.innerHTML = `<tr><td colspan="6" class="bi-table-empty"><i class="fas fa-inbox"></i>No subscription payments yet</td></tr>`;
+    return;
+  }
+  body.innerHTML = allSubs.slice(0, BI.tablePageSize).map(s => `
+    <tr>
+      <td><span class="cell-primary">${escapeHtml(s.businessName)}</span><br><span class="cell-muted">${escapeHtml(s.email)}</span></td>
+      <td><span class="cell-muted" style="text-transform:capitalize;">${escapeHtml(planLabel(s.tier))}</span></td>
+      <td><span class="cell-muted" style="text-transform:capitalize;">${escapeHtml(actionLabel(s.action))}</span></td>
+      <td class="cell-num">${formatKesExact(s.amount)}</td>
+      <td><span class="bi-status ${s.status === 'paid' ? 'completed' : s.status === 'pending_verification' ? 'in-progress' : 'planning'}"><span class="tag-dot"></span>${escapeHtml(s.status.replace(/_/g, ' '))}</span></td>
+      <td><span class="cell-muted">${escapeHtml(formatDate(s._ts))}</span></td>
+    </tr>
+  `).join('');
+}
+
+/* ============================================================
+   KPIs
+   ============================================================ */
+function updateKpis() {
+  const setVal = (id, v) => { const el = document.getElementById(id); if (!el) return; el.classList.remove('loading'); el.textContent = v; };
+  const setSub = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const setDelta = (id, dir) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'bi-kpi-delta ' + dir;
+    el.innerHTML = dir === 'up' ? '<i class="fas fa-arrow-up"></i>+' : dir === 'down' ? '<i class="fas fa-arrow-down"></i>−' : '—';
+  };
+  const now = Date.now();
+  const d7 = now - 7 * 86400000;
+  const d14 = now - 14 * 86400000;
+  const recent7 = allProjects.filter(p => p._ts >= d7);
+  const prev7 = allProjects.filter(p => p._ts >= d14 && p._ts < d7);
+  const activeProjects = allProjects.filter(p => !['completed', 'cancelled'].includes(String(p.status).toLowerCase()));
+  const activeSubs = allSubs.filter(s => s.status === 'paid');
+  const recentSubs = activeSubs.filter(s => s._ts >= d7);
+  const prevSubs = activeSubs.filter(s => s._ts >= d14 && s._ts < d7);
+  const totalRev = activeSubs.reduce((s, x) => s + (x.amount || 0), 0);
+  const recentRev = recentSubs.reduce((s, x) => s + (x.amount || 0), 0);
+  const prevRev = prevSubs.reduce((s, x) => s + (x.amount || 0), 0);
+
+  setVal('biTotalProjects', String(activeProjects.length));
+  setSub('biProjectsSub', `${recent7.length} new in last 7 days`);
+  setDelta('biProjectsDelta', recent7.length >= prev7.length ? 'up' : 'down');
+
+  setVal('biTotalClients', String(allBusinesses.length));
+  setSub('biClientsSub', `${allBusinesses.filter(b => b.status === 'active').length} active`);
+  setDelta('biClientsDelta', 'flat');
+
+  setVal('biTotalSubs', String(activeSubs.length));
+  setSub('biSubsSub', `${recentSubs.length} in last 7 days`);
+  setDelta('biSubsDelta', recentSubs.length >= prevSubs.length ? 'up' : 'down');
+
+  setVal('biTotalRevenue', formatKes(totalRev));
+  setSub('biRevenueSub', `${formatKes(recentRev)} this week`);
+  setDelta('biRevenueDelta', recentRev >= prevRev ? 'up' : 'down');
+}
+
+/* ============================================================
+   CHARTS
+   ============================================================ */
+function destroyCharts() { activeCharts.forEach(c => { try { c.destroy(); } catch (e) {} }); activeCharts = []; }
+function renderCharts() {
+  if (typeof Chart === 'undefined') {
+    document.querySelectorAll('.bi-canvas-wrap').forEach(w => {
+      w.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;font-family:var(--font-heading);">Charts unavailable</div>';
+    });
+    return;
+  }
+  destroyCharts();
+  const styles = getComputedStyle(document.documentElement);
+  const border = styles.getPropertyValue('--m365-border').trim() || '#edebe9';
+  const muted = styles.getPropertyValue('--text-muted').trim() || '#6b7280';
+  const ink = styles.getPropertyValue('--ink').trim() || '#0f0f1e';
+  Chart.defaults.font.family = "'Satoshi','Cabinet Grotesk',system-ui,sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = muted;
+  renderRevenueChart(border, ink);
+  renderStatusChart(border, ink);
+  renderServicesChart(border, ink);
+  renderPlansChart(border, ink);
+  renderPerfChart(border, ink);
+}
+function renderRevenueChart(border, ink) {
+  const ctx = document.getElementById('biRevenueChart');
+  if (!ctx) return;
+  const days = BI.chartDays;
+  const buckets = {};
+  for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0, 10)] = 0; }
+  allSubs.filter(s => s.status === 'paid').forEach(s => {
+    if (!s._ts) return;
+    const k = new Date(s._ts).toISOString().slice(0, 10);
+    if (k in buckets) buckets[k] += s.amount || 0;
+  });
+  const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+  const values = Object.values(buckets);
+  const total = values.reduce((s, v) => s + v, 0);
+  const meta = document.getElementById('biRevenueChartMeta');
+  if (meta) meta.textContent = formatKes(total) + ' total';
+  activeCharts.push(new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: [{ label: 'Revenue', data: values, borderColor: BI.color, backgroundColor: 'rgba(202,138,4,0.12)', borderWidth: 2, tension: 0.35, fill: true, pointRadius: 2, pointHoverRadius: 5, pointBackgroundColor: BI.colorLight }] },
+    options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, grid: { color: border, drawBorder: false }, ticks: { callback: v => formatKes(v) } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + formatKes(c.parsed.y) } } } }
+  }));
+}
+function renderStatusChart(border, ink) {
+  const ctx = document.getElementById('biStatusChart');
+  if (!ctx) return;
+  const counts = { planning: 0, 'in-progress': 0, review: 0, completed: 0, 'on-hold': 0 };
+  allProjects.forEach(p => {
+    const s = String(p.status || 'planning').toLowerCase();
+    if (s in counts) counts[s]++;
+    else counts.planning++;
+  });
+  const meta = document.getElementById('biStatusChartMeta');
+  if (meta) meta.textContent = pluralize(allProjects.length, 'project');
+  activeCharts.push(new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels: ['Planning', 'In progress', 'Review', 'Completed', 'On hold'], datasets: [{ data: [counts.planning, counts['in-progress'], counts.review, counts.completed, counts['on-hold']], backgroundColor: ['#2563eb', '#d97706', '#7c3aed', '#16a34a', '#9ca3af'], borderWidth: 0, hoverOffset: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, padding: 12 } }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
+  }));
+}
+function renderServicesChart(border, ink) {
+  const ctx = document.getElementById('biServicesChart');
+  if (!ctx) return;
+  const byService = {};
+  allProjects.forEach(p => { const n = p.serviceType || 'Other'; byService[n] = (byService[n] || 0) + 1; });
+  const sorted = Object.entries(byService).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const labels = sorted.map(([k]) => k.length > 16 ? k.slice(0, 14) + '…' : k);
+  const values = sorted.map(([, v]) => v);
+  if (!labels.length) { ctx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;font-family:var(--font-heading);">No project data yet</div>'; return; }
+  activeCharts.push(new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ data: values, backgroundColor: BI.color, borderRadius: 4, barThickness: 12 }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, grid: { color: border, drawBorder: false }, ticks: { precision: 0 } }, y: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
+  }));
+}
+function renderPlansChart(border, ink) {
+  const ctx = document.getElementById('biPlansChart');
+  if (!ctx) return;
+  const byPlan = {};
+  allBusinesses.forEach(b => { const p = planLabel(b.plan); byPlan[p] = (byPlan[p] || 0) + 1; });
+  const sorted = Object.entries(byPlan).sort((a, b) => b[1] - a[1]);
+  const labels = sorted.map(([k]) => k);
+  const values = sorted.map(([, v]) => v);
+  if (!labels.length) { ctx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;font-family:var(--font-heading);">No plan data yet</div>'; return; }
+  activeCharts.push(new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ data: values, backgroundColor: BI.colorDark, borderRadius: 4, barThickness: 14 }] },
+    options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true } }, y: { beginAtZero: true, grid: { color: border, drawBorder: false }, ticks: { precision: 0 } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
+  }));
+}
+function renderPerfChart(border, ink) {
+  const ctx = document.getElementById('biPerfChart');
+  if (!ctx) return;
+  const days = BI.chartDays;
+  const buckets = {};
+  for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0, 10)] = { completed: 0, total: 0 }; }
+  allProjects.forEach(p => {
+    if (!p._ts) return;
+    const k = new Date(p._ts).toISOString().slice(0, 10);
+    if (!(k in buckets)) return;
+    buckets[k].total++;
+    if (String(p.status).toLowerCase() === 'completed') buckets[k].completed++;
+  });
+  const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+  const values = Object.keys(buckets).map(k => { const b = buckets[k]; return b.total > 0 ? Math.round((b.completed / b.total) * 100) : 0; });
+  activeCharts.push(new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Completion rate', data: values, backgroundColor: BI.color, borderRadius: 4, barThickness: 12 }] },
+    options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, max: 100, grid: { color: border, drawBorder: false }, ticks: { callback: v => v + '%' } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + c.parsed.y + '%' } } } }
+  }));
+}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+function setupLightbox() {
+  const lb = document.getElementById('biLightbox');
+  if (lb) lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+}
+function openLightboxById(id) {
+  const b = allBusinesses.find(x => x.id === id);
+  if (b) openLightbox(b);
+}
+function openLightbox(business) {
+  const lb = document.getElementById('biLightbox');
+  const cover = document.getElementById('biLightboxCover');
+  const title = document.getElementById('biLightboxTitle');
+  const tagline = document.getElementById('biLightboxTagline');
+  const meta = document.getElementById('biLightboxMeta');
+  const stats = document.getElementById('biLightboxStats');
+  const attrs = document.getElementById('biLightboxAttrs');
+  const desc = document.getElementById('biLightboxDesc');
+  const links = document.getElementById('biLightboxLinks');
+  if (!lb || !cover) return;
+
+  lastFocusedBeforeLightbox = document.activeElement;
+  activeLightboxBusiness = business;
+
+  const img = businessImage(business);
+  const logo = businessLogo(business);
+  const initials = getInitials(business.businessName);
+
+  cover.innerHTML = (img
+    ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(business.businessName)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas fa-store bi-business-placeholder\\"></i>';">`
+    : `<i class="fas fa-store bi-business-placeholder" aria-hidden="true"></i>`)
+    + `<div class="bi-lightbox-logo">${logo ? `<img src="${escapeHtml(logo)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='${escapeHtml(initials)}';">` : escapeHtml(initials)}</div>`;
+
+  if (title) title.textContent = business.businessName || 'Business';
+  if (tagline) tagline.textContent = business.tagline || '';
+
+  if (meta) {
+    const parts = [];
+    if (business.category || business.industry) parts.push(`<span style="text-transform:capitalize;"><i class="fas fa-tag" style="color:var(--gold);margin-right:4px;font-size:0.7rem;"></i>${escapeHtml(business.category || business.industry)}</span>`);
+    if (business.location || business.area) parts.push(`<span><i class="fas fa-location-dot" style="color:var(--gold);margin-right:4px;font-size:0.7rem;"></i>${escapeHtml(business.location || business.area)}</span>`);
+    if (business.phone) parts.push(`<span><i class="fas fa-phone" style="color:var(--gold);margin-right:4px;font-size:0.7rem;"></i>${escapeHtml(business.phone)}</span>`);
+    if (business.email) parts.push(`<span><i class="fas fa-envelope" style="color:var(--gold);margin-right:4px;font-size:0.7rem;"></i>${escapeHtml(business.email)}</span>`);
+    meta.innerHTML = parts.join('');
+  }
+
+  if (stats) {
+    const projectCount = allProjects.filter(p => (p.businessName || '').toLowerCase() === (business.businessName || '').toLowerCase()).length;
+    const completed = allProjects.filter(p => (p.businessName || '').toLowerCase() === (business.businessName || '').toLowerCase() && String(p.status).toLowerCase() === 'completed').length;
+    const subPayments = allSubs.filter(s => s.email && business.email && s.email.toLowerCase() === business.email.toLowerCase()).length;
+    stats.innerHTML = `
+      <div class="bi-lightbox-stat"><div class="label">Projects</div><div class="value">${projectCount}</div></div>
+      <div class="bi-lightbox-stat"><div class="label">Completed</div><div class="value">${completed}</div></div>
+      <div class="bi-lightbox-stat"><div class="label">Payments</div><div class="value">${subPayments}</div></div>
+    `;
+  }
+
+  if (attrs) {
+    const rows = [];
+    rows.push(`<span class="bi-lightbox-attr"><strong>Plan:</strong> ${escapeHtml(planLabel(business.plan))}</span>`);
+    if (business.industry) rows.push(`<span class="bi-lightbox-attr"><strong>Industry:</strong> ${escapeHtml(business.industry)}</span>`);
+    if (business.status) rows.push(`<span class="bi-lightbox-attr"><strong>Status:</strong> ${escapeHtml(business.status)}</span>`);
+    if (business.zone) rows.push(`<span class="bi-lightbox-attr"><strong>Zone:</strong> ${escapeHtml(business.zone)}</span>`);
+    if (business.subdomainId) rows.push(`<span class="bi-lightbox-attr"><strong>ID:</strong> ${escapeHtml(String(business.subdomainId).slice(-8))}</span>`);
+    attrs.innerHTML = rows.join('');
+  }
+
+  if (desc) {
+    const d = (business.pageData && business.pageData.business && business.pageData.business.description) || business.description || '';
+    if (d) { desc.innerHTML = escapeHtml(String(d)).replace(/\n/g, '<br>'); desc.style.display = 'block'; }
+    else { desc.innerHTML = ''; desc.style.display = 'none'; }
+  }
+
+  if (links) {
+    const rows = [];
+    if (business.slug) rows.push(`<a class="bi-lightbox-link" href="https://brandinn-pages.vercel.app/p/${encodeURIComponent(business.slug)}" target="_blank" rel="noopener"><i class="fas fa-globe"></i>Public page</a>`);
+    if (business.phone) rows.push(`<a class="bi-lightbox-link" href="tel:${escapeHtml(business.phone)}"><i class="fas fa-phone"></i>Call</a>`);
+    if (business.email) rows.push(`<a class="bi-lightbox-link" href="mailto:${escapeHtml(business.email)}"><i class="fas fa-envelope"></i>Email</a>`);
+    links.innerHTML = rows.join('');
+  }
+
+  lb.classList.add('active');
+  lb.setAttribute('aria-hidden', 'false');
+  setTimeout(() => {
+    const closeBtn = lb.querySelector('.bi-lightbox-close');
+    if (closeBtn) closeBtn.focus();
+  }, 40);
+}
+function closeLightbox() {
+  const lb = document.getElementById('biLightbox');
+  if (lb) { lb.classList.remove('active'); lb.setAttribute('aria-hidden', 'true'); }
+  activeLightboxBusiness = null;
+  if (lastFocusedBeforeLightbox && typeof lastFocusedBeforeLightbox.focus === 'function') {
+    try { lastFocusedBeforeLightbox.focus(); } catch (e) {}
+  }
+  lastFocusedBeforeLightbox = null;
+}
+
+/* ============================================================
+   EMPTY STATE + CLEANUP
+   ============================================================ */
+function renderEmpty() {
+  ['biProjectsBody', 'biSubsBody'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `<tr><td colspan="6" class="bi-table-empty"><i class="fas fa-circle-exclamation"></i>Could not load data</td></tr>`;
+  });
+  const grid = document.getElementById('biBusinessGrid');
+  if (grid) grid.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--text-muted);font-family:var(--font-heading);">Could not load businesses</div>`;
+}
+window.addEventListener('beforeunload', destroyCharts);
+</script>
+</body>
+</html>
