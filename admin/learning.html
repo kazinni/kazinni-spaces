@@ -7,14 +7,29 @@
 <title>Learning Admin — KazInni</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Satoshi:wght@400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?v=2&f[]=cabinet-grotesk@400,500,600,700,800&f[]=satoshi@400,500,600,700,800,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;--gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);--ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;--text-2:#4a4a5e;--muted:#6b7280;--border:#e9ecef;--border-2:#d1d5db;--surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;--header-h:60px;--f-display:'Clash Display','Cabinet Grotesk',sans-serif;--f-head:'Satoshi','Cabinet Grotesk',sans-serif;--f-body:'Satoshi','Cabinet Grotesk',sans-serif;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;--t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1);--shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08)}
+:root{
+  --gold:#ca8a04;--gold-dark:#a16207;--gold-soft:#fef3c7;
+  --gold-gradient:linear-gradient(135deg,#ca8a04 0%,#eab308 50%,#fbbf24 100%);
+  --ink:#0f0f1e;--success:#10b981;--danger:#ef4444;--info:#3b82f6;--warning:#f59e0b;
+  --text-2:#4a4a5e;--muted:#6b7280;
+  --border:#e9ecef;--border-2:#d1d5db;
+  --surface:#fff;--surface-2:#faf9f7;--surface-3:#f4f3f1;
+  --header-h:60px;
+  --f-display:'Clash Display','Cabinet Grotesk',sans-serif;
+  --f-head:'Satoshi','Cabinet Grotesk',sans-serif;
+  --f-body:'Satoshi','Cabinet Grotesk',sans-serif;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
+  --t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1);
+  --shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08)
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* HEADER */
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(15,15,30,.06);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:1rem}
 .ws-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none}
@@ -30,10 +45,14 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .ws-btn:disabled{opacity:.5;cursor:not-allowed}
 .ws-account-chip{display:flex;align-items:center;gap:.5rem;padding:.3rem .8rem .3rem .3rem;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);font-family:var(--f-head);font-size:.8rem;font-weight:600;color:var(--ink);text-decoration:none}
 .ws-avatar{width:28px;height:28px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem}
+
+/* TABS */
 .admin-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;gap:.3rem;overflow-x:auto}
 .admin-tab{padding:1rem 1.2rem;font-family:var(--f-head);font-size:.85rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;transition:color var(--t-fast),border-color var(--t-fast);display:flex;align-items:center;gap:.5rem}
 .admin-tab:hover{color:var(--ink)}
 .admin-tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
+
+/* LAYOUT */
 .admin-main{flex:1;padding:2rem 2.5rem;max-width:1600px;margin:0 auto;width:100%}
 .admin-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.4rem;flex-wrap:wrap}
 .admin-toolbar-left{display:flex;align-items:center;gap:.8rem;flex:1;min-width:0}
@@ -42,8 +61,10 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .search-box input{width:100%;padding:.6rem 1rem .6rem 2.4rem;border:1.5px solid var(--border);border-radius:var(--r-pill);background:#fff;font-family:var(--f-body);font-size:.85rem;color:var(--ink)}
 .search-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,138,4,.12)}
 .search-box i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;pointer-events:none}
+
+/* TABLE */
 .admin-table{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
-.admin-row{display:grid;grid-template-columns:48px 2fr 1fr 1fr 100px 100px 90px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+.admin-row{display:grid;grid-template-columns:48px 2fr 1fr 100px 90px 90px 90px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
 .admin-row:last-child{border-bottom:none}
 .admin-row.header{background:var(--surface-2);font-family:var(--f-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);padding:.7rem 1.2rem}
 .admin-row:not(.header):hover{background:var(--surface-2)}
@@ -55,6 +76,8 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .admin-badge.paid{background:#dbeafe;color:#1e40af}
 .admin-badge.published{background:#d1fae5;color:#065f46}
 .admin-badge.draft{background:#fef3c7;color:#92400e}
+.admin-badge.academy{background:#ede9fe;color:#6d28d9}
+.admin-badge.guide{background:#fef3c7;color:#92400e}
 .admin-badge.learner{background:#fef3c7;color:#92400e}
 .admin-badge.pro{background:#ede9fe;color:#6d28d9}
 .admin-badge.none{background:var(--surface-3);color:var(--muted)}
@@ -65,10 +88,11 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
 .empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
 .empty-state h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
-.skeleton{height:220px;border-radius:var(--r-lg);background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+
+/* DIAGNOSTIC */
 .diag-panel{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;margin-bottom:1.5rem;font-family:var(--f-head)}
 .diag-panel h3{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
 .diag-panel h3 i{color:var(--gold)}
@@ -81,6 +105,8 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .diag-item strong{color:var(--ink);font-weight:600}
 .diag-item code{background:var(--surface-3);padding:.1rem .35rem;border-radius:4px;font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .diag-actions{display:flex;gap:.5rem;margin-top:1rem}
+
+/* MODALS */
 .ws-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:var(--r-xl);padding:0;max-width:900px;width:calc(100% - 2rem);max-height:90vh;overflow-y:auto;z-index:2001;box-shadow:0 40px 80px rgba(15,15,30,.3);display:none}
 .ws-modal.active{display:block}
 .modal-header{padding:1.5rem 1.5rem 0;display:flex;align-items:center;justify-content:space-between}
@@ -88,6 +114,9 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .ws-modal-close{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .ws-modal-close:hover{color:var(--ink);background:rgba(15,15,30,.05)}
 .modal-body{padding:1.5rem}
+.modal-actions{display:flex;gap:.6rem;padding:1rem 1.5rem 1.5rem;justify-content:flex-end;border-top:1px solid var(--border)}
+.modal-actions .ws-btn{min-width:120px;justify-content:center}
+
 .editor-grid{display:grid;grid-template-columns:1fr 340px;gap:1.5rem}
 @media(max-width:900px){.editor-grid{grid-template-columns:1fr}}
 .editor-field{margin-bottom:1rem}
@@ -96,16 +125,21 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .editor-field label .req{color:var(--danger)}
 .editor-input,.editor-textarea,.editor-select{width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--f-body);font-size:.88rem;background:var(--surface-2);color:var(--ink)}
 .editor-input:focus,.editor-textarea:focus,.editor-select:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(202,138,4,.12)}
+.editor-input:disabled{opacity:.6;cursor:not-allowed;background:var(--surface-3)}
 .editor-textarea{min-height:80px;resize:vertical;line-height:1.6}
 .editor-textarea.tall{min-height:140px}
 .editor-two-col{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.editor-hint{font-size:.7rem;color:var(--muted);margin-top:.35rem;font-family:var(--f-head)}
+.editor-hint{font-size:.7rem;color:var(--muted);margin-top:.35rem;font-family:var(--f-head);transition:color .15s}
+.editor-hint.ok{color:var(--success)}
+.editor-hint.warn{color:var(--warning)}
+
 .icon-picker,.color-picker{display:flex;flex-wrap:wrap;gap:.4rem}
 .icon-choice,.color-choice{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:all var(--t-fast);color:var(--text-2)}
 .icon-choice:hover,.color-choice:hover{border-color:var(--border-2)}
 .icon-choice.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .color-choice{position:relative;overflow:hidden}
 .color-choice.active::after{content:'';position:absolute;inset:3px;border-radius:7px;border:2.5px solid #fff}
+
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid var(--border)}
 .toggle-row:last-child{border-bottom:none;padding-bottom:0}
 .toggle-label{display:flex;flex-direction:column;gap:.15rem}
@@ -115,14 +149,14 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .toggle-switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform var(--t-fast);box-shadow:0 2px 4px rgba(0,0,0,.1)}
 .toggle-switch.on{background:var(--success)}
 .toggle-switch.on::after{transform:translateX(18px)}
-.modal-actions{display:flex;gap:.6rem;padding:1rem 1.5rem 1.5rem;justify-content:flex-end;border-top:1px solid var(--border)}
-.modal-actions .ws-btn{min-width:120px;justify-content:center}
+
 .lesson-list{display:flex;flex-direction:column;gap:.5rem}
 .lesson-row{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:.85rem 1rem;display:grid;grid-template-columns:28px 1fr auto;gap:.8rem;align-items:center}
 .lesson-row-title{font-family:var(--f-head);font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.3}
 .lesson-row-meta{font-size:.7rem;color:var(--muted);margin-top:.15rem;font-family:var(--f-head)}
 .lesson-row-actions{display:flex;gap:.3rem}
 .grip{color:var(--muted);font-size:.75rem;cursor:grab}
+
 .entitlement-row{display:grid;grid-template-columns:1fr 100px 100px 100px 80px;gap:1rem;align-items:center;padding:.9rem 1.2rem;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
 .entitlement-row:last-child{border-bottom:none}
 .entitlement-row:hover{background:var(--surface-2)}
@@ -131,13 +165,25 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .entitlement-row .toggle-mini.on{background:var(--success)}
 .entitlement-row .toggle-mini.on::after{transform:translateX(16px)}
 .entitlement-row .toggle-mini.off{background:var(--border-2)}
+
 .modal-overlay{position:fixed;inset:0;background:rgba(15,15,30,.55);backdrop-filter:blur(8px);z-index:2000;display:none}
 .modal-overlay.active{display:block}
+
 .toast-container{position:fixed;top:calc(var(--header-h) + 16px);right:16px;z-index:4000;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
 .toast{background:var(--ink);color:#fff;border-radius:var(--r-md);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;font-family:var(--f-head);font-size:.85rem;max-width:360px;pointer-events:auto;transition:opacity .35s,transform .35s}
 .toast.success i{color:#34d399}.toast.error i{color:#f87171}.toast.info i{color:#fbbf24}
 .toast.leaving{opacity:0;transform:translateX(24px)}
-@media(max-width:900px){.admin-tabs{padding:0 1rem}.admin-main{padding:1.5rem 1.25rem}.admin-row{grid-template-columns:40px 1fr 80px;gap:.8rem;padding:.8rem}.admin-row.header{display:none}.admin-row>*:not(.admin-row-thumb):not(.admin-row-title-cell):not(.admin-row-actions){display:none}.entitlement-row{grid-template-columns:1fr 60px 60px 60px 60px;padding:.7rem .9rem;font-size:.78rem}.toast-container{right:12px;left:12px;align-items:stretch}.toast{max-width:none}}
+
+@media(max-width:900px){
+  .admin-tabs{padding:0 1rem}
+  .admin-main{padding:1.5rem 1.25rem}
+  .admin-row{grid-template-columns:40px 1fr 80px;gap:.8rem;padding:.8rem}
+  .admin-row.header{display:none}
+  .admin-row>*:not(.admin-row-thumb):not(.admin-row-title-cell):not(.admin-row-actions){display:none}
+  .entitlement-row{grid-template-columns:1fr 60px 60px 60px 60px;padding:.7rem .9rem;font-size:.78rem}
+  .toast-container{right:12px;left:12px;align-items:stretch}
+  .toast{max-width:none}
+}
 </style>
 </head>
 <body>
@@ -186,6 +232,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   <div id="tab-entitlements" style="display:none;"></div>
 </main>
 
+<!-- COURSE EDITOR -->
 <div class="modal-overlay" id="courseModalOverlay" onclick="closeCourseEditor()"></div>
 <div class="ws-modal" id="courseModal" role="dialog" aria-modal="true">
   <div class="modal-header">
@@ -202,7 +249,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
         <div class="editor-field">
           <label for="fSlug">URL slug <span class="req">*</span></label>
           <input type="text" id="fSlug" class="editor-input" placeholder="client-communication-101">
-          <div class="editor-hint">Auto-generated. Used as the course ID in the database.</div>
+          <div class="editor-hint" id="slugHint">Auto-generated. Used as the course ID in the database.</div>
         </div>
         <div class="editor-field">
           <label for="fDesc">Short description <span class="req">*</span></label>
@@ -258,6 +305,13 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
             </div>
             <button type="button" class="toggle-switch" id="togglePublished" onclick="toggleField('published')"></button>
           </div>
+          <div class="toggle-row">
+            <div class="toggle-label">
+              <strong>Show in Academy</strong>
+              <span>Requires sign-in · otherwise shows as free guide</span>
+            </div>
+            <button type="button" class="toggle-switch" id="toggleSurface" onclick="toggleSurface()"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -282,6 +336,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   </div>
 </div>
 
+<!-- LESSON EDITOR -->
 <div class="modal-overlay" id="lessonModalOverlay" onclick="closeLessonEditor()"></div>
 <div class="ws-modal" id="lessonModal" role="dialog" aria-modal="true" style="max-width:720px;">
   <div class="modal-header">
@@ -296,7 +351,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     <div class="editor-two-col">
       <div class="editor-field">
         <label for="lType">Type</label>
-        <select id="lType" class="editor-select">
+        <select id="lType" class="editor-select" onchange="onLessonTypeChange()">
           <option value="video">Video</option>
           <option value="text">Text</option>
           <option value="quiz">Quiz</option>
@@ -309,8 +364,8 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     </div>
     <div class="editor-field">
       <label for="lVideoUrl">Video URL</label>
-      <input type="url" id="lVideoUrl" class="editor-input" placeholder="https://youtube.com/watch?v=... or https://...mp4">
-      <div class="editor-hint">YouTube, Vimeo, or direct .mp4 / .webm</div>
+      <input type="url" id="lVideoUrl" class="editor-input" placeholder="https://youtube.com/watch?v=... or https://...mp4" oninput="onVideoUrlChange()">
+      <div class="editor-hint" id="videoHint">YouTube, Vimeo, or direct .mp4 / .webm</div>
     </div>
     <div class="editor-field">
       <label for="lContent">Content (HTML or text)</label>
@@ -339,7 +394,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 'use strict';
 
 // ══════════════════════════════════════════════════════════════
-// CONFIG — same Firebase project as the rest of KazInni
+// CONFIG
 // ══════════════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyC7kppUyHUaPzeLBV62NEZWuHiuz1Kz0mA",
@@ -361,6 +416,9 @@ let courseDraft = null;
 let activeLessonId = null;
 let activeLessonFree = false;
 
+let courseListRef = null;
+let courseListListener = null;
+
 // ══════════════════════════════════════════════════════════════
 // UTILS
 // ══════════════════════════════════════════════════════════════
@@ -370,13 +428,11 @@ function escapeHtml(text) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
 function slugify(s) {
   return String(s || '').toLowerCase().trim()
     .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')
     .replace(/-+/g, '-').slice(0, 60);
 }
-
 function getInitials(name) {
   if (!name) return 'U';
   const p = name.trim().split(/[\s._-]+/).filter(Boolean);
@@ -384,7 +440,6 @@ function getInitials(name) {
   if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
   return (p[0][0] + p[p.length - 1][0]).toUpperCase();
 }
-
 function lighten(hex, percent) {
   const num = parseInt(hex.replace('#', ''), 16);
   const amt = Math.round(2.55 * percent);
@@ -393,7 +448,6 @@ function lighten(hex, percent) {
   const B = Math.min(255, (num & 0x0000FF) + amt);
   return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
 }
-
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
   if (!container) return;
@@ -411,26 +465,33 @@ function showToast(msg, type = 'success') {
 
 const LEARNING_CATEGORIES = [
   { id: 'communication', label: 'Communication' },
-  { id: 'finance', label: 'Finance' },
-  { id: 'career', label: 'Career' },
-  { id: 'tech', label: 'Tech' },
-  { id: 'business', label: 'Business' },
-  { id: 'wellness', label: 'Wellness' }
+  { id: 'finance',       label: 'Finance' },
+  { id: 'career',        label: 'Career' },
+  { id: 'tech',          label: 'Tech' },
+  { id: 'business',      label: 'Business' },
+  { id: 'wellness',      label: 'Wellness' },
+  { id: 'ehuduma',       label: 'E-Huduma (Government Services)' },
+  { id: 'brandinn',      label: 'BrandInn (Business Suite)' },
+  { id: 'dsog',          label: 'DSOG Fashion' },
+  { id: 'workfit',       label: 'WorkFit' },
+  { id: 'heritage',      label: 'Heritage' },
+  { id: 'fusion',        label: 'Fusion Foods' }
 ];
 const LEARNING_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
 const LEARNING_ICONS = [
   'fa-comments','fa-shield-halved','fa-briefcase','fa-coins','fa-pen-fancy','fa-clock',
   'fa-chart-line','fa-lightbulb','fa-handshake','fa-mobile-screen','fa-users','fa-rocket',
   'fa-graduation-cap','fa-book','fa-code','fa-palette','fa-heart-pulse','fa-utensils',
-  'fa-truck-fast','fa-store'
+  'fa-truck-fast','fa-store','fa-landmark','fa-keyboard','fa-hammer','fa-industry'
 ];
 const LEARNING_COLORS = [
   '#10b981','#0891b2','#f59e0b','#7c3aed','#ec4899',
-  '#3b82f6','#ef4444','#ca8a04','#059669','#6366f1'
+  '#3b82f6','#ef4444','#ca8a04','#059669','#6366f1',
+  '#1e40af','#b45309','#475569'
 ];
 
 // ══════════════════════════════════════════════════════════════
-// DIAGNOSTIC RENDERER
+// DIAGNOSTIC
 // ══════════════════════════════════════════════════════════════
 function diag(html) {
   const el = document.getElementById('diagBody');
@@ -476,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══════════════════════════════════════════════════════════════
-// AUTH STATE
+// AUTH
 // ══════════════════════════════════════════════════════════════
 async function handleAuthStateChanged(user) {
   if (!user) {
@@ -495,7 +556,6 @@ async function handleAuthStateChanged(user) {
     diagItem('pending', 'Reading admin status…')
   );
 
-  // Read admin status
   let adminReadError = null;
   try {
     const snap = await window._db.ref(`admins/${user.uid}`).once('value');
@@ -509,9 +569,9 @@ async function handleAuthStateChanged(user) {
     diag(
       diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
       diagItem('err', 'Could not read admin status', `<code>${escapeHtml(adminReadError.message)}</code>`) +
-      diagItem('warn', 'Likely cause', 'Your <code>admins/{uid}</code> rule blocks read, or the path <code>admins/' + escapeHtml(user.uid) + '</code> doesn\'t exist.') +
+      diagItem('warn', 'Likely cause', 'Your <code>admins/{uid}</code> rule blocks read, or the path doesn\'t exist.') +
       `<div class="diag-actions">
-        <button class="ws-btn ws-btn-primary" onclick="location.reload()"><i class="fas fa-redo"></i> Retry</button>
+        <button class="ws-btn ws-btn-primary" onclick="retryDiagnostics()"><i class="fas fa-redo"></i> Retry</button>
       </div>`
     );
     return;
@@ -520,7 +580,7 @@ async function handleAuthStateChanged(user) {
   if (!isAdminUser) {
     diag(
       diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
-      diagItem('warn', 'Not an admin', `Your UID <code>${escapeHtml(user.uid)}</code> is not set to <code>true</code> under <code>admins/</code>. Contact a super-admin to grant access.`) +
+      diagItem('warn', 'Not an admin', `Your UID <code>${escapeHtml(user.uid)}</code> is not set to <code>true</code> under <code>admins/</code>.`) +
       `<div class="diag-actions">
         <a href="../index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-left"></i> Back to workspace</a>
       </div>`
@@ -536,13 +596,11 @@ async function handleAuthStateChanged(user) {
     diagItem('pending', 'Loading workspace permissions…')
   );
 
-  // Read workspacePermissions (informational, not required for admins)
   try {
     const snap = await window._db.ref(`workspacePermissions/${user.uid}`).once('value');
     currentPerms = snap.exists() ? (snap.val() || {}) : {};
   } catch (e) { currentPerms = {}; }
 
-  // Read learning_entitlements (informational)
   try {
     const snap = await window._db.ref(`learning_entitlements/${user.uid}`).once('value');
     currentEntitlements = snap.exists() ? (snap.val() || {}) : {};
@@ -555,37 +613,12 @@ async function handleAuthStateChanged(user) {
     diagItem('pending', 'Loading courses…')
   );
 
-  // Load courses
-  let coursesError = null;
-  try {
-    const snap = await window._db.ref('learning_courses').once('value');
-    const val = snap.val() || {};
-    allCourses = Object.entries(val)
-      .map(([id, c]) => ({ id, ...c }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999));
-  } catch (e) {
-    coursesError = e;
-    allCourses = [];
-  }
+  attachCourseListListener();
+}
 
-  if (coursesError) {
-    diag(
-      diagItem('ok', 'Signed in', `<code>${escapeHtml(user.email || user.uid)}</code>`) +
-      diagItem('ok', 'Admin access confirmed') +
-      diagItem('err', 'Could not read learning_courses', `<code>${escapeHtml(coursesError.message)}</code>`) +
-      diagItem('warn', 'Likely cause', 'Rules for <code>learning_courses</code> are not published, or the read rule is too strict.') +
-      diagItem('info', 'Fix', 'Publish the Learning rules patch: <code>learning_courses: { ".read": "auth != null" }</code>') +
-      `<div class="diag-actions">
-        <button class="ws-btn ws-btn-primary" onclick="location.reload()"><i class="fas fa-redo"></i> Retry</button>
-      </div>`
-    );
-    return;
-  }
-
-  // Success — clear diagnostic, render the real page
-  const diagEl = document.getElementById('diagPanel');
-  if (diagEl) diagEl.style.display = 'none';
-  renderCoursesTab();
+async function retryDiagnostics() {
+  document.getElementById('diagPanel').style.display = '';
+  await handleAuthStateChanged(window._auth.currentUser);
 }
 
 function renderAccountChip(user) {
@@ -597,6 +630,53 @@ function renderAccountChip(user) {
       <div class="ws-avatar">${escapeHtml(getInitials(name))}</div>
       <span>${escapeHtml(name)}</span>
     </a>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// COURSE LIST LISTENER (REAL-TIME)
+// ══════════════════════════════════════════════════════════════
+function attachCourseListListener() {
+  detachCourseListListener();
+  courseListRef = window._db.ref('learning_courses');
+  let firstLoad = true;
+
+  courseListListener = courseListRef.on('value', snap => {
+    const val = snap.val() || {};
+    allCourses = Object.entries(val)
+      .map(([id, c]) => ({ id, ...c }))
+      .sort((a, b) => (a.order || 999) - (b.order || 999));
+
+    if (firstLoad) {
+      firstLoad = false;
+      const diagEl = document.getElementById('diagPanel');
+      if (diagEl) diagEl.style.display = 'none';
+      renderCoursesTab();
+    } else {
+      // Live update — refresh the table without disrupting an open editor
+      if (!document.getElementById('courseModal').classList.contains('active')) {
+        renderCourseTable(filteredCourses());
+      }
+    }
+  }, err => {
+    diag(
+      diagItem('ok', 'Signed in') +
+      diagItem('ok', 'Admin access confirmed') +
+      diagItem('err', 'Could not read learning_courses', `<code>${escapeHtml(err.message)}</code>`) +
+      diagItem('warn', 'Likely cause', 'Rules for <code>learning_courses</code> are too strict, or the read rule is missing.') +
+      diagItem('info', 'Fix', 'Ensure your rules include: <code>"learning_courses": { ".read": "auth != null" }</code>') +
+      `<div class="diag-actions">
+        <button class="ws-btn ws-btn-primary" onclick="retryDiagnostics()"><i class="fas fa-redo"></i> Retry</button>
+      </div>`
+    );
+  });
+}
+
+function detachCourseListListener() {
+  if (courseListRef && courseListListener) {
+    try { courseListRef.off('value', courseListListener); } catch (e) {}
+  }
+  courseListRef = null;
+  courseListListener = null;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -630,17 +710,20 @@ function renderCoursesTab() {
     </div>
     <div class="admin-table" id="courseTable"></div>
   `;
-  document.getElementById('courseSearch').addEventListener('input', (e) => {
-    const q = e.target.value.trim().toLowerCase();
-    const filtered = q
-      ? allCourses.filter(c =>
-          (c.title || '').toLowerCase().includes(q) ||
-          (c.category || '').toLowerCase().includes(q) ||
-          (c.slug || '').toLowerCase().includes(q))
-      : allCourses;
-    renderCourseTable(filtered);
+  document.getElementById('courseSearch').addEventListener('input', () => {
+    renderCourseTable(filteredCourses());
   });
   renderCourseTable(allCourses);
+}
+
+function filteredCourses() {
+  const input = document.getElementById('courseSearch');
+  const q = input ? input.value.trim().toLowerCase() : '';
+  if (!q) return allCourses;
+  return allCourses.filter(c =>
+    (c.title || '').toLowerCase().includes(q) ||
+    (c.category || '').toLowerCase().includes(q) ||
+    (c.slug || '').toLowerCase().includes(q));
 }
 
 function renderCourseTable(list) {
@@ -664,8 +747,8 @@ function renderCourseTable(list) {
       <div></div>
       <div>Course</div>
       <div>Category</div>
-      <div>Level</div>
       <div>Access</div>
+      <div>Surface</div>
       <div>Status</div>
       <div></div>
     </div>
@@ -677,6 +760,9 @@ function renderCourseTable(list) {
       const accessText = c.free ? 'Free' : 'Paid';
       const statusClass = c.published ? 'published' : 'draft';
       const statusText = c.published ? 'Published' : 'Draft';
+      const surface = c.surface || 'janta';
+      const surfaceClass = surface === 'academy' ? 'academy' : 'guide';
+      const surfaceText = surface === 'academy' ? 'Academy' : (surface === 'both' ? 'Both' : 'Guide');
       return `
         <div class="admin-row">
           <div class="admin-row-thumb" style="background:linear-gradient(135deg, ${escapeHtml(color)}, ${escapeHtml(lighten(color, 18))});">
@@ -687,8 +773,8 @@ function renderCourseTable(list) {
             <div class="admin-row-sub">${lessonCount} lesson${lessonCount === 1 ? '' : 's'} · ${escapeHtml(c.slug || c.id)}</div>
           </div>
           <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.category || '—')}</div>
-          <div style="font-size:.82rem;color:var(--text-2);">${escapeHtml(c.level || '—')}</div>
           <div><span class="admin-badge ${accessClass}">${accessText}</span></div>
+          <div><span class="admin-badge ${surfaceClass}">${surfaceText}</span></div>
           <div><span class="admin-badge ${statusClass}">${statusText}</span></div>
           <div class="admin-row-actions">
             <button type="button" class="admin-icon-btn" onclick="openCourseEditor('${escapeHtml(c.id)}')" title="Edit">
@@ -703,18 +789,28 @@ function renderCourseTable(list) {
   `;
 }
 
-function confirmDelete(courseId, title) {
-  if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-  window._db.ref(`learning_courses/${courseId}`).remove()
-    .then(() => {
-      allCourses = allCourses.filter(c => c.id !== courseId);
-      renderCourseTable(allCourses);
-      showToast('Course deleted', 'success');
-    })
-    .catch((e) => {
-      console.error(e);
-      showToast('Could not delete course: ' + e.message, 'error');
-    });
+async function confirmDelete(courseId, title) {
+  const ok = confirm(
+    `Delete "${title}"?\n\n` +
+    `This removes:\n` +
+    `• The course metadata\n` +
+    `• All ${allCourses.find(c => c.id === courseId)?.lessons ? Object.keys(allCourses.find(c => c.id === courseId).lessons).length : 0} lessons\n` +
+    `• The quiz answer key\n\n` +
+    `Student progress and certificates remain in the database (orphaned) for audit purposes.`
+  );
+  if (!ok) return;
+
+  try {
+    const updates = {};
+    updates[`learning_courses/${courseId}`] = null;
+    updates[`learning_quiz_keys/${courseId}`] = null;
+    await window._db.ref().update(updates);
+    showToast('Course deleted', 'success');
+    // The real-time listener will refresh the table
+  } catch (e) {
+    console.error(e);
+    showToast('Could not delete course: ' + e.message, 'error');
+  }
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -726,6 +822,7 @@ function openCourseEditor(courseId) {
   if (courseId) {
     const existing = allCourses.find(c => c.id === courseId);
     courseDraft = JSON.parse(JSON.stringify(existing || {}));
+    if (!courseDraft.lessons) courseDraft.lessons = {};
     document.getElementById('courseModalTitle').textContent = 'Edit course';
   } else {
     courseDraft = {
@@ -733,10 +830,13 @@ function openCourseEditor(courseId) {
       category: 'communication', level: 'Beginner',
       order: allCourses.length + 1, duration: 0,
       icon: 'fa-graduation-cap', color: '#ca8a04',
-      free: false, published: false, lessons: {}
+      free: false, published: false, surface: 'janta',
+      lessons: {}
     };
     document.getElementById('courseModalTitle').textContent = 'New course';
   }
+
+  if (!courseDraft.surface) courseDraft.surface = 'janta';
 
   buildCategorySelect();
   buildLevelSelect();
@@ -790,9 +890,23 @@ function syncCourseForm() {
   document.getElementById('fDuration').value = courseDraft.duration || '';
   document.getElementById('toggleFree').classList.toggle('on', courseDraft.free === true);
   document.getElementById('togglePublished').classList.toggle('on', courseDraft.published === true);
+  document.getElementById('toggleSurface').classList.toggle('on', courseDraft.surface === 'academy' || courseDraft.surface === 'both');
 
   const titleEl = document.getElementById('fTitle');
   const slugEl = document.getElementById('fSlug');
+  const slugHint = document.getElementById('slugHint');
+
+  if (editingCourseId) {
+    // Slug is immutable after creation
+    slugEl.disabled = true;
+    slugHint.textContent = '⚠ Slug cannot be changed after creation (would orphan student progress)';
+    slugHint.className = 'editor-hint warn';
+  } else {
+    slugEl.disabled = false;
+    slugHint.textContent = 'Auto-generated. Used as the course ID in the database.';
+    slugHint.className = 'editor-hint';
+  }
+
   titleEl.oninput = () => {
     courseDraft.title = titleEl.value;
     if (!editingCourseId) {
@@ -800,7 +914,10 @@ function syncCourseForm() {
       slugEl.value = courseDraft.slug;
     }
   };
-  slugEl.oninput = () => { courseDraft.slug = slugify(slugEl.value); };
+  slugEl.oninput = () => {
+    if (editingCourseId) return;
+    courseDraft.slug = slugify(slugEl.value);
+  };
   document.getElementById('fDesc').oninput = (e) => { courseDraft.desc = e.target.value; };
   document.getElementById('fLongDesc').oninput = (e) => { courseDraft.longDesc = e.target.value; };
   document.getElementById('fCategory').onchange = (e) => { courseDraft.category = e.target.value; };
@@ -813,6 +930,17 @@ function toggleField(field) {
   courseDraft[field] = !courseDraft[field];
   document.getElementById(`toggle${field.charAt(0).toUpperCase() + field.slice(1)}`)
     .classList.toggle('on', courseDraft[field]);
+}
+
+function toggleSurface() {
+  // Cycle between 'janta' (free guide) and 'academy' (main course)
+  courseDraft.surface = courseDraft.surface === 'academy' ? 'janta' : 'academy';
+  document.getElementById('toggleSurface')
+    .classList.toggle('on', courseDraft.surface === 'academy');
+  showToast(
+    courseDraft.surface === 'academy' ? 'Will appear in Academy (requires sign-in)' : 'Will appear as free guide',
+    'info'
+  );
 }
 
 function renderLessonList() {
@@ -862,6 +990,8 @@ function openLessonEditor(lessonId) {
   document.getElementById('lContent').value = existing ? (existing.content || '') : '';
   activeLessonFree = existing ? (existing.free === true) : false;
   document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
+  onVideoUrlChange();
+  onLessonTypeChange();
   document.getElementById('lessonModal').classList.add('active');
   document.getElementById('lessonModalOverlay').classList.add('active');
   setTimeout(() => document.getElementById('lTitle').focus(), 50);
@@ -878,20 +1008,58 @@ function toggleLessonFree() {
   document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
 }
 
+function onLessonTypeChange() {
+  const type = document.getElementById('lType').value;
+  const videoField = document.getElementById('lVideoUrl').closest('.editor-field');
+  const contentField = document.getElementById('lContent').closest('.editor-field');
+
+  if (type === 'quiz') {
+    videoField.style.opacity = '.4';
+    document.getElementById('lVideoUrl').disabled = true;
+    showToast('Quiz questions must be edited in the quiz builder (coming soon)', 'info');
+  } else {
+    videoField.style.opacity = '1';
+    document.getElementById('lVideoUrl').disabled = false;
+  }
+}
+
+function onVideoUrlChange() {
+  const url = document.getElementById('lVideoUrl').value.trim();
+  const hint = document.getElementById('videoHint');
+  if (!url) {
+    hint.textContent = 'YouTube, Vimeo, or direct .mp4 / .webm';
+    hint.className = 'editor-hint';
+    return;
+  }
+  if (/youtube\.com\/watch\?v=|youtu\.be\//i.test(url)) {
+    hint.textContent = '✓ YouTube detected';
+    hint.className = 'editor-hint ok';
+  } else if (/vimeo\.com\//i.test(url)) {
+    hint.textContent = '✓ Vimeo detected';
+    hint.className = 'editor-hint ok';
+  } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
+    hint.textContent = '✓ Direct video file detected';
+    hint.className = 'editor-hint ok';
+  } else {
+    hint.textContent = '⚠ Unrecognized video URL — may not play';
+    hint.className = 'editor-hint warn';
+  }
+}
+
 function saveLesson() {
   const title = document.getElementById('lTitle').value.trim();
   if (!title) { showToast('Lesson needs a title', 'error'); return; }
 
+  const type = document.getElementById('lType').value;
   const lessons = { ...courseDraft.lessons };
   const id = activeLessonId || `l_${Date.now().toString(36)}`;
   const existing = activeLessonId ? lessons[activeLessonId] : null;
   const order = existing ? existing.order : Object.keys(lessons).length + 1;
 
   lessons[id] = {
-    order, title,
-    type: document.getElementById('lType').value,
+    order, title, type,
     duration: Number(document.getElementById('lDuration').value) || 0,
-    videoUrl: document.getElementById('lVideoUrl').value.trim(),
+    videoUrl: type === 'quiz' ? '' : document.getElementById('lVideoUrl').value.trim(),
     content: document.getElementById('lContent').value,
     free: activeLessonFree,
     updatedAt: Date.now()
@@ -923,6 +1091,7 @@ async function saveCourse() {
   btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Saving…';
 
   try {
+    // Validation
     if (!courseDraft.title.trim()) throw new Error('Title is required');
     if (!courseDraft.slug.trim()) throw new Error('Slug is required');
     if (!courseDraft.desc.trim()) throw new Error('Short description is required');
@@ -933,8 +1102,11 @@ async function saveCourse() {
     const now = Date.now();
     const existing = editingCourseId ? allCourses.find(c => c.id === editingCourseId) : null;
 
-    const payload = {
-      ...courseDraft,
+    // Split metadata from lessons — CRITICAL for avoiding size-limit PERMISSION_DENIED
+    const { lessons, ...meta } = courseDraft;
+
+    const courseMeta = {
+      ...meta,
       slug: courseDraft.slug,
       authorId: existing ? existing.authorId : (currentUser ? currentUser.uid : ''),
       authorName: existing ? existing.authorName : (currentUser ? (currentUser.displayName || currentUser.email) : ''),
@@ -942,20 +1114,32 @@ async function saveCourse() {
       updatedAt: now,
       version: ((existing && existing.version) ? existing.version : 0) + 1
     };
-    if (payload.published && !(existing && existing.publishedAt)) {
-      payload.publishedAt = now;
+    if (courseMeta.published && !(existing && existing.publishedAt)) {
+      courseMeta.publishedAt = now;
     }
 
-    await window._db.ref(`learning_courses/${courseId}`).set(payload);
+    // Step 1: Save the metadata first (small payload — will always pass validation)
+    await window._db.ref(`learning_courses/${courseId}`).set(courseMeta);
 
-    const idx = allCourses.findIndex(c => c.id === courseId);
-    const merged = { id: courseId, ...payload };
-    if (idx >= 0) allCourses[idx] = merged;
-    else allCourses.push(merged);
+    // Step 2: Read the current lessons from Firebase to detect deletions
+    const existingLessonsSnap = await window._db.ref(`learning_courses/${courseId}/lessons`).once('value');
+    const existingLessons = existingLessonsSnap.val() || {};
+
+    // Step 3: Save each lesson individually (avoids size limits)
+    for (const [lessonId, lesson] of Object.entries(lessons || {})) {
+      await window._db.ref(`learning_courses/${courseId}/lessons/${lessonId}`).set(lesson);
+    }
+
+    // Step 4: Remove lessons that were deleted in the draft
+    for (const oldLessonId of Object.keys(existingLessons)) {
+      if (!lessons || !lessons[oldLessonId]) {
+        await window._db.ref(`learning_courses/${courseId}/lessons/${oldLessonId}`).remove();
+      }
+    }
 
     showToast('Course saved', 'success');
     closeCourseEditor();
-    renderCourseTable(allCourses);
+    // Real-time listener will refresh the table automatically
   } catch (e) {
     console.error(e);
     showToast(e.message || 'Could not save course', 'error');
@@ -1124,6 +1308,10 @@ document.addEventListener('keydown', e => {
     closeCourseEditor();
     closeLessonEditor();
   }
+});
+
+window.addEventListener('beforeunload', () => {
+  detachCourseListListener();
 });
 </script>
 </body>
