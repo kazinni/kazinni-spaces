@@ -22,7 +22,6 @@
   --f-body:'Satoshi','Cabinet Grotesk',sans-serif;
   --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-pill:100px;
   --t-fast:.15s cubic-bezier(.2,.8,.2,1);--t-base:.25s cubic-bezier(.2,.8,.2,1);
-  --shadow-pop:0 24px 60px rgba(15,15,30,.18),0 4px 12px rgba(15,15,30,.08)
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
@@ -81,6 +80,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .admin-badge.learner{background:#fef3c7;color:#92400e}
 .admin-badge.pro{background:#ede9fe;color:#6d28d9}
 .admin-badge.none{background:var(--surface-3);color:var(--muted)}
+.admin-badge.pending{background:#fef3c7;color:#92400e}
 .admin-row-actions{display:flex;gap:.4rem;justify-content:flex-end}
 .admin-icon-btn{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--t-fast);font-size:.78rem}
 .admin-icon-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -88,7 +88,6 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
 .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);font-family:var(--f-head)}
 .empty-state i{font-size:2.4rem;color:var(--gold);opacity:.5;display:block;margin-bottom:1rem}
 .empty-state h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
 
@@ -215,6 +214,9 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
   <button type="button" class="admin-tab" data-tab="entitlements" onclick="switchTab('entitlements')">
     <i class="fas fa-crown"></i> Entitlements
   </button>
+  <button type="button" class="admin-tab" data-tab="payments" onclick="switchTab('payments')">
+    <i class="fas fa-money-bill-wave"></i> Payments
+  </button>
 </nav>
 
 <main id="main" class="admin-main">
@@ -230,6 +232,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
     </div>
   </div>
   <div id="tab-entitlements" style="display:none;"></div>
+  <div id="tab-payments" style="display:none;"></div>
 </main>
 
 <!-- COURSE EDITOR -->
@@ -362,7 +365,7 @@ body{font-family:var(--f-body);background:var(--surface-2);color:var(--ink);line
         <input type="number" id="lDuration" class="editor-input" min="0" placeholder="8">
       </div>
     </div>
-    <div class="editor-field">
+    <div class="editor-field" id="videoFieldWrap">
       <label for="lVideoUrl">Video URL</label>
       <input type="url" id="lVideoUrl" class="editor-input" placeholder="https://youtube.com/watch?v=... or https://...mp4" oninput="onVideoUrlChange()">
       <div class="editor-hint" id="videoHint">YouTube, Vimeo, or direct .mp4 / .webm</div>
@@ -686,7 +689,10 @@ function switchTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   document.getElementById('tab-courses').style.display = tab === 'courses' ? '' : 'none';
   document.getElementById('tab-entitlements').style.display = tab === 'entitlements' ? '' : 'none';
+  document.getElementById('tab-payments').style.display = tab === 'payments' ? '' : 'none';
+  
   if (tab === 'entitlements') renderEntitlementsTab();
+  if (tab === 'payments') renderPaymentsTab();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -794,7 +800,7 @@ async function confirmDelete(courseId, title) {
     `Delete "${title}"?\n\n` +
     `This removes:\n` +
     `• The course metadata\n` +
-    `• All ${allCourses.find(c => c.id === courseId)?.lessons ? Object.keys(allCourses.find(c => c.id === courseId).lessons).length : 0} lessons\n` +
+    `• All lessons\n` +
     `• The quiz answer key\n\n` +
     `Student progress and certificates remain in the database (orphaned) for audit purposes.`
   );
@@ -806,7 +812,6 @@ async function confirmDelete(courseId, title) {
     updates[`learning_quiz_keys/${courseId}`] = null;
     await window._db.ref().update(updates);
     showToast('Course deleted', 'success');
-    // The real-time listener will refresh the table
   } catch (e) {
     console.error(e);
     showToast('Could not delete course: ' + e.message, 'error');
@@ -897,7 +902,6 @@ function syncCourseForm() {
   const slugHint = document.getElementById('slugHint');
 
   if (editingCourseId) {
-    // Slug is immutable after creation
     slugEl.disabled = true;
     slugHint.textContent = '⚠ Slug cannot be changed after creation (would orphan student progress)';
     slugHint.className = 'editor-hint warn';
@@ -933,7 +937,6 @@ function toggleField(field) {
 }
 
 function toggleSurface() {
-  // Cycle between 'janta' (free guide) and 'academy' (main course)
   courseDraft.surface = courseDraft.surface === 'academy' ? 'janta' : 'academy';
   document.getElementById('toggleSurface')
     .classList.toggle('on', courseDraft.surface === 'academy');
@@ -982,16 +985,24 @@ function renderLessonList() {
 function openLessonEditor(lessonId) {
   activeLessonId = lessonId;
   const existing = lessonId ? courseDraft.lessons[lessonId] : null;
+  
   document.getElementById('lessonModalTitle').textContent = existing ? 'Edit lesson' : 'New lesson';
   document.getElementById('lTitle').value = existing ? (existing.title || '') : '';
   document.getElementById('lType').value = existing ? (existing.type || 'video') : 'video';
   document.getElementById('lDuration').value = existing ? (existing.duration || '') : '';
-  document.getElementById('lVideoUrl').value = existing ? (existing.videoUrl || '') : '';
+  
+  // FIX: Ensure we load the video URL properly
+  const videoInput = document.getElementById('lVideoUrl');
+  videoInput.value = existing ? (existing.videoUrl || '') : '';
+  
   document.getElementById('lContent').value = existing ? (existing.content || '') : '';
   activeLessonFree = existing ? (existing.free === true) : false;
   document.getElementById('toggleLessonFree').classList.toggle('on', activeLessonFree);
+  
+  // Run the checks AFTER the values are populated
   onVideoUrlChange();
   onLessonTypeChange();
+  
   document.getElementById('lessonModal').classList.add('active');
   document.getElementById('lessonModalOverlay').classList.add('active');
   setTimeout(() => document.getElementById('lTitle').focus(), 50);
@@ -1010,16 +1021,16 @@ function toggleLessonFree() {
 
 function onLessonTypeChange() {
   const type = document.getElementById('lType').value;
-  const videoField = document.getElementById('lVideoUrl').closest('.editor-field');
-  const contentField = document.getElementById('lContent').closest('.editor-field');
+  const videoInput = document.getElementById('lVideoUrl');
+  const videoField = document.getElementById('videoFieldWrap');
 
   if (type === 'quiz') {
     videoField.style.opacity = '.4';
-    document.getElementById('lVideoUrl').disabled = true;
+    videoInput.disabled = true;
     showToast('Quiz questions must be edited in the quiz builder (coming soon)', 'info');
   } else {
     videoField.style.opacity = '1';
-    document.getElementById('lVideoUrl').disabled = false;
+    videoInput.disabled = false;
   }
 }
 
@@ -1054,12 +1065,17 @@ function saveLesson() {
   const lessons = { ...courseDraft.lessons };
   const id = activeLessonId || `l_${Date.now().toString(36)}`;
   const existing = activeLessonId ? lessons[activeLessonId] : null;
-  const order = existing ? existing.order : Object.keys(lessons).length + 1;
+  
+  // Ensure we always have an order number
+  const order = existing ? (existing.order || Object.keys(lessons).length + 1) : Object.keys(lessons).length + 1;
 
   lessons[id] = {
-    order, title, type,
+    order: order, 
+    title: title, 
+    type: type,
     duration: Number(document.getElementById('lDuration').value) || 0,
-    videoUrl: type === 'quiz' ? '' : document.getElementById('lVideoUrl').value.trim(),
+    // FIX: Save the videoUrl regardless of type, so it's never wiped out
+    videoUrl: document.getElementById('lVideoUrl').value.trim(),
     content: document.getElementById('lContent').value,
     free: activeLessonFree,
     updatedAt: Date.now()
@@ -1102,7 +1118,7 @@ async function saveCourse() {
     const now = Date.now();
     const existing = editingCourseId ? allCourses.find(c => c.id === editingCourseId) : null;
 
-    // Split metadata from lessons — CRITICAL for avoiding size-limit PERMISSION_DENIED
+    // Split metadata from lessons
     const { lessons, ...meta } = courseDraft;
 
     const courseMeta = {
@@ -1118,14 +1134,14 @@ async function saveCourse() {
       courseMeta.publishedAt = now;
     }
 
-    // Step 1: Save the metadata first (small payload — will always pass validation)
+    // Step 1: Save the metadata first
     await window._db.ref(`learning_courses/${courseId}`).set(courseMeta);
 
-    // Step 2: Read the current lessons from Firebase to detect deletions
+    // Step 2: Read current lessons to detect deletions
     const existingLessonsSnap = await window._db.ref(`learning_courses/${courseId}/lessons`).once('value');
     const existingLessons = existingLessonsSnap.val() || {};
 
-    // Step 3: Save each lesson individually (avoids size limits)
+    // Step 3: Save each lesson individually
     for (const [lessonId, lesson] of Object.entries(lessons || {})) {
       await window._db.ref(`learning_courses/${courseId}/lessons/${lessonId}`).set(lesson);
     }
@@ -1139,7 +1155,6 @@ async function saveCourse() {
 
     showToast('Course saved', 'success');
     closeCourseEditor();
-    // Real-time listener will refresh the table automatically
   } catch (e) {
     console.error(e);
     showToast(e.message || 'Could not save course', 'error');
@@ -1297,6 +1312,116 @@ async function toggleEntitlement(uid, key, current) {
   } catch (e) {
     console.error(e);
     showToast('Could not update entitlement: ' + e.message, 'error');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// PAYMENTS TAB
+// ══════════════════════════════════════════════════════════════
+async function renderPaymentsTab() {
+  const el = document.getElementById('tab-payments');
+  el.innerHTML = `
+    <div class="admin-toolbar">
+      <div class="admin-toolbar-left">
+        <h2 style="font-family:var(--f-display);font-size:1.2rem;font-weight:700;color:var(--ink);">Payment Requests</h2>
+      </div>
+    </div>
+    <div class="admin-table" id="paymentsTable">
+      <div class="empty-state" style="padding:3rem 1rem;">
+        <div class="spinner"></div>
+        <p>Loading requests…</p>
+      </div>
+    </div>
+  `;
+
+  let requests = [];
+  try {
+    const snap = await window._db.ref('learning_payment_requests').once('value');
+    const val = snap.val() || {};
+    requests = Object.entries(val).map(([id, r]) => ({ id, ...r })).sort((a, b) => b.timestamp - a.timestamp);
+  } catch (e) {
+    document.getElementById('paymentsTable').innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error loading payments</h3><p>${e.message}</p></div>`;
+    return;
+  }
+
+  if (requests.length === 0) {
+    document.getElementById('paymentsTable').innerHTML = `
+      <div class="empty-state" style="padding:3rem 1rem;">
+        <i class="fas fa-receipt"></i>
+        <h3>No payment requests yet</h3>
+        <p>When students submit M-Pesa codes, they will appear here.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('paymentsTable').innerHTML = `
+    <div class="admin-row header" style="grid-template-columns: 1fr 100px 100px 120px 100px;">
+      <div>Student</div>
+      <div>Plan</div>
+      <div>Amount</div>
+      <div>M-Pesa Code</div>
+      <div>Action</div>
+    </div>
+    ${requests.map(r => {
+      const isPending = r.status === 'pending';
+      const date = new Date(r.timestamp).toLocaleDateString();
+      return `
+        <div class="admin-row" style="grid-template-columns: 1fr 100px 100px 120px 100px;">
+          <div>
+            <div class="admin-row-title">${escapeHtml(r.email || 'Unknown Email')}</div>
+            <div class="admin-row-sub">UID: ${escapeHtml(r.uid)} • ${date}</div>
+          </div>
+          <div><span class="admin-badge pro">${escapeHtml(r.plan.toUpperCase())}</span></div>
+          <div style="font-weight:700;color:var(--ink);">Ksh ${r.amount}</div>
+          <div><code style="background:var(--surface-3);padding:.2rem .4rem;border-radius:4px;font-weight:600;">${escapeHtml(r.code)}</code></div>
+          <div>
+            ${isPending 
+              ? `<button class="ws-btn ws-btn-primary" style="padding:.4rem .8rem;font-size:.75rem;" onclick="approvePayment('${r.id}', '${r.uid}', '${r.plan}')">Approve</button>`
+              : `<span class="admin-badge published">Approved</span>`
+            }
+          </div>
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+async function approvePayment(requestId, uid, plan) {
+  if (!confirm("Have you confirmed this M-Pesa code on your phone?\n\nClick OK to unlock the student's account.")) return;
+
+  try {
+    // 1. Mark request as approved
+    await window._db.ref(`learning_payment_requests/${requestId}`).update({
+      status: 'approved',
+      approvedAt: Date.now(),
+      approvedBy: currentUser.email
+    });
+
+    // 2. Grant the entitlement
+    const now = Date.now();
+    const updates = {
+      updatedAt: now,
+      grantedBy: currentUser.email,
+      grantedAt: now,
+      planId: plan
+    };
+
+    if (plan === 'pro') {
+      updates.learning = true;
+    } else if (plan === 'mastery') {
+      updates.learning = true;
+      updates.advancedCourses = true;
+      updates.mentorship = true;
+    }
+
+    await window._db.ref(`learning_entitlements/${uid}`).update(updates);
+    
+    // 3. Refresh the table
+    showToast('Payment approved and account unlocked!', 'success');
+    renderPaymentsTab();
+  } catch (e) {
+    console.error(e);
+    showToast('Error approving payment: ' + e.message, 'error');
   }
 }
 
