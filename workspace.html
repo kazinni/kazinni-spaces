@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ca8a04">
 <meta name="color-scheme" content="light">
+<meta name="description" content="Workspace · Janta">
 <title>Workspace · Janta</title>
 <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -35,7 +36,6 @@
   --ws-accent-soft:#f0fdf4;
   --ws-hero-bg:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 40%,#bbf7d0 100%);
   --ws-hero-border:rgba(16,124,16,.15);
-  --ws-hero-chip-border:rgba(16,124,16,.18);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
@@ -50,7 +50,6 @@ body{font-family:var(--font-body);background:var(--surface-2);color:var(--text-p
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes popIn{from{opacity:0;transform:translateY(-4px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes orb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(.95)}}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 .ws-header{position:sticky;top:0;z-index:1000;height:var(--header-h);background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--m365-border);padding:0 1rem;display:flex;align-items:center}
 .ws-header-inner{width:100%;display:flex;align-items:center;gap:1rem}
@@ -79,12 +78,7 @@ body{font-family:var(--font-body);background:var(--surface-2);color:var(--text-p
 .ws-search-hint-empty{padding:2rem 1rem;text-align:center;font-size:.82rem;color:var(--text-muted);font-family:var(--font-heading)}
 .ws-search-hint-empty i{display:block;font-size:1.4rem;color:var(--ws-accent);opacity:.4;margin-bottom:.5rem}
 .ws-header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem;flex-shrink:0}
-.ws-icon-btn{width:38px;height:38px;border-radius:4px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--m365-text);font-size:.95rem;transition:background var(--t-fast);position:relative}
-.ws-icon-btn:hover{background:var(--m365-hover)}
-.ws-waffle{width:38px;height:38px;border-radius:4px;background:transparent;border:none;cursor:pointer;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;padding:9px;transition:background var(--t-fast)}
-.ws-waffle:hover{background:var(--m365-hover)}
-.ws-waffle span{width:4px;height:4px;border-radius:1px;background:var(--m365-text);justify-self:center;align-self:center}
-.ws-account-btn{display:flex;align-items:center;gap:.55rem;padding:.25rem .7rem .25rem .25rem;border-radius:4px;border:1px solid transparent;background:transparent;cursor:pointer;transition:background var(--t-fast)}
+.ws-account-btn{display:flex;align-items:center;gap:.55rem;padding:.25rem .7rem .25rem .25rem;border-radius:4px;border:1px solid transparent;background:transparent;cursor:pointer;transition:background var(--t-fast);font-family:var(--font-body)}
 .ws-account-btn:hover{background:var(--m365-hover);border-color:var(--m365-border)}
 .ws-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;font-family:var(--font-heading)}
 .ws-account-name{font-size:.82rem;font-weight:600;color:var(--m365-text);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-heading)}
@@ -96,9 +90,8 @@ body{font-family:var(--font-body);background:var(--surface-2);color:var(--text-p
 .ws-btn-primary:hover::before{opacity:1}
 .ws-btn-ghost{background:#fff;color:var(--ws-accent);border:1.5px solid color-mix(in srgb,var(--ws-accent) 25%,transparent);box-shadow:none}
 
-body.mode-workspace{background:var(--surface-2)}
 body.mode-workspace .ws-shell{display:grid;grid-template-columns:var(--rail-w) 1fr;min-height:calc(100vh - var(--header-h));transition:grid-template-columns var(--t-base)}
-body.mode-workspace.rail-collapsed .ws-shell{grid-template-columns:var(--rail-w-collapsed) 1fr}
+body.rail-collapsed .ws-shell{grid-template-columns:var(--rail-w-collapsed) 1fr}
 .ws-rail{background:var(--surface);border-right:1px solid var(--m365-border);padding:.85rem .6rem;display:flex;flex-direction:column;gap:.15rem;overflow-y:auto;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));height:calc(100dvh - var(--header-h))}
 .rail-group{display:flex;flex-direction:column;gap:.15rem;padding:.35rem 0}
 .rail-group + .rail-group{border-top:1px solid var(--m365-border);margin-top:.3rem;padding-top:.65rem}
@@ -126,13 +119,13 @@ body.rail-collapsed .ws-content{padding:1.75rem 2.5rem}
 .ff-hero-bg .orb-2{width:280px;height:280px;background:var(--ws-accent);bottom:-100px;right:-60px;opacity:.2;animation:orb 28s ease-in-out infinite;animation-delay:-8s}
 .ff-hero-inner{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
 .ff-hero-left{max-width:640px}
-.ff-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .85rem;background:#fff;border:1px solid var(--ws-hero-chip-border);border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;color:var(--ws-accent);margin-bottom:1rem;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:1px}
+.ff-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .85rem;background:#fff;border:1px solid color-mix(in srgb,var(--ws-accent) 18%,transparent);border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;color:var(--ws-accent);margin-bottom:1rem;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:1px}
 .ff-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulseDot 2s infinite}
 .ff-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,3vw,2.6rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin-bottom:.6rem}
 .ff-hero h1 .accent{color:var(--ws-accent)}
 .ff-hero-lede{font-size:.95rem;color:var(--text-secondary);line-height:1.6;max-width:560px;margin-bottom:1.2rem}
 .ff-hero-chips{display:flex;gap:.4rem;flex-wrap:wrap}
-.ff-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;background:#fff;border:1px solid var(--ws-hero-chip-border);border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.72rem;font-weight:600;color:var(--text-secondary)}
+.ff-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;background:#fff;border:1px solid color-mix(in srgb,var(--ws-accent) 18%,transparent);border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.72rem;font-weight:600;color:var(--text-secondary)}
 .ff-chip i{color:var(--ws-accent);font-size:.7rem}
 .ff-hero-actions{display:flex;flex-direction:column;gap:.5rem;flex-shrink:0}
 .ff-hero-actions .ws-btn{padding:.55rem 1.1rem;font-size:.8rem}
@@ -154,10 +147,7 @@ body.rail-collapsed .ws-content{padding:1.75rem 2.5rem}
 .ff-kpi-icon.amber{background:#fffbeb;color:var(--gold-dark)}
 .ff-kpi-icon.blue{background:#eff6ff;color:var(--info)}
 .ff-kpi-icon.rose{background:#fef2f2;color:var(--danger)}
-.ff-kpi-delta{font-family:var(--font-heading);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:var(--radius-pill)}
-.ff-kpi-delta.up{background:#dcfce7;color:#166534}
-.ff-kpi-delta.down{background:#fee2e2;color:#991b1b}
-.ff-kpi-delta.flat{background:var(--surface-3);color:var(--text-muted)}
+.ff-kpi-delta{font-family:var(--font-heading);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:var(--radius-pill);background:var(--surface-3);color:var(--text-muted)}
 .ff-kpi-value{font-family:var(--font-display);font-size:1.7rem;font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:.25rem}
 .ff-kpi-value.loading{width:60%;height:1.7rem;border-radius:6px;color:transparent;background:linear-gradient(90deg,#f0f0f0 25%,#fafafa 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
 .ff-kpi-label{font-family:var(--font-heading);font-size:.68rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px}
@@ -323,10 +313,6 @@ body.rail-open .rail-backdrop{display:block}
       <div class="ws-search-hint" id="wsSearchHint" role="listbox"></div>
     </div>
     <div class="ws-header-right">
-      <button type="button" class="ws-icon-btn" aria-label="Notifications"><i class="far fa-bell"></i></button>
-      <button type="button" class="ws-waffle" aria-label="App launcher" onclick="location.href='index.html'">
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-      </button>
       <div id="headerAccount"></div>
     </div>
   </div>
@@ -347,12 +333,6 @@ body.rail-open .rail-backdrop{display:block}
   <main class="ws-main" id="main">
     <div class="ws-content" id="wsContent">
       <div class="ff-skeleton" style="height:200px;margin-bottom:1rem;"></div>
-      <div class="ff-kpi-grid" style="margin-bottom:1rem;">
-        <div class="ff-kpi"><div class="ff-skeleton" style="height:80px;"></div></div>
-        <div class="ff-kpi"><div class="ff-skeleton" style="height:80px;"></div></div>
-        <div class="ff-kpi"><div class="ff-skeleton" style="height:80px;"></div></div>
-        <div class="ff-kpi"><div class="ff-skeleton" style="height:80px;"></div></div>
-      </div>
     </div>
   </main>
 </div>
@@ -385,265 +365,14 @@ const firebaseConfig = {
 };
 
 /* ============================================================
-   WORKSPACES — one config per project.
-   To add a new project, add a block here. Nothing else changes.
-   ============================================================ */
-const WORKSPACES = {
-  'fusion-foods': {
-    name: 'Fusion Foods',
-    tagline: 'B2B produce supply',
-    icon: 'fa-carrot',
-    permission: 'fusion-foods',
-    theme: {
-      accent: '#107c10', accentLight: '#34d399', accentSoft: '#f0fdf4',
-      heroBg: 'linear-gradient(135deg,#f0fdf4 0%,#dcfce7 40%,#bbf7d0 100%)',
-      heroBorder: 'rgba(16,124,16,.15)',
-      heroChipBorder: 'rgba(16,124,16,.18)'
-    },
-    hero: {
-      eyebrow: 'Fusion Foods · B2B Supply',
-      headline: 'Fresh produce, <span class="accent">delivered daily.</span>',
-      lede: 'Fusion Foods sources fresh vegetables, spices, meats and dry goods from Kawangware Market and delivers them to restaurants, grocers and hotels across Nairobi.',
-      chips: [
-        { icon: 'fa-store', text: 'Restaurants & grocers' },
-        { icon: 'fa-truck', text: 'Same-day delivery' },
-        { icon: 'fa-leaf', text: 'Market-sourced' },
-        { icon: 'fa-mobile-screen', text: 'M-Pesa & cash' }
-      ],
-      actions: [
-        { label: 'Open operations', icon: 'fa-arrow-up-right-from-square', link: 'apps/fusion-foods/', primary: true },
-        { label: 'How it works', icon: 'fa-circle-info', anchor: '#about' }
-      ]
-    },
-    paths: {
-      orders: 'fusion_foods_orders',
-      products: 'fusion_foods_products',
-      suppliers: 'fusion_foods_suppliers'
-    },
-    fields: {
-      clientName: 'restaurantName',
-      orderTotal: 'total',
-      productPrice: 'unitPrice',
-      productUnit: 'unit',
-      productStock: 'stock',
-      productCategory: 'category',
-      productSupplier: 'supplier',
-      productImages: ['imageUrl','image','img','photo','thumbnail']
-    },
-    kpis: [
-      { label: 'Total Orders', source: 'orders.count', icon: 'fa-basket-shopping', color: '' },
-      { label: 'Gross Revenue (KES)', source: 'orders.sumTotal', format: 'kes', icon: 'fa-coins', color: 'amber' },
-      { label: 'Active Restaurants', source: 'orders.uniqueClient', icon: 'fa-store', color: 'blue' },
-      { label: 'Active Suppliers', source: 'suppliers.countActive', icon: 'fa-truck-field', color: 'rose' }
-    ],
-    charts: ['revenue', 'status', 'topProducts', 'topClients', 'performance'],
-    orders: {
-      title: 'Recent orders',
-      searchPlaceholder: 'Search orders…',
-      filters: [
-        { key: 'all', label: 'All' },
-        { key: 'new', label: 'New' },
-        { key: 'pending', label: 'Pending' },
-        { key: 'delivered', label: 'Delivered' },
-        { key: 'cancelled', label: 'Cancelled' }
-      ]
-    },
-    catalogue: { title: 'Product catalogue', singular: 'product', placeholderIcon: 'fa-carrot' },
-    suppliers: { title: 'Supplier network', singular: 'supplier' },
-    about: {
-      title: 'How Fusion Foods works',
-      heading: 'From market to kitchen',
-      body: 'Fusion Foods is a B2B produce supplier built for Nairobi\'s restaurant and grocery economy. Orders flow through three stages — placed → confirmed → delivered — priced against a weekly price list kept in sync with the market.',
-      steps: [
-        'Restaurants place orders via the Fusion Foods portal, WhatsApp, or the operator at the shop.',
-        'Orders are picked and packed from the supply store (Gitanga Rd, Naivasha Rd, or Dagoretti).',
-        'A Pick Up rider delivers the order and the customer confirms receipt in the portal.',
-        'Payment is settled via M-Pesa, cash on delivery, or weekly invoicing.'
-      ],
-      stats: [
-        { icon: 'fa-warehouse', value: '3', label: 'supply stores' },
-        { icon: 'fa-truck', value: 'Same-day', label: 'delivery in Nairobi' },
-        { icon: 'fa-carrot', value: 'products', label: 'across categories', dynamic: 'productsCount' },
-        { icon: 'fa-people-group', value: 'suppliers', label: 'active suppliers', dynamic: 'suppliersCount' },
-        { icon: 'fa-mobile-screen', value: 'M-Pesa', label: '& cash payments' },
-        { icon: 'fa-clock', value: '3 PM', label: 'cutoff for same-day ship' }
-      ]
-    }
-  },
-
-  'dsog': {
-    name: 'DSOG Fashion',
-    tagline: 'Apparel & franchise operations',
-    icon: 'fa-shirt',
-    permission: 'dsog',
-    theme: {
-      accent: '#8b5cf6', accentLight: '#c4b5fd', accentSoft: '#f5f3ff',
-      heroBg: 'linear-gradient(135deg,#f5f3ff 0%,#ede9fe 40%,#ddd6fe 100%)',
-      heroBorder: 'rgba(139,92,246,.15)',
-      heroChipBorder: 'rgba(139,92,246,.18)'
-    },
-    hero: {
-      eyebrow: 'DSOG Fashion · Apparel',
-      headline: 'Wear the <span class="accent">brand.</span>',
-      lede: 'DSOG designs, produces and distributes apparel through a franchise network — from single-piece drops to full store rollouts.',
-      chips: [
-        { icon: 'fa-shirt', text: 'Apparel' },
-        { icon: 'fa-store', text: 'Franchise network' },
-        { icon: 'fa-truck', text: 'Retail & wholesale' },
-        { icon: 'fa-mobile-screen', text: 'M-Pesa & cash' }
-      ],
-      actions: [
-        { label: 'Open operations', icon: 'fa-arrow-up-right-from-square', link: 'apps/dsog-fashion/', primary: true },
-        { label: 'How it works', icon: 'fa-circle-info', anchor: '#about' }
-      ]
-    },
-    paths: {
-      orders: 'dsog_fashion_orders',
-      products: 'dsog_fashion_products',
-      suppliers: 'dsog_fashion_suppliers'
-    },
-    fields: {
-      clientName: 'customerName',
-      orderTotal: 'total',
-      productPrice: 'price',
-      productUnit: 'unit',
-      productStock: 'stock',
-      productCategory: 'category',
-      productSupplier: 'supplier',
-      productImages: ['imageUrl','image','img']
-    },
-    kpis: [
-      { label: 'Total Orders', source: 'orders.count', icon: 'fa-bag-shopping', color: '' },
-      { label: 'Revenue (KES)', source: 'orders.sumTotal', format: 'kes', icon: 'fa-coins', color: 'amber' },
-      { label: 'Customers', source: 'orders.uniqueClient', icon: 'fa-user', color: 'blue' },
-      { label: 'Products', source: 'products.count', icon: 'fa-shirt', color: 'rose' }
-    ],
-    charts: ['revenue', 'status', 'topProducts', 'topClients', 'performance'],
-    orders: {
-      title: 'Recent orders',
-      searchPlaceholder: 'Search orders…',
-      filters: [
-        { key: 'all', label: 'All' },
-        { key: 'pending', label: 'Pending' },
-        { key: 'shipped', label: 'Shipped' },
-        { key: 'delivered', label: 'Delivered' },
-        { key: 'cancelled', label: 'Cancelled' }
-      ]
-    },
-    catalogue: { title: 'Product catalogue', singular: 'product', placeholderIcon: 'fa-shirt' },
-    suppliers: { title: 'Supplier network', singular: 'supplier' },
-    about: {
-      title: 'How DSOG works',
-      heading: 'Design, produce, distribute',
-      body: 'DSOG produces apparel in-house and distributes through a franchise network of stores. Orders flow from franchise or retail customers through dispatch and delivery.',
-      steps: [
-        'Customers and franchisees place orders via the DSOG portal or directly through the store.',
-        'Orders are confirmed, packed and dispatched by the operations team.',
-        'A rider delivers to the customer or franchise store.',
-        'Payment settles via M-Pesa, cash or invoicing.'
-      ],
-      stats: [
-        { icon: 'fa-store', value: 'franchises', label: 'active stores', dynamic: 'suppliersCount' },
-        { icon: 'fa-shirt', value: 'products', label: 'in catalogue', dynamic: 'productsCount' },
-        { icon: 'fa-truck', value: 'Same-day', label: 'dispatch in Nairobi' },
-        { icon: 'fa-mobile-screen', value: 'M-Pesa', label: '& cash' }
-      ]
-    }
-  },
-
-  'workfit': {
-    name: 'WorkFit',
-    tagline: 'Fitness clubs & memberships',
-    icon: 'fa-dumbbell',
-    permission: 'workfit',
-    theme: {
-      accent: '#ec4899', accentLight: '#f9a8d4', accentSoft: '#fdf2f8',
-      heroBg: 'linear-gradient(135deg,#fdf2f8 0%,#fce7f3 40%,#fbcfe8 100%)',
-      heroBorder: 'rgba(236,72,153,.15)',
-      heroChipBorder: 'rgba(236,72,153,.18)'
-    },
-    hero: {
-      eyebrow: 'WorkFit · Fitness',
-      headline: 'Train hard. <span class="accent">Live well.</span>',
-      lede: 'WorkFit operates fitness clubs and memberships across Nairobi — with trainers, schedules, attendance, and a member shop.',
-      chips: [
-        { icon: 'fa-dumbbell', text: 'Fitness clubs' },
-        { icon: 'fa-user-group', text: 'Memberships' },
-        { icon: 'fa-calendar', text: 'Schedules' },
-        { icon: 'fa-bag-shopping', text: 'Merch shop' }
-      ],
-      actions: [
-        { label: 'Open operations', icon: 'fa-arrow-up-right-from-square', link: 'apps/workfit/', primary: true },
-        { label: 'How it works', icon: 'fa-circle-info', anchor: '#about' }
-      ]
-    },
-    paths: {
-      orders: 'workfit_shop_orders',
-      products: 'workfit_shop_products',
-      suppliers: 'workfit_trainers'
-    },
-    fields: {
-      clientName: 'customerName',
-      orderTotal: 'total',
-      productPrice: 'price',
-      productUnit: 'unit',
-      productStock: 'stock',
-      productCategory: 'category',
-      productSupplier: 'brand',
-      productImages: ['image','imageUrl','img']
-    },
-    kpis: [
-      { label: 'Shop Orders', source: 'orders.count', icon: 'fa-bag-shopping', color: '' },
-      { label: 'Shop Revenue', source: 'orders.sumTotal', format: 'kes', icon: 'fa-coins', color: 'amber' },
-      { label: 'Customers', source: 'orders.uniqueClient', icon: 'fa-user', color: 'blue' },
-      { label: 'Trainers / Staff', source: 'suppliers.countActive', icon: 'fa-user-tie', color: 'rose' }
-    ],
-    charts: ['revenue', 'status', 'topProducts', 'topClients', 'performance'],
-    orders: {
-      title: 'Shop orders',
-      searchPlaceholder: 'Search shop orders…',
-      filters: [
-        { key: 'all', label: 'All' },
-        { key: 'pending', label: 'Pending' },
-        { key: 'processing', label: 'Processing' },
-        { key: 'delivered', label: 'Delivered' },
-        { key: 'cancelled', label: 'Cancelled' }
-      ]
-    },
-    catalogue: { title: 'Shop products', singular: 'product', placeholderIcon: 'fa-shirt' },
-    suppliers: { title: 'Trainers & staff', singular: 'trainer' },
-    about: {
-      title: 'How WorkFit works',
-      heading: 'Clubs, members, trainers',
-      body: 'WorkFit operates fitness clubs with a shared membership base. Members join a club, train with assigned trainers, and can buy merch through the shop.',
-      steps: [
-        'Clubs register and manage their own trainers, schedules and attendance.',
-        'Members join a club and pick a membership tier (Basic, Standard, Premium).',
-        'Trainers run scheduled sessions and mark attendance.',
-        'Shop orders ship to members or are picked up at the club.'
-      ],
-      stats: [
-        { icon: 'fa-dumbbell', value: 'clubs', label: 'active clubs', dynamic: 'suppliersCount' },
-        { icon: 'fa-shirt', value: 'products', label: 'in shop', dynamic: 'productsCount' },
-        { icon: 'fa-user-group', value: 'Members', label: 'across all clubs' },
-        { icon: 'fa-calendar', value: 'Schedules', label: 'daily sessions' }
-      ]
-    }
-  }
-
-  /* Add more workspaces here — brandinn, heritage, epitome,
-     mugs-n-dines, digital-services, pick-up, pick-me, latter-logistics.
-     Each block is self-contained. No new HTML file needed. */
-};
-
-/* ============================================================
    STATE
    ============================================================ */
-const slug = new URLSearchParams(location.search).get('b') || 'fusion-foods';
-const WS = WORKSPACES[slug];
-
+const slug = new URLSearchParams(location.search).get('b') || '';
 let currentUser = null;
 let currentPerms = {};
+let business = null;        // the business record from Firebase
+let pageData = null;        // business.pageData (theme, hero, services)
+let wsConfig = null;        // workspace_config if present
 let allOrders = [];
 let allProducts = [];
 let allSuppliers = [];
@@ -676,7 +405,6 @@ function showToast(msg, type = 'success') {
   c.appendChild(t);
   setTimeout(() => { t.classList.add('leaving'); setTimeout(() => t.remove(), 400); }, 4000);
 }
-
 function escapeHtml(text) {
   if (text === null || text === undefined) return '';
   return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -710,12 +438,12 @@ function getInitials(name) {
 function pluralize(n, w) { return `${n} ${w}${n === 1 ? '' : 's'}`; }
 function statusLabel(s) {
   const v = String(s || 'pending').toLowerCase();
-  const map = { new: 'New', pending: 'Pending', confirmed: 'Confirmed', shipped: 'Shipped', delivered: 'Delivered', cancelled: 'Cancelled', processing: 'Processing', fulfilled: 'Fulfilled' };
+  const map = { new: 'New', pending: 'Pending', confirmed: 'Confirmed', shipped: 'Shipped', delivered: 'Delivered', cancelled: 'Cancelled', processing: 'Processing', fulfilled: 'Fulfilled', 'in-progress': 'In progress', completed: 'Completed', planning: 'Planning' };
   return map[v] || v;
 }
 function statusClass(s) {
   const v = String(s || 'pending').toLowerCase();
-  if (['delivered', 'fulfilled'].includes(v)) return 'delivered';
+  if (['delivered', 'fulfilled', 'completed'].includes(v)) return 'delivered';
   if (['cancelled', 'rejected'].includes(v)) return 'cancelled';
   if (['shipped', 'in_transit', 'out-for-delivery'].includes(v)) return 'shipped';
   if (v === 'new') return 'new';
@@ -734,98 +462,284 @@ function stockLabel(stock) {
   if (s < 10) return `Low · ${s}`;
   return `${s} in stock`;
 }
-function productImage(p) {
-  if (!p || !WS) return null;
-  const fields = WS.fields.productImages || ['imageUrl','image','img'];
+
+/* Read a value from an object with dotted path support: "a.b.c" */
+function readPath(obj, path) {
+  if (!obj || !path) return undefined;
+  if (!path.includes('.')) return obj[path];
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
+}
+
+/* Lighten a hex colour. */
+function lighten(hex, percent) {
+  try {
+    const num = parseInt(String(hex).replace('#',''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min(255, (num >> 16) + amt);
+    const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+    const B = Math.min(255, (num & 0x0000FF) + amt);
+    return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
+  } catch (e) { return hex; }
+}
+
+/* Pick a product image from a set of candidate fields. */
+function productImage(p, imageFields) {
+  if (!p) return null;
+  const fields = imageFields && imageFields.length ? imageFields : ['imageUrl','image','img','photo','thumbnail'];
   for (const f of fields) {
-    const v = p[f];
+    const v = readPath(p, f);
     if (v && typeof v === 'string' && /^https?:\/\//.test(v.trim())) return v.trim();
+  }
+  if (Array.isArray(p.images) && p.images.length) {
+    const first = p.images[0];
+    if (typeof first === 'string' && /^https?:\/\//.test(first.trim())) return first.trim();
   }
   return null;
 }
 
-/* Apply workspace theme */
-function applyTheme() {
-  if (!WS || !WS.theme) return;
-  const r = document.documentElement.style;
-  r.setProperty('--ws-accent', WS.theme.accent);
-  r.setProperty('--ws-accent-light', WS.theme.accentLight);
-  r.setProperty('--ws-accent-soft', WS.theme.accentSoft);
-  r.setProperty('--ws-hero-bg', WS.theme.heroBg);
-  r.setProperty('--ws-hero-border', WS.theme.heroBorder);
-  r.setProperty('--ws-hero-chip-border', WS.theme.heroChipBorder);
-  document.title = WS.name + ' · Janta';
+/* ============================================================
+   WORKSPACE CONFIG RESOLUTION
+   Reads everything from Firebase:
+   - business record: brandinn_subdomains/{slug}
+   - optional workspace_config on the business record
+   - otherwise derives paths/fields from the slug + node existence
+   ============================================================ */
+
+/* Does this node exist? Returns true/false. */
+async function nodeExists(db, path) {
+  try {
+    const snap = await db.ref(path).limitToFirst(1).once('value');
+    return snap.exists();
+  } catch (e) { return false; }
 }
 
-/* ============================================================
-   BOOT
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  if (!WS) { location.replace('index.html'); return; }
-  applyTheme();
-  setupKeyboardHandlers();
-  setupGlobalSearch();
-  setupOrderFilters();
-  setupProductFilters();
-  setupLightbox();
-  renderRail();
-  bootFirebase();
-});
+/* Build a config from the business record. This is the ONLY place
+   paths/fields are decided, and it uses Firebase + conventions. */
+async function resolveWorkspaceConfig(db, biz) {
+  const ws = biz.workspace_config || null;
 
-function setupKeyboardHandlers() {
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeRail(); closeGlobalSearch();
-      if (activeLightboxProduct) { closeLightbox(); return; }
-      const os = document.getElementById('ffOrderSearch');
-      if (os && os.value) { os.value = ''; orderSearchQuery = ''; applyOrderFilter(); }
-      const ps = document.getElementById('ffProductSearch');
-      if (ps && ps.value) { ps.value = ''; productSearchQuery = ''; applyProductFilter(); }
-    }
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-      e.preventDefault();
-      const s = document.getElementById('wsSearch');
-      if (s) { s.focus(); s.select(); }
-    }
-  });
+  if (ws && ws.paths) {
+    return {
+      paths: ws.paths,
+      fields: ws.fields || {},
+      kpis: ws.kpis || defaultKpis(),
+      charts: ws.charts || ['revenue', 'status', 'topClients', 'performance'],
+      ordersTitle: ws.ordersTitle || 'Recent activity',
+      catalogueTitle: ws.catalogueTitle || 'Catalogue',
+      catalogueSingular: ws.catalogueSingular || 'item',
+      catalogueIcon: ws.catalogueIcon || 'fa-cube',
+      suppliersTitle: ws.suppliersTitle || 'Network',
+      suppliersSingular: ws.suppliersSingular || 'member'
+    };
+  }
+
+  // No explicit config — derive from conventions and what actually exists.
+  const candidates = {
+    orders: [
+      `${slug.replace(/-/g,'_')}_orders`,
+      `${slug.replace(/-/g,'_')}_projects`,
+      `${slug.replace(/-/g,'_')}_bookings`,
+      `${slug.replace(/-/g,'_')}_applications`,
+      `${slug.replace(/-/g,'_')}_shipments`
+    ],
+    products: [
+      `${slug.replace(/-/g,'_')}_products`,
+      `${slug.replace(/-/g,'_')}_menu`,
+      `${slug.replace(/-/g,'_')}_inventory`,
+      `${slug.replace(/-/g,'_')}_businesses`
+    ],
+    suppliers: [
+      `${slug.replace(/-/g,'_')}_suppliers`,
+      `${slug.replace(/-/g,'_')}_trainers`,
+      `${slug.replace(/-/g,'_')}_members`,
+      `${slug.replace(/-/g,'_')}_partners`,
+      `${slug.replace(/-/g,'_')}_subdomains`
+    ]
+  };
+
+  let ordersPath = null, productsPath = null, suppliersPath = null;
+  for (const p of candidates.orders) { if (await nodeExists(db, p)) { ordersPath = p; break; } }
+  for (const p of candidates.products) { if (await nodeExists(db, p)) { productsPath = p; break; } }
+  for (const p of candidates.suppliers) { if (await nodeExists(db, p)) { suppliersPath = p; break; } }
+
+  // Field mapping — try common candidates, pick the first one present in the data.
+  const fields = await inferFields(db, ordersPath, productsPath);
+
+  return {
+    paths: { orders: ordersPath, products: productsPath, suppliers: suppliersPath },
+    fields,
+    kpis: defaultKpis(),
+    charts: ['revenue', 'status', 'topClients', 'performance'],
+    ordersTitle: 'Recent activity',
+    catalogueTitle: productsPath ? 'Catalogue' : 'Items',
+    catalogueSingular: 'item',
+    catalogueIcon: 'fa-cube',
+    suppliersTitle: 'Network',
+    suppliersSingular: 'member'
+  };
 }
 
-/* ============================================================
-   RAIL
-   ============================================================ */
-function renderRail() {
-  const primary = document.getElementById('railPrimary');
-  const sections = document.getElementById('railSections');
-  if (!primary || !sections) return;
+/* Inspect the first record from the orders/products nodes to infer which
+   fields hold "client name", "total", "price", "image", etc.
+   This is what makes the page work with data that already exists. */
+async function inferFields(db, ordersPath, productsPath) {
+  const fields = {
+    clientName: 'customerName',
+    orderTotal: 'total',
+    productPrice: 'price',
+    productUnit: 'unit',
+    productStock: 'stock',
+    productCategory: 'category',
+    productSupplier: 'supplier',
+    productImages: ['imageUrl','image','img','photo','thumbnail','logo']
+  };
 
-  primary.innerHTML = `
-    <a href="index.html" class="rail-item">
-      <i class="fas fa-arrow-left"></i>
-      <span class="rail-item-name">Back to Janta</span>
-    </a>
-    <button type="button" class="rail-item active" data-nav="overview" onclick="scrollToSection('overview')">
-      <i class="fas ${WS.icon}"></i>
-      <span class="rail-item-name">${escapeHtml(WS.name)}</span>
-    </button>
-  `;
+  if (ordersPath) {
+    try {
+      const snap = await db.ref(ordersPath).limitToFirst(1).once('value');
+      const val = snap.val();
+      if (val) {
+        const first = Object.values(val)[0];
+        const pick = (keys) => keys.find(k => first[k] !== undefined && first[k] !== null && first[k] !== '');
+        fields.clientName = pick(['customerName','restaurantName','businessName','clientName','name','fullName','customer']) || fields.clientName;
+        fields.orderTotal = pick(['total','amount','budget','price','grandTotal']) || fields.orderTotal;
+      }
+    } catch (e) {}
+  }
 
-  const items = [
-    { key: 'overview', label: 'Overview', icon: 'fa-chart-pie' },
-    { key: 'orders', label: 'Orders', icon: 'fa-box' },
-    { key: 'products', label: WS.catalogue.title, icon: WS.icon },
-    { key: 'suppliers', label: WS.suppliers.title, icon: 'fa-truck-field' },
-    { key: 'about', label: 'How it works', icon: 'fa-circle-info' }
+  if (productsPath) {
+    try {
+      const snap = await db.ref(productsPath).limitToFirst(1).once('value');
+      const val = snap.val();
+      if (val) {
+        const first = Object.values(val)[0];
+        const pick = (keys) => keys.find(k => first[k] !== undefined && first[k] !== null && first[k] !== '');
+        fields.productPrice = pick(['price','unitPrice','salePrice','amount','budget']) || fields.productPrice;
+        fields.productUnit = pick(['unit','size','weight']) || fields.productUnit;
+        fields.productStock = pick(['stock','quantity','available']) || fields.productStock;
+        fields.productCategory = pick(['category','type','industry']) || fields.productCategory;
+        fields.productSupplier = pick(['supplier','brand','specialty','specialization','ownerName']) || fields.productSupplier;
+      }
+    } catch (e) {}
+  }
+
+  return fields;
+}
+
+/* Default KPI set — works for any workspace. */
+function defaultKpis() {
+  return [
+    { label: 'Records', source: 'orders.count', icon: 'fa-list', color: '' },
+    { label: 'Total Value', source: 'orders.sumTotal', format: 'kes', icon: 'fa-coins', color: 'amber' },
+    { label: 'Clients', source: 'orders.uniqueClient', icon: 'fa-user', color: 'blue' },
+    { label: 'Catalogue', source: 'products.count', icon: 'fa-cube', color: 'rose' }
   ];
-  sections.innerHTML = items.map(it => `
-    <button type="button" class="rail-item ${it.key === 'overview' ? 'active' : ''}" data-nav="${it.key}" onclick="scrollToSection('${it.key}')">
-      <i class="fas ${it.icon}"></i>
-      <span class="rail-item-name">${escapeHtml(it.label)}</span>
-    </button>
-  `).join('');
+}
 
-  document.querySelectorAll('.rail-item[data-nav]').forEach(el => {
-    if (el.dataset.nav !== 'overview') el.classList.remove('active');
-  });
+/* Apply theme from the business record's pageData.business.primaryColor. */
+function applyTheme(biz) {
+  const pd = biz.pageData || {};
+  const b = pd.business || {};
+  const primary = b.primaryColor || '#107c10';
+  const root = document.documentElement.style;
+  root.setProperty('--ws-accent', primary);
+  root.setProperty('--ws-accent-light', lighten(primary, 25));
+  root.setProperty('--ws-accent-soft', lighten(primary, 45));
+  root.setProperty('--ws-hero-bg', `linear-gradient(135deg, ${lighten(primary, 55)} 0%, ${lighten(primary, 45)} 40%, ${lighten(primary, 35)} 100%)`);
+  root.setProperty('--ws-hero-border', `color-mix(in srgb, ${primary} 18%, transparent)`);
+  document.title = (b.name || biz.businessName || 'Workspace') + ' · Janta';
+}
+
+/* ============================================================
+   FIREBASE BOOT
+   ============================================================ */
+function bootFirebase() {
+  if (typeof firebase === 'undefined') { showToast('Could not load Firebase', 'error'); return; }
+  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); } catch (e) {}
+  const auth = firebase.auth();
+  const db = firebase.database();
+  window._auth = auth; window._db = db;
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+  auth.onAuthStateChanged(handleAuth);
+}
+
+async function handleAuth(user) {
+  const db = window._db;
+  if (!user) {
+    showToast('Sign in to view this workspace', 'info');
+    setTimeout(() => { location.href = 'index.html'; }, 1500);
+    return;
+  }
+  currentUser = user;
+
+  if (!slug) {
+    showToast('No workspace specified', 'error');
+    setTimeout(() => { location.href = 'index.html'; }, 1500);
+    return;
+  }
+
+  // Load permissions
+  try {
+    const snap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
+    currentPerms = snap.exists() ? (snap.val() || {}) : {};
+  } catch (e) { currentPerms = {}; }
+
+  // Load the business record
+  try {
+    const snap = await db.ref(`brandinn_subdomains/${slug}`).once('value');
+    business = snap.exists() ? snap.val() : null;
+  } catch (e) { business = null; }
+
+  if (!business) {
+    showToast(`Workspace "${slug}" not found`, 'error');
+    setTimeout(() => { location.href = 'index.html'; }, 1500);
+    return;
+  }
+
+  // Permission check: permission field, or slug itself, or fallback
+  const requiredPerm = business.permission || business.workspacePermission || slug;
+  const hasPerm = currentPerms[requiredPerm] === true
+    || currentPerms[requiredPerm] === 'true'
+    || currentPerms[slug] === true
+    || currentPerms.admins === true;
+
+  if (!hasPerm) {
+    showToast(`You do not have access to ${business.businessName || slug}`, 'error');
+    setTimeout(() => { location.href = 'index.html'; }, 1500);
+    return;
+  }
+
+  pageData = business.pageData || {};
+
+  // Resolve workspace config from Firebase
+  wsConfig = await resolveWorkspaceConfig(db, business);
+
+  applyTheme(business);
+  renderRail();
+  renderAccountButton();
+
+  await loadAll();
+  renderWorkspace();
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+function renderAccountButton() {
+  const c = document.getElementById('headerAccount');
+  if (!c) return;
+  if (!currentUser) {
+    c.innerHTML = `<a href="index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-right-to-bracket"></i><span>Sign in</span></a>`;
+    return;
+  }
+  const name = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
+  c.innerHTML = `
+    <div style="position:relative;">
+      <button type="button" class="ws-account-btn" onclick="location.href='account.html'" aria-label="Account">
+        <div class="ws-avatar">${escapeHtml(getInitials(name))}</div>
+        <span class="ws-account-name">${escapeHtml(name)}</span>
+      </button>
+    </div>`;
 }
 
 function toggleRail() {
@@ -850,6 +764,39 @@ function scrollToSection(key) {
   closeRail();
 }
 
+function renderRail() {
+  const primary = document.getElementById('railPrimary');
+  const sections = document.getElementById('railSections');
+  if (!primary || !sections) return;
+
+  const name = business.businessName || (pageData.business && pageData.business.name) || slug;
+
+  primary.innerHTML = `
+    <a href="index.html" class="rail-item">
+      <i class="fas fa-arrow-left"></i>
+      <span class="rail-item-name">Back to Janta</span>
+    </a>
+    <button type="button" class="rail-item active" data-nav="overview" onclick="scrollToSection('overview')">
+      <i class="fas fa-chart-pie"></i>
+      <span class="rail-item-name">${escapeHtml(name)}</span>
+    </button>
+  `;
+
+  const items = [
+    { key: 'overview', label: 'Overview', icon: 'fa-chart-pie' },
+    { key: 'orders', label: wsConfig.ordersTitle, icon: 'fa-box' },
+    { key: 'products', label: wsConfig.catalogueTitle, icon: wsConfig.catalogueIcon },
+    { key: 'suppliers', label: wsConfig.suppliersTitle, icon: 'fa-truck-field' },
+    { key: 'about', label: 'How it works', icon: 'fa-circle-info' }
+  ];
+  sections.innerHTML = items.map(it => `
+    <button type="button" class="rail-item ${it.key === 'overview' ? 'active' : ''}" data-nav="${it.key}" onclick="scrollToSection('${it.key}')">
+      <i class="fas ${it.icon}"></i>
+      <span class="rail-item-name">${escapeHtml(it.label)}</span>
+    </button>
+  `).join('');
+}
+
 /* ============================================================
    GLOBAL SEARCH
    ============================================================ */
@@ -859,7 +806,9 @@ function setupGlobalSearch() {
   const hint = document.getElementById('wsSearchHint');
   if (!input || !hint) return;
 
-  input.placeholder = `Search ${WS.name}…`;
+  const name = business.businessName || 'this workspace';
+  input.placeholder = `Search ${name}…`;
+
   input.addEventListener('input', () => {
     clearTimeout(globalSearchDebounce);
     const q = input.value.trim();
@@ -885,15 +834,15 @@ function renderGlobalSearchHint(query) {
   const input = document.getElementById('wsSearch');
   if (!hint || !input) return;
   const q = query.toLowerCase();
-  const clientField = WS.fields.clientName;
+  const f = wsConfig.fields;
 
   const productMatches = allProducts.filter(p => {
-    const hay = [p.name, p[WS.fields.productCategory], p[WS.fields.productSupplier], p[WS.fields.productUnit]].filter(Boolean).join(' ').toLowerCase();
+    const hay = [p.name, p.title, readPath(p, f.productCategory), readPath(p, f.productSupplier)].filter(Boolean).join(' ').toLowerCase();
     return hay.includes(q);
   }).slice(0, 4);
 
   const orderMatches = allOrders.filter(o => {
-    const hay = [o[clientField], o.contactPerson, o.phone, o.location, ...(o.products || []).map(x => x.name)].filter(Boolean).join(' ').toLowerCase();
+    const hay = [readPath(o, f.clientName), o.contactPerson, o.phone, ...(o.products || []).map(x => x.name)].filter(Boolean).join(' ').toLowerCase();
     return hay.includes(q);
   }).slice(0, 3);
 
@@ -906,29 +855,29 @@ function renderGlobalSearchHint(query) {
 
   let html = '';
   if (productMatches.length) {
-    html += `<div class="ws-search-hint-group">Products</div>`;
+    html += `<div class="ws-search-hint-group">Catalogue</div>`;
     html += productMatches.map(p => {
-      const img = productImage(p);
+      const img = productImage(p, f.productImages);
       const thumb = img
-        ? `<div class="ws-search-hint-thumb"><img src="${escapeHtml(img)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${WS.catalogue.placeholderIcon}\\"></i>';"></div>`
-        : `<div class="ws-search-hint-thumb"><i class="fas ${WS.catalogue.placeholderIcon}"></i></div>`;
+        ? `<div class="ws-search-hint-thumb"><img src="${escapeHtml(img)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${wsConfig.catalogueIcon}\\"></i>';"></div>`
+        : `<div class="ws-search-hint-thumb"><i class="fas ${wsConfig.catalogueIcon}"></i></div>`;
       return `<button type="button" class="ws-search-hint-item" onclick="focusProduct('${escapeHtml(p.id)}')">
         ${thumb}
         <div class="ws-search-hint-body">
-          <div class="ws-search-hint-title">${highlightMatch(p.name, query)}</div>
-          <div class="ws-search-hint-meta">${escapeHtml(p[WS.fields.productCategory] || '')} · ${formatKesExact(p[WS.fields.productPrice])}</div>
+          <div class="ws-search-hint-title">${highlightMatch(p.name || p.title || 'Item', query)}</div>
+          <div class="ws-search-hint-meta">${escapeHtml(readPath(p, f.productCategory) || '')}</div>
         </div>
       </button>`;
     }).join('');
   }
   if (orderMatches.length) {
-    html += `<div class="ws-search-hint-group">Orders</div>`;
+    html += `<div class="ws-search-hint-group">${escapeHtml(wsConfig.ordersTitle)}</div>`;
     html += orderMatches.map(o => `
       <button type="button" class="ws-search-hint-item" onclick="focusOrder('${escapeHtml(o.id)}')">
         <div class="ws-search-hint-thumb"><i class="fas fa-box"></i></div>
         <div class="ws-search-hint-body">
-          <div class="ws-search-hint-title">${highlightMatch(o[clientField] || 'Order', query)}</div>
-          <div class="ws-search-hint-meta">${formatKes(o[WS.fields.orderTotal])} · ${statusLabel(o.status)}</div>
+          <div class="ws-search-hint-title">${highlightMatch(readPath(o, f.clientName) || 'Record', query)}</div>
+          <div class="ws-search-hint-meta">${formatKes(readPath(o, f.orderTotal))} · ${statusLabel(o.status)}</div>
         </div>
       </button>
     `).join('');
@@ -967,10 +916,10 @@ function focusOrder(id) {
 }
 function jumpToFirstResult(query) {
   const q = query.toLowerCase();
-  const clientField = WS.fields.clientName;
-  const p = allProducts.find(x => [x.name, x[WS.fields.productCategory]].filter(Boolean).join(' ').toLowerCase().includes(q));
+  const f = wsConfig.fields;
+  const p = allProducts.find(x => [x.name, x.title, readPath(x, f.productCategory)].filter(Boolean).join(' ').toLowerCase().includes(q));
   if (p) { focusProduct(p.id); return; }
-  const o = allOrders.find(x => [x[clientField], x.contactPerson].filter(Boolean).join(' ').toLowerCase().includes(q));
+  const o = allOrders.find(x => [readPath(x, f.clientName), x.contactPerson].filter(Boolean).join(' ').toLowerCase().includes(q));
   if (o) { focusOrder(o.id); return; }
   showToast(`No matches for "${query}"`, 'info');
   closeGlobalSearch();
@@ -1003,17 +952,17 @@ function setupOrderFilters() {
   }
 }
 function applyOrderFilter() {
-  const clientField = WS.fields.clientName;
+  const f = wsConfig.fields;
   filteredOrders = allOrders.filter(o => {
     const s = String(o.status || 'new').toLowerCase();
     if (activeOrderFilter !== 'all' && s !== activeOrderFilter) {
       if (activeOrderFilter === 'pending' && !['pending','processing','confirmed'].includes(s)) return false;
-      if (activeOrderFilter === 'delivered' && !['delivered','fulfilled'].includes(s)) return false;
+      if (activeOrderFilter === 'delivered' && !['delivered','fulfilled','completed'].includes(s)) return false;
       if (activeOrderFilter === 'cancelled' && !['cancelled','rejected'].includes(s)) return false;
       if (!['pending','delivered','cancelled'].includes(activeOrderFilter) && s !== activeOrderFilter) return false;
     }
     if (orderSearchQuery) {
-      const hay = [o[clientField], o.contactPerson, o.phone, o.location, ...(o.products || []).map(x => x.name)].filter(Boolean).join(' ').toLowerCase();
+      const hay = [readPath(o, f.clientName), o.contactPerson, o.phone, ...(o.products || []).map(x => x.name)].filter(Boolean).join(' ').toLowerCase();
       if (!hay.includes(orderSearchQuery)) return false;
     }
     return true;
@@ -1036,11 +985,11 @@ function setupProductFilters() {
 function buildProductCategoryTabs() {
   const container = document.getElementById('ffProductTabs');
   if (!container) return;
-  const catField = WS.fields.productCategory;
-  const cats = Array.from(new Set(allProducts.map(p => String(p[catField] || '').trim()).filter(Boolean))).sort();
+  const catField = wsConfig.fields.productCategory;
+  const cats = Array.from(new Set(allProducts.map(p => String(readPath(p, catField) || '').trim()).filter(Boolean))).sort();
   let html = `<button type="button" class="ff-tab ${activeProductCategory === 'all' ? 'active' : ''}" data-cat="all">All <span style="opacity:.6;font-weight:500;">(${allProducts.length})</span></button>`;
   html += cats.map(c => {
-    const count = allProducts.filter(p => String(p[catField] || '').trim() === c).length;
+    const count = allProducts.filter(p => String(readPath(p, catField) || '').trim() === c).length;
     return `<button type="button" class="ff-tab ${activeProductCategory === c ? 'active' : ''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)} <span style="opacity:.6;font-weight:500;">(${count})</span></button>`;
   }).join('');
   container.innerHTML = html;
@@ -1054,12 +1003,11 @@ function buildProductCategoryTabs() {
   });
 }
 function applyProductFilter() {
-  const catField = WS.fields.productCategory;
-  const supField = WS.fields.productSupplier;
+  const f = wsConfig.fields;
   filteredProducts = allProducts.filter(p => {
-    if (activeProductCategory !== 'all' && String(p[catField] || '').trim() !== activeProductCategory) return false;
+    if (activeProductCategory !== 'all' && String(readPath(p, f.productCategory) || '').trim() !== activeProductCategory) return false;
     if (productSearchQuery) {
-      const hay = [p.name, p[catField], p[supField], p[WS.fields.productUnit], p.sku].filter(Boolean).join(' ').toLowerCase();
+      const hay = [p.name, p.title, readPath(p, f.productCategory), readPath(p, f.productSupplier), readPath(p, f.productUnit), p.sku].filter(Boolean).join(' ').toLowerCase();
       if (!hay.includes(productSearchQuery)) return false;
     }
     return true;
@@ -1076,111 +1024,67 @@ function clearProductSearch() {
 }
 
 /* ============================================================
-   FIREBASE
-   ============================================================ */
-function bootFirebase() {
-  if (typeof firebase === 'undefined') { showToast('Could not load Firebase', 'error'); return; }
-  try { if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); } catch (e) {}
-  const auth = firebase.auth();
-  const db = firebase.database();
-  window._auth = auth; window._db = db;
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
-  auth.onAuthStateChanged(handleAuth);
-}
-
-async function handleAuth(user) {
-  const db = window._db;
-  if (!user) {
-    currentUser = null;
-    renderAccountButton();
-    showToast('Sign in to view this workspace', 'info');
-    setTimeout(() => { location.href = 'index.html'; }, 1500);
-    return;
-  }
-  currentUser = user;
-  try {
-    const snap = await db.ref(`workspacePermissions/${user.uid}`).once('value');
-    currentPerms = snap.exists() ? (snap.val() || {}) : {};
-  } catch (e) { currentPerms = {}; }
-
-  renderAccountButton();
-
-  const hasPerm = currentPerms[WS.permission] === true
-    || currentPerms[WS.permission] === 'true'
-    || currentPerms.admins === true;
-
-  if (!hasPerm) {
-    showToast(`You do not have access to ${WS.name}`, 'error');
-    setTimeout(() => { location.href = 'index.html'; }, 1500);
-    return;
-  }
-
-  await loadAll();
-  renderWorkspace();
-}
-
-function renderAccountButton() {
-  const c = document.getElementById('headerAccount');
-  if (!c) return;
-  if (!currentUser) {
-    c.innerHTML = `<a href="index.html" class="ws-btn ws-btn-primary"><i class="fas fa-arrow-right-to-bracket"></i><span>Sign in</span></a>`;
-    return;
-  }
-  const name = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'User');
-  c.innerHTML = `
-    <div style="position:relative;">
-      <button type="button" class="ws-account-btn" onclick="location.href='account.html'" aria-label="Account">
-        <div class="ws-avatar">${escapeHtml(getInitials(name))}</div>
-        <span class="ws-account-name">${escapeHtml(name)}</span>
-      </button>
-    </div>`;
-}
-
-/* ============================================================
-   LOADERS (generic — uses WS.paths + WS.fields)
+   LOADERS
    ============================================================ */
 async function loadAll(manual = false) {
-  if (!window._db || !currentUser) return;
+  const db = window._db;
+  if (!db || !currentUser) return;
   if (manual) showToast('Refreshing…', 'info');
   await Promise.all([loadOrders(), loadProducts(), loadSuppliers()]);
-  buildProductCategoryTabs();
-  applyOrderFilter();
-  applyProductFilter();
-  renderSupplierGrid();
-  updateKpis();
-  renderCharts();
+  if (document.getElementById('ffProductTabs')) {
+    buildProductCategoryTabs();
+    applyOrderFilter();
+    applyProductFilter();
+    renderSupplierGrid();
+    updateKpis();
+    renderCharts();
+  }
 }
 
 async function loadOrders() {
   const db = window._db;
+  const path = wsConfig.paths.orders;
+  if (!path) { allOrders = []; return; }
   try {
-    const snap = await db.ref(WS.paths.orders).once('value');
+    const snap = await db.ref(path).once('value');
     const val = snap.val() || {};
-    allOrders = Object.entries(val).map(([id, o]) => ({
-      id, ...o,
-      _total: Number(o[WS.fields.orderTotal] || o.total || o.amount || 0),
-      products: Array.isArray(o.products) ? o.products : Object.values(o.products || o.items || {}),
-      _ts: Number(o.createdAt || o.updatedAt || o.timestamp || o.orderDate) || 0
-    })).sort((a, b) => b._ts - a._ts);
+    const f = wsConfig.fields;
+    allOrders = Object.entries(val).map(([id, o]) => {
+      const products = Array.isArray(o.products) ? o.products
+        : (o.items ? Object.values(o.items) : Object.values(o.products || {}));
+      return {
+        id, ...o,
+        _total: Number(readPath(o, f.orderTotal) || o.total || o.amount || 0),
+        products: Array.isArray(products) ? products : [],
+        _ts: Number(o.createdAt || o.updatedAt || o.timestamp || o.orderDate) || 0
+      };
+    }).sort((a, b) => b._ts - a._ts);
   } catch (e) { console.warn('orders read failed:', e); allOrders = []; }
 }
 
 async function loadProducts() {
   const db = window._db;
+  const path = wsConfig.paths.products;
+  if (!path) { allProducts = []; return; }
   try {
-    const snap = await db.ref(WS.paths.products).once('value');
+    const snap = await db.ref(path).once('value');
     const val = snap.val() || {};
-    allProducts = Object.entries(val).map(([id, p]) => ({ id, ...p, name: p.name || p.title || 'Unnamed' }));
+    allProducts = Object.entries(val).map(([id, p]) => ({ id, ...p, name: p.name || p.title || p.businessName || 'Item' }));
   } catch (e) { console.warn('products read failed:', e); allProducts = []; }
 }
 
 async function loadSuppliers() {
   const db = window._db;
-  if (!WS.paths.suppliers) { allSuppliers = []; return; }
+  const path = wsConfig.paths.suppliers;
+  if (!path) { allSuppliers = []; return; }
   try {
-    const snap = await db.ref(WS.paths.suppliers).once('value');
+    const snap = await db.ref(path).once('value');
     const val = snap.val() || {};
-    allSuppliers = Object.entries(val).map(([id, s]) => ({ id, ...s, name: s.name || s.fullName || 'Supplier', status: s.status || 'active' }));
+    allSuppliers = Object.entries(val).map(([id, s]) => ({
+      id, ...s,
+      name: s.name || s.fullName || s.businessName || s.ownerName || 'Member',
+      status: s.status || 'active'
+    }));
   } catch (e) { console.warn('suppliers read failed:', e); allSuppliers = []; }
 }
 
@@ -1191,23 +1095,36 @@ function renderWorkspace() {
   const content = document.getElementById('wsContent');
   if (!content) return;
 
+  const b = pageData.business || {};
+  const bizName = b.name || business.businessName || slug;
+  const tagline = b.tagline || business.tagline || '';
+  const logo = b.logo || business.logo || '';
+  const phone = (pageData.contact && pageData.contact.phone) || business.phone || '';
+  const email = (pageData.contact && pageData.contact.email) || business.email || '';
+  const address = (pageData.contact && pageData.contact.address) || business.address || '';
+
+  const chips = [];
+  if (business.category) chips.push({ icon: 'fa-tag', text: business.category });
+  if (phone) chips.push({ icon: 'fa-phone', text: phone });
+  if (address) chips.push({ icon: 'fa-location-dot', text: address });
+
   content.innerHTML = `
     <section class="ff-hero" id="wsHero">
       <div class="ff-hero-bg"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
       <div class="ff-hero-inner">
         <div class="ff-hero-left">
-          <div class="ff-eyebrow"><span class="dot"></span><span>${escapeHtml(WS.hero.eyebrow)}</span></div>
-          <h1>${WS.hero.headline}</h1>
-          <p class="ff-hero-lede">${escapeHtml(WS.hero.lede)}</p>
-          <div class="ff-hero-chips">
-            ${WS.hero.chips.map(c => `<span class="ff-chip"><i class="fas ${c.icon}"></i>${escapeHtml(c.text)}</span>`).join('')}
+          <div class="ff-eyebrow">
+            <span class="dot"></span>
+            <span>${escapeHtml(bizName)} · Workspace</span>
           </div>
+          <h1>${escapeHtml(bizName)}${tagline ? '<span class="accent">.</span>' : ''}</h1>
+          ${tagline ? `<p class="ff-hero-lede">${escapeHtml(tagline)}</p>` : ''}
+          ${chips.length ? `<div class="ff-hero-chips">${chips.map(c => `<span class="ff-chip"><i class="fas ${c.icon}"></i>${escapeHtml(c.text)}</span>`).join('')}</div>` : ''}
         </div>
         <div class="ff-hero-actions">
-          ${WS.hero.actions.map(a => a.link
-            ? `<a href="${a.link}" class="ws-btn ws-btn-primary"><i class="fas ${a.icon}"></i>${escapeHtml(a.label)}</a>`
-            : `<a href="${a.anchor}" class="ws-btn ws-btn-ghost" onclick="event.preventDefault();scrollToSection('about')"><i class="fas ${a.icon}"></i>${escapeHtml(a.label)}</a>`
-          ).join('')}
+          <a href="index.html" class="ws-btn ws-btn-ghost">
+            <i class="fas fa-arrow-left"></i> Back to Janta
+          </a>
         </div>
       </div>
     </section>
@@ -1215,14 +1132,13 @@ function renderWorkspace() {
     <section class="ff-section">
       <div class="ff-section-header">
         <h2 class="ff-section-title"><i class="fas fa-chart-line"></i> Key metrics</h2>
-        <span class="ff-section-action" id="ffLastUpdated" style="cursor:default;">Updated ${new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span>
       </div>
-      <div class="ff-kpi-grid">
-        ${WS.kpis.map((k, i) => `
+      <div class="ff-kpi-grid" id="ffKpiGrid">
+        ${wsConfig.kpis.map((k, i) => `
           <div class="ff-kpi">
             <div class="ff-kpi-head">
               <div class="ff-kpi-icon ${k.color || ''}"><i class="fas ${k.icon}"></i></div>
-              <span class="ff-kpi-delta flat">—</span>
+              <span class="ff-kpi-delta">—</span>
             </div>
             <div class="ff-kpi-value" id="kpi_${i}">—</div>
             <div class="ff-kpi-label">${escapeHtml(k.label)}</div>
@@ -1242,21 +1158,21 @@ function renderWorkspace() {
           <div class="ff-canvas-wrap"><canvas id="chartRev"></canvas></div>
         </div>
         <div class="ff-card">
-          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-chart-pie"></i> Orders by status</div><div class="ff-card-meta" id="metaStatus">—</div></div>
+          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-chart-pie"></i> Status breakdown</div><div class="ff-card-meta" id="metaStatus">—</div></div>
           <div class="ff-canvas-wrap"><canvas id="chartStatus"></canvas></div>
         </div>
       </div>
       <div class="ff-chart-grid three" style="margin-top:.9rem;">
         <div class="ff-card">
-          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-cube"></i> Top products</div><div class="ff-card-meta">By revenue</div></div>
+          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-cube"></i> Top items</div><div class="ff-card-meta">By revenue</div></div>
           <div class="ff-canvas-wrap"><canvas id="chartProd"></canvas></div>
         </div>
         <div class="ff-card">
-          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-users"></i> Top customers</div><div class="ff-card-meta">By order count</div></div>
+          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-users"></i> Top clients</div><div class="ff-card-meta">By record count</div></div>
           <div class="ff-canvas-wrap"><canvas id="chartClient"></canvas></div>
         </div>
         <div class="ff-card">
-          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-clock"></i> Delivery performance</div><div class="ff-card-meta">Last 14 days</div></div>
+          <div class="ff-card-head"><div class="ff-card-title"><i class="fas fa-clock"></i> Completion rate</div><div class="ff-card-meta">Last 14 days</div></div>
           <div class="ff-canvas-wrap"><canvas id="chartPerf"></canvas></div>
         </div>
       </div>
@@ -1264,22 +1180,25 @@ function renderWorkspace() {
 
     <section class="ff-section" id="ffOrders">
       <div class="ff-section-header">
-        <h2 class="ff-section-title"><i class="fas fa-box"></i> ${escapeHtml(WS.orders.title)}</h2>
+        <h2 class="ff-section-title"><i class="fas fa-box"></i> ${escapeHtml(wsConfig.ordersTitle)}</h2>
         <span class="ff-section-action" id="ffOrdersCount" style="cursor:default;">—</span>
       </div>
       <div class="ff-table-wrap">
         <div class="ff-toolbar">
           <div class="ff-tabs" id="ffOrderTabs">
-            ${WS.orders.filters.map((f, i) => `<button type="button" class="ff-tab ${i===0?'active':''}" data-filter="${f.key}">${escapeHtml(f.label)}</button>`).join('')}
+            <button type="button" class="ff-tab active" data-filter="all">All</button>
+            <button type="button" class="ff-tab" data-filter="pending">Pending</button>
+            <button type="button" class="ff-tab" data-filter="delivered">Delivered</button>
+            <button type="button" class="ff-tab" data-filter="cancelled">Cancelled</button>
           </div>
           <div class="ff-search">
             <i class="fas fa-magnifying-glass"></i>
-            <input type="search" id="ffOrderSearch" placeholder="${escapeHtml(WS.orders.searchPlaceholder)}" aria-label="Search orders">
+            <input type="search" id="ffOrderSearch" placeholder="Search…" aria-label="Search records">
           </div>
         </div>
         <div style="overflow-x:auto;">
           <table class="ff-table">
-            <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+            <thead><tr><th>Ref</th><th>Client</th><th>Items</th><th>Value</th><th>Status</th><th>Date</th></tr></thead>
             <tbody id="ffOrdersBody"><tr><td colspan="6" class="ff-table-empty"><i class="fas fa-circle-notch fa-spin"></i>Loading…</td></tr></tbody>
           </table>
         </div>
@@ -1288,7 +1207,7 @@ function renderWorkspace() {
 
     <section class="ff-section" id="ffProducts">
       <div class="ff-section-header">
-        <h2 class="ff-section-title"><i class="fas ${WS.icon}"></i> ${escapeHtml(WS.catalogue.title)}</h2>
+        <h2 class="ff-section-title"><i class="fas ${wsConfig.catalogueIcon}"></i> ${escapeHtml(wsConfig.catalogueTitle)}</h2>
         <span class="ff-section-action" id="ffProductsCount" style="cursor:default;">—</span>
       </div>
       <div class="ff-table-wrap">
@@ -1298,7 +1217,7 @@ function renderWorkspace() {
           </div>
           <div class="ff-search">
             <i class="fas fa-magnifying-glass"></i>
-            <input type="search" id="ffProductSearch" placeholder="Search ${WS.catalogue.singular}s…" aria-label="Search products">
+            <input type="search" id="ffProductSearch" placeholder="Search…" aria-label="Search catalogue">
           </div>
         </div>
         <div class="ff-product-grid" id="ffProductGrid">
@@ -1306,7 +1225,7 @@ function renderWorkspace() {
         </div>
         <div class="ff-product-empty" id="ffProductEmpty" hidden>
           <i class="fas fa-magnifying-glass"></i>
-          <div>No ${WS.catalogue.singular}s match your search</div>
+          <div>No items match your search</div>
           <button type="button" class="ff-tab active" onclick="clearProductSearch()" style="margin-top:.7rem;">Clear search</button>
         </div>
       </div>
@@ -1315,7 +1234,7 @@ function renderWorkspace() {
     ${allSuppliers.length ? `
     <section class="ff-section" id="ffSuppliers">
       <div class="ff-section-header">
-        <h2 class="ff-section-title"><i class="fas fa-truck-field"></i> ${escapeHtml(WS.suppliers.title)}</h2>
+        <h2 class="ff-section-title"><i class="fas fa-truck-field"></i> ${escapeHtml(wsConfig.suppliersTitle)}</h2>
         <span class="ff-section-action" id="ffSuppliersCount" style="cursor:default;">—</span>
       </div>
       <div class="ff-table-wrap">
@@ -1327,53 +1246,56 @@ function renderWorkspace() {
     ` : ''}
 
     <section class="ff-section" id="ffAbout">
-      <div class="ff-section-header"><h2 class="ff-section-title"><i class="fas fa-circle-info"></i> ${escapeHtml(WS.about.title)}</h2></div>
+      <div class="ff-section-header"><h2 class="ff-section-title"><i class="fas fa-circle-info"></i> How it works</h2></div>
       <div class="ff-about">
         <div>
-          <h3>${escapeHtml(WS.about.heading)}</h3>
-          <p>${escapeHtml(WS.about.body)}</p>
+          <h3>${escapeHtml(bizName)}</h3>
+          <p>${escapeHtml(tagline || 'This workspace is managed through Janta. Data is read live from Firebase and rendered here.')}</p>
           <div class="ff-about-list">
-            ${WS.about.steps.map((s, i) => `<div class="ff-about-item"><span class="num">${i+1}</span><div>${escapeHtml(s)}</div></div>`).join('')}
+            <div class="ff-about-item"><span class="num">1</span><div>Records are read from <code>${escapeHtml(wsConfig.paths.orders || '—')}</code>.</div></div>
+            <div class="ff-about-item"><span class="num">2</span><div>The catalogue comes from <code>${escapeHtml(wsConfig.paths.products || '—')}</code>.</div></div>
+            <div class="ff-about-item"><span class="num">3</span><div>Network data comes from <code>${escapeHtml(wsConfig.paths.suppliers || '—')}</code>.</div></div>
+            <div class="ff-about-item"><span class="num">4</span><div>Everything is access-controlled via <code>workspacePermissions</code>.</div></div>
           </div>
         </div>
         <div class="ff-about-side">
           <h4>At a glance</h4>
           <ul>
-            ${WS.about.stats.map(st => {
-              let val = st.value;
-              if (st.dynamic === 'productsCount') val = allProducts.length;
-              if (st.dynamic === 'suppliersCount') val = allSuppliers.filter(s => s.status === 'active').length;
-              return `<li><i class="fas ${st.icon}"></i><span><strong>${escapeHtml(String(val))}</strong> ${escapeHtml(st.label)}</span></li>`;
-            }).join('')}
+            <li><i class="fas fa-box"></i><span><strong>${allOrders.length}</strong> records</span></li>
+            <li><i class="fas fa-cube"></i><span><strong>${allProducts.length}</strong> catalogue items</span></li>
+            <li><i class="fas fa-truck-field"></i><span><strong>${allSuppliers.length}</strong> network members</span></li>
+            ${email ? `<li><i class="fas fa-envelope"></i><span>${escapeHtml(email)}</span></li>` : ''}
+            ${phone ? `<li><i class="fas fa-phone"></i><span>${escapeHtml(phone)}</span></li>` : ''}
           </ul>
         </div>
       </div>
     </section>
   `;
 
-  // Rebind filters after re-render
+  setupGlobalSearch();
   setupOrderFilters();
   setupProductFilters();
-  renderOrderTable();
-  renderProductGrid();
+  buildProductCategoryTabs();
+  applyOrderFilter();
+  applyProductFilter();
   renderSupplierGrid();
   updateKpis();
   renderCharts();
 }
 
 /* ============================================================
-   RENDER — ORDERS
+   RENDER TABLES / CARDS
    ============================================================ */
 function renderOrderTable() {
   const body = document.getElementById('ffOrdersBody');
   const count = document.getElementById('ffOrdersCount');
-  if (count) count.textContent = pluralize(allOrders.length, 'order');
+  if (count) count.textContent = pluralize(allOrders.length, 'record');
   if (!body) return;
   if (!filteredOrders.length) {
-    body.innerHTML = `<tr><td colspan="6" class="ff-table-empty"><i class="fas fa-inbox"></i>No orders</td></tr>`;
+    body.innerHTML = `<tr><td colspan="6" class="ff-table-empty"><i class="fas fa-inbox"></i>No records</td></tr>`;
     return;
   }
-  const clientField = WS.fields.clientName;
+  const f = wsConfig.fields;
   body.innerHTML = filteredOrders.slice(0, FF.tablePageSize).map(o => {
     const items = o.products || [];
     const itemCount = items.reduce((s, p) => s + (Number(p.quantity) || 1), 0);
@@ -1381,8 +1303,8 @@ function renderOrderTable() {
     const more = items.length > 2 ? ` +${items.length - 2} more` : '';
     return `<tr>
       <td><span class="cell-primary">${escapeHtml((o.id || '').slice(-6).toUpperCase())}</span></td>
-      <td><span class="cell-primary">${escapeHtml(o[clientField] || '—')}</span></td>
-      <td><span class="cell-muted">${itemCount} item${itemCount === 1 ? '' : 's'}</span><br><span class="cell-muted">${escapeHtml(itemLabel)}${escapeHtml(more)}</span></td>
+      <td><span class="cell-primary">${escapeHtml(readPath(o, f.clientName) || '—')}</span></td>
+      <td><span class="cell-muted">${itemCount ? itemCount + ' item' + (itemCount === 1 ? '' : 's') : '—'}</span><br><span class="cell-muted">${escapeHtml(itemLabel)}${escapeHtml(more)}</span></td>
       <td class="cell-num">${formatKesExact(o._total)}</td>
       <td><span class="ff-status ${statusClass(o.status)}"><span class="tag-dot"></span>${escapeHtml(statusLabel(o.status))}</span></td>
       <td><span class="cell-muted">${escapeHtml(formatDate(o._ts))}</span></td>
@@ -1390,14 +1312,11 @@ function renderOrderTable() {
   }).join('');
 }
 
-/* ============================================================
-   RENDER — PRODUCTS
-   ============================================================ */
 function renderProductGrid() {
   const grid = document.getElementById('ffProductGrid');
   const empty = document.getElementById('ffProductEmpty');
   const count = document.getElementById('ffProductsCount');
-  if (count) count.textContent = `${filteredProducts.length} of ${allProducts.length} ${WS.catalogue.singular}s`;
+  if (count) count.textContent = `${filteredProducts.length} of ${allProducts.length} items`;
   if (!grid) return;
 
   if (!filteredProducts.length) {
@@ -1407,45 +1326,41 @@ function renderProductGrid() {
   }
   if (empty) empty.hidden = true;
 
-  const catField = WS.fields.productCategory;
-  const supField = WS.fields.productSupplier;
-  const priceField = WS.fields.productPrice;
-  const unitField = WS.fields.productUnit;
-  const stockField = WS.fields.productStock;
-
+  const f = wsConfig.fields;
   grid.innerHTML = filteredProducts.map(p => {
-    const img = productImage(p);
-    const stockCls = stockClass(p[stockField]);
-    const stockTxt = stockLabel(p[stockField]);
-    const badge = p.isActive === false ? `<span class="ff-product-badge inactive">Inactive</span>` : '';
+    const img = productImage(p, f.productImages);
+    const stockField = readPath(p, f.productStock);
+    const stockCls = stockClass(stockField);
+    const stockTxt = stockField !== undefined ? stockLabel(stockField) : '';
+    const priceField = readPath(p, f.productPrice);
+    const unitField = readPath(p, f.productUnit);
+    const catField = readPath(p, f.productCategory);
+    const supField = readPath(p, f.productSupplier);
     const media = img
-      ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${WS.catalogue.placeholderIcon} ff-product-placeholder\\"></i>';">`
-      : `<i class="fas ${WS.catalogue.placeholderIcon} ff-product-placeholder"></i>`;
+      ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${wsConfig.catalogueIcon} ff-product-placeholder\\"></i>';">`
+      : `<i class="fas ${wsConfig.catalogueIcon} ff-product-placeholder"></i>`;
     return `<article class="ff-product-card" role="listitem" tabindex="0" onclick="openLightboxById('${escapeHtml(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightboxById('${escapeHtml(p.id)}')}">
-      <div class="ff-product-img">${badge}${media}</div>
+      <div class="ff-product-img">${media}</div>
       <div class="ff-product-body">
         <div class="ff-product-name">${highlightMatch(p.name, productSearchQuery)}</div>
-        ${p[catField] ? `<div class="ff-product-cat"><i class="fas fa-tag"></i>${escapeHtml(p[catField])}</div>` : ''}
-        ${p[supField] ? `<div class="ff-product-supplier"><i class="fas fa-truck-field" style="font-size:.6rem;margin-right:3px;"></i>${escapeHtml(p[supField])}</div>` : ''}
+        ${catField ? `<div class="ff-product-cat"><i class="fas fa-tag"></i>${escapeHtml(catField)}</div>` : ''}
+        ${supField ? `<div class="ff-product-supplier"><i class="fas fa-truck-field" style="font-size:.6rem;margin-right:3px;"></i>${escapeHtml(supField)}</div>` : ''}
         <div class="ff-product-foot">
-          ${p[priceField] !== undefined ? `<div class="ff-product-price">${formatKesExact(p[priceField])}${p[unitField] ? `<span class="ff-product-unit">/ ${escapeHtml(p[unitField])}</span>` : ''}</div>` : ''}
-          ${p[stockField] !== undefined ? `<span class="ff-product-stock ${stockCls}">${escapeHtml(stockTxt)}</span>` : ''}
+          ${priceField !== undefined ? `<div class="ff-product-price">${formatKesExact(priceField)}${unitField ? `<span class="ff-product-unit">/ ${escapeHtml(unitField)}</span>` : ''}</div>` : ''}
+          ${stockField !== undefined ? `<span class="ff-product-stock ${stockCls}">${escapeHtml(stockTxt)}</span>` : ''}
         </div>
       </div>
     </article>`;
   }).join('');
 }
 
-/* ============================================================
-   RENDER — SUPPLIERS
-   ============================================================ */
 function renderSupplierGrid() {
   const grid = document.getElementById('ffSupplierGrid');
   const count = document.getElementById('ffSuppliersCount');
-  if (count) count.textContent = pluralize(allSuppliers.length, WS.suppliers.singular);
+  if (count) count.textContent = pluralize(allSuppliers.length, wsConfig.suppliersSingular);
   if (!grid) return;
   if (!allSuppliers.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--text-muted);font-family:var(--font-heading);">No ${WS.suppliers.singular}s yet</div>`;
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--text-muted);font-family:var(--font-heading);">No members yet</div>`;
     return;
   }
   grid.innerHTML = allSuppliers.slice(0, 24).map(s => `
@@ -1466,8 +1381,8 @@ function renderSupplierGrid() {
    KPIs
    ============================================================ */
 function updateKpis() {
-  const clientField = WS.fields.clientName;
-  WS.kpis.forEach((k, i) => {
+  const f = wsConfig.fields;
+  wsConfig.kpis.forEach((k, i) => {
     const el = document.getElementById(`kpi_${i}`);
     if (!el) return;
     let val = '—';
@@ -1479,7 +1394,7 @@ function updateKpis() {
         break;
       }
       case 'orders.uniqueClient': {
-        val = String(new Set(allOrders.map(o => o[clientField]).filter(Boolean)).size);
+        val = String(new Set(allOrders.map(o => readPath(o, f.clientName)).filter(Boolean)).size);
         break;
       }
       case 'products.count': val = String(allProducts.length); break;
@@ -1503,102 +1418,96 @@ function renderCharts() {
   const border = styles.getPropertyValue('--m365-border').trim() || '#edebe9';
   const muted = styles.getPropertyValue('--text-muted').trim() || '#6b7280';
   const ink = styles.getPropertyValue('--ink').trim() || '#0f0f1e';
-  const clientField = WS.fields.clientName;
+  const f = wsConfig.fields;
 
   Chart.defaults.font.family = "'Satoshi','Clash Display',system-ui,sans-serif";
   Chart.defaults.font.size = 11;
   Chart.defaults.color = muted;
 
-  if (WS.charts.includes('revenue')) {
-    const ctx = document.getElementById('chartRev');
-    if (ctx) {
-      const days = FF.chartDays;
-      const buckets = {};
-      for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0,10)] = 0; }
-      allOrders.forEach(o => { if (!o._ts) return; const k = new Date(o._ts).toISOString().slice(0,10); if (k in buckets) buckets[k] += o._total || 0; });
-      const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
-      const values = Object.values(buckets);
-      const meta = document.getElementById('metaRev');
-      if (meta) meta.textContent = formatKes(values.reduce((s,v)=>s+v,0)) + ' total';
-      activeCharts.push(new Chart(ctx, {
-        type: 'line',
-        data: { labels, datasets: [{ data: values, borderColor: accent, backgroundColor: accent + '20', borderWidth: 2, tension: .35, fill: true, pointRadius: 2, pointBackgroundColor: accentLight }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, grid: { color: border }, ticks: { callback: v => formatKes(v) } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + formatKes(c.parsed.y) } } } }
-      }));
-    }
+  const revCtx = document.getElementById('chartRev');
+  if (revCtx) {
+    const days = FF.chartDays;
+    const buckets = {};
+    for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0,10)] = 0; }
+    allOrders.forEach(o => { if (!o._ts) return; const k = new Date(o._ts).toISOString().slice(0,10); if (k in buckets) buckets[k] += o._total || 0; });
+    const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
+    const values = Object.values(buckets);
+    const meta = document.getElementById('metaRev');
+    if (meta) meta.textContent = formatKes(values.reduce((s,v)=>s+v,0)) + ' total';
+    activeCharts.push(new Chart(revCtx, {
+      type: 'line',
+      data: { labels, datasets: [{ data: values, borderColor: accent, backgroundColor: accent + '20', borderWidth: 2, tension: .35, fill: true, pointRadius: 2, pointBackgroundColor: accentLight }] },
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, grid: { color: border }, ticks: { callback: v => formatKes(v) } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + formatKes(c.parsed.y) } } } }
+    }));
   }
 
-  if (WS.charts.includes('status')) {
-    const ctx = document.getElementById('chartStatus');
-    if (ctx) {
-      const counts = {};
-      allOrders.forEach(o => { const s = String(o.status || 'new').toLowerCase(); counts[s] = (counts[s] || 0) + 1; });
-      const labels = Object.keys(counts);
-      const values = Object.values(counts);
-      const meta = document.getElementById('metaStatus');
-      if (meta) meta.textContent = pluralize(allOrders.length, 'order');
-      activeCharts.push(new Chart(ctx, {
+  const statusCtx = document.getElementById('chartStatus');
+  if (statusCtx) {
+    const counts = {};
+    allOrders.forEach(o => { const s = String(o.status || 'new').toLowerCase(); counts[s] = (counts[s] || 0) + 1; });
+    const labels = Object.keys(counts);
+    const values = Object.values(counts);
+    const meta = document.getElementById('metaStatus');
+    if (meta) meta.textContent = pluralize(allOrders.length, 'record');
+    if (labels.length) {
+      activeCharts.push(new Chart(statusCtx, {
         type: 'doughnut',
         data: { labels, datasets: [{ data: values, backgroundColor: [accent,'#f59e0b','#16a34a','#dc2626','#3b82f6','#8b5cf6'], borderWidth: 0 }] },
         options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, padding: 12 } }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
       }));
+    } else {
+      statusCtx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:.78rem;font-family:var(--font-heading);">No data yet</div>';
     }
   }
 
-  if (WS.charts.includes('topProducts')) {
-    const ctx = document.getElementById('chartProd');
-    if (ctx) {
-      const agg = {};
-      allOrders.forEach(o => (o.products || []).forEach(p => {
-        const n = p.name || 'Unknown';
-        agg[n] = (agg[n] || 0) + ((Number(p.price) || Number(p.unitPrice) || 0) * (Number(p.quantity) || 1));
-      }));
-      const sorted = Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,6);
-      if (sorted.length) {
-        activeCharts.push(new Chart(ctx, {
-          type: 'bar',
-          data: { labels: sorted.map(([k]) => k.length > 16 ? k.slice(0,14)+'…' : k), datasets: [{ data: sorted.map(([,v])=>v), backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
-          options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, grid: { color: border }, ticks: { callback: v => formatKes(v) } }, y: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + formatKes(c.parsed.x) } } } }
-        }));
-      } else {
-        ctx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:.78rem;font-family:var(--font-heading);">No product data yet</div>';
-      }
-    }
-  }
-
-  if (WS.charts.includes('topClients')) {
-    const ctx = document.getElementById('chartClient');
-    if (ctx) {
-      const agg = {};
-      allOrders.forEach(o => { const n = o[clientField] || 'Unknown'; agg[n] = (agg[n] || 0) + 1; });
-      const sorted = Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,6);
-      if (sorted.length) {
-        activeCharts.push(new Chart(ctx, {
-          type: 'bar',
-          data: { labels: sorted.map(([k]) => k.length > 16 ? k.slice(0,14)+'…' : k), datasets: [{ data: sorted.map(([,v])=>v), backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
-          options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, grid: { color: border }, ticks: { precision: 0 } }, y: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
-        }));
-      } else {
-        ctx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:.78rem;font-family:var(--font-heading);">No customer data yet</div>';
-      }
-    }
-  }
-
-  if (WS.charts.includes('performance')) {
-    const ctx = document.getElementById('chartPerf');
-    if (ctx) {
-      const days = FF.chartDays;
-      const buckets = {};
-      for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0,10)] = { ok: 0, total: 0 }; }
-      allOrders.forEach(o => { if (!o._ts) return; const k = new Date(o._ts).toISOString().slice(0,10); if (!(k in buckets)) return; buckets[k].total++; if (['delivered','fulfilled'].includes(String(o.status).toLowerCase())) buckets[k].ok++; });
-      const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
-      const values = Object.keys(buckets).map(k => { const b = buckets[k]; return b.total ? Math.round((b.ok/b.total)*100) : 0; });
-      activeCharts.push(new Chart(ctx, {
+  const prodCtx = document.getElementById('chartProd');
+  if (prodCtx) {
+    const agg = {};
+    allOrders.forEach(o => (o.products || []).forEach(p => {
+      const n = p.name || 'Unknown';
+      agg[n] = (agg[n] || 0) + ((Number(p.price) || 0) * (Number(p.quantity) || 1));
+    }));
+    const sorted = Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,6);
+    if (sorted.length) {
+      activeCharts.push(new Chart(prodCtx, {
         type: 'bar',
-        data: { labels, datasets: [{ data: values, backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, max: 100, grid: { color: border }, ticks: { callback: v => v + '%' } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + c.parsed.y + '%' } } } }
+        data: { labels: sorted.map(([k]) => k.length > 16 ? k.slice(0,14)+'…' : k), datasets: [{ data: sorted.map(([,v])=>v), backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, grid: { color: border }, ticks: { callback: v => formatKes(v) } }, y: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + formatKes(c.parsed.x) } } } }
       }));
+    } else {
+      prodCtx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:.78rem;font-family:var(--font-heading);">No item data yet</div>';
     }
+  }
+
+  const clientCtx = document.getElementById('chartClient');
+  if (clientCtx) {
+    const agg = {};
+    allOrders.forEach(o => { const n = readPath(o, f.clientName) || 'Unknown'; agg[n] = (agg[n] || 0) + 1; });
+    const sorted = Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,6);
+    if (sorted.length) {
+      activeCharts.push(new Chart(clientCtx, {
+        type: 'bar',
+        data: { labels: sorted.map(([k]) => k.length > 16 ? k.slice(0,14)+'…' : k), datasets: [{ data: sorted.map(([,v])=>v), backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, grid: { color: border }, ticks: { precision: 0 } }, y: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6 } } }
+      }));
+    } else {
+      clientCtx.parentElement.innerHTML = '<div style="color:var(--text-muted);font-size:.78rem;font-family:var(--font-heading);">No client data yet</div>';
+    }
+  }
+
+  const perfCtx = document.getElementById('chartPerf');
+  if (perfCtx) {
+    const days = FF.chartDays;
+    const buckets = {};
+    for (let i = days - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); buckets[d.toISOString().slice(0,10)] = { ok: 0, total: 0 }; }
+    allOrders.forEach(o => { if (!o._ts) return; const k = new Date(o._ts).toISOString().slice(0,10); if (!(k in buckets)) return; buckets[k].total++; if (['delivered','fulfilled','completed'].includes(String(o.status).toLowerCase())) buckets[k].ok++; });
+    const labels = Object.keys(buckets).map(k => new Date(k).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
+    const values = Object.keys(buckets).map(k => { const b = buckets[k]; return b.total ? Math.round((b.ok/b.total)*100) : 0; });
+    activeCharts.push(new Chart(perfCtx, {
+      type: 'bar',
+      data: { labels, datasets: [{ data: values, backgroundColor: accent, borderRadius: 4, barThickness: 12 }] },
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } }, y: { beginAtZero: true, max: 100, grid: { color: border }, ticks: { callback: v => v + '%' } } }, plugins: { legend: { display: false }, tooltip: { backgroundColor: ink, padding: 10, cornerRadius: 6, callbacks: { label: c => ' ' + c.parsed.y + '%' } } } }
+    }));
   }
 }
 
@@ -1608,6 +1517,11 @@ function renderCharts() {
 function setupLightbox() {
   const lb = document.getElementById('ffLightbox');
   if (lb) lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (activeLightboxProduct) { closeLightbox(); return; }
+    }
+  });
 }
 function openLightboxById(id) {
   const p = allProducts.find(x => x.id === id);
@@ -1624,26 +1538,24 @@ function openLightbox(product) {
   lastFocusedBeforeLightbox = document.activeElement;
   activeLightboxProduct = product;
 
-  const img = productImage(product);
+  const f = wsConfig.fields;
+  const img = productImage(product, f.productImages);
   media.innerHTML = img
-    ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(product.name)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${WS.catalogue.placeholderIcon} ff-product-placeholder\\"></i>';">`
-    : `<i class="fas ${WS.catalogue.placeholderIcon} ff-product-placeholder"></i>`;
+    ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(product.name)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\"fas ${wsConfig.catalogueIcon} ff-product-placeholder\\"></i>';">`
+    : `<i class="fas ${wsConfig.catalogueIcon} ff-product-placeholder"></i>`;
 
-  title.textContent = product.name || 'Product';
-  const catField = WS.fields.productCategory;
-  const supField = WS.fields.productSupplier;
+  title.textContent = product.name || 'Item';
+  const catField = readPath(product, f.productCategory);
+  const supField = readPath(product, f.productSupplier);
   const parts = [];
-  if (product[catField]) parts.push(`<span style="text-transform:capitalize;"><i class="fas fa-tag" style="color:var(--ws-accent);margin-right:4px;font-size:.7rem;"></i>${escapeHtml(product[catField])}</span>`);
-  if (product[supField]) parts.push(`<span><i class="fas fa-truck-field" style="color:var(--ws-accent);margin-right:4px;font-size:.7rem;"></i>${escapeHtml(product[supField])}</span>`);
-  if (product.sku) parts.push(`<span style="font-family:monospace;font-size:.72rem;color:var(--text-muted);">SKU ${escapeHtml(product.sku)}</span>`);
-  const stockCls = stockClass(product[WS.fields.productStock]);
-  parts.push(`<span class="ff-product-stock ${stockCls}">${escapeHtml(stockLabel(product[WS.fields.productStock]))}</span>`);
+  if (catField) parts.push(`<span style="text-transform:capitalize;"><i class="fas fa-tag" style="color:var(--ws-accent);margin-right:4px;font-size:.7rem;"></i>${escapeHtml(catField)}</span>`);
+  if (supField) parts.push(`<span><i class="fas fa-truck-field" style="color:var(--ws-accent);margin-right:4px;font-size:.7rem;"></i>${escapeHtml(supField)}</span>`);
   meta.innerHTML = parts.join('');
 
-  const priceField = WS.fields.productPrice;
-  const unitField = WS.fields.productUnit;
-  if (product[priceField] !== undefined) {
-    price.innerHTML = `${formatKesExact(product[priceField])}${product[unitField] ? `<span class="unit">/ ${escapeHtml(product[unitField])}</span>` : ''}`;
+  const priceField = readPath(product, f.productPrice);
+  const unitField = readPath(product, f.productUnit);
+  if (priceField !== undefined) {
+    price.innerHTML = `${formatKesExact(priceField)}${unitField ? `<span class="unit">/ ${escapeHtml(unitField)}</span>` : ''}`;
   } else {
     price.innerHTML = '';
   }
@@ -1665,6 +1577,14 @@ function closeLightbox() {
   }
   lastFocusedBeforeLightbox = null;
 }
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  setupLightbox();
+  bootFirebase();
+});
 
 window.addEventListener('beforeunload', destroyCharts);
 </script>
