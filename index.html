@@ -1112,7 +1112,7 @@ body.mode-landing .ws-content {
 }
 .progress-canvas-wrap canvas { max-width: 100%; max-height: 100%; }
 
-/* ---------- Today's schedule (read-only, from assigned work) ---------- */
+/* ---------- Today's schedule ---------- */
 .schedule-list {
   background: white;
   border: 1px solid var(--m365-border);
@@ -2070,8 +2070,54 @@ const firebaseConfig = {
 
 const ACADEMY_URL = 'https://kazinni-academy.vercel.app';
 const ACADEMY_COURSE_URL = 'https://kazinni-academy.vercel.app/learning/course.html';
+const WORKSPACE_PAGE = 'workspace.html';
 
-const APPS = {
+/* ============================================================
+   WORKSPACE REGISTRY — single source of truth.
+   Every workspace app points to workspace.html?b=<slug>.
+   The workspace.html page reads the slug and renders only that project.
+   ============================================================ */
+const WORKSPACE_REGISTRY = {
+  'fusion-foods': {
+    name: 'Fusion Foods',
+    desc: 'B2B produce supply — orders, products, suppliers and analytics.',
+    icon: 'fa-carrot',
+    color: '#107c10',
+    permission: 'fusion-foods'
+  },
+  'dsog': {
+    name: 'DSOG Fashion',
+    desc: 'Apparel catalogue, franchise network and order analytics.',
+    icon: 'fa-shirt',
+    color: '#8b5cf6',
+    permission: 'dsog',
+    fallbackPermission: 'dsog-fashion'
+  },
+  'brandinn': {
+    name: 'BrandInn',
+    desc: 'Projects, client businesses and subscription analytics.',
+    icon: 'fa-bullhorn',
+    color: '#ca8a04',
+    permission: 'brandinn'
+  },
+  'workfit': {
+    name: 'WorkFit',
+    desc: 'Fitness clubs, members, attendance, library and shop analytics.',
+    icon: 'fa-dumbbell',
+    color: '#ec4899',
+    permission: 'workfit'
+  },
+  'e-huduma': {
+    name: 'E-Huduma',
+    desc: 'Government applications, print jobs and digital service analytics.',
+    icon: 'fa-landmark',
+    color: '#1e40af',
+    permission: 'digital-services'
+  }
+};
+
+/* Non-workspace apps (task boards, assistant, learning) that keep their own URL. */
+const STANDALONE_APPS = {
   'janta-assistant': {
     name: 'Janta Assistant',
     desc: 'Ask anything about work on KazInni — businesses, products, services, courses and resources.',
@@ -2128,53 +2174,51 @@ const APPS = {
     permission: 'learning',
     alwaysVisible: false,
     signedInOnly: true
-  },
- 'e-huduma': {
-     name: 'E-Huduma',
-     desc: 'Government applications, print jobs and digital service analytics.',
-     icon: 'fa-landmark',
-     color: '#1e40af',
-     link: 'e-huduma.html',
-     permission: 'digital-services',
-     alwaysVisible: false
-   },
-  'brandinn': {
-     name: 'BrandInn',
-     desc: 'Projects, client businesses and subscription analytics.',
-     icon: 'fa-bullhorn',
-     color: '#ca8a04',
-     link: 'brandinn.html',
-     permission: 'brandinn',
-     alwaysVisible: false
-   },
-  'workfit': {
-     name: 'WorkFit',
-     desc: 'Fitness clubs, members, attendance, library and shop analytics.',
-     icon: 'fa-dumbbell',
-     color: '#ec4899',
-     link: 'workfit.html',
-     permission: 'workfit',
-     alwaysVisible: false
-   },
-  'dsog': {
-     name: 'DSOG Fashion',
-     desc: 'Apparel catalogue, franchise network and order analytics.',
-     icon: 'fa-shirt',
-     color: '#8b5cf6',
-     link: 'dsog.html',
-     permission: 'dsog',
-     fallbackPermission: 'dsog-fashion',
-     alwaysVisible: false
-   },
-  'fusion-foods': {
-     name: 'Fusion Foods',
-     desc: 'B2B produce supply — orders, products, suppliers and analytics.',
-     icon: 'fa-carrot',
-     color: '#107c10',
-     link: 'fusion-foods.html',
-     permission: 'fusion-foods',
-     alwaysVisible: false
-   }
+  }
+};
+
+/* Build the unified APPS map from both registries. */
+const APPS = (() => {
+  const out = { ...STANDALONE_APPS };
+  Object.keys(WORKSPACE_REGISTRY).forEach(slug => {
+    const w = WORKSPACE_REGISTRY[slug];
+    out['ws_' + slug] = {
+      name: w.name,
+      desc: w.desc,
+      icon: w.icon,
+      color: w.color,
+      link: `${WORKSPACE_PAGE}?b=${encodeURIComponent(slug)}`,
+      permission: w.permission,
+      fallbackPermission: w.fallbackPermission,
+      alwaysVisible: false,
+      workspaceSlug: slug
+    };
+  });
+  return out;
+})();
+
+/* Workspace display metadata (kept for the landing hero chips). */
+const WORKSPACE_META = {
+  brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work.' },
+  'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders and stickers.' },
+  dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
+  'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
+  'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods supply.' },
+  heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and listings.' },
+  'heritage-marketplace': { name: 'Heritage Marketplace',  icon: 'fa-store',       color: '#0891b2', desc: 'Listings and marketplace orders.' },
+  'heritage-interiors':   { name: 'Heritage Interiors',    icon: 'fa-couch',       color: '#0e7490', desc: 'Furniture, interiors and custom builds.' },
+  workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs and events.' },
+  epitome:                { name: 'Epitome Reviews',       icon: 'fa-car',         color: '#3b82f6', desc: 'Cars, homes and reviews.' },
+  'digital-services':     { name: 'Digital Services',      icon: 'fa-laptop-code', color: '#1e40af', desc: 'Government and online service applications.' },
+  'mugs-n-dines':         { name: 'Mugs n Dines',          icon: 'fa-utensils',    color: '#f59e0b', desc: 'Restaurant and catering operations.' },
+  'latter-logistics':     { name: 'Latter Logistics',      icon: 'fa-truck-fast',  color: '#475569', desc: 'Intercounty and cross-border logistics.' },
+  'pick-up':              { name: 'Pick Up',               icon: 'fa-box',         color: '#059669', desc: 'Same-day and scheduled deliveries.' },
+  'pick-me':              { name: 'Pick Me',               icon: 'fa-taxi',        color: '#eab308', desc: 'Rides and scheduled trips.' },
+  ekazi:                  { name: 'FlexiKazi',             icon: 'fa-list-check',  color: '#059669', desc: 'Task board.' },
+  kasikazi:               { name: 'Kasikazi',              icon: 'fa-bullhorn',    color: '#0891b2', desc: 'Public task board.' },
+  craftikazi:             { name: 'CraftiKazi',            icon: 'fa-hammer',      color: '#b45309', desc: 'Craft-work marketplace.' },
+  zindua:                 { name: 'Zindua Hub',            icon: 'fa-rocket',      color: '#4f46e5', desc: 'Tech-task marketplace.' },
+  learning:               { name: 'Learning',              icon: 'fa-graduation-cap', color: '#f59e0b', desc: 'Courses, certificates and mentorship.' }
 };
 
 const FALLBACK_COURSES = [
@@ -2201,30 +2245,6 @@ const COURSE_CATEGORY_LABELS = {
 const COURSE_CATEGORY_ORDER = [
   'communication', 'productivity', 'career', 'finance', 'civic', 'tech', 'design', 'business', 'other'
 ];
-
-/* Workspace display metadata */
-const WORKSPACE_META = {
-  brandinn:               { name: 'BrandInn',              icon: 'fa-bullhorn',    color: '#ca8a04', desc: 'Branding, design and print work.' },
-  'brandinn-print':       { name: 'BrandInn Print',        icon: 'fa-print',       color: '#b45309', desc: 'Print orders and stickers.' },
-  dsog:                   { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
-  'dsog-fashion':         { name: 'DSOG Fashion',          icon: 'fa-shirt',       color: '#8b5cf6', desc: 'Apparel and franchise operations.' },
-  'fusion-foods':         { name: 'Fusion Foods',          icon: 'fa-carrot',      color: '#107c10', desc: 'Fresh produce and dry goods supply.' },
-  heritage:               { name: 'Heritage Ads',          icon: 'fa-rectangle-ad',color: '#0891b2', desc: 'Outdoor advertising and listings.' },
-  'heritage-marketplace': { name: 'Heritage Marketplace',  icon: 'fa-store',       color: '#0891b2', desc: 'Listings and marketplace orders.' },
-  'heritage-interiors':   { name: 'Heritage Interiors',    icon: 'fa-couch',       color: '#0e7490', desc: 'Furniture, interiors and custom builds.' },
-  workfit:                { name: 'WorkFit',               icon: 'fa-dumbbell',    color: '#ec4899', desc: 'Fitness clubs and events.' },
-  epitome:                { name: 'Epitome Reviews',       icon: 'fa-car',         color: '#3b82f6', desc: 'Cars, homes and reviews.' },
-  'digital-services':     { name: 'Digital Services',      icon: 'fa-laptop-code', color: '#1e40af', desc: 'Government and online service applications.' },
-  'mugs-n-dines':         { name: 'Mugs n Dines',          icon: 'fa-utensils',    color: '#f59e0b', desc: 'Restaurant and catering operations.' },
-  'latter-logistics':     { name: 'Latter Logistics',      icon: 'fa-truck-fast',  color: '#475569', desc: 'Intercounty and cross-border logistics.' },
-  'pick-up':              { name: 'Pick Up',               icon: 'fa-box',         color: '#059669', desc: 'Same-day and scheduled deliveries.' },
-  'pick-me':              { name: 'Pick Me',               icon: 'fa-taxi',        color: '#eab308', desc: 'Rides and scheduled trips.' },
-  ekazi:                  { name: 'FlexiKazi',             icon: 'fa-list-check',  color: '#059669', desc: 'Task board.' },
-  kasikazi:               { name: 'Kasikazi',              icon: 'fa-bullhorn',    color: '#0891b2', desc: 'Public task board.' },
-  craftikazi:             { name: 'CraftiKazi',            icon: 'fa-hammer',      color: '#b45309', desc: 'Craft-work marketplace.' },
-  zindua:                 { name: 'Zindua Hub',            icon: 'fa-rocket',      color: '#4f46e5', desc: 'Tech-task marketplace.' },
-  learning:               { name: 'Learning',              icon: 'fa-graduation-cap', color: '#f59e0b', desc: 'Courses, certificates and mentorship.' }
-};
 
 const CONFIG = {
   notifLimit: 50,
@@ -2343,8 +2363,6 @@ function formatTime12(h, m) {
   return { label: `${hh}:${mm}`, period: ampm };
 }
 
-/* Parse various due date formats from Firebase into a Date object.
-   Supports: ISO strings, "YYYY-MM-DD", "DD MMM YYYY", and epoch numbers. */
 function parseDueDate(raw) {
   if (!raw) return null;
   if (typeof raw === 'number') {
@@ -2353,12 +2371,8 @@ function parseDueDate(raw) {
   }
   const s = String(raw).trim();
   if (!s) return null;
-
-  // ISO or YYYY-MM-DD
   let d = new Date(s);
   if (!isNaN(d.getTime())) return d;
-
-  // DD MMM YYYY  (e.g. "14 Oct 2026")
   const m = s.match(/^(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})$/);
   if (m) {
     const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
@@ -2375,6 +2389,21 @@ function isSameDay(a, b) {
   return a.getFullYear() === b.getFullYear()
     && a.getMonth() === b.getMonth()
     && a.getDate() === b.getDate();
+}
+
+/* Resolve the URL for an app — respects workspace redirect target. */
+function appTargetUrl(app) {
+  if (!app) return '#';
+  if (app.workspaceSlug) {
+    return `${WORKSPACE_PAGE}?b=${encodeURIComponent(app.workspaceSlug)}`;
+  }
+  return app.link || '#';
+}
+
+/* Build a click handler that safely navigates to the app target. */
+function appClickHandler(app) {
+  const url = appTargetUrl(app);
+  return `location.href='${escapeHtml(url)}'`;
 }
 
 /* ============================================================
@@ -2488,11 +2517,7 @@ function renderNavApps() {
   });
 
   const items = visible.map(app => {
-    // Force target to same tab
-    const target = app.key === 'learning' 
-      ? `location.href='${ACADEMY_URL}'` 
-      : `location.href='${escapeHtml(app.link)}'`;
-      
+    const target = appClickHandler(app);
     return `
       <button type="button" class="ws-nav-dd-item" onclick="${target}">
         <div class="ws-nav-dd-icon" style="background:${escapeHtml(app.color)};">
@@ -2503,6 +2528,7 @@ function renderNavApps() {
             ${escapeHtml(app.name)}
             ${!signedIn && !app.alwaysVisible ? '<span class="badge-mini">Sign in</span>' : ''}
             ${app.key === 'janta-assistant' ? '<span class="badge-mini">Live</span>' : ''}
+            ${app.workspaceSlug ? '<span class="badge-mini">Workspace</span>' : ''}
           </div>
           <div class="ws-nav-dd-desc">${escapeHtml(app.desc)}</div>
         </div>
@@ -2814,7 +2840,7 @@ function renderAccountButton() {
           <a href="account.html" class="ud-item" role="menuitem"><i class="fas fa-user" aria-hidden="true"></i> My account</a>
           <a href="account-settings.html" class="ud-item" role="menuitem"><i class="fas fa-gear" aria-hidden="true"></i> Settings</a>
           <div class="ud-divider"></div>
-          <div class="ud-section-label">Workspace</div>
+          <div class="ud-section-label">Workspaces</div>
           ${renderDropdownApps()}
           <div class="ud-divider"></div>
           <button type="button" class="ud-item danger" onclick="handleSignOut()" role="menuitem">
@@ -2841,7 +2867,7 @@ function renderDropdownApps() {
   if (apps.length === 0) return '';
 
   return apps.map(app => `
-    <a href="${escapeHtml(app.link)}" class="ud-item" role="menuitem">
+    <a href="${escapeHtml(appTargetUrl(app))}" class="ud-item" role="menuitem">
       <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i> ${escapeHtml(app.name)}
     </a>
   `).join('');
@@ -3131,9 +3157,12 @@ function renderPreviewGrid() {
     if (app.key === 'janta-assistant') {
       target = "location.href='assistant.html'";
       cta = 'Open assistant';
-    } else if (app.signedInOnly) {
+    } else if (app.signedInOnly && !currentUser) {
       target = "openAuthModal()";
       cta = 'Sign in to open';
+    } else if (app.workspaceSlug) {
+      target = `location.href='${WORKSPACE_PAGE}?b=${encodeURIComponent(app.workspaceSlug)}'`;
+      cta = 'Open workspace';
     } else {
       target = "openLauncher(event)";
       cta = 'Preview';
@@ -3297,7 +3326,7 @@ function renderWorkspaceApps() {
   }
 
   tiles.innerHTML = apps.map(app => `
-    <a href="${escapeHtml(app.link)}" class="ws-app-tile">
+    <a href="${escapeHtml(appTargetUrl(app))}" class="ws-app-tile">
       <div class="tile-icon" style="background:linear-gradient(135deg, ${escapeHtml(app.color)}, ${escapeHtml(lighten(app.color, 18))});">
         <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
       </div>
@@ -3325,7 +3354,7 @@ function renderRailApps() {
 
   apps.forEach(app => {
     const el = document.createElement('a');
-    el.href = app.link;
+    el.href = appTargetUrl(app);
     el.className = 'rail-sub-item';
     el.innerHTML = `
       <span class="rail-sub-dot" style="background:${escapeHtml(app.color)};" aria-hidden="true"></span>
@@ -3377,17 +3406,8 @@ function buildWorkspaceChips() {
 }
 
 /* ============================================================
-   TODAY'S SCHEDULE  — derived from real assignments in Firebase
-   ============================================================
-   Reads only nodes already permitted by the rules:
-     • ekazi_assigned_tasks       (filtered by taskerEmail)
-     • user_assignments/{uid}     (to know which workspaces are relevant)
-     • zindua_tasks               (claimedBy[uid])
-     • kasikazi_tasks             (claimedBy[uid])
-     • craftikazi_tasks           (claimedBy[uid])
-   Nothing is written.
+   TODAY'S SCHEDULE
    ============================================================ */
-
 function updateScheduleDateLabel() {
   const el = document.getElementById('scheduleDateLabel');
   if (!el) return;
@@ -3405,7 +3425,6 @@ async function fetchTodaySchedule() {
   const today = new Date();
   const items = [];
 
-  /* ---- FlexiKazi assigned tasks (by taskerEmail) ---- */
   if (currentPerms.ekazi === true && email) {
     try {
       const snap = await db.ref('ekazi_assigned_tasks')
@@ -3421,8 +3440,7 @@ async function fetchTodaySchedule() {
           title: t.title || 'Assigned task',
           client: t.clientName || '',
           category: t.category || '',
-          due,
-          status,
+          due, status,
           source: 'FlexiKazi',
           color: APPS.flexikazi.color
         });
@@ -3430,7 +3448,6 @@ async function fetchTodaySchedule() {
     } catch (e) { console.warn('FlexiKazi schedule read:', e); }
   }
 
-  /* ---- Helper for claimedBy-based boards ---- */
   const readClaimedBoard = async (path, sourceLabel, color, titleKey) => {
     try {
       const snap = await db.ref(path).once('value');
@@ -3447,8 +3464,7 @@ async function fetchTodaySchedule() {
           title: t[titleKey] || t.title || 'Assigned task',
           client: t.clientName || '',
           category: t.category || '',
-          due,
-          status,
+          due, status,
           source: sourceLabel,
           color
         });
@@ -3491,7 +3507,6 @@ function renderSchedule(items) {
 
   container.innerHTML = items.map(item => {
     const dueMs = item.due.getTime();
-    // Treat due times earlier than now (same day) as "past"
     const isPast = dueMs < now - 30 * 60 * 1000;
     const isCurrent = !isPast && dueMs - now <= 60 * 60 * 1000;
     const t = formatTime12(item.due.getHours(), item.due.getMinutes());
@@ -3566,7 +3581,6 @@ async function loadWorkspaceData() {
       ts: n.timestamp
     }));
 
-  /* Schedule from real assignments */
   const items = await fetchTodaySchedule();
   scheduleItems = items;
   renderSchedule(items);
@@ -3606,19 +3620,14 @@ function renderProgressCharts(learningProgress, certificates, ents) {
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
-    dayBuckets[key] = 0;
+    dayBuckets[d.toISOString().slice(0, 10)] = 0;
   }
   notifications.forEach(n => {
     if (!n.timestamp) return;
-    const d = new Date(n.timestamp);
-    const key = d.toISOString().slice(0, 10);
+    const key = new Date(n.timestamp).toISOString().slice(0, 10);
     if (key in dayBuckets) dayBuckets[key]++;
   });
-  const lineLabels = Object.keys(dayBuckets).map(k => {
-    const d = new Date(k);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  });
+  const lineLabels = Object.keys(dayBuckets).map(k => new Date(k).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
   const lineValues = Object.keys(dayBuckets).map(k => dayBuckets[k]);
 
   const wsLabels = [];
@@ -3895,7 +3904,7 @@ function renderLauncher() {
     grid.innerHTML = `<div class="lp-empty" style="grid-column:1/-1;"><i class="fas fa-lock" aria-hidden="true"></i>No apps granted yet.</div>`;
   } else {
     grid.innerHTML = visible.map(app => `
-      <a href="${escapeHtml(app.link)}" class="lp-app">
+      <a href="${escapeHtml(appTargetUrl(app))}" class="lp-app">
         <div class="lp-app-icon" style="background:${escapeHtml(app.color)};">
           <i class="fas ${escapeHtml(app.icon)}" aria-hidden="true"></i>
         </div>
